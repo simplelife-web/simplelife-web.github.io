@@ -1,0 +1,29 @@
+# Transcriptor gratuito de audio
+
+Página web que convierte audio o video en texto. Todo ocurre en el navegador de quien la usa:
+
+- **Gratis para siempre**: no hay servidor que pagar; la página es estática.
+- **Sin límite de duración**: el audio se lee de 10 en 10 minutos y se transcribe en tramos de unos 28 segundos, cortados en silencios para no partir palabras.
+- **Privada**: el archivo nunca se sube a internet.
+- **Modelo**: Whisper (código abierto), mediante Transformers.js. Usa la tarjeta gráfica (WebGPU) si el navegador lo permite; si no, el procesador.
+
+## Archivos
+
+| Archivo | Para qué sirve |
+|---|---|
+| `index.html` | La página y su lógica (lectura del audio, cortes, botones). |
+| `worker.js` | Carga Whisper y transcribe en segundo plano. |
+| `lib/ort-*` | ONNX Runtime Web (motor de IA). Transformers.js 4.3.1 se carga desde jsDelivr. |
+| `lib/ffmpeg/` | FFmpeg.wasm 0.12 (lee cualquier formato y audios largos por partes). |
+
+## Publicarla gratis
+
+**Opción A, la más fácil (Netlify Drop):** entra a https://app.netlify.com/drop, crea una cuenta gratis y arrastra la carpeta `transcriptor-web` completa. Te da un enlace al instante.
+
+**Opción B (GitHub Pages):** sube esta carpeta a un repositorio y activa *Settings → Pages → Deploy from a branch → main / (root)*. Ojo: la web de GitHub no deja subir archivos de más de 25 MB arrastrándolos, y dos archivos de `lib/` pesan más; hay que subirlos con `git push` (o con GitHub Desktop).
+
+Para probarla en tu computadora sin publicarla: en esta carpeta ejecuta `python -m http.server` y abre http://localhost:8000 (abrir `index.html` con doble clic no funciona).
+
+## Licencias
+
+Transformers.js y ONNX Runtime: Apache 2.0 y MIT. `@ffmpeg/ffmpeg`: MIT. `@ffmpeg/core` (FFmpeg compilado a WebAssembly): GPL 2.0 o posterior; su código fuente está en https://github.com/ffmpegwasm/ffmpeg.wasm. Modelos Whisper: MIT (OpenAI), descargados desde Hugging Face (onnx-community).

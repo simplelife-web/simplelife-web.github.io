@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simplelife | Transcriptor gratuito de audio a texto</title>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<meta name="description" content="Convierte tus audios y videos en texto gratis, sin límite de duración y sin subir tus archivos a ningún servidor. Funciona en español y otros idiomas.">
+<link rel="canonical" href="https://simplelife-web.github.io/">
+<meta property="og:title" content="Simplelife | Transcriptor gratuito de audio">
+<meta property="og:site_name" content="Simplelife">
+<meta property="og:description" content="Convierte audios y videos en texto gratis, sin límite de duración y con total privacidad.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simplelife-web.github.io/">
+<!-- AdSense: cuando Google te dé tu código, pégalo aquí (una sola línea <script async src="https://pagead2.googlesyndication.com/...">). -->
+<style>
+  :root {
+    --bg: #f6f5f1; --card: #ffffff; --text: #1d1d1b; --muted: #66645e;
+    --line: #dedbd2; --accent: #1f6f5c; --accent-text: #ffffff; --soft: #e7f1ed;
+    --warn: #8a4b00; --danger: #a12a2a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151614; --card: #1e1f1d; --text: #ecebe6; --muted: #a3a19a;
+      --line: #34352f; --accent: #4fb596; --accent-text: #0d1a15; --soft: #1f2d28;
+      --warn: #e2a85c; --danger: #ef7b7b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; text-decoration: none; color: var(--text); }
+  .brand img { width: 52px; height: 52px; }
+  .brand span { font-size: 1.6rem; font-weight: 700; letter-spacing: -.01em; }
+  .brand span b { color: var(--accent); font-weight: 700; }
+  h1 { font-size: 1.8rem; line-height: 1.2; margin: 0 0 6px; }
+  .lead { color: var(--muted); margin: 0 0 24px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+  .drop { display: block; border: 2px dashed var(--line); border-radius: 12px; padding: 28px 16px; text-align: center; cursor: pointer; transition: .15s; }
+  .drop:hover, .drop.over { border-color: var(--accent); background: var(--soft); }
+  .drop strong { display: block; font-size: 1.05rem; }
+  .drop span { color: var(--muted); font-size: .92rem; }
+  .file { margin-top: 10px; font-size: .95rem; word-break: break-word; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+  label.f { display: block; font-size: .85rem; color: var(--muted); margin-bottom: 4px; }
+  select, button, textarea { font: inherit; color: inherit; }
+  select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); }
+  .check { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-size: .95rem; }
+  button { border: 1px solid var(--line); background: var(--card); padding: 10px 16px; border-radius: 10px; cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .bar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; margin: 10px 0 6px; }
+  .bar > div { height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+  .status { font-size: .95rem; }
+  .small { font-size: .85rem; color: var(--muted); }
+  .warn { color: var(--warn); }
+  .err { color: var(--danger); }
+  textarea { width: 100%; min-height: 320px; padding: 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); line-height: 1.6; resize: vertical; }
+  .hidden { display: none; }
+  footer { color: var(--muted); font-size: .85rem; margin-top: 28px; }
+  footer p { margin: 6px 0; }
+  footer a, .info a { color: var(--accent); }
+  .info h2 { font-size: 1.25rem; margin: 0 0 8px; }
+  .info h3 { font-size: 1.02rem; margin: 18px 0 4px; }
+  .info p, .info li { margin: 4px 0; }
+  .info ol { padding-left: 22px; margin: 6px 0; }
+</style>
+</head>
+<body>
+<main>
+  <a class="brand" href="./"><img src="logo.svg" alt="" width="52" height="52"><span>Simple<b>life</b></span></a>
+  <h1>Transcriptor gratuito de audio a texto</h1>
+  <p class="lead">Sube un audio o un video y obtén el texto tal como se dice. Es gratis, no tiene límite de duración y tu archivo nunca sale de tu computadora: todo se procesa en tu navegador.</p>
+
+  <section class="card">
+    <label class="drop" id="drop">
+      <input type="file" id="file" accept="audio/*,video/*,.mp3,.m4a,.wav,.ogg,.opus,.webm,.mp4,.aac,.flac" hidden>
+      <strong>Elige un archivo o arrástralo aquí</strong>
+      <span>MP3, M4A, WAV, OGG, OPUS (audios de WhatsApp), MP4, WEBM y más</span>
+    </label>
+    <div class="file" id="fileInfo"></div>
+
+    <div class="row">
+      <div>
+        <label class="f" for="lang">Idioma del audio</label>
+        <select id="lang">
+          <option value="spanish" selected>Español</option>
+          <option value="english">Inglés</option>
+          <option value="portuguese">Portugués</option>
+          <option value="french">Francés</option>
+          <option value="italian">Italiano</option>
+          <option value="german">Alemán</option>
+          <option value="auto">Detectar automáticamente</option>
+        </select>
+      </div>
+      <div>
+        <label class="f" for="model">Calidad</label>
+        <select id="model">
+          <option value="onnx-community/whisper-base">Rápida (descarga ~80 MB)</option>
+          <option value="onnx-community/whisper-small">Buena (descarga ~250 MB)</option>
+          <option value="onnx-community/whisper-large-v3-turbo">Máxima (descarga ~1 GB, requiere tarjeta gráfica)</option>
+        </select>
+      </div>
+    </div>
+    <label class="check"><input type="checkbox" id="stamps"> Mostrar el minuto de cada parte</label>
+    <p class="small" id="deviceInfo">Revisando tu equipo…</p>
+
+    <div class="actions">
+      <button class="primary" id="start" disabled>Transcribir</button>
+      <button id="cancel" class="hidden">Detener</button>
+    </div>
+
+    <div id="progressBox" class="hidden">
+      <div class="bar"><div id="bar"></div></div>
+      <div class="status" id="status"></div>
+      <div class="small" id="eta"></div>
+    </div>
+  </section>
+
+  <section class="card hidden" id="resultBox">
+    <label class="f" for="out">Transcripción (puedes editarla aquí mismo)</label>
+    <textarea id="out" spellcheck="true"></textarea>
+    <div class="actions">
+      <button id="copy">Copiar texto</button>
+      <button id="dlTxt">Descargar .txt</button>
+      <button id="dlSrt">Descargar subtítulos .srt</button>
+    </div>
+  </section>
+
+  <section class="card info">
+    <h2>Cómo usarlo</h2>
+    <ol>
+      <li>Elige tu archivo de audio o video (también sirven las notas de voz de WhatsApp).</li>
+      <li>Indica el idioma y la calidad. Si tu equipo tiene tarjeta gráfica, la calidad "Buena" ya viene elegida.</li>
+      <li>Pulsa <strong>Transcribir</strong> y espera. El texto aparece mientras avanza.</li>
+      <li>Revisa el texto, corrige lo que haga falta y cópialo o descárgalo.</li>
+    </ol>
+
+    <h2 style="margin-top:22px">Preguntas frecuentes</h2>
+    <h3>¿De verdad es gratis?</h3>
+    <p>Sí. La transcripción se hace en tu propio equipo, así que no hay servidores que pagar ni cuentas que crear.</p>
+    <h3>¿Hay un límite de duración?</h3>
+    <p>No. Los audios largos se leen por partes de 10 minutos y se transcriben en tramos cortos, cortados en los silencios para no partir palabras. Un audio de varias horas solo tarda más.</p>
+    <h3>¿Mis audios se suben a internet?</h3>
+    <p>No. El archivo nunca sale de tu navegador. Lo único que se descarga es el modelo de reconocimiento de voz, y solo la primera vez.</p>
+    <h3>¿Qué tan exacta es la transcripción?</h3>
+    <p>Usa Whisper, un modelo de reconocimiento de voz de código abierto. Con buen sonido acierta la gran mayoría de palabras; con ruido, música de fondo o varias personas hablando a la vez puede equivocarse, por eso conviene revisar el texto.</p>
+    <h3>¿Cuánto tarda?</h3>
+    <p>Depende de tu equipo. Con tarjeta gráfica suele ir más rápido que el propio audio; solo con el procesador puede tardar más que la duración del audio. La página te muestra el tiempo restante.</p>
+    <h3>¿Funciona en el celular?</h3>
+    <p>Funciona, pero es más lento y puede quedarse sin memoria con audios largos. Para eso es mejor una computadora con Chrome o Edge.</p>
+  </section>
+
+  <footer>
+    <p><a href="acerca.html">Acerca de y contacto</a> · <a href="privacidad.html">Política de privacidad</a></p>
+    <p>La primera vez se descarga el modelo de reconocimiento de voz (Whisper, de código abierto). Luego queda guardado en tu navegador y las siguientes veces empieza al instante.</p>
+    <p>Funciona mejor en Chrome o Edge de escritorio. En audios muy largos, deja esta pestaña abierta hasta que termine.</p>
+  </footer>
+</main>
+
+<script type="module">
+const $ = (id) => document.getElementById(id);
+const SR = 16000;                 // Whisper trabaja con audio a 16 000 muestras por segundo
+const MAX = 28 * SR, MIN = 18 * SR; // cada tramo dura entre 18 y 28 s
+const SEG_SEC = 600;              // los audios largos se leen de 10 en 10 minutos
+const NATIVE_MAX_SEC = 20 * 60;   // hasta 20 min se leen de una vez con el navegador
+const MAX_PENDING = 30;           // tramos en espera como máximo (cuida la memoria)
+
+let file = null, worker = null, pieces = [], busy = false, wakeLock = null;
+let job = null; // trabajo en curso
+let ffmpeg = null;
+
+function newWorker() {
+  if (worker) worker.terminate();
+  worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+  worker.onmessage = onWorker;
+  worker.onerror = (e) => fail('No se pudo iniciar el transcriptor: ' + (e.message || 'error desconocido'));
+}
+newWorker();
+worker.postMessage({ type: 'gpu' });
+
+// ---------- elegir archivo ----------
+const drop = $('drop');
+$('file').addEventListener('change', (e) => setFile(e.target.files[0]));
+['dragover', 'dragenter'].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave', 'drop'].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', (e) => setFile(e.dataTransfer.files[0]));
+
+function setFile(f) {
+  if (!f) return;
+  file = f;
+  $('fileInfo').textContent = `Archivo: ${f.name} (${(f.size / 1048576).toFixed(1)} MB)`;
+  $('start').disabled = busy;
+}
+
+// ---------- utilidades ----------
+function fmt(t, withMs = false) {
+  const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), s = Math.floor(t % 60);
+  const p = (n, l = 2) => String(n).padStart(l, '0');
+  if (withMs) return `${p(h)}:${p(m)}:${p(s)},${p(Math.floor((t % 1) * 1000), 3)}`;
+  return h ? `${h}:${p(m)}:${p(s)}` : `${p(m)}:${p(s)}`;
+}
+function humanTime(sec) {
+  if (!isFinite(sec) || sec <= 0) return '';
+  if (sec < 60) return 'menos de un minuto';
+  const m = Math.round(sec / 60);
+  if (m < 60) return `${m} min`;
+  return `${Math.floor(m / 60)} h ${m % 60} min`;
+}
+function setStatus(text, cls = '') { const s = $('status'); s.textContent = text; s.className = 'status ' + cls; }
+function setBar(frac) { $('bar').style.width = Math.max(0, Math.min(1, frac)) * 100 + '%'; }
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Duración del archivo, leída por el navegador (no carga todo el audio).
+function probeDuration(f) {
+  return new Promise((resolve) => {
+    const a = document.createElement('audio');
+    const url = URL.createObjectURL(f);
+    const done = (v) => { URL.revokeObjectURL(url); resolve(v); };
+    a.preload = 'metadata';
+    a.onloadedmetadata = () => done(isFinite(a.duration) ? a.duration : null);
+    a.onerror = () => done(null);
+    setTimeout(() => done(null), 8000);
+    a.src = url;
+  });
+}
+
+// ---------- lectura del audio ----------
+// Opción 1: el propio navegador decodifica todo el archivo (rápido, para audios no muy largos).
+async function decodeNative(f) {
+  const buf = await f.arrayBuffer();
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  const ctx = new Ctx({ sampleRate: SR });
+  try {
+    const ab = await ctx.decodeAudioData(buf);
+    const out = new Float32Array(ab.length);
+    if (ab.numberOfChannels === 1) { ab.copyFromChannel(out, 0); return out; }
+    for (let c = 0; c < ab.numberOfChannels; c++) {
+      const d = ab.getChannelData(c);
+      for (let i = 0; i < d.length; i++) out[i] += d[i] / ab.numberOfChannels;
+    }
+    return out;
+  } finally { ctx.close(); }
+}
+
+// Opción 2: FFmpeg lee el archivo por partes de 10 min, así la duración no tiene límite.
+async function getFFmpeg() {
+  if (ffmpeg) return ffmpeg;
+  setStatus('Preparando el lector de audio (solo la primera vez puede tardar un poco)…');
+  const { FFmpeg } = await import('./lib/ffmpeg/index.js');
+  const ff = new FFmpeg();
+  const base = new URL('./lib/ffmpeg/', import.meta.url).href;
+  await ff.load({ coreURL: base + 'ffmpeg-core.js', wasmURL: base + 'ffmpeg-core.wasm' });
+  ffmpeg = ff;
+  return ff;
+}
+
+async function* ffmpegSegments(f, duration, isCancelled) {
+  const ff = await getFFmpeg();
+  try { await ff.createDir('/in'); } catch {}
+  await ff.mount('WORKERFS', { files: [f] }, '/in');
+  const input = '/in/' + f.name;
+  try {
+    if (!duration) {
+      let log = '';
+      const onLog = ({ message }) => { log += message + '\n'; };
+      ff.on('log', onLog);
+      await ff.exec(['-hide_banner', '-i', input]);
+      ff.off('log', onLog);
+      const m = log.match(/Duration:\s*(\d+):(\d+):(\d+(?:\.\d+)?)/);
+      duration = m ? (+m[1]) * 3600 + (+m[2]) * 60 + parseFloat(m[3]) : Infinity;
+      if (isFinite(duration)) job.duration = duration;
+    }
+    for (let s = 0; s < duration; s += SEG_SEC) {
+      if (isCancelled()) return;
+      const out = '/seg.raw';
+      const code = await ff.exec(['-hide_banner', '-loglevel', 'error', '-ss', String(s), '-t', String(SEG_SEC),
+        '-i', input, '-vn', '-ac', '1', '-ar', String(SR), '-f', 'f32le', '-y', out]);
+      let data;
+      try { data = await ff.readFile(out); } catch { data = new Uint8Array(0); }
+      try { await ff.deleteFile(out); } catch {}
+      if (code !== 0 && s === 0 && data.length === 0) throw new Error('ffmpeg no pudo leer el archivo');
+      if (data.length < 4) return; // fin del audio
+      const n = Math.floor(data.byteLength / 4);
+      const seg = new Float32Array(n);
+      new Uint8Array(seg.buffer).set(data.subarray(0, n * 4));
+      yield seg;
+      if (n < SEG_SEC * SR * 0.98) return; // fue la última parte
+    }
+  } finally {
+    try { await ff.unmount('/in'); } catch {}
+  }
+}
+
+// Busca el punto más silencioso entre los 18 y 28 s para no cortar palabras.
+function findCut(buf, pos) {
+  const FRAME = Math.round(0.03 * SR);
+  let best = pos + MAX, bestE = Infinity;
+  for (let f = pos + MIN; f + FRAME <= pos + MAX; f += FRAME) {
+    let e = 0;
+    for (let i = f; i < f + FRAME; i++) e += buf[i] * buf[i];
+    if (e <= bestE) { bestE = e; best = f + (FRAME >> 1); }
+  }
+  return best;
+}
+
+// Recibe el audio por partes y lo envía al transcriptor en tramos cortos.
+function makeSlicer(send) {
+  let carry = new Float32Array(0), carryStart = 0;
+  return (seg, final) => {
+    let buf = seg;
+    if (carry.length) { buf = new Float32Array(carry.length + seg.length); buf.set(carry); buf.set(seg, carry.length); }
+    let pos = 0;
+    while (buf.length - pos > MAX) {
+      const cut = findCut(buf, pos);
+      send(buf.slice(pos, cut), carryStart + pos);
+      pos = cut;
+    }
+    if (final) {
+      if (buf.length - pos > SR * 0.2) send(buf.slice(pos), carryStart + pos);
+      carry = new Float32Array(0);
+    } else {
+      carry = buf.slice(pos);
+      carryStart += pos;
+    }
+  };
+}
+
+function render() {
+  const withStamps = $('stamps').checked;
+  const ok = pieces.filter((p) => p && p.text);
+  $('out').value = withStamps
+    ? ok.map((p) => `[${fmt(p.start)}] ${p.text}`).join('\n\n')
+    : ok.map((p) => p.text).join(' ').replace(/\s+/g, ' ').trim();
+  const ta = $('out');
+  if (busy) ta.scrollTop = ta.scrollHeight;
+}
+$('stamps').addEventListener('change', render);
+
+// ---------- transcribir ----------
+$('start').addEventListener('click', async () => {
+  if (!file || busy) return;
+  busy = true; pieces = [];
+  const me = job = { sent: 0, done: 0, duration: null, startTime: 0, doneSec: 0, readAll: false, wait: null, cancelled: false };
+  const isCancelled = () => me.cancelled || job !== me;
+  $('start').disabled = true;
+  $('cancel').classList.remove('hidden');
+  $('progressBox').classList.remove('hidden');
+  $('resultBox').classList.remove('hidden');
+  $('out').value = ''; $('eta').textContent = ''; setBar(0);
+  setStatus('Leyendo el audio…');
+  try { wakeLock = await navigator.wakeLock?.request('screen'); } catch {}
+
+  worker.postMessage({ type: 'init', model: $('model').value, language: $('lang').value });
+
+  const send = (audio, startSample) => {
+    const start = startSample / SR, end = start + audio.length / SR;
+    worker.postMessage({ type: 'piece', index: me.sent++, audio, start, end }, [audio.buffer]);
+  };
+  const slice = makeSlicer(send);
+  const throttle = async () => {
+    while (!isCancelled() && me.sent - me.done > MAX_PENDING) await new Promise((r) => (me.wait = r));
+  };
+
+  try {
+    me.duration = await probeDuration(file);
+    let usedNative = false;
+    if (me.duration && me.duration <= NATIVE_MAX_SEC) {
+      try {
+        const audio = await decodeNative(file);
+        if (isCancelled()) return;
+        me.duration = audio.length / SR;
+        slice(audio, true);
+        usedNative = true;
+      } catch (e) { console.log('lectura directa falló, se usa FFmpeg:', e && e.message); }
+    }
+    if (!usedNative) {
+      for await (const seg of ffmpegSegments(file, me.duration, isCancelled)) {
+        if (isCancelled()) return;
+        slice(seg, false);
+        await throttle();
+      }
+      if (isCancelled()) return;
+      slice(new Float32Array(0), true);
+    }
+    me.readAll = true;
+    if (!me.duration) me.duration = me.sent * 28;
+    worker.postMessage({ type: 'end' });
+    if (me.sent === 0) finish('No se encontró audio en este archivo.');
+  } catch (e) {
+    console.log('decode error', e && e.message);
+    if (!isCancelled()) fail('No se pudo leer este archivo. Prueba con otro formato (por ejemplo MP3).');
+  }
+});
+
+$('cancel').addEventListener('click', () => {
+  // Detener al instante. El modelo ya quedó guardado en el navegador para la próxima vez.
+  if (job) { job.cancelled = true; job.wait?.(); }
+  newWorker();
+  if (ffmpeg) { try { ffmpeg.terminate(); } catch {} ffmpeg = null; }
+  finish('Detenido. Lo transcrito hasta aquí se conserva abajo.');
+});
+
+function onWorker(e) {
+  const m = e.data;
+  const me = job;
+  switch (m.type) {
+    case 'gpu': {
+      $('deviceInfo').textContent = m.webgpu
+        ? 'Tu equipo usará la tarjeta gráfica: la transcripción será rápida.'
+        : 'Tu navegador no permite usar la tarjeta gráfica, así que se usará el procesador. Funciona igual, pero más lento; la calidad "Rápida" es la más recomendable aquí.';
+      if (!m.webgpu || !m.f16) {
+        const big = $('model').querySelector('option[value*="large"]');
+        big.disabled = true; big.textContent += ' (no disponible en este equipo)';
+      }
+      $('model').value = m.webgpu ? 'onnx-community/whisper-small' : 'onnx-community/whisper-base';
+      break;
+    }
+    case 'download':
+      setStatus(`Descargando el modelo (solo la primera vez): ${(m.loaded / 1048576).toFixed(0)} de ${(m.total / 1048576).toFixed(0)} MB`);
+      setBar(m.loaded / m.total);
+      break;
+    case 'ready':
+      if (!me) break;
+      setBar(0); me.startTime = performance.now();
+      setStatus('Transcribiendo…');
+      break;
+    case 'piece': {
+      if (!me) break;
+      pieces[m.index] = m;
+      me.done++; me.doneSec = Math.max(me.doneSec, m.end);
+      me.wait?.(); me.wait = null;
+      const total = me.duration || me.doneSec;
+      setBar(me.doneSec / total);
+      setStatus(`Transcribiendo… ${fmt(me.doneSec)} de ${fmt(total)} (${Math.min(100, Math.floor((me.doneSec / total) * 100))} %)`);
+      const elapsed = (performance.now() - me.startTime) / 1000;
+      const left = (elapsed / me.doneSec) * (total - me.doneSec);
+      $('eta').textContent = left > 5 ? `Tiempo restante aproximado: ${humanTime(left)}` : '';
+      render();
+      break;
+    }
+    case 'done':
+      if (me && me.readAll && me.done >= me.sent) finish('¡Listo! Revisa el texto, cópialo o descárgalo.');
+      break;
+    case 'error':
+      if (me) me.cancelled = true;
+      fail('Ocurrió un error: ' + m.message + '. Si el equipo se quedó sin memoria, prueba con la calidad "Rápida".');
+      newWorker();
+      break;
+  }
+}
+
+function finish(msg) {
+  busy = false;
+  job = null;
+  $('start').disabled = !file;
+  $('cancel').classList.add('hidden');
+  $('eta').textContent = '';
+  if (msg.startsWith('¡Listo')) setBar(1);
+  setStatus(msg);
+  render();
+  try { wakeLock?.release(); } catch {}
+  wakeLock = null;
+}
+function fail(msg) { finish(''); setStatus(msg, 'err'); }
+
+window.addEventListener('beforeunload', (e) => { if (busy) { e.preventDefault(); e.returnValue = ''; } });
+
+// ---------- copiar y descargar ----------
+function baseName() { return (file?.name || 'transcripcion').replace(/\.[^.]+$/, ''); }
+function download(name, text) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+  a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+$('copy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText($('out').value); } catch { $('out').select(); document.execCommand('copy'); }
+  $('copy').textContent = '¡Copiado!';
+  setTimeout(() => ($('copy').textContent = 'Copiar texto'), 1500);
+});
+$('dlTxt').addEventListener('click', () => download(baseName() + '.txt', $('out').value));
+$('dlSrt').addEventListener('click', () => {
+  const srt = pieces.filter((p) => p && p.text)
+    .map((p, i) => `${i + 1}\n${fmt(p.start, true)} --> ${fmt(p.end, true)}\n${p.text}\n`).join('\n');
+  download(baseName() + '.srt', srt);
+});
+</script>
+
+</body>
+</html>
