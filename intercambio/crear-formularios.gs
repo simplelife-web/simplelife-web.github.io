@@ -10,14 +10,26 @@
  *      y no lo revisó Google; solo trabaja dentro de tu cuenta.
  *   5. Te llegará un correo "Tus 3 enlaces". Pásaselos a Claude.
  *
+ * ¿Ya lo habías ejecutado antes y solo estás actualizando el script?
+ *   Pega esta versión nueva, guarda, elige la función "actualizar" y pulsa "Ejecutar".
+ *
  * Qué crea:
  *   - Formulario "publicar mi oferta" y formulario "quiero contactar".
  *   - Hoja PRIVADA con las respuestas (ahí están correos y teléfonos; no la compartas).
  *   - Hoja PÚBLICA solo con las ofertas que apruebes (sin correos ni teléfonos).
  *   - Avisos a tu correo cuando llega una oferta nueva o alguien quiere contactar.
  *
- * Para aprobar una oferta: en la hoja privada, pestaña de ofertas, elige "Sí" en la
- * columna "Aprobado". Para quitarla, elige "No" o borra la fila.
+ * Cómo funciona:
+ *   - Verificación: cada oferta nueva te llega por correo con un enlace directo a su
+ *     fila. Si está bien, eliges "Sí" en "Aprobado" y se publica. Si tiene algo
+ *     sospechoso (enlaces, correos o teléfonos en el texto, precios o cobros), el
+ *     correo te lo advierte.
+ *   - Al aprobarla, el script avisa solo a la persona que su oferta ya está publicada.
+ *   - Cuando alguien quiere aprender, el script envía solo un correo de presentación a
+ *     las dos personas, con los consejos de seguridad. Tú recibes una copia oculta.
+ *     Si el mensaje parece sospechoso, no lo envía y te lo manda a ti para que decidas.
+ *
+ * Para quitar una oferta: elige "No" en la columna "Aprobado" o borra la fila.
  */
 
 const PRIVACIDAD_URL = 'https://simplelife-web.github.io/intercambio/privacidad.html';
@@ -27,6 +39,10 @@ const COLUMNAS_PUBLICAS = 9;   // marca temporal + 8 preguntas públicas
 const COL_CORREO = 10;         // columna J
 const COL_TELEFONO = 11;       // columna K
 const COL_APROBADO = 13;       // columna M
+const APROBAR_A_MANO = true;   // true: tú verificas cada oferta antes de publicarla
+const PRESENTAR_SOLO = true;   // true: el script presenta a las personas por correo
+const COL_AVISADO = 14;        // columna N: marca que ya se avisó a la persona
+const WEB = 'https://simplelife-web.github.io/intercambio/';
 
 function crearTodo() {
   const props = PropertiesService.getScriptProperties();
@@ -78,6 +94,7 @@ function crearTodo() {
     if (h.getSheetId() !== hojaOfertas.getSheetId() && h.getSheetId() !== hojaContactos.getSheetId()) privada.deleteSheet(h);
   });
   hojaOfertas.getRange(1, COL_APROBADO).setValue('Aprobado').setFontWeight('bold');
+  hojaOfertas.getRange(1, COL_AVISADO).setValue('Avisado').setFontWeight('bold');
   hojaOfertas.getRange(2, COL_APROBADO, 999, 1).setDataValidation(
     SpreadsheetApp.newDataValidation().requireValueInList(['Sí', 'No'], true).build());
 
@@ -93,13 +110,28 @@ function crearTodo() {
   });
 
   // 5) Automatismos
-  ScriptApp.newTrigger('sincronizar').forSpreadsheet(privada).onEdit().create();
-  ScriptApp.newTrigger('sincronizar').timeBased().everyHours(1).create();
-  ScriptApp.newTrigger('alPublicar').forForm(f1).onFormSubmit().create();
-  ScriptApp.newTrigger('alContactar').forForm(f2).onFormSubmit().create();
-
+  crearAutomatismos_();
   sincronizar();
   enviarmeLosEnlaces();
+}
+
+// Ejecuta esta función una vez después de pegar una versión nueva del script
+function actualizar() {
+  const p = PropertiesService.getScriptProperties();
+  SpreadsheetApp.openById(p.getProperty('privadaId')).getSheetByName('Ofertas')
+    .getRange(1, COL_AVISADO).setValue('Avisado').setFontWeight('bold');
+  crearAutomatismos_();
+  sincronizar();
+  Logger.log('Listo: automatismos actualizados.');
+}
+
+function crearAutomatismos_() {
+  const p = PropertiesService.getScriptProperties();
+  ScriptApp.getProjectTriggers().forEach(function (t) { ScriptApp.deleteTrigger(t); });
+  const privada = SpreadsheetApp.openById(p.getProperty('privadaId'));
+  ScriptApp.newTrigger('alEditar').forSpreadsheet(privada).onEdit().create();
+  ScriptApp.newTrigger('sincronizar').timeBased().everyHours(1).create();
+  ScriptApp.newTrigger('alResponder').forSpreadsheet(privada).onFormSubmit().create();
 }
 
 function hojaDeFormulario_(ss, form) {
@@ -127,41 +159,106 @@ function sincronizar() {
   pub.getRange(1, 1, filas.length, titulos.length).setValues(filas);
 }
 
-// Aviso por correo cuando llega una oferta nueva para revisar
-function alPublicar(e) {
-  const p = PropertiesService.getScriptProperties();
-  const r = {};
-  e.response.getItemResponses().forEach(function (x) { r[x.getItem().getTitle()] = x.getResponse(); });
-  MailApp.sendEmail(Session.getEffectiveUser().getEmail(),
-    'Nueva oferta para revisar: ' + r['¿Qué puedes enseñar?'],
-    'Llegó una oferta de ' + r['Tu nombre o apodo'] + ' (' + r['Distrito y ciudad'] + ').\n\n' +
-    'Enseña: ' + r['¿Qué puedes enseñar?'] + '\nQuiere aprender: ' + r['¿Qué te gustaría aprender?'] + '\n' +
-    'Sobre ti: ' + (r['Cuéntanos un poco de ti (opcional)'] || '-') + '\n\n' +
-    'Si está bien, elige "Sí" en la columna Aprobado:\n' +
-    SpreadsheetApp.openById(p.getProperty('privadaId')).getUrl());
+// Busca señales de riesgo: enlaces, correos o teléfonos en el texto, precios o cobros
+function motivoSospecha_(texto) {
+  const t = String(texto || '');
+  if (/https?:|www\.|\.com\b/i.test(t)) return 'tiene un enlace';
+  if (/@/.test(t)) return 'tiene un correo en el texto';
+  if (/\d[\d\s.-]{6,}\d/.test(t)) return 'parece tener un número de teléfono o de cuenta';
+  if (/\bS\/|soles|d[oó]lares|precio|cobro|cobrar|tarifa|dep[oó]sito|transferencia|cuenta bancaria|tarjeta/i.test(t)) return 'habla de dinero o cobros';
+  return '';
 }
 
-// Aviso por correo cuando alguien quiere contactar, con todo listo para presentarlos
-function alContactar(e) {
+// Se ejecuta cada vez que alguien llena cualquiera de los dos formularios
+function alResponder(e) {
+  const hoja = e.range.getSheet().getName();
+  if (hoja === 'Ofertas') alPublicar_(e);
+  else if (hoja === 'Contactos') alContactar_(e);
+}
+
+function alPublicar_(e) {
   const p = PropertiesService.getScriptProperties();
-  const r = {};
-  e.response.getItemResponses().forEach(function (x) { r[x.getItem().getTitle()] = x.getResponse(); });
-  const oferta = String(r['Oferta que te interesa'] || '');
-  let datosOferta = 'No encontré el código de la oferta. Búscala a mano en la hoja privada.';
-  const m = oferta.match(/^O(\d+)/);
-  if (m) {
-    const fila = SpreadsheetApp.openById(p.getProperty('privadaId')).getSheetByName('Ofertas')
-      .getRange(+m[1], 1, 1, COL_APROBADO).getValues()[0];
-    datosOferta = 'Persona de la oferta: ' + fila[1] + '\nSu correo: ' + fila[COL_CORREO - 1] +
-      (fila[COL_TELEFONO - 1] ? '\nSu teléfono: ' + fila[COL_TELEFONO - 1] : '');
+  const yo = Session.getEffectiveUser().getEmail();
+  const v = e.range.getValues()[0];
+  const hojaOfertas = e.range.getSheet();
+  const fila = e.range.getRow();
+  const nombre = v[1], ensena = v[4], aprende = v[6], sobre = v[8];
+  const sospecha = motivoSospecha_([nombre, v[3], ensena, aprende, sobre].join(' '));
+
+  if (!APROBAR_A_MANO && !sospecha) {
+    hojaOfertas.getRange(fila, COL_APROBADO).setValue('Sí');
+    avisarPublicada_(hojaOfertas, fila);
+    sincronizar();
+    return;
   }
-  MailApp.sendEmail(Session.getEffectiveUser().getEmail(),
-    'Alguien quiere aprender: ' + oferta.slice(0, 80),
-    'Oferta: ' + oferta + '\n' + datosOferta + '\n\n' +
-    'Quien escribe: ' + r['Tu nombre'] + '\nSu correo: ' + r['Tu correo electrónico'] + '\n' +
-    'Mensaje: ' + r['Tu mensaje: preséntate y cuenta qué puedes enseñar a cambio'] + '\n\n' +
-    'Si el mensaje está bien, escribe UN correo a la persona de la oferta, con copia a quien escribe, ' +
-    'pegando su mensaje y recordándoles los consejos de seguridad.');
+  const enlace = SpreadsheetApp.openById(p.getProperty('privadaId')).getUrl() +
+    '#gid=' + hojaOfertas.getSheetId() + '&range=M' + fila;
+  MailApp.sendEmail(yo, (sospecha ? '⚠️ Revisa con cuidado: ' : 'Nueva oferta para verificar: ') + ensena,
+    (sospecha ? 'Atención: esta oferta ' + sospecha + '.\n\n' : '') +
+    nombre + ' (' + v[2] + ', ' + v[3] + ')\nEnseña: ' + ensena + ' (' + v[5] + ')\nQuiere aprender: ' + aprende +
+    '\nModalidad: ' + v[7] + '\nSobre ti: ' + (sobre || '-') +
+    '\n\nSi está bien, abre este enlace y elige "Sí" en Aprobado. Se publica y la persona recibe un aviso:\n' + enlace);
+}
+
+// Se ejecuta cuando editas la hoja privada: publica lo aprobado y avisa a la persona
+function alEditar(e) {
+  if (e && e.range && e.range.getSheet().getName() === 'Ofertas' && e.range.getColumn() <= COL_APROBADO &&
+      e.range.getLastColumn() >= COL_APROBADO) {
+    const hoja = e.range.getSheet();
+    for (let f = e.range.getRow(); f <= e.range.getLastRow(); f++) {
+      if (f > 1 && String(hoja.getRange(f, COL_APROBADO).getValue()).trim() === 'Sí') avisarPublicada_(hoja, f);
+    }
+  }
+  sincronizar();
+}
+
+function avisarPublicada_(hoja, fila) {
+  if (!PRESENTAR_SOLO || hoja.getRange(fila, COL_AVISADO).getValue()) return;
+  const v = hoja.getRange(fila, 1, 1, COL_APROBADO).getValues()[0];
+  if (!v[COL_CORREO - 1]) return;
+  MailApp.sendEmail(v[COL_CORREO - 1], 'Tu oferta ya está publicada en Yo te enseño, tú me enseñas',
+    'Hola, ' + v[1] + ':\n\nTu oferta "' + v[4] + '" ya aparece en ' + WEB + '\n\n' +
+    'Cuando alguien quiera aprender contigo, te enviaremos un correo para presentarte. ' +
+    'Tu correo y tu teléfono no se publican.\n\nSi quieres borrar tu oferta, responde a este correo.\n\nEquipo Simplelife',
+    { name: 'Simplelife', replyTo: Session.getEffectiveUser().getEmail() });
+  hoja.getRange(fila, COL_AVISADO).setValue(new Date());
+}
+
+function alContactar_(e) {
+  const p = PropertiesService.getScriptProperties();
+  const yo = Session.getEffectiveUser().getEmail();
+  const v = e.range.getValues()[0];
+  const oferta = String(v[1] || ''), quien = v[2], suCorreo = v[3], mensaje = v[4];
+  const m = oferta.match(/^O(\d+)/);
+  let datos = null;
+  if (m) datos = SpreadsheetApp.openById(p.getProperty('privadaId')).getSheetByName('Ofertas')
+    .getRange(+m[1], 1, 1, COL_APROBADO).getValues()[0];
+  const valida = datos && datos[1] && String(datos[COL_APROBADO - 1]).trim() === 'Sí';
+  const sospecha = motivoSospecha_(mensaje);
+
+  if (PRESENTAR_SOLO && valida && !sospecha) {
+    const nombreOferta = datos[1], correoOferta = datos[COL_CORREO - 1], ensena = datos[4];
+    MailApp.sendEmail(correoOferta, quien + ' quiere aprender contigo: ' + ensena,
+      'Hola, ' + nombreOferta + ' y ' + quien + ':\n\n' +
+      quien + ' vio la oferta de ' + nombreOferta + ' ("' + ensena + '") en Yo te enseño, tú me enseñas y quiere aprender. Su mensaje:\n\n' +
+      '"' + mensaje + '"\n\n' +
+      'Para ponerse de acuerdo, respondan a este correo ("Responder a todos").\n\n' +
+      'Consejos para un intercambio seguro:\n' +
+      '- La primera vez, conversen por videollamada o reúnanse en un lugar público.\n' +
+      '- Avisen a un familiar o amigo con quién y dónde se van a reunir.\n' +
+      '- Aquí nadie cobra. Si alguien pide dinero, desconfíen y avísennos.\n' +
+      '- Nunca compartan contraseñas, claves del banco ni códigos que lleguen por mensaje.\n\n' +
+      '¡Que disfruten el intercambio!\nEquipo Simplelife\n' + WEB,
+      { name: 'Simplelife', cc: suCorreo, bcc: yo, replyTo: suCorreo + ',' + correoOferta });
+  } else {
+    let motivo = !valida ? 'no encontré la oferta o ya no está aprobada' : (sospecha ? 'el mensaje ' + sospecha : 'la presentación automática está apagada');
+    let datosOferta = datos && datos[1] ? '\nPersona de la oferta: ' + datos[1] + '\nSu correo: ' + datos[COL_CORREO - 1] +
+      (datos[COL_TELEFONO - 1] ? '\nSu teléfono: ' + datos[COL_TELEFONO - 1] : '') : '';
+    MailApp.sendEmail(yo, 'Contacto en espera de tu revisión: ' + oferta.slice(0, 60),
+      'No lo presenté solo porque ' + motivo + '.\n\nOferta: ' + oferta + datosOferta + '\n\n' +
+      'Quien escribe: ' + quien + '\nSu correo: ' + suCorreo + '\nMensaje: ' + mensaje + '\n\n' +
+      'Si está bien, escribe tú un correo a la persona de la oferta con copia a quien escribe.');
+  }
 }
 
 // Te envía por correo los 3 enlaces para la página web

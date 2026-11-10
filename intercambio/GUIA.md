@@ -22,15 +22,15 @@ La página ya funciona y muestra **ofertas de ejemplo**. Para recibir ofertas re
 | Hoja "respuestas (PRIVADO)" | Todas las respuestas, con correos y teléfonos | **No. No la compartas nunca.** |
 | Hoja "ofertas publicadas (PÚBLICO)" | Solo las ofertas que apruebes, sin correos ni teléfonos | Sí, solo lectura |
 
-## Tu trabajo del día a día
+## Cómo funciona solo
 
-**Cuando llega una oferta**, te llega un correo "Nueva oferta para revisar". Ábrela en la hoja privada (pestaña **Ofertas**). Si está bien (sin cobros, sin datos privados en el texto, sin cosas raras), elige **Sí** en la columna **Aprobado**. En unos minutos aparece en la página.
+1. **Llega una oferta.** Te llega un correo "Nueva oferta para verificar" con un enlace directo a su fila. Si el script ve algo sospechoso (enlaces, correos o teléfonos en el texto, precios o cobros), el asunto empieza con ⚠️.
+2. **Tú la verificas.** Si está bien, elige **Sí** en la columna **Aprobado**. La oferta se publica en unos minutos y la persona recibe solo un correo "Tu oferta ya está publicada".
+3. **Alguien quiere aprender.** El script envía solo **un correo de presentación** a las dos personas, con los consejos de seguridad, y tú recibes una copia oculta. Si el mensaje parece sospechoso, no lo envía y te lo manda a ti para que decidas.
 
-**Cuando alguien quiere contactar**, te llega un correo "Alguien quiere aprender" con el mensaje y los correos de las dos personas. Si el mensaje está bien, envía **un solo correo** a la persona de la oferta, con copia a quien escribió, por ejemplo:
+**Para quitar una oferta**, elige **No** en la columna Aprobado (o borra la fila).
 
-> Hola, Rosa: Diego vio tu oferta de cocina criolla en Yo te enseño, tú me enseñas y quiere aprender contigo. Su mensaje: "…". Pueden responder a este correo para ponerse de acuerdo. Recuerden los consejos de seguridad: la primera reunión por videollamada o en un lugar público. ¡Que disfruten el intercambio! Equipo Simplelife.
-
-**Para quitar una oferta**, cambia **Sí** por **No** en la columna Aprobado (o borra la fila).
+**Si actualizas el script:** pega la versión nueva, guarda, elige la función **actualizar** y pulsa **Ejecutar** (una sola vez).
 
 ## Si algo falla
 
