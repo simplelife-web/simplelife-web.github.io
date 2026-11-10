@@ -85,6 +85,8 @@ const RE_EVENTO = /\b(exposici[oó]n|muestra|taller(es)?|concierto|recital|feria
 const RE_INVITA = /\b(invita|inv[ií]tanos|participa|inscr[ií]bete|inscripci[oó]n|inscripciones|no te pierdas|ven a|asiste|te esperamos|programaci[oó]n|agenda|se realizar[aá]|se llevar[aá] a cabo|presentar[aá]|ofrecer[aá]|tendr[aá] lugar|hasta el|del \d{1,2} al \d{1,2}|este (lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo|fin de semana)|pr[oó]xim[oa]|ingreso libre|entrada libre|gratis|gratuit[oa])\b/i;
 // Resúmenes de algo que ya pasó o noticias que no son planes
 const RE_PASADO = /\b(se llen[oó]|celebr[oó]|realiz[oó]|inaugur[oó]|entreg[oó]|particip[oó]|reuni[oó]|clausur[oó]|culmin[oó]|congreg[oó]|recibi[oó]|disfrutaron|asistieron|fue un [eé]xito|balance)\b/i;
+// Verbos en pasado en el título ("celebraron", "llenó"): es una crónica, no una invitación
+const RE_VERBO_PASADO = /(^|[^a-záéíóúñ])[a-záéíóúñ]{3,}(aron|ieron|ó)(?![a-záéíóúñ])/i;
 const RE_NO_PLAN = /\b(subasta|licitaci[oó]n|convocatoria|cas n|proceso de selecci[oó]n|alcalde|regidor|gerente|fiscaliza|operativo|prevenir|violencia|denuncia|obras? de (pistas|veredas|agua)|comunicado|transparencia|presupuesto)\b/i;
 // Si el título nombra otra región, el evento no es en Lima
 const RE_OTRA_REGION = /\b(amazonas|[aá]ncash|apur[ií]mac|arequipa|ayacucho|cajamarca|cusco|cuzco|huancavelica|hu[aá]nuco|ica|jun[ií]n|la libertad|lambayeque|loreto|madre de dios|moquegua|pasco|piura|puno|san mart[ií]n|tacna|tumbes|ucayali|trujillo|chiclayo|iquitos|huancayo|raquina)\b/i;
@@ -182,7 +184,7 @@ async function leerRSS(f) {
       const texto = `${it.titulo}. ${it.texto} ${it.cuerpo}`;
       // Solo actividades a las que se puede ir en Lima, no noticias institucionales
       if (!RE_EVENTO.test(it.titulo)) continue;
-      if (RE_PASADO.test(it.titulo) || RE_NO_PLAN.test(it.titulo) || RE_OTRA_REGION.test(it.titulo)) continue;
+      if (RE_PASADO.test(it.titulo) || RE_VERBO_PASADO.test(it.titulo) || RE_NO_PLAN.test(it.titulo) || RE_OTRA_REGION.test(it.titulo)) continue;
       const corta = `${it.titulo}. ${it.texto}`;
       if (!RE_INVITA.test(corta + " " + it.cuerpo.slice(0, 1500))) continue;
       const fechas = fechasEn(corta + " " + it.cuerpo.slice(0, 800), publicado);

@@ -199,8 +199,8 @@
       "desc": "Fuentes de agua con luces y espectáculos de música por la noche. Muy bonito para ir en familia.",
       "url": "https://www.munlima.gob.pe/",
       "fuente": "Municipalidad de Lima; datos de El Popular (20/01/2026)",
-      "lat": -12.0704,
-      "lon": -77.0335,
+      "lat": -12.0711,
+      "lon": -77.0337,
       "osm": "Parque de la Reserva, Lima"
     },
     {
@@ -283,8 +283,8 @@
       "desc": "Uno de los parques más grandes de Lima Norte, con laguna, juegos y áreas deportivas.",
       "url": "https://www.serpar.gob.pe/",
       "fuente": "Tarifario general de SERPAR",
-      "lat": -11.9333,
-      "lon": -77.056,
+      "lat": -11.9223,
+      "lon": -77.0488,
       "osm": "Club Metropolitano Sinchi Roca"
     },
     {
@@ -390,8 +390,8 @@
       "desc": "El rincón más famoso de Barranco: casonas, murales, artistas en la calle y bajada hasta el mar.",
       "url": "https://www.munibarranco.gob.pe/",
       "fuente": "Municipalidad de Barranco",
-      "lat": -12.1495,
-      "lon": -77.0221,
+      "lat": -12.1492,
+      "lon": -77.0226,
       "osm": "Puente de los Suspiros, Barranco"
     },
     {
@@ -433,8 +433,8 @@
       "desc": "Bosque de olivos centenarios con lagunas y aves. Tranquilo para caminar o leer.",
       "url": "https://msi.gob.pe/",
       "fuente": "Municipalidad de San Isidro",
-      "lat": -12.1007,
-      "lon": -77.0369,
+      "lat": -12.0992,
+      "lon": -77.0347,
       "osm": "El Olivar, San Isidro"
     }
   ]
