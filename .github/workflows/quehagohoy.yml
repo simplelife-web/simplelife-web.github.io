@@ -8,9 +8,6 @@ on:
   schedule:
     - cron: "0 11 * * *"   # todos los días a las 6:00 a. m. de Lima
   workflow_dispatch:
-  push:
-    branches: [claude/project-thread-1c1nza]
-    paths: [".github/robot/**", ".github/workflows/quehagohoy.yml", "quehagohoy/fuentes.json"]
 
 permissions:
   contents: write
@@ -27,16 +24,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
       - name: Buscar eventos en las fuentes oficiales
         run: node .github/robot/buscar-eventos.mjs
-      - name: Revisar enlaces y mapa de los lugares fijos
-        if: github.event_name == 'push'
-        run: |
-          node .github/robot/revisar-lugares.mjs
-          node -e "const j=require('./quehagohoy/eventos.json');for(const e of j.eventos)console.log('EVENTO',e.fecha||('pub '+e.publicado),e.fechaFin||'','|',e.fuente,'|',e.titulo,'|',e.precio,'|',e.url)"
       - name: Guardar los eventos nuevos
-        if: github.event_name != 'push'
         run: |
           git config user.name "robot-quehagohoy"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
