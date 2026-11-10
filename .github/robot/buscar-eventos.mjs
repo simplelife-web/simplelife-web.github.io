@@ -79,7 +79,15 @@ function limpiar(s = "") {
 }
 const corto = (s, n = 220) => (s.length > n ? s.slice(0, n).replace(/\s+\S*$/, "") + "…" : s);
 
-const RE_EVENTO = /\b(exposici[oó]n|muestra|taller|talleres|concierto|recital|feria|festival|funci[oó]n|obra|teatro|cine|pel[ií]cula|proyecci[oó]n|charla|conversatorio|conferencia|presentaci[oó]n del libro|presentaci[oó]n de libro|lectura|cuentacuentos|visita guiada|recorrido|danza|baile|m[uú]sica|clase|curso|ciclo|jornada|inauguraci[oó]n|encuentro|seminario|actividad)/i;
+// Palabras de actividad: deben estar en el TÍTULO
+const RE_EVENTO = /\b(exposici[oó]n|muestra|taller(es)?|concierto|recital|feria|festival|funci[oó]n|obra|teatro|cine|cineclub|pel[ií]cula|proyecci[oó]n|charla|conversatorio|conferencia|presentaci[oó]n de(l)? libro|cuentacuentos|visita guiada|recorrido|danza|baile|m[uú]sica|curso|ciclo de|seminario|festival|noche de|tarde de|serenata|verbena|carnaval|maratón|corso)/i;
+// Señales de que es una invitación a algo que viene (no un resumen de algo pasado)
+const RE_INVITA = /\b(invita|inv[ií]tanos|participa|inscr[ií]bete|inscripci[oó]n|inscripciones|no te pierdas|ven a|asiste|te esperamos|programaci[oó]n|agenda|se realizar[aá]|se llevar[aá] a cabo|presentar[aá]|ofrecer[aá]|tendr[aá] lugar|hasta el|del \d{1,2} al \d{1,2}|este (lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo|fin de semana)|pr[oó]xim[oa]|ingreso libre|entrada libre|gratis|gratuit[oa])\b/i;
+// Resúmenes de algo que ya pasó o noticias que no son planes
+const RE_PASADO = /\b(se llen[oó]|celebr[oó]|realiz[oó]|inaugur[oó]|entreg[oó]|particip[oó]|reuni[oó]|clausur[oó]|culmin[oó]|congreg[oó]|recibi[oó]|disfrutaron|asistieron|fue un [eé]xito|balance)\b/i;
+const RE_NO_PLAN = /\b(subasta|licitaci[oó]n|convocatoria|cas n|proceso de selecci[oó]n|alcalde|regidor|gerente|fiscaliza|operativo|prevenir|violencia|denuncia|obras? de (pistas|veredas|agua)|comunicado|transparencia|presupuesto)\b/i;
+// Si el título nombra otra región, el evento no es en Lima
+const RE_OTRA_REGION = /\b(amazonas|[aá]ncash|apur[ií]mac|arequipa|ayacucho|cajamarca|cusco|cuzco|huancavelica|hu[aá]nuco|ica|jun[ií]n|la libertad|lambayeque|loreto|madre de dios|moquegua|pasco|piura|puno|san mart[ií]n|tacna|tumbes|ucayali|trujillo|chiclayo|iquitos|huancayo|raquina)\b/i;
 const RE_GRATIS = /\b(gratis|gratuit[oa]s?|ingreso libre|entrada libre|libre acceso|acceso libre|sin costo)\b/i;
 
 function tipoDe(t, base) {
@@ -172,15 +180,21 @@ async function leerRSS(f) {
       const pub = it.fecha ? new Date(it.fecha) : null;
       const publicado = pub && !isNaN(pub) ? pub : null;
       const texto = `${it.titulo}. ${it.texto} ${it.cuerpo}`;
-      if (!RE_EVENTO.test(texto)) continue; // solo actividades, no noticias institucionales
-      const fechas = fechasEn(`${it.titulo}. ${it.texto} ${it.cuerpo.slice(0, 3000)}`, publicado);
+      // Solo actividades a las que se puede ir en Lima, no noticias institucionales
+      if (!RE_EVENTO.test(it.titulo)) continue;
+      if (RE_PASADO.test(it.titulo) || RE_NO_PLAN.test(it.titulo) || RE_OTRA_REGION.test(it.titulo)) continue;
+      const corta = `${it.titulo}. ${it.texto}`;
+      if (!RE_INVITA.test(corta + " " + it.cuerpo.slice(0, 1500))) continue;
+      const fechas = fechasEn(corta + " " + it.cuerpo.slice(0, 800), publicado);
       let fecha = "", fechaFin = "";
       if (fechas.length) {
         const primera = fechas[0], ultima = fechas[fechas.length - 1];
         if (ultima < HOY) continue; // ya pasó
         if (primera - HOY > DIAS_ADELANTE * 864e5) continue; // demasiado lejos (suele ser un error de lectura)
         fecha = iso(primera);
-        if (iso(ultima) !== fecha) fechaFin = iso(ultima);
+        // Un rango solo si es corto (hasta 3 meses); si no, suele ser una fecha suelta del texto
+        if (iso(ultima) !== fecha && ultima - primera <= 92 * 864e5) fechaFin = iso(ultima);
+        if (!fechaFin && primera < HOY) continue;
       } else {
         if (!publicado || HOY - publicado > DIAS_NOVEDAD * 864e5) continue;
       }

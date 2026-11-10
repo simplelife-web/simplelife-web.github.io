@@ -9,13 +9,25 @@
       "tipo": "cultura",
       "precio": "Gratis",
       "gratis": true,
-      "dias": [0, 2, 3, 4, 5, 6],
+      "dias": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "horario": "Martes a domingo, de 10:00 a. m. a 7:00 p. m.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Exposiciones sobre escritores peruanos, talleres, cuentacuentos y presentaciones de libros en la antigua estación Desamparados.",
       "url": "https://www.casadelaliteratura.gob.pe/",
       "fuente": "Agenda oficial de la Casa de la Literatura",
-      "lat": -12.0441, "lon": -77.0296
+      "lat": -12.0444,
+      "lon": -77.0288
     },
     {
       "id": "lum",
@@ -25,13 +37,24 @@
       "tipo": "museo",
       "precio": "Gratis",
       "gratis": true,
-      "dias": [0, 2, 3, 4, 5, 6],
+      "dias": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "horario": "Martes a domingo, de 10:00 a. m. a 6:00 p. m.",
-      "publico": ["j", "m"],
+      "publico": [
+        "j",
+        "m"
+      ],
       "desc": "Museo sobre la memoria del periodo de violencia de 1980 a 2000, con exposiciones, cine y conversatorios. Está frente al mar.",
       "url": "https://lum.cultura.pe/",
       "fuente": "Agenda oficial del LUM (Ministerio de Cultura)",
-      "lat": -12.1103, "lon": -77.0514
+      "lat": -12.1101,
+      "lon": -77.0537
     },
     {
       "id": "mnaahp",
@@ -43,11 +66,17 @@
       "primerDomingo": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "El museo más antiguo del Perú: cerámica, textiles y la historia del país desde los primeros pobladores hasta la República.",
       "url": "https://museos.cultura.pe/",
       "fuente": "Programa Museos Abiertos, Ley 30599 (Ministerio de Cultura)",
-      "lat": -12.0784, "lon": -77.0645
+      "lat": -12.0784,
+      "lon": -77.0645,
+      "osm": "Museo Nacional de Arqueología Antropología e Historia, Pueblo Libre"
     },
     {
       "id": "pucllana",
@@ -59,11 +88,16 @@
       "primerDomingo": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Pirámide de adobe de la cultura Lima, en medio de la ciudad, con museo de sitio y visita guiada.",
       "url": "https://museos.cultura.pe/",
       "fuente": "Programa Museos Abiertos, Ley 30599 (Ministerio de Cultura)",
-      "lat": -12.1107, "lon": -77.0336
+      "lat": -12.1115,
+      "lon": -77.034
     },
     {
       "id": "puruchuco",
@@ -75,11 +109,16 @@
       "primerDomingo": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Palacio inca restaurado y museo de sitio. En Museos Abiertos suele haber talleres y visitas guiadas gratis.",
       "url": "https://museos.cultura.pe/",
       "fuente": "Programa Museos Abiertos, Ley 30599 (Ministerio de Cultura)",
-      "lat": -12.0386, "lon": -76.9277
+      "lat": -12.0481,
+      "lon": -76.9344
     },
     {
       "id": "pachacamac",
@@ -91,11 +130,16 @@
       "primerDomingo": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Gran santuario prehispánico frente al mar, con museo de sitio. Ideal para un paseo de medio día en familia.",
       "url": "https://museos.cultura.pe/",
       "fuente": "Programa Museos Abiertos, Ley 30599 (Ministerio de Cultura)",
-      "lat": -12.2566, "lon": -76.9005
+      "lat": -12.2557,
+      "lon": -76.9068
     },
     {
       "id": "mariategui",
@@ -107,11 +151,15 @@
       "primerDomingo": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "m"],
+      "publico": [
+        "j",
+        "m"
+      ],
       "desc": "La casa donde vivió el pensador peruano. Organiza talleres de música y actividades culturales.",
       "url": "https://museos.cultura.pe/",
       "fuente": "Programa Museos Abiertos, Ley 30599 (Ministerio de Cultura)",
-      "lat": -12.0617, "lon": -77.0410
+      "lat": -12.0639,
+      "lon": -77.039
     },
     {
       "id": "bnp",
@@ -123,11 +171,16 @@
       "gratis": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Exposiciones gratuitas, salas de lectura y presentaciones de libros. Con tu DNI puedes acceder a sus servicios.",
-      "url": "https://www.bnp.gob.pe/",
+      "url": "https://www.gob.pe/bnp",
       "fuente": "Biblioteca Nacional del Perú",
-      "lat": -12.0866, "lon": -76.9988
+      "lat": -12.0878,
+      "lon": -77.0051
     },
     {
       "id": "circuito-agua",
@@ -138,11 +191,17 @@
       "precio": "S/ 5 (referencial). Niños hasta 5 años gratis; mayores de 65, la mitad.",
       "dias": null,
       "horario": "Todos los días, de 3:00 p. m. a 10:00 p. m. (referencial).",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Fuentes de agua con luces y espectáculos de música por la noche. Muy bonito para ir en familia.",
       "url": "https://www.munlima.gob.pe/",
       "fuente": "Municipalidad de Lima; datos de El Popular (20/01/2026)",
-      "lat": -12.0704, "lon": -77.0335
+      "lat": -12.0704,
+      "lon": -77.0335,
+      "osm": "Parque de la Reserva, Lima"
     },
     {
       "id": "leyendas",
@@ -153,107 +212,143 @@
       "precio": "Adultos S/ 15, niños S/ 8, mayores de 60 S/ 4 (tarifa 2025, referencial)",
       "dias": null,
       "horario": "Todos los días, de 9:00 a. m. a 5:00 p. m. (referencial).",
-      "publico": ["f", "m"],
+      "publico": [
+        "f",
+        "m"
+      ],
       "desc": "Zoológico y parque con animales de la costa, sierra y selva, jardín botánico y zonas arqueológicas.",
-      "url": "https://www.leyendas.gob.pe/",
+      "url": "https://www.gob.pe/leyendas",
       "fuente": "Parque de las Leyendas; datos de El Tiempo (2025)",
-      "lat": -12.0682, "lon": -77.0865
+      "lat": -12.0695,
+      "lon": -77.0861
     },
     {
       "id": "pz-huiracocha",
-      "nombre": "Parque Zonal Huiracocha",
+      "nombre": "Club Metropolitano Huiracocha (ex Parque Zonal)",
       "distrito": "San Juan de Lurigancho",
       "direccion": "Av. Próceres de la Independencia, San Juan de Lurigancho",
       "tipo": "parque",
-      "precio": "S/ 3 de lunes a sábado; S/ 4 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años.",
+      "precio": "S/ 3 de lunes a sábado; S/ 4 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años. (tarifario SERPAR, referencial)",
       "serpar": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Parque grande con áreas verdes, juegos para niños, losas deportivas y piscina en verano.",
       "url": "https://www.serpar.gob.pe/",
       "fuente": "Tarifario general de SERPAR",
-      "lat": -11.9958, "lon": -76.9958
+      "lat": -11.9958,
+      "lon": -76.9958,
+      "osm": "Club Metropolitano Huiracocha"
     },
     {
       "id": "pz-cahuide",
-      "nombre": "Parque Zonal Cahuide",
+      "nombre": "Club Metropolitano Cahuide (ex Parque Zonal)",
       "distrito": "Ate",
       "direccion": "Ate",
       "tipo": "parque",
-      "precio": "S/ 3 de lunes a sábado; S/ 4 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años.",
+      "precio": "S/ 3 de lunes a sábado; S/ 4 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años. (tarifario SERPAR, referencial)",
       "serpar": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Parque zonal con áreas verdes, juegos y espacios para hacer deporte o un picnic.",
       "url": "https://www.serpar.gob.pe/",
       "fuente": "Tarifario general de SERPAR",
-      "lat": -12.0440, "lon": -76.9450
+      "lat": -12.0574,
+      "lon": -76.9915
     },
     {
       "id": "pz-sinchiroca",
-      "nombre": "Parque Zonal Sinchi Roca",
+      "nombre": "Club Metropolitano Sinchi Roca (ex Parque Zonal)",
       "distrito": "Comas",
       "direccion": "Comas",
       "tipo": "parque",
-      "precio": "S/ 3 de lunes a sábado; S/ 4 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años.",
+      "precio": "S/ 3 de lunes a sábado; S/ 4 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años. (tarifario SERPAR, referencial)",
       "serpar": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Uno de los parques más grandes de Lima Norte, con laguna, juegos y áreas deportivas.",
       "url": "https://www.serpar.gob.pe/",
       "fuente": "Tarifario general de SERPAR",
-      "lat": -11.9333, "lon": -77.0560
+      "lat": -11.9333,
+      "lon": -77.056,
+      "osm": "Club Metropolitano Sinchi Roca"
     },
     {
       "id": "pz-huascar",
-      "nombre": "Parque Zonal Huáscar",
+      "nombre": "Club Metropolitano Huáscar (ex Parque Zonal)",
       "distrito": "Villa El Salvador",
       "direccion": "Villa El Salvador",
       "tipo": "parque",
-      "precio": "S/ 3 de lunes a sábado; S/ 4 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años.",
+      "precio": "S/ 3 de lunes a sábado; S/ 4 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años. (tarifario SERPAR, referencial)",
       "serpar": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Parque grande de Lima Sur con áreas verdes, juegos, losas deportivas y piscina en verano.",
       "url": "https://www.serpar.gob.pe/",
       "fuente": "Tarifario general de SERPAR",
-      "lat": -12.2140, "lon": -76.9320
+      "lat": -12.2339,
+      "lon": -76.9292
     },
     {
       "id": "pz-lloqueyupanqui",
-      "nombre": "Parque Zonal Lloque Yupanqui",
+      "nombre": "Club Metropolitano Lloque Yupanqui (ex Parque Zonal)",
       "distrito": "Los Olivos",
       "direccion": "Los Olivos",
       "tipo": "parque",
-      "precio": "S/ 3 de lunes a sábado; S/ 4 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años.",
+      "precio": "S/ 3 de lunes a sábado; S/ 4 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años. (tarifario SERPAR, referencial)",
       "serpar": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Parque zonal con áreas verdes y juegos, cerca de la Panamericana Norte.",
       "url": "https://www.serpar.gob.pe/",
       "fuente": "Tarifario general de SERPAR",
-      "lat": -11.9820, "lon": -77.0710
+      "lat": -11.9772,
+      "lon": -77.0745
     },
     {
       "id": "pz-capacyupanqui",
-      "nombre": "Parque Zonal Cápac Yupanqui",
+      "nombre": "Club Metropolitano Cápac Yupanqui (ex Parque Zonal)",
       "distrito": "Rímac",
       "direccion": "Rímac",
       "tipo": "parque",
-      "precio": "S/ 2 de lunes a sábado; S/ 3 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años.",
+      "precio": "S/ 2 de lunes a sábado; S/ 3 domingos y feriados. Gratis: mayores de 60 y niños de 0 a 4 años. (tarifario SERPAR, referencial)",
       "serpar": true,
       "dias": null,
       "horario": "Revisa el horario en el enlace oficial.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Parque zonal del Rímac con áreas verdes y juegos para niños.",
       "url": "https://www.serpar.gob.pe/",
       "fuente": "Tarifario general de SERPAR",
-      "lat": -12.0230, "lon": -77.0420
+      "lat": -12.0153,
+      "lon": -77.0298
     },
     {
       "id": "malecon-miraflores",
@@ -265,11 +360,17 @@
       "gratis": true,
       "dias": null,
       "horario": "Espacio público, abierto todos los días.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Paseo frente al mar con parques, vista a la Costa Verde y ciclovía. Para caminar, correr o ver el atardecer.",
       "url": "https://www.miraflores.gob.pe/",
       "fuente": "Municipalidad de Miraflores",
-      "lat": -12.1272, "lon": -77.0370
+      "lat": -12.1272,
+      "lon": -77.037,
+      "osm": "Parque del Amor, Miraflores"
     },
     {
       "id": "barranco",
@@ -281,11 +382,17 @@
       "gratis": true,
       "dias": null,
       "horario": "Espacio público, abierto todos los días.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "El rincón más famoso de Barranco: casonas, murales, artistas en la calle y bajada hasta el mar.",
       "url": "https://www.munibarranco.gob.pe/",
       "fuente": "Municipalidad de Barranco",
-      "lat": -12.1495, "lon": -77.0221
+      "lat": -12.1495,
+      "lon": -77.0221,
+      "osm": "Puente de los Suspiros, Barranco"
     },
     {
       "id": "plaza-armas",
@@ -297,11 +404,16 @@
       "gratis": true,
       "dias": null,
       "horario": "Espacio público, abierto todos los días.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Corazón del Centro Histórico, con la Catedral, el Palacio de Gobierno y casonas coloniales para recorrer a pie.",
       "url": "https://www.munlima.gob.pe/",
       "fuente": "Municipalidad de Lima",
-      "lat": -12.0464, "lon": -77.0300
+      "lat": -12.0459,
+      "lon": -77.0306
     },
     {
       "id": "olivar",
@@ -313,11 +425,17 @@
       "gratis": true,
       "dias": null,
       "horario": "Espacio público, abierto todos los días.",
-      "publico": ["j", "f", "m"],
+      "publico": [
+        "j",
+        "f",
+        "m"
+      ],
       "desc": "Bosque de olivos centenarios con lagunas y aves. Tranquilo para caminar o leer.",
       "url": "https://msi.gob.pe/",
       "fuente": "Municipalidad de San Isidro",
-      "lat": -12.1007, "lon": -77.0369
+      "lat": -12.1007,
+      "lon": -77.0369,
+      "osm": "El Olivar, San Isidro"
     }
   ]
 }
