@@ -38,6 +38,10 @@
   .brand img { width: 44px; height: 44px; }
   .brand span { font-size: 1.35rem; font-weight: 700; }
   .brand span b { color: var(--accent); }
+  .brand a { display: inline-flex; align-items: center; text-decoration: none; color: inherit; }
+  .hoja img { transition: transform .2s; }
+  .hoja:hover img, .hoja:focus-visible img { transform: scale(1.1) rotate(-4deg); }
+  @media (prefers-reduced-motion: reduce) { .hoja img { transition: none; } }
   nav.top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
   nav.top .links a { margin-left: 14px; font-size: .95rem; text-decoration: none; }
   .hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: center; margin-bottom: 30px; }
@@ -86,7 +90,7 @@
 <body>
 <main>
   <nav class="top">
-    <a class="brand" href="./"><img src="../logo.svg" alt="" width="44" height="44"><span>Simple<b>life</b></span></a>
+    <span class="brand"><a class="hoja" href="../" title="Ir al inicio de Simplelife"><img src="../logo.svg" alt="Inicio Simplelife" width="44" height="44"></a><a class="brand-txt" href="./"><span>Simple<b>life</b></span></a></span>
     <div class="links"><a href="#ofertas">Ofertas</a><a href="#publicar">Publicar</a><a href="#seguridad">Seguridad</a></div>
   </nav>
 

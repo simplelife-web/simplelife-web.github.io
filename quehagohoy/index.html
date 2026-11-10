@@ -43,6 +43,10 @@
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
   .brand span { font-size: 1.45rem; font-weight: 700; line-height: 1.1; }
   .brand b { color: var(--accent); }
+  .brand a { display: inline-flex; align-items: center; text-decoration: none; color: inherit; }
+  .hoja img { transition: transform .2s; }
+  .hoja:hover img, .hoja:focus-visible img { transform: scale(1.1) rotate(-4deg); }
+  @media (prefers-reduced-motion: reduce) { .hoja img { transition: none; } }
   .brand small { display: block; font-size: .72rem; font-weight: 500; color: var(--muted); }
   main { padding-top: 14px; padding-bottom: 32px; }
   h1 { font-size: 1.9rem; line-height: 1.2; margin: 8px 0 8px; }
@@ -119,7 +123,7 @@
 <body>
 <a class="saltar" href="#contenido">Ir al contenido</a>
 <header class="top">
-  <a class="brand" href="./"><img src="../logo.svg" alt="" width="48" height="48"><span>¿Qué hago <b>hoy</b>?<small>Lima · de Simplelife</small></span></a>
+  <span class="brand"><a class="hoja" href="../" title="Ir al inicio de Simplelife"><img src="../logo.svg" alt="Inicio Simplelife" width="48" height="48"></a><a class="brand-txt" href="./"><span>¿Qué hago <b>hoy</b>?<small>Lima · de Simplelife</small></span></a></span>
 </header>
 <main id="contenido">
   <h1>Planes gratis y económicos cerca de ti</h1>

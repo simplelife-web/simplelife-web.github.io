@@ -24,6 +24,10 @@ a { color: var(--accent); }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
 .brand span { font-size: 1.45rem; font-weight: 700; line-height: 1.1; }
 .brand b { color: var(--accent); }
+.brand a { display: inline-flex; align-items: center; text-decoration: none; color: inherit; }
+.hoja img { transition: transform .2s; }
+.hoja:hover img, .hoja:focus-visible img { transform: scale(1.1) rotate(-4deg); }
+@media (prefers-reduced-motion: reduce) { .hoja img { transition: none; } }
 .brand small { display: block; font-size: .7rem; font-weight: 500; color: var(--muted); }
 .letra { display: flex; gap: 6px; }
 .letra button { min-width: 52px; min-height: 48px; font: inherit; font-weight: 700; color: var(--text);
