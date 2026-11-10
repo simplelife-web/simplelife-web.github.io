@@ -16,7 +16,7 @@ for (const u of urls) {
 for (const l of lugares) {
   const q = `${l.nombre.replace(/\(.*?\)/g, "")}, ${l.distrito}, Lima, Perú`;
   try {
-    const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=pe&q=${encodeURIComponent(q)}`, { headers: { "User-Agent": UA } });
+    const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=pe&q=${encodeURIComponent(q)}`, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15000) });
     const j = await r.json();
     if (j[0]) console.log(`MAPA ${l.id} osm=${(+j[0].lat).toFixed(4)},${(+j[0].lon).toFixed(4)} actual=${l.lat},${l.lon} dif=${km(l.lat, l.lon, +j[0].lat, +j[0].lon).toFixed(2)}km  (${j[0].display_name.slice(0, 90)})`);
     else console.log(`MAPA ${l.id} sin resultado para "${q}"`);
