@@ -49,16 +49,27 @@
     transition: transform .15s, box-shadow .15s, border-color .15s; }
   a.tool:hover, a.tool:focus-visible { transform: translateY(-3px); border-color: var(--accent);
     box-shadow: 0 10px 24px rgba(0,0,0,.08); outline: none; }
-  .icon { width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; margin-bottom: 16px; }
-  .icon svg { width: 32px; height: 32px; }
-  .t1 .icon { background: var(--c1); color: var(--i1); }
-  .t2 .icon { background: var(--c2); color: var(--i2); }
-  .t3 .icon { background: var(--c3); color: var(--i3); }
+  .icon { position: relative; overflow: hidden; height: 150px; margin: -8px -8px 18px; border-radius: 14px;
+    display: grid; place-items: center; }
+  .icon::before, .icon::after { content: ""; position: absolute; border-radius: 50%; opacity: .55; }
+  .icon::before { width: 120px; height: 120px; left: -30px; bottom: -50px; background: var(--b1); }
+  .icon::after { width: 70px; height: 70px; right: -14px; top: -20px; background: var(--b2); }
+  .icon svg { position: relative; z-index: 1; width: 128px; height: 128px; transition: transform .25s; }
+  a.tool:hover .icon svg, a.tool:focus-visible .icon svg { transform: scale(1.06) rotate(-2deg); }
+  .t1 .icon { background: linear-gradient(135deg, #dff2e8, #c4e8d5); --b1: #b2dfc6; --b2: #eaf7f0; }
+  .t2 .icon { background: linear-gradient(135deg, #fff1dc, #fbdcae); --b1: #f7cd8e; --b2: #fff7ea; }
+  .t3 .icon { background: linear-gradient(135deg, #eeeafc, #d9d1f7); --b1: #c9bff2; --b2: #f6f3fe; }
+  .soon .icon { background: linear-gradient(135deg, #eef6f1, #e0efe6); --b1: #d3e9dc; --b2: #f6fbf8; width: calc(100% + 16px); }
+  @media (prefers-color-scheme: dark) {
+    .t1 .icon { background: linear-gradient(135deg, #1f3a2f, #18302a); --b1: #24473a; --b2: #2a4c3f; }
+    .t2 .icon { background: linear-gradient(135deg, #3d2e1a, #332614); --b1: #4a3820; --b2: #4f3d24; }
+    .t3 .icon { background: linear-gradient(135deg, #2e2a48, #252140); --b1: #3a3560; --b2: #3d3866; }
+    .soon .icon { background: linear-gradient(135deg, #1d2a24, #18231e); --b1: #23352c; --b2: #273a30; }
+  }
   .tool h2 { font-size: 1.25rem; line-height: 1.25; margin: 0 0 6px; }
   .tool p { margin: 0 0 16px; color: var(--muted); font-size: .98rem; }
   .go { margin-top: auto; font-weight: 600; color: var(--accent); }
   .soon { border-style: dashed; background: transparent; align-items: center; justify-content: center; text-align: center; color: var(--muted); }
-  .soon .icon { background: var(--soft); color: var(--accent); }
   .soon h2 { color: var(--text); }
 
   .about { margin-top: 40px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px 24px; }
@@ -69,7 +80,7 @@
   footer p { margin: 6px 0; }
   footer a, .about a, .soon a { color: var(--accent); }
   @media (max-width: 560px) { h1 { font-size: 1.6rem; } .brand span { font-size: 1.7rem; } .brand img { width: 54px; height: 54px; } }
-  @media (prefers-reduced-motion: reduce) { .tool { transition: none; } a.tool:hover { transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .tool, .icon svg { transition: none; } a.tool:hover, a.tool:hover .icon svg { transform: none; } }
 </style>
 </head>
 <body>
@@ -86,7 +97,20 @@
   <ul class="tools">
     <li>
       <a class="tool t1" href="transcriptor/">
-        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v5"/><path d="M8 22h8"/></svg></span>
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 128 128"><g>
+<rect x="66" y="30" width="46" height="60" rx="8" fill="#ffffff" stroke="#2f7a4f" stroke-width="2.5"/>
+<path d="M75 44h28M75 53h22M75 62h28M75 71h16M75 80h24" stroke="#5cbf7a" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M52 44q7 7 0 14M58 39q12 12 0 24" stroke="#4fae6c" stroke-width="3" stroke-linecap="round" fill="none"/>
+<rect x="18" y="24" width="30" height="52" rx="15" fill="#5cbf7a"/>
+<path d="M18 39c0-8.3 6.7-15 15-15s15 6.7 15 15" fill="#4fae6c"/>
+<path d="M22 34h8M22 41h6" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+<ellipse cx="28" cy="53" rx="2.6" ry="3.2" fill="#1d3b2a"/><ellipse cx="39" cy="53" rx="2.6" ry="3.2" fill="#1d3b2a"/><circle cx="28.9" cy="52" r=".9" fill="#fff"/><circle cx="39.9" cy="52" r=".9" fill="#fff"/>
+<circle cx="24" cy="60" r="2.3" fill="#f29a9a" opacity=".75"/><circle cx="43" cy="60" r="2.3" fill="#f29a9a" opacity=".75"/>
+<path d="M30 60q3.5 3 7 0" stroke="#1d3b2a" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+<path d="M12 64c0 12 9.4 21 21 21s21-9 21-21" stroke="#2f7a4f" stroke-width="3" stroke-linecap="round" fill="none"/>
+<path d="M33 85v12M22 100h22" stroke="#2f7a4f" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M100 98c6-2 10-7 11-14-6 0-11 4-12 10" fill="#5cbf7a"/>
+</g></svg></span>
         <h2>Transcriptor de audio a texto</h2>
         <p>Convierte audios y videos en texto, sin límite de duración. Tu archivo no se sube a internet: todo pasa en tu navegador.</p>
         <span class="go">Transcribir un audio →</span>
@@ -94,7 +118,18 @@
     </li>
     <li>
       <a class="tool t2" href="tramites/">
-        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg></span>
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 128 128"><g>
+<rect x="30" y="16" width="58" height="80" rx="9" fill="#ffffff" stroke="#9a5a12" stroke-width="2.5"/>
+<rect x="46" y="10" width="26" height="12" rx="5" fill="#e0952f"/>
+<path d="M42 36h8M42 48h8M42 60h8" stroke="#e0952f" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M56 36h20M56 48h16M56 60h20" stroke="#f2c27d" stroke-width="3.5" stroke-linecap="round"/>
+<ellipse cx="50" cy="76" rx="2.6" ry="3.2" fill="#4a2c08"/><ellipse cx="66" cy="76" rx="2.6" ry="3.2" fill="#4a2c08"/><circle cx="50.9" cy="75" r=".9" fill="#fff"/><circle cx="66.9" cy="75" r=".9" fill="#fff"/>
+<circle cx="45" cy="83" r="2.3" fill="#f29a9a" opacity=".75"/><circle cx="71" cy="83" r="2.3" fill="#f29a9a" opacity=".75"/>
+<path d="M54 83q4 3.5 8 0" stroke="#4a2c08" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+<circle cx="90" cy="88" r="20" fill="#d64545"/><circle cx="90" cy="88" r="15" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="3 3"/>
+<path d="m82 88 6 6 11-12" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<g transform="rotate(35 104 36)"><rect x="100" y="14" width="9" height="40" rx="3" fill="#5b4ea3"/><path d="M100 54h9l-4.5 9z" fill="#f2c27d"/><rect x="100" y="14" width="9" height="7" rx="3" fill="#3f3580"/></g>
+</g></svg></span>
         <h2>Trámite fácil Perú</h2>
         <p>Trámites del RENIEC, SUNAT, municipalidades y más, paso a paso: qué necesitas, cuánto cuesta y el enlace oficial.</p>
         <span class="go">Ver los trámites →</span>
@@ -102,7 +137,19 @@
     </li>
     <li>
       <a class="tool t3" href="intercambio/">
-        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 21v-1a6 6 0 0 1 12 0v1"/><path d="M14.5 15.5A4.5 4.5 0 0 1 22 19v2"/></svg></span>
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 128 128"><g>
+<path d="M14 26h50a10 10 0 0 1 10 10v26a10 10 0 0 1-10 10H34l-12 11v-11h-8A10 10 0 0 1 4 62V36a10 10 0 0 1 10-10z" fill="#8c7fe0"/>
+<ellipse cx="28" cy="47" rx="2.6" ry="3.2" fill="#231c55"/><ellipse cx="48" cy="47" rx="2.6" ry="3.2" fill="#231c55"/><circle cx="28.9" cy="46" r=".9" fill="#fff"/><circle cx="48.9" cy="46" r=".9" fill="#fff"/>
+<circle cx="22" cy="55" r="2.3" fill="#f29a9a" opacity=".85"/><circle cx="54" cy="55" r="2.3" fill="#f29a9a" opacity=".85"/>
+<path d="M33 55q5 4 10 0" stroke="#231c55" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+<path d="M114 52H66a10 10 0 0 0-10 10v24a10 10 0 0 0 10 10h28l12 10V96h8a10 10 0 0 0 10-10V62a10 10 0 0 0-10-10z" fill="#5cbf7a"/>
+<ellipse cx="78" cy="72" rx="2.6" ry="3.2" fill="#1d3b2a"/><ellipse cx="98" cy="72" rx="2.6" ry="3.2" fill="#1d3b2a"/><circle cx="78.9" cy="71" r=".9" fill="#fff"/><circle cx="98.9" cy="71" r=".9" fill="#fff"/>
+<circle cx="72" cy="80" r="2.3" fill="#f29a9a" opacity=".85"/><circle cx="104" cy="80" r="2.3" fill="#f29a9a" opacity=".85"/>
+<path d="M83 80q5 4 10 0" stroke="#1d3b2a" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+<path d="M98 18c-4-5-12-2-11 4 1 5 11 11 11 11s10-6 11-11c1-6-7-9-11-4z" fill="#e85d75"/>
+<path d="M80 30q4-10 12-12" stroke="#c9bff2" stroke-width="2.5" stroke-linecap="round" fill="none" stroke-dasharray="1 5"/>
+<circle cx="24" cy="100" r="9" fill="#f6c94a"/><path d="M21 112h6M22 116h4" stroke="#9a7a1a" stroke-width="2.5" stroke-linecap="round"/><path d="M24 87v-4M13 92l-3-2M35 92l3-2" stroke="#f6c94a" stroke-width="2.5" stroke-linecap="round"/>
+</g></svg></span>
         <h2>Yo te enseño, tú me enseñas</h2>
         <p>Intercambia lo que sabes entre generaciones: tecnología por cocina, costura, jardinería u oficios. Nadie paga.</p>
         <span class="go">Buscar o enseñar →</span>
@@ -110,7 +157,15 @@
     </li>
     <li>
       <div class="tool soon">
-        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></span>
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 128 128"><g>
+<path d="M64 84V56" stroke="#2f7a4f" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M64 62c-18 1-28-10-26-26 16-1 27 9 26 26z" fill="#5cbf7a"/>
+<path d="M64 56c1-19 13-29 30-27 1 18-12 28-30 27z" fill="#4fae6c"/>
+<ellipse cx="55" cy="48" rx="2.6" ry="3.2" fill="#1d3b2a"/><ellipse cx="73" cy="44" rx="2.6" ry="3.2" fill="#1d3b2a"/><circle cx="55.9" cy="47" r=".9" fill="#fff"/><circle cx="73.9" cy="43" r=".9" fill="#fff"/>
+<path d="M60 52q4 3 8-1" stroke="#1d3b2a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+<path d="M40 84h48l-6 30H46z" fill="#e0952f"/><rect x="36" y="80" width="56" height="10" rx="4" fill="#c97d1f"/>
+<path d="M24 30l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM104 70l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="#f6c94a"/>
+</g></svg></span>
         <h2>Próximamente</h2>
         <p>Estamos preparando más herramientas gratuitas. ¿Tienes una idea? <a href="https://github.com/simplelife-web/simplelife-web.github.io/issues" rel="noopener">Cuéntanos</a>.</p>
       </div>
