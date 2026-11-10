@@ -27,3 +27,7 @@ Para probarla en tu computadora sin publicarla: en esta carpeta ejecuta `python 
 ## Licencias
 
 Transformers.js y ONNX Runtime: Apache 2.0 y MIT. `@ffmpeg/ffmpeg`: MIT. `@ffmpeg/core` (FFmpeg compilado a WebAssembly): GPL 2.0 o posterior; su código fuente está en https://github.com/ffmpegwasm/ffmpeg.wasm. Modelos Whisper: MIT (OpenAI), descargados desde Hugging Face (onnx-community).
+
+## Trámite fácil Perú (`/tramites/`)
+
+Guías sencillas de trámites del Perú (RENIEC, SUNAT, municipalidades y otras entidades), con letra grande y enlaces oficiales. Son páginas HTML estáticas en la carpeta `tramites/`, con un estilo común (`estilo.css`) y botones para agrandar la letra (`letra.js`). Cada guía indica la fecha de revisión y su fuente: los costos cambian, así que conviene revisarlos cada cierto tiempo.
