@@ -1,0 +1,95 @@
+/* Trámite fácil Perú: mismo estilo que Simplelife, con letra más grande */
+:root {
+  --bg: #f6f5f1; --card: #ffffff; --text: #1d1d1b; --muted: #5c5a54;
+  --line: #dedbd2; --accent: #1f6f5c; --accent-text: #ffffff; --soft: #e7f1ed;
+  --warn-bg: #fff6e5; --warn-line: #e8c98f;
+  --base: 19px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151614; --card: #1e1f1d; --text: #ecebe6; --muted: #b0aea7;
+    --line: #34352f; --accent: #4fb596; --accent-text: #0d1a15; --soft: #1f2d28;
+    --warn-bg: #2b2416; --warn-line: #5c4a26;
+  }
+}
+* { box-sizing: border-box; }
+html { font-size: var(--base); }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 1rem/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--accent); }
+.saltar { position: absolute; left: -999px; }
+.saltar:focus { left: 16px; top: 8px; background: var(--card); padding: 8px 12px; z-index: 9; }
+.top, main, footer { max-width: 780px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 20px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+.brand span { font-size: 1.45rem; font-weight: 700; line-height: 1.1; }
+.brand b { color: var(--accent); }
+.brand small { display: block; font-size: .7rem; font-weight: 500; color: var(--muted); }
+.letra { display: flex; gap: 6px; }
+.letra button { min-width: 52px; min-height: 48px; font: inherit; font-weight: 700; color: var(--text);
+  background: var(--card); border: 2px solid var(--line); border-radius: 12px; cursor: pointer; }
+.letra button:hover, .letra button:focus-visible { border-color: var(--accent); }
+main { padding-top: 18px; padding-bottom: 32px; }
+h1 { font-size: 1.75rem; line-height: 1.2; margin: 8px 0 10px; }
+h2 { font-size: 1.25rem; margin: 0 0 10px; }
+.lead { font-size: 1.08rem; color: var(--muted); margin: 0 0 22px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+.hidden { display: none; }
+
+/* Buscador y lista */
+.buscar span { display: block; font-weight: 600; margin-bottom: 6px; }
+.buscar input { width: 100%; font: inherit; color: inherit; padding: 14px 16px; border-radius: 14px;
+  border: 2px solid var(--line); background: var(--card); }
+.buscar input:focus { outline: none; border-color: var(--accent); }
+#nada { margin: 14px 0; }
+.lista { display: grid; gap: 12px; margin: 18px 0 24px; }
+@media (min-width: 640px) { .lista { grid-template-columns: 1fr 1fr; } }
+.tram { display: flex; gap: 14px; align-items: flex-start; padding: 16px; border-radius: 16px; text-decoration: none;
+  color: var(--text); background: var(--card); border: 2px solid var(--line); transition: border-color .15s, background .15s; }
+.tram:hover, .tram:focus-visible { border-color: var(--accent); background: var(--soft); }
+.tram[hidden] { display: none; }
+.tram .ic { font-size: 2rem; line-height: 1; }
+.tram small { display: block; color: var(--muted); font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; }
+.tram strong { display: block; line-height: 1.3; margin: 2px 0 4px; }
+.tram em { font-style: normal; color: var(--accent); font-weight: 600; font-size: .92rem; }
+
+/* Guía */
+.miga { margin: 0 0 6px; }
+.ent { display: inline-block; margin: 0; padding: 2px 12px; border-radius: 99px; background: var(--soft); color: var(--accent); font-weight: 700; font-size: .85rem; }
+.datos { display: grid; gap: 12px; margin-bottom: 16px; }
+@media (min-width: 640px) { .datos { grid-template-columns: 1fr 2fr; } }
+.dato { background: var(--soft); border-radius: 16px; padding: 16px 18px; }
+.dato span { display: block; font-size: .85rem; color: var(--muted); font-weight: 600; }
+.dato strong { display: block; font-size: 1.6rem; color: var(--accent); line-height: 1.25; }
+.dato p { margin: 2px 0 0; }
+ul.check { list-style: none; padding: 0; margin: 0; }
+ul.check li { position: relative; padding-left: 34px; margin: 8px 0; }
+ul.check li::before { content: "✓"; position: absolute; left: 0; top: 0; width: 24px; height: 24px; margin-top: .2em;
+  border-radius: 50%; background: var(--accent); color: var(--accent-text); font-size: .8rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; }
+.pago { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); }
+ol.pasos { list-style: none; counter-reset: p; padding: 0; margin: 0; }
+ol.pasos li { counter-increment: p; position: relative; padding: 4px 0 14px 54px; min-height: 52px; }
+ol.pasos li::before { content: counter(p); position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-text); font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
+.botones { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.btn { display: block; text-align: center; padding: 14px 18px; border-radius: 14px; font: inherit; font-weight: 700; text-decoration: none;
+  background: var(--accent); color: var(--accent-text); border: 2px solid var(--accent); cursor: pointer; }
+.btn.sec { background: transparent; color: var(--accent); }
+.btn:hover { filter: brightness(1.08); }
+.ojo { background: var(--warn-bg); border-color: var(--warn-line); }
+.ojo ul { margin: 0; padding-left: 22px; }
+.ojo li { margin: 6px 0; }
+.rev { font-size: .88rem; color: var(--muted); }
+.acciones .btn { display: inline-block; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+footer { color: var(--muted); font-size: .88rem; padding-bottom: 48px; border-top: 1px solid var(--line); padding-top: 16px; }
+footer p { margin: 8px 0; }
+
+@media print {
+  .top .letra, .acciones, footer, .miga, .saltar, ins { display: none !important; }
+  body { background: #fff; color: #000; }
+  .card, .dato { border: 1px solid #999; background: #fff; }
+  .btn::after { content: " " attr(href); font-weight: 400; font-size: .8rem; word-break: break-all; }
+}
