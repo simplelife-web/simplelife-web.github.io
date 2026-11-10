@@ -53,3 +53,7 @@ Transformers.js y ONNX Runtime: Apache 2.0 y MIT. `@ffmpeg/ffmpeg`: MIT. `@ffmpe
 ## Trámite fácil Perú (`/tramites/`)
 
 Guías sencillas de trámites del Perú (RENIEC, SUNAT, municipalidades y otras entidades), con letra grande y enlaces oficiales. Son páginas HTML estáticas en la carpeta `tramites/`, con un estilo común (`estilo.css`) y botones para agrandar la letra (`letra.js`). Cada guía indica la fecha de revisión y su fuente: los costos cambian, así que conviene revisarlos cada cierto tiempo.
+
+## Barra de navegación (`nav.js`)
+
+La barra de arriba (logo, herramientas, Acerca, Privacidad y "Volver al inicio") sale de un solo archivo, `nav.js`, que cargan todas las páginas. Para sumar una herramienta nueva a la barra, agrégala a la lista `HERRAMIENTAS` de ese archivo, y en su página pon `<script src="../nav.js"></script>` justo después de `<body>`.
