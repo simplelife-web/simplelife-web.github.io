@@ -224,6 +224,7 @@
 
   // Reconoce cada columna por palabras clave del título de la pregunta
   const CLAVES = {
+    codigo: ["codigo"],
     fecha: ["marca temporal", "timestamp", "fecha"],
     nombre: ["nombre", "apodo"],
     generacion: ["generacion", "edad"],
@@ -272,7 +273,7 @@
     e.preventDefault();
     const o = OFERTAS[+a.dataset.i];
     if (DEMO || !CFG.formContacto) { alert("Esta es una oferta de ejemplo. Cuando haya ofertas reales, aquí se abrirá un formulario para escribirle a esa persona."); return; }
-    const texto = `${o.nombre} (${o.lugar}) enseña: ${o.ensena}` + (o.fecha ? ` [publicada ${o.fecha}]` : "");
+    const texto = (o.codigo ? o.codigo + " · " : "") + `${o.nombre} (${o.lugar}) enseña: ${o.ensena}` + (o.fecha ? ` [publicada ${o.fecha}]` : "");
     const url = CFG.formContacto.replace(/=OFERTA(?=&|$)/, "=" + encodeURIComponent(texto));
     window.open(url, "_blank", "noopener");
   });
