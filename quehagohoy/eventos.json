@@ -1,1 +1,76 @@
-{ "actualizado": "", "eventos": [], "fuentes": [] }
+{
+ "actualizado": "2026-11-10T18:29:57.496Z",
+ "eventos": [],
+ "fuentes": [
+  {
+   "fuente": "Casa de la Literatura Peruana",
+   "estado": "sin agenda abierta",
+   "n": 0
+  },
+  {
+   "fuente": "Lugar de la Memoria (LUM)",
+   "estado": "rss",
+   "n": 0
+  },
+  {
+   "fuente": "Biblioteca Nacional del Perú",
+   "estado": "rss",
+   "n": 0
+  },
+  {
+   "fuente": "Gran Teatro Nacional",
+   "estado": "su robots.txt no lo permite",
+   "n": 0
+  },
+  {
+   "fuente": "Centro Cultural Inca Garcilaso",
+   "estado": "sin agenda abierta",
+   "n": 0
+  },
+  {
+   "fuente": "SERPAR (parques de Lima)",
+   "estado": "rss",
+   "n": 0
+  },
+  {
+   "fuente": "Museo de Arte de Lima (MALI)",
+   "estado": "rss",
+   "n": 0
+  },
+  {
+   "fuente": "Centro Cultural de España en Lima",
+   "estado": "sin agenda abierta",
+   "n": 0
+  },
+  {
+   "fuente": "Museo de Arte Contemporáneo de Lima (MAC)",
+   "estado": "su robots.txt no lo permite",
+   "n": 0
+  },
+  {
+   "fuente": "Centro Cultural de San Marcos",
+   "estado": "sin agenda abierta",
+   "n": 0
+  },
+  {
+   "fuente": "Alianza Francesa de Lima",
+   "estado": "rss",
+   "n": 0
+  },
+  {
+   "fuente": "ICPNA Cultural",
+   "estado": "sin agenda abierta",
+   "n": 0
+  },
+  {
+   "fuente": "Municipalidad de Miraflores",
+   "estado": "rss",
+   "n": 0
+  },
+  {
+   "fuente": "Municipalidad de Lima",
+   "estado": "sin agenda abierta",
+   "n": 0
+  }
+ ]
+}
