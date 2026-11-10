@@ -1,4 +1,14 @@
-# Transcriptor gratuito de audio
+# Simplelife
+
+Herramientas gratuitas para hacer la vida más simple. La página principal (`index.html`) es la portada con un cuadro por herramienta. Para agregar una herramienta nueva, crea su carpeta, copia uno de los bloques `<li>` de `index.html` con su enlace y súmala a `sitemap.xml`.
+
+| Carpeta | Herramienta |
+|---|---|
+| `transcriptor/` | Transcriptor gratuito de audio |
+| `tramites/` | Trámite fácil Perú |
+| `intercambio/` | Yo te enseño, tú me enseñas |
+
+## Transcriptor gratuito de audio (`/transcriptor/`)
 
 Página web que convierte audio o video en texto. Todo ocurre en el navegador de quien la usa:
 
@@ -11,10 +21,10 @@ Página web que convierte audio o video en texto. Todo ocurre en el navegador de
 
 | Archivo | Para qué sirve |
 |---|---|
-| `index.html` | La página y su lógica (lectura del audio, cortes, botones). |
-| `worker.js` | Carga Whisper y transcribe en segundo plano. |
-| `lib/ort-*` | ONNX Runtime Web (motor de IA). Transformers.js 4.3.1 se carga desde jsDelivr. |
-| `lib/ffmpeg/` | FFmpeg.wasm 0.12 (lee cualquier formato y audios largos por partes). |
+| `transcriptor/index.html` | La página y su lógica (lectura del audio, cortes, botones). |
+| `transcriptor/worker.js` | Carga Whisper y transcribe en segundo plano. |
+| `transcriptor/lib/ort-*` | ONNX Runtime Web (motor de IA). Transformers.js 4.3.1 se carga desde jsDelivr. |
+| `transcriptor/lib/ffmpeg/` | FFmpeg.wasm 0.12 (lee cualquier formato y audios largos por partes). |
 
 ## Publicarla gratis
 
