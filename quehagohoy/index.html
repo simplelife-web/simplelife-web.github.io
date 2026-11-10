@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Qué hago hoy? | Planes gratis y económicos en Lima, en un mapa</title>
+<link rel="icon" href="../logo.svg" type="image/svg+xml">
+<meta name="description" content="Encuentra en un mapa planes gratis o económicos en Lima según tu distrito: museos, parques, talleres, conciertos y eventos culturales, con el enlace a su página oficial.">
+<link rel="canonical" href="https://simplelife-web.github.io/quehagohoy/">
+<meta property="og:title" content="¿Qué hago hoy? | Planes gratis y económicos en Lima">
+<meta property="og:site_name" content="Simplelife">
+<meta property="og:description" content="Museos, parques, talleres y eventos culturales gratis o económicos en Lima, en un mapa y con su enlace oficial.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simplelife-web.github.io/quehagohoy/">
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9798339025422593"
+     crossorigin="anonymous"></script>
+<link rel="stylesheet" href="lib/leaflet.css">
+<script src="lib/leaflet.js"></script>
+<style>
+  :root {
+    --bg: #f6f5f1; --card: #ffffff; --text: #1d1d1b; --muted: #5c5a54;
+    --line: #dedbd2; --accent: #1f6f5c; --accent-text: #ffffff; --soft: #e7f1ed;
+    --warn-bg: #fff6e5; --warn-line: #e8c98f;
+    --gratis: #1f8a5b; --barato: #d9822b; --evento: #6a5acd;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151614; --card: #1e1f1d; --text: #ecebe6; --muted: #b0aea7;
+      --line: #34352f; --accent: #4fb596; --accent-text: #0d1a15; --soft: #1f2d28;
+      --warn-bg: #2b2416; --warn-line: #5c4a26;
+      --gratis: #43c08a; --barato: #f0a050; --evento: #9d8ff5;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent); }
+  .saltar { position: absolute; left: -999px; }
+  .saltar:focus { left: 16px; top: 8px; background: var(--card); padding: 8px 12px; z-index: 9999; }
+  .top, main, footer { max-width: 1080px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
+  .top { display: flex; align-items: center; gap: 12px; padding-top: 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .brand span { font-size: 1.45rem; font-weight: 700; line-height: 1.1; }
+  .brand b { color: var(--accent); }
+  .brand small { display: block; font-size: .72rem; font-weight: 500; color: var(--muted); }
+  main { padding-top: 14px; padding-bottom: 32px; }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 8px 0 8px; }
+  h2 { font-size: 1.3rem; margin: 0 0 10px; }
+  .lead { color: var(--muted); margin: 0 0 18px; max-width: 64ch; font-size: 1.05rem; }
+  .hidden { display: none !important; }
+
+  /* Aviso de Museos Abiertos */
+  .banner { display: flex; gap: 14px; align-items: center; background: var(--soft); border: 1px solid var(--line);
+    border-radius: 16px; padding: 14px 18px; margin: 0 0 16px; }
+  .banner .ic { font-size: 1.9rem; line-height: 1; }
+  .banner p { margin: 0; }
+  .banner strong { color: var(--accent); }
+
+  /* Filtros */
+  .filtros { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px; margin-bottom: 16px;
+    display: grid; gap: 12px; }
+  .fila { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .fila > span { font-weight: 600; font-size: .92rem; min-width: 74px; }
+  .chip { font: inherit; font-size: .95rem; padding: 8px 14px; min-height: 42px; border-radius: 99px; cursor: pointer;
+    background: var(--bg); color: var(--text); border: 2px solid var(--line); }
+  .chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
+  .chip:focus-visible, select:focus-visible, .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  select { font: inherit; padding: 8px 12px; min-height: 44px; border-radius: 12px; border: 2px solid var(--line);
+    background: var(--bg); color: var(--text); max-width: 100%; }
+  .acciones { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 16px; min-height: 44px;
+    border-radius: 12px; font: inherit; font-weight: 700; font-size: .95rem; text-decoration: none; cursor: pointer;
+    background: var(--accent); color: var(--accent-text); border: 2px solid var(--accent); }
+  .btn.sec { background: transparent; color: var(--accent); }
+  .btn.mini { padding: 6px 12px; min-height: 38px; font-size: .88rem; }
+
+  /* Mapa */
+  .mapa-caja { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); margin-bottom: 8px; }
+  #mapa { height: 460px; background: #dfe8e3; }
+  @media (max-width: 640px) { #mapa { height: 360px; } h1 { font-size: 1.6rem; } }
+  .leyenda { display: flex; flex-wrap: wrap; gap: 14px; font-size: .88rem; color: var(--muted); margin: 0 0 18px; }
+  .leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .punto { width: 18px; height: 18px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.4); }
+  .punto.g { background: var(--gratis); } .punto.b { background: var(--barato); } .punto.e { background: var(--evento); }
+  .punto.yo { background: #2a7de1; width: 16px; height: 16px; box-shadow: 0 0 0 6px rgba(42,125,225,.25); }
+  .punto.activo { transform: scale(1.35); }
+  .leaflet-popup-content { font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin: 12px 14px; }
+  .leaflet-popup-content strong { display: block; font-size: 1rem; margin-bottom: 2px; }
+  .leaflet-popup-content a { font-weight: 600; }
+
+  /* Tarjetas */
+  .seccion { margin-top: 22px; }
+  .seccion > p.sub { color: var(--muted); margin: -4px 0 12px; font-size: .95rem; }
+  .lista { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  @media (max-width: 360px) { .lista { grid-template-columns: 1fr; } }
+  .tarjeta { background: var(--card); border: 2px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .tarjeta.activo { border-color: var(--accent); }
+  .tarjeta h3 { font-size: 1.08rem; line-height: 1.3; margin: 0; }
+  .meta { font-size: .85rem; color: var(--muted); font-weight: 600; }
+  .tarjeta p { margin: 0; font-size: .95rem; }
+  .etiquetas { display: flex; flex-wrap: wrap; gap: 6px; }
+  .et { font-size: .8rem; font-weight: 700; padding: 2px 10px; border-radius: 99px; background: var(--soft); color: var(--accent); }
+  .et.g { background: color-mix(in srgb, var(--gratis) 16%, transparent); color: var(--gratis); }
+  .et.b { background: color-mix(in srgb, var(--barato) 18%, transparent); color: var(--barato); }
+  .et.e { background: color-mix(in srgb, var(--evento) 18%, transparent); color: var(--evento); }
+  .et.hoy { background: var(--accent); color: var(--accent-text); }
+  .tarjeta .acciones { margin-top: auto; padding-top: 8px; }
+  .vacio { color: var(--muted); background: var(--card); border: 1px dashed var(--line); border-radius: 16px; padding: 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; margin-top: 22px; }
+  .card.ojo { background: var(--warn-bg); border-color: var(--warn-line); }
+  .card p { margin: 6px 0; }
+  .card ul { margin: 6px 0; padding-left: 22px; }
+  footer { color: var(--muted); font-size: .9rem; padding-bottom: 40px; }
+  footer p { margin: 6px 0; }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<a class="saltar" href="#contenido">Ir al contenido</a>
+<header class="top">
+  <a class="brand" href="./"><img src="../logo.svg" alt="" width="48" height="48"><span>¿Qué hago <b>hoy</b>?<small>Lima · de Simplelife</small></span></a>
+</header>
+<main id="contenido">
+  <h1>Planes gratis y económicos cerca de ti</h1>
+  <p class="lead">Museos, parques, talleres, conciertos y eventos culturales de Lima en un mapa. Elige tu distrito, toca un puntito y abre su página oficial para ver todos los detalles.</p>
+
+  <div class="banner" id="banner" role="status">
+    <span class="ic" aria-hidden="true">🏛️</span>
+    <p id="bannerTexto"></p>
+  </div>
+
+  <section class="filtros" aria-label="Filtros">
+    <div class="fila">
+      <span>Distrito</span>
+      <select id="distrito" aria-label="Distrito"><option value="">Todos los distritos</option></select>
+    </div>
+    <div class="fila" role="group" aria-label="Cuándo">
+      <span>Cuándo</span>
+      <button class="chip" type="button" data-f="cuando" data-v="hoy" aria-pressed="true">Hoy</button>
+      <button class="chip" type="button" data-f="cuando" data-v="finde" aria-pressed="false">Este fin de semana</button>
+      <button class="chip" type="button" data-f="cuando" data-v="todo" aria-pressed="false">Cualquier día</button>
+    </div>
+    <div class="fila" role="group" aria-label="Qué">
+      <span>Qué</span>
+      <button class="chip" type="button" data-f="tipo" data-v="" aria-pressed="true">Todo</button>
+      <button class="chip" type="button" data-f="tipo" data-v="evento" aria-pressed="false">🎭 Eventos</button>
+      <button class="chip" type="button" data-f="tipo" data-v="museo" aria-pressed="false">🏛️ Museos</button>
+      <button class="chip" type="button" data-f="tipo" data-v="cultura" aria-pressed="false">📚 Centros culturales</button>
+      <button class="chip" type="button" data-f="tipo" data-v="parque" aria-pressed="false">🌳 Parques</button>
+      <button class="chip" type="button" data-f="tipo" data-v="paseo" aria-pressed="false">🚶 Paseos</button>
+    </div>
+    <div class="fila" role="group" aria-label="Para quién">
+      <span>Para</span>
+      <button class="chip" type="button" data-f="publico" data-v="" aria-pressed="true">Todos</button>
+      <button class="chip" type="button" data-f="publico" data-v="j" aria-pressed="false">Jóvenes</button>
+      <button class="chip" type="button" data-f="publico" data-v="f" aria-pressed="false">Familias con niños</button>
+      <button class="chip" type="button" data-f="publico" data-v="m" aria-pressed="false">Adultos mayores</button>
+    </div>
+    <div class="fila">
+      <span>Precio</span>
+      <button class="chip" type="button" id="soloGratis" aria-pressed="false">Solo gratis</button>
+    </div>
+    <div class="acciones">
+      <button class="btn" type="button" id="cerca">📍 Ver qué hay cerca de mí</button>
+      <button class="btn sec" type="button" id="sorpresa">🎲 Sorpréndeme</button>
+    </div>
+  </section>
+
+  <div class="mapa-caja"><div id="mapa" role="region" aria-label="Mapa de actividades"></div></div>
+  <div class="leyenda" aria-hidden="true">
+    <span><i style="background:var(--gratis)"></i>Lugar gratis</span>
+    <span><i style="background:var(--barato)"></i>Lugar económico</span>
+    <span><i style="background:var(--evento)"></i>Evento de agenda oficial</span>
+  </div>
+  <p id="resumen" class="meta" aria-live="polite"></p>
+
+  <section class="seccion" aria-labelledby="tEv">
+    <h2 id="tEv">Eventos de la agenda oficial</h2>
+    <p class="sub" id="subEv">Los encuentra un robot cada mañana en las páginas oficiales. Toca «Ver publicación oficial» para confirmar fecha, hora y precio.</p>
+    <div class="lista" id="listaEventos"></div>
+  </section>
+
+  <section class="seccion" aria-labelledby="tLu">
+    <h2 id="tLu">Lugares para ir</h2>
+    <p class="sub">Lugares fijos de Lima, gratis o de bajo costo, con su enlace oficial.</p>
+    <div class="lista" id="listaLugares"></div>
+  </section>
+
+  <section class="card ojo">
+    <h2>Antes de salir</h2>
+    <ul>
+      <li>Los datos de cada evento vienen de su <strong>publicación oficial</strong>. Ábrela antes de ir: ahí están la fecha, la hora y el precio exactos, y si hay que inscribirse.</li>
+      <li>Los precios y horarios de los lugares son referenciales y pueden cambiar.</li>
+      <li>Los puntitos del mapa son aproximados. Para llegar, usa el botón «Cómo llegar».</li>
+      <li>Lleva tu DNI: algunos lugares lo piden para entrar gratis (adultos mayores, niños o primer domingo del mes).</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>¿Organizas algo gratis o conoces un lugar?</h2>
+    <p>Cuéntanos qué página oficial publica su agenda y la sumamos al robot. Escríbenos desde <a href="../acerca.html">Acerca de y contacto</a>.</p>
+  </section>
+</main>
+<footer>
+  <p><strong>¿Qué hago hoy?</strong> no organiza los eventos ni vende entradas. Solo reunimos información pública de páginas oficiales y te llevamos a ellas.</p>
+  <p id="actualizado"></p>
+  <p><a href="../">Inicio Simplelife</a> · <a href="../tramites/">Trámite fácil Perú</a> · <a href="../intercambio/">Yo te enseño, tú me enseñas</a> · <a href="../transcriptor/">Transcriptor de audio</a> · <a href="../acerca.html">Contacto</a> · <a href="../privacidad.html">Privacidad</a></p>
+  <p>Mapa: © colaboradores de <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>.</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","setiembre","octubre","noviembre","diciembre"];
+  var DIAS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+  var TIPOS = { museo: "Museo", cultura: "Centro cultural", parque: "Parque", paseo: "Paseo", evento: "Evento",
+    concierto: "Concierto", taller: "Taller", feria: "Feria", cine: "Cine", teatro: "Teatro y danza", exposicion: "Exposición" };
+
+  // ---- Fechas en hora de Lima ----
+  function hoyLima() {
+    var p = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Lima", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+    var a = p.split("-"); return new Date(+a[0], +a[1] - 1, +a[2]);
+  }
+  function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function deIso(s) { var a = s.split("-"); return new Date(+a[0], +a[1] - 1, +a[2]); }
+  function bonita(d) { return DIAS[d.getDay()] + " " + d.getDate() + " de " + MESES[d.getMonth()]; }
+  function sumar(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  var HOY = hoyLima(), HOY_ISO = iso(HOY);
+  function esPrimerDomingo(d) { return d.getDay() === 0 && d.getDate() <= 7; }
+  function proximoPrimerDomingo(d) {
+    for (var i = 0; i < 40; i++) { var x = sumar(d, i); if (esPrimerDomingo(x)) return x; }
+  }
+  // Fin de semana: sábado y domingo próximos (si hoy es domingo, solo hoy)
+  var SAB = HOY.getDay() === 0 ? sumar(HOY, -1) : sumar(HOY, 6 - HOY.getDay());
+  var DOM = sumar(SAB, 1);
+
+  // ---- Utilidades seguras (los eventos vienen de otras páginas) ----
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function urlSegura(u) { return /^https:\/\/|^http:\/\//i.test(u || "") ? u : "#"; }
+  function norm(s) { return String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); }
+  function maps(nombre, direccion, distrito) {
+    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent([nombre, direccion, distrito, "Lima, Perú"].filter(Boolean).join(", "));
+  }
+
+  // ---- Banner de Museos Abiertos ----
+  var pd = proximoPrimerDomingo(HOY);
+  var bt = document.getElementById("bannerTexto");
+  if (iso(pd) === HOY_ISO) bt.innerHTML = "<strong>¡Hoy es primer domingo del mes!</strong> Los museos y sitios arqueológicos del Estado tienen ingreso gratis (programa Museos Abiertos, Ley 30599). Lleva tu DNI.";
+  else bt.innerHTML = "<strong>Próximo día de museos gratis: " + esc(bonita(pd)) + ".</strong> Cada primer domingo del mes, los museos del Estado abren gratis para peruanos y extranjeros residentes (Museos Abiertos, Ley 30599).";
+
+  // ---- Estado ----
+  var F = { cuando: "hoy", tipo: "", publico: "", gratis: false, distrito: "" };
+  var LUGARES = [], EVENTOS = [], marcadores = {}, yo = null;
+
+  // ---- Mapa ----
+  var mapa = L.map("mapa", { scrollWheelZoom: false, tap: true }).setView([-12.07, -77.03], 11);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(mapa);
+  var capa = L.layerGroup().addTo(mapa);
+  mapa.on("focus", function () { mapa.scrollWheelZoom.enable(); });
+  mapa.on("blur", function () { mapa.scrollWheelZoom.disable(); });
+
+  function icono(clase) { return L.divIcon({ className: "", html: '<div class="punto ' + clase + '"></div>', iconSize: [18, 18], iconAnchor: [9, 9], popupAnchor: [0, -10] }); }
+
+  // ---- Reglas de cada filtro ----
+  function lugarGratisEn(l, d) { return !!l.gratis || (!!l.primerDomingo && esPrimerDomingo(d)); }
+  function lugarAbiertoEn(l, d) { return !l.dias || l.dias.indexOf(d.getDay()) > -1; }
+  function diasDeFiltro() { return F.cuando === "hoy" ? [HOY] : F.cuando === "finde" ? (HOY.getDay() === 0 ? [HOY] : [SAB, DOM]) : null; }
+
+  function pasaLugar(l) {
+    if (F.distrito && l.distrito !== F.distrito) return false;
+    if (F.tipo && F.tipo !== l.tipo) return false;
+    if (F.publico && l.publico.indexOf(F.publico) < 0) return false;
+    var ds = diasDeFiltro();
+    if (ds && !ds.some(function (d) { return lugarAbiertoEn(l, d); })) return false;
+    if (F.gratis) {
+      if (ds) { if (!ds.some(function (d) { return lugarGratisEn(l, d) && lugarAbiertoEn(l, d); })) return false; }
+      else if (!l.gratis && !l.primerDomingo) return false;
+    }
+    return true;
+  }
+  function vigente(e) {
+    if (e.fecha) return (e.fechaFin || e.fecha) >= HOY_ISO;
+    return e.publicado && iso(sumar(deIso(e.publicado), 15)) >= HOY_ISO;
+  }
+  function pasaEvento(e) {
+    if (!vigente(e)) return false;
+    if (F.distrito && e.distrito !== F.distrito) return false;
+    if (F.tipo && F.tipo !== "evento" && !(F.tipo === "cultura")) return false;
+    if (F.publico && e.publico && e.publico.length && e.publico.indexOf(F.publico) < 0) return false;
+    if (F.gratis && e.precio !== "Gratis") return false;
+    var ds = diasDeFiltro();
+    if (ds) {
+      if (!e.fecha) return false;
+      var ini = e.fecha, fin = e.fechaFin || e.fecha;
+      if (!ds.some(function (d) { var s = iso(d); return ini <= s && s <= fin; })) return false;
+    }
+    return true;
+  }
+
+  // ---- Dibujar ----
+  function textoFechaEvento(e) {
+    if (!e.fecha) return "Publicado el " + bonita(deIso(e.publicado));
+    var ini = deIso(e.fecha);
+    if (e.fechaFin && e.fechaFin !== e.fecha) {
+      if (e.fecha <= HOY_ISO) return "Hasta el " + bonita(deIso(e.fechaFin));
+      return "Del " + bonita(ini) + " al " + bonita(deIso(e.fechaFin));
+    }
+    return (e.fecha === HOY_ISO ? "Hoy, " : "") + bonita(ini) + (e.hora ? " · " + e.hora : "");
+  }
+  function tarjetaLugar(l) {
+    var gHoy = lugarGratisEn(l, HOY) && lugarAbiertoEn(l, HOY);
+    var cl = l.gratis || l.primerDomingo ? "g" : "b";
+    var et = '<span class="et ' + cl + '">' + esc(l.precio) + "</span>";
+    if (l.primerDomingo && esPrimerDomingo(HOY)) et = '<span class="et hoy">¡Hoy gratis!</span>' + et;
+    else if (F.cuando === "hoy" && !lugarAbiertoEn(l, HOY)) et += '<span class="et">Hoy cerrado</span>';
+    return '<article class="tarjeta" id="t-' + esc(l.id) + '">' +
+      '<div class="meta">' + esc(l.distrito) + " · " + esc(TIPOS[l.tipo] || l.tipo) + "</div>" +
+      "<h3>" + esc(l.nombre) + "</h3>" +
+      '<div class="etiquetas">' + et + "</div>" +
+      "<p>" + esc(l.desc) + "</p>" +
+      '<p class="meta">🕒 ' + esc(l.horario) + "</p>" +
+      '<p class="meta">📍 ' + esc(l.direccion) + "</p>" +
+      '<div class="acciones">' +
+        '<a class="btn mini" href="' + esc(urlSegura(l.url)) + '" target="_blank" rel="noopener">Página oficial</a>' +
+        '<a class="btn mini sec" href="' + esc(maps(l.nombre, l.direccion, l.distrito)) + '" target="_blank" rel="noopener">Cómo llegar</a>' +
+        '<button class="btn mini sec" type="button" data-ver="' + esc(l.id) + '">Ver en el mapa</button>' +
+      "</div></article>";
+  }
+  function tarjetaEvento(e) {
+    var precio = e.precio ? '<span class="et ' + (e.precio === "Gratis" ? "g" : "b") + '">' + esc(e.precio) + "</span>" : '<span class="et">Precio en la publicación</span>';
+    var hoy = e.fecha && e.fecha <= HOY_ISO && HOY_ISO <= (e.fechaFin || e.fecha) ? '<span class="et hoy">Hoy</span>' : "";
+    return '<article class="tarjeta" id="t-' + esc(e.id) + '">' +
+      '<div class="meta">' + esc(e.distrito) + " · " + esc(TIPOS[e.tipo] || "Evento") + "</div>" +
+      "<h3>" + esc(e.titulo) + "</h3>" +
+      '<div class="etiquetas">' + hoy + '<span class="et e">📅 ' + esc(textoFechaEvento(e)) + "</span>" + precio + "</div>" +
+      (e.resumen ? "<p>" + esc(e.resumen) + "</p>" : "") +
+      '<p class="meta">Fuente oficial: ' + esc(e.fuente) + "</p>" +
+      '<div class="acciones">' +
+        '<a class="btn mini" href="' + esc(urlSegura(e.url)) + '" target="_blank" rel="noopener">Ver publicación oficial</a>' +
+        (e.lat != null ? '<a class="btn mini sec" href="' + esc(maps(e.lugar || e.fuente, e.direccion, e.distrito)) + '" target="_blank" rel="noopener">Cómo llegar</a>' +
+          '<button class="btn mini sec" type="button" data-ver="' + esc(e.id) + '">Ver en el mapa</button>' : "") +
+      "</div></article>";
+  }
+  function popup(x, esEvento) {
+    var h = "<strong>" + esc(esEvento ? x.titulo : x.nombre) + "</strong>";
+    h += esEvento ? esc(textoFechaEvento(x)) + "<br>" + esc(x.fuente) : esc(x.distrito) + " · " + esc(x.precio);
+    h += '<br><a href="' + esc(urlSegura(x.url)) + '" target="_blank" rel="noopener">' + (esEvento ? "Ver publicación oficial" : "Página oficial") + "</a>";
+    h += ' · <a href="' + esc(esEvento ? maps(x.lugar || x.fuente, x.direccion, x.distrito) : maps(x.nombre, x.direccion, x.distrito)) + '" target="_blank" rel="noopener">Abrir en Google Maps</a>';
+    h += '<br><a href="#t-' + esc(x.id) + '">Ver detalles abajo ↓</a>';
+    return h;
+  }
+  function distanciaKm(a, b, c, d) {
+    var R = 6371, x = (c - a) * Math.PI / 180, y = (d - b) * Math.PI / 180;
+    var h = Math.sin(x / 2) * Math.sin(x / 2) + Math.cos(a * Math.PI / 180) * Math.cos(c * Math.PI / 180) * Math.sin(y / 2) * Math.sin(y / 2);
+    return 2 * R * Math.asin(Math.sqrt(h));
+  }
+  function ordenarPorCercania(arr) {
+    if (!yo) return arr;
+    return arr.slice().sort(function (p, q) {
+      var dp = p.lat == null ? 1e9 : distanciaKm(yo[0], yo[1], p.lat, p.lon), dq = q.lat == null ? 1e9 : distanciaKm(yo[0], yo[1], q.lat, q.lon);
+      return dp - dq;
+    });
+  }
+
+  var visibles = [];
+  function pintar() {
+    var lu = ordenarPorCercania(LUGARES.filter(pasaLugar));
+    var ev = ordenarPorCercania(EVENTOS.filter(pasaEvento));
+    if (F.tipo === "evento") lu = [];
+    if (F.tipo && F.tipo !== "evento" && F.tipo !== "cultura") ev = [];
+
+    document.getElementById("listaLugares").innerHTML = lu.length ? lu.map(tarjetaLugar).join("") :
+      '<p class="vacio">No hay lugares con estos filtros. Prueba con «Cualquier día» u otro distrito.</p>';
+    document.getElementById("listaEventos").innerHTML = ev.length ? ev.map(tarjetaEvento).join("") :
+      '<p class="vacio">' + (EVENTOS.length ? "No hay eventos con estos filtros. Prueba con «Cualquier día» u otro distrito." :
+        "Todavía no hay eventos de agenda. El robot revisa las páginas oficiales cada mañana.") + "</p>";
+
+    capa.clearLayers(); marcadores = {}; visibles = [];
+    var puntos = [];
+    lu.forEach(function (l) {
+      var m = L.marker([l.lat, l.lon], { icon: icono(l.gratis || l.primerDomingo ? "g" : "b"), title: l.nombre, keyboard: true }).bindPopup(popup(l, false));
+      m.addTo(capa); marcadores[l.id] = m; puntos.push([l.lat, l.lon]); visibles.push(l);
+    });
+    // Varios eventos en el mismo sitio: se separan un poquito para poder tocarlos
+    var usados = {};
+    ev.forEach(function (e) {
+      if (e.lat == null || e.lon == null) return;
+      var k = e.lat.toFixed(4) + "," + e.lon.toFixed(4), n = usados[k] = (usados[k] || 0) + 1;
+      var ang = n * 2.4, r = n === 1 ? 0.0004 : 0.0004 + n * 0.00012;
+      var lat = e.lat + r * Math.cos(ang), lon = e.lon + r * Math.sin(ang);
+      var m = L.marker([lat, lon], { icon: icono("e"), title: e.titulo, keyboard: true }).bindPopup(popup(e, true));
+      m.addTo(capa); marcadores[e.id] = m; puntos.push([lat, lon]); visibles.push(e);
+    });
+    if (yo) { L.marker(yo, { icon: icono("yo"), title: "Tú estás aquí" }).bindPopup("Tú estás aquí").addTo(capa); }
+    if (puntos.length && !yo) mapa.fitBounds(puntos, { padding: [30, 30], maxZoom: 15 });
+
+    var n = lu.length + ev.length;
+    document.getElementById("resumen").textContent = n + (n === 1 ? " plan encontrado" : " planes encontrados") +
+      (F.cuando === "hoy" ? " para hoy, " + bonita(HOY) : F.cuando === "finde" ? " para este fin de semana" : "") +
+      (F.distrito ? " en " + F.distrito : "") + ".";
+  }
+
+  function verEnMapa(id) {
+    var m = marcadores[id]; if (!m) return;
+    document.getElementById("mapa").scrollIntoView({ behavior: "smooth", block: "center" });
+    mapa.setView(m.getLatLng(), 16); m.openPopup();
+  }
+
+  // ---- Eventos de la página ----
+  document.addEventListener("click", function (ev) {
+    var b = ev.target.closest("[data-f]");
+    if (b) {
+      F[b.dataset.f] = b.dataset.v;
+      document.querySelectorAll('[data-f="' + b.dataset.f + '"]').forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      pintar(); return;
+    }
+    var v = ev.target.closest("[data-ver]");
+    if (v) verEnMapa(v.dataset.ver);
+  });
+  document.getElementById("soloGratis").addEventListener("click", function () {
+    F.gratis = !F.gratis; this.setAttribute("aria-pressed", F.gratis ? "true" : "false"); pintar();
+  });
+  document.getElementById("distrito").addEventListener("change", function () { F.distrito = this.value; pintar(); });
+  document.getElementById("sorpresa").addEventListener("click", function () {
+    if (!visibles.length) { alert("No hay planes con estos filtros. Prueba con «Cualquier día»."); return; }
+    var x = visibles[Math.floor(Math.random() * visibles.length)];
+    verEnMapa(x.id);
+  });
+  document.getElementById("cerca").addEventListener("click", function () {
+    var btn = this;
+    if (!navigator.geolocation) { alert("Tu navegador no permite ver tu ubicación. Elige tu distrito en la lista."); return; }
+    btn.textContent = "Buscando tu ubicación…";
+    navigator.geolocation.getCurrentPosition(function (p) {
+      yo = [p.coords.latitude, p.coords.longitude];
+      btn.textContent = "📍 Ordenado por cercanía";
+      F.distrito = ""; document.getElementById("distrito").value = "";
+      pintar(); mapa.setView(yo, 13);
+    }, function () {
+      btn.textContent = "📍 Ver qué hay cerca de mí";
+      alert("No pudimos ver tu ubicación. Elige tu distrito en la lista.");
+    }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 });
+  });
+
+  // ---- Cargar datos ----
+  function cargar(url) { return fetch(url, { cache: "no-cache" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  Promise.all([cargar("lugares.json"), cargar("eventos.json").catch(function () { return { eventos: [] }; })]).then(function (res) {
+    LUGARES = res[0].lugares || [];
+    var datos = res[1] || {};
+    EVENTOS = (datos.eventos || []).map(function (e, i) { e.id = "ev" + i; return e; });
+    var distritos = {};
+    LUGARES.concat(EVENTOS).forEach(function (x) { if (x.distrito && x.distrito !== "Lima") distritos[x.distrito] = 1; });
+    var sel = document.getElementById("distrito");
+    Object.keys(distritos).sort(function (a, b) { return norm(a).localeCompare(norm(b)); }).forEach(function (d) {
+      var o = document.createElement("option"); o.value = d; o.textContent = d; sel.appendChild(o);
+    });
+    if (datos.actualizado) {
+      var d = new Date(datos.actualizado);
+      document.getElementById("actualizado").textContent = "Agenda actualizada por última vez el " + d.toLocaleDateString("es-PE", { timeZone: "America/Lima", day: "numeric", month: "long", year: "numeric" }) + ".";
+    }
+    pintar();
+  }).catch(function () {
+    document.getElementById("listaLugares").innerHTML = '<p class="vacio">No pudimos cargar los lugares. Revisa tu conexión y vuelve a cargar la página.</p>';
+  });
+})();
+</script>
+</body>
+</html>
