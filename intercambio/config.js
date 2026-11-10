@@ -1,6 +1,7 @@
 // ===============================================================
 //  CONFIGURACIÓN DE "YO TE ENSEÑO, TÚ ME ENSEÑAS"
 //  Solo tienes que pegar aquí tus 3 enlaces de Google (todo gratis).
+//  El script intercambio/crear-formularios.gs los crea y te los envía por correo.
 //  La guía paso a paso está en intercambio/GUIA.md
 //  Mientras estén vacíos, la página muestra ofertas de EJEMPLO.
 // ===============================================================
