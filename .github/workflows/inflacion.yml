@@ -1,0 +1,38 @@
+# Robot de la "Calculadora de inflación Perú": cada día del 1 al 15 de cada mes
+# (cuando el INEI y el BCRP publican la inflación del mes anterior) descarga el
+# IPC de Lima del BCRP y actualiza inflacion/ipc.json. Es gratis y no necesitas
+# hacer nada. Para lanzarlo a mano: pestaña Actions → "Robot inflación" → Run workflow.
+name: Robot inflación
+
+on:
+  schedule:
+    - cron: "30 12 1-15 * *"   # 7:30 a. m. de Lima, del 1 al 15 de cada mes
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/robot/actualizar-ipc.mjs
+
+permissions:
+  contents: write
+
+concurrency:
+  group: robot-inflacion
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Descargar el IPC de Lima del BCRP
+        run: node .github/robot/actualizar-ipc.mjs
+      - name: Guardar los datos nuevos
+        run: |
+          git config user.name "robot-inflacion"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add inflacion/ipc.json
+          git diff --cached --quiet || (git commit -m "Robot: actualizar IPC de Lima (BCRP)" && git push)
