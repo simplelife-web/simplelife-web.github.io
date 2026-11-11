@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de inflación Perú | ¿Cuánto valen hoy tus soles? (IPC del BCRP)</title>
+<link rel="icon" href="../logo.svg" type="image/svg+xml">
+<meta name="description" content="Calcula cuánto valen hoy tus soles de un año pasado con la inflación oficial del Perú (IPC de Lima del BCRP y el INEI). Gratis, al mes exacto y con la inflación de cada año desde 1992.">
+<link rel="canonical" href="https://simplelife-web.github.io/inflacion/">
+<meta property="og:image" content="https://simplelife-web.github.io/og-imagen.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_PE">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://simplelife-web.github.io/"},{"@type":"ListItem","position":2,"name":"Calculadora de inflación Perú","item":"https://simplelife-web.github.io/inflacion/"}]},{"@type":"WebApplication","name":"Calculadora de inflación Perú de Simplelife","url":"https://simplelife-web.github.io/inflacion/","applicationCategory":"FinanceApplication","operatingSystem":"Navegador web","description":"Calcula cuánto valen hoy tus soles de un año pasado con el índice de precios al consumidor de Lima Metropolitana publicado por el BCRP.","inLanguage":"es-PE","isBasedOn":"https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN38705PM/html","offers":{"@type":"Offer","price":"0","priceCurrency":"PEN"},"publisher":{"@type":"Organization","name":"Simplelife","url":"https://simplelife-web.github.io/","logo":"https://simplelife-web.github.io/logo.svg","email":"simplelifecontacto899@gmail.com"}}]}
+</script>
+<meta property="og:title" content="Calculadora de inflación Perú | ¿Cuánto valen hoy tus soles?">
+<meta property="og:site_name" content="Simplelife">
+<meta property="og:description" content="¿Cuánto valen hoy 100 soles de 2015? Calcúlalo gratis con la inflación oficial del BCRP.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simplelife-web.github.io/inflacion/">
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9798339025422593"
+     crossorigin="anonymous"></script>
+<style>
+  :root {
+    --bg: #f6f5f1; --card: #ffffff; --text: #1d1d1b; --muted: #5c5a54;
+    --line: #dedbd2; --accent: #1f6f5c; --accent-text: #ffffff; --soft: #e7f1ed;
+    --warm: #c2410c; --warm-soft: #fdeee4; --band: rgba(31,111,92,.12); --bar: #2f8f73; --bar-hi: #d9822b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151614; --card: #1e1f1d; --text: #ecebe6; --muted: #b0aea7;
+      --line: #34352f; --accent: #4fb596; --accent-text: #0d1a15; --soft: #1f2d28;
+      --warm: #f59e62; --warm-soft: #33241a; --band: rgba(79,181,150,.16); --bar: #4fb596; --bar-hi: #f0a050;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent); }
+  .saltar { position: absolute; left: -999px; }
+  .saltar:focus { left: 16px; top: 8px; background: var(--card); padding: 8px 12px; z-index: 9999; }
+  .top, main, footer { max-width: 920px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
+  .top { display: flex; align-items: center; gap: 12px; padding-top: 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .brand span { font-size: 1.45rem; font-weight: 700; line-height: 1.1; }
+  .brand b { color: var(--accent); }
+  .brand a { display: inline-flex; align-items: center; text-decoration: none; color: inherit; }
+  .hoja img { transition: transform .2s; }
+  .hoja:hover img, .hoja:focus-visible img { transform: scale(1.1) rotate(-4deg); }
+  @media (prefers-reduced-motion: reduce) { .hoja img { transition: none; } }
+  .brand small { display: block; font-size: .72rem; font-weight: 500; color: var(--muted); }
+  main { padding-top: 14px; padding-bottom: 32px; }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 8px 0 8px; }
+  h2 { font-size: 1.3rem; line-height: 1.3; margin: 0 0 10px; }
+  h3 { font-size: 1.05rem; margin: 18px 0 4px; }
+  .lead { color: var(--muted); margin: 0 0 18px; max-width: 64ch; font-size: 1.05rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; margin-bottom: 18px; }
+
+  /* Formulario */
+  .form { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; align-items: end; }
+  .campo label { display: block; font-weight: 600; font-size: .92rem; margin-bottom: 4px; }
+  .par { display: flex; gap: 6px; }
+  input, select { font: inherit; width: 100%; min-height: 46px; padding: 8px 10px; border-radius: 12px;
+    border: 2px solid var(--line); background: var(--bg); color: var(--text); }
+  .monto { position: relative; }
+  .monto span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-weight: 600; }
+  .monto input { padding-left: 42px; }
+  input:focus-visible, select:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .atajos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .atajos span { font-size: .9rem; color: var(--muted); align-self: center; }
+  .chip { font: inherit; font-size: .92rem; padding: 6px 12px; min-height: 38px; border-radius: 99px; cursor: pointer;
+    background: var(--bg); color: var(--text); border: 2px solid var(--line); }
+  .chip:hover { border-color: var(--accent); }
+  @media (max-width: 700px) { .form { grid-template-columns: 1fr; } }
+
+  /* Resultado */
+  .res { background: var(--soft); border-color: transparent; }
+  .res .grande { font-size: 1.15rem; margin: 0 0 6px; }
+  .res .cifra { display: block; font-size: 2.4rem; font-weight: 800; line-height: 1.15; color: var(--accent); letter-spacing: -.01em; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+  .stat { background: var(--card); border-radius: 14px; padding: 12px 14px; }
+  .stat b { display: block; font-size: 1.3rem; }
+  .stat small { color: var(--muted); font-size: .88rem; line-height: 1.35; display: block; }
+  .explica { margin: 14px 0 0; font-size: .95rem; color: var(--muted); }
+  .acciones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .btn { font: inherit; font-size: .95rem; font-weight: 600; padding: 8px 14px; min-height: 42px; border-radius: 99px; cursor: pointer;
+    background: var(--accent); color: var(--accent-text); border: 0; }
+  .btn.sec { background: var(--card); color: var(--accent); border: 2px solid var(--accent); }
+  @media (max-width: 700px) { .stats { grid-template-columns: 1fr; } .res .cifra { font-size: 2rem; } }
+
+  /* Indicador del momento */
+  .hoy { display: flex; gap: 14px; align-items: center; }
+  .hoy .num { font-size: 2rem; font-weight: 800; color: var(--accent); white-space: nowrap; }
+  .hoy p { margin: 0; }
+
+  /* Gráfico */
+  .grafico svg { width: 100%; height: auto; display: block; }
+  .grafico text { fill: var(--muted); font-size: 11px; font-family: inherit; }
+  .grafico .eje { stroke: var(--line); }
+  .grafico .banda { fill: var(--band); }
+  .grafico .b { fill: var(--bar); }
+  .grafico .b.fuera { fill: var(--bar-hi); }
+  .leyenda { display: flex; flex-wrap: wrap; gap: 14px; font-size: .88rem; color: var(--muted); margin-top: 8px; }
+  .leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+  /* Tabla */
+  .tabla-cont { max-height: 420px; overflow: auto; border: 1px solid var(--line); border-radius: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { padding: 7px 12px; text-align: right; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { position: sticky; top: 0; background: var(--card); }
+  tbody tr:nth-child(odd) { background: var(--bg); }
+
+  .formula { font-family: "Cambria Math", "Times New Roman", serif; font-size: 1.15rem; background: var(--bg); border-radius: 12px;
+    padding: 12px 16px; display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 6px 0; }
+  .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; }
+  .frac span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 4px; }
+  .frac span:last-child { padding: 0 4px; }
+  .aviso { background: var(--warm-soft); border-radius: 12px; padding: 10px 14px; font-size: .95rem; }
+  .error { color: var(--warm); font-weight: 600; }
+  footer { color: var(--muted); font-size: .9rem; padding-bottom: 40px; }
+  footer p { margin: 6px 0; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<a class="saltar" href="#contenido">Ir al contenido</a>
+<script src="../nav.js"></script>
+<header class="top">
+  <span class="brand"><a class="hoja" href="../" title="Ir al inicio de Simplelife"><img src="../logo.svg" alt="Inicio Simplelife" width="48" height="48"></a><a class="brand-txt" href="../" title="Ir al inicio de Simplelife"><span>Calculadora de <b>inflación</b><small>Perú · de Simplelife</small></span></a></span>
+</header>
+
+<main id="contenido">
+  <h1>¿Cuánto valen hoy tus soles? Calculadora de inflación Perú</h1>
+  <p class="lead">Elige un monto y una fecha. Te decimos cuánto dinero necesitas hoy para comprar lo mismo, con la inflación oficial del Perú publicada por el Banco Central de Reserva del Perú (BCRP).</p>
+
+  <section class="card" aria-labelledby="t-calc">
+    <h2 id="t-calc" class="hidden">Calcular</h2>
+    <form class="form" id="form" onsubmit="return false">
+      <div class="campo">
+        <label for="monto">Monto</label>
+        <div class="monto"><span>S/</span><input id="monto" type="text" inputmode="decimal" value="100" autocomplete="off"></div>
+      </div>
+      <div class="campo">
+        <label for="mes-ini">Desde (fecha del dinero)</label>
+        <div class="par"><select id="mes-ini" aria-label="Mes de inicio"></select><select id="anio-ini" aria-label="Año de inicio"></select></div>
+      </div>
+      <div class="campo">
+        <label for="mes-fin">Hasta</label>
+        <div class="par"><select id="mes-fin" aria-label="Mes final"></select><select id="anio-fin" aria-label="Año final"></select></div>
+      </div>
+    </form>
+    <div class="atajos" id="atajos"><span>Ejemplos:</span></div>
+  </section>
+
+  <section class="card res" aria-live="polite" id="resultado">
+    <p class="grande" id="frase">Cargando los datos oficiales del BCRP…</p>
+    <span class="cifra" id="cifra"></span>
+    <div class="stats hidden" id="stats">
+      <div class="stat"><b id="s-acum"></b><small>Inflación acumulada en el periodo</small></div>
+      <div class="stat"><b id="s-anual"></b><small>Inflación promedio por año</small></div>
+      <div class="stat"><b id="s-poder"></b><small id="s-poder-txt">Poder de compra que perdió el dinero guardado</small></div>
+    </div>
+    <p class="explica" id="explica"></p>
+    <div class="acciones hidden" id="acciones">
+      <button class="btn" id="copiar" type="button">Copiar enlace de este cálculo</button>
+      <button class="btn sec" id="invertir" type="button">Calcular al revés</button>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="t-hoy">
+    <h2 id="t-hoy">Inflación del Perú en los últimos 12 meses</h2>
+    <div class="hoy"><span class="num" id="h-num">…</span><p id="h-txt">Cargando…</p></div>
+  </section>
+
+  <section class="card grafico" aria-labelledby="t-graf">
+    <h2 id="t-graf">Inflación de cada año desde 2000</h2>
+    <p class="explica" style="margin-top:0">Variación de precios de diciembre a diciembre en Lima Metropolitana. La franja verde es el rango meta del BCRP (entre 1 % y 3 %).</p>
+    <div id="grafico" role="img" aria-label="Gráfico de barras de la inflación anual del Perú"></div>
+    <div class="leyenda"><span><i style="background:var(--bar)"></i>Dentro o debajo de la meta</span><span><i style="background:var(--bar-hi)"></i>Encima de la meta</span><span><i style="background:var(--band)"></i>Rango meta 1 % a 3 %</span></div>
+  </section>
+
+  <section class="card" aria-labelledby="t-tabla">
+    <h2 id="t-tabla">Tabla: inflación anual del Perú desde 1992</h2>
+    <div class="tabla-cont">
+      <table>
+        <thead><tr><th scope="col">Año</th><th scope="col">Inflación del año</th><th scope="col">S/ 100 de ese año valen hoy</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="t-como">
+    <h2 id="t-como">¿Cómo se calcula?</h2>
+    <p>Usamos el <strong>índice de precios al consumidor (IPC)</strong>, que mide cada mes cuánto cuesta una canasta de productos y servicios que compran las familias de Lima Metropolitana: comida, pasajes, alquiler, luz, salud, educación y más. Si el índice sube de 100 a 110, la canasta está 10 % más cara.</p>
+    <p>Para saber cuánto vale hoy un monto del pasado, se multiplica por el índice de hoy y se divide entre el índice de la fecha de origen:</p>
+    <div class="formula" aria-label="Valor hoy igual a monto por IPC final entre IPC inicial">
+      <span>Valor hoy</span><span>=</span><span>Monto</span><span>×</span>
+      <span class="frac"><span>IPC<sub>final</sub></span><span>IPC<sub>inicial</sub></span></span>
+    </div>
+    <p>La inflación promedio por año se obtiene así, donde <em>n</em> es el número de años entre las dos fechas:</p>
+    <div class="formula" aria-label="Inflación anual promedio igual a la razón de IPC elevada a uno entre n, menos uno">
+      <span>Inflación anual</span><span>=</span>
+      <span>(<span class="frac"><span>IPC<sub>final</sub></span><span>IPC<sub>inicial</sub></span></span>)<sup>1/<i>n</i></sup></span><span>− 1</span>
+    </div>
+    <h3>¿Qué es la inflación?</h3>
+    <p>Es la subida general y sostenida de los precios. Con inflación, el mismo billete compra cada vez menos cosas: por eso 100 soles guardados en un cajón pierden poder de compra con el tiempo. Lee más en el <a href="../glosario/inflacion.html">glosario: inflación</a>, <a href="../glosario/ipc.html">IPC</a> y <a href="../glosario/poder-adquisitivo.html">poder adquisitivo</a>.</p>
+    <h3>¿Qué es la meta de inflación del BCRP?</h3>
+    <p>El Banco Central de Reserva del Perú busca que la inflación se mantenga entre 1 % y 3 % al año, con 2 % como punto medio. Cuando se sale de ese rango, usa herramientas como la tasa de interés de referencia para devolverla a la meta.</p>
+  </section>
+
+  <section class="card" aria-labelledby="t-preg">
+    <h2 id="t-preg">Preguntas frecuentes</h2>
+    <h3>¿De dónde salen los datos?</h3>
+    <p>De la serie oficial <strong>PN38705PM</strong> del BCRP: «Índice de precios al consumidor de Lima Metropolitana (índice dic. 2021 = 100)», elaborada con datos del INEI. Puedes verla en <a href="https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN38705PM/html" rel="noopener" target="_blank">BCRP Estadísticas</a>. <span id="f-actual"></span></p>
+    <h3>¿Cada cuánto se actualiza?</h3>
+    <p>El INEI publica la inflación de cada mes el primer día del mes siguiente. Un robot de Simplelife revisa los datos del BCRP los primeros días de cada mes y los pone al día solo.</p>
+    <h3>¿Por qué empieza en 1992?</h3>
+    <p>Porque el nuevo sol empezó a circular en julio de 1991. Antes se usaban intis y soles de oro, y comparar esos montos con soles de hoy confunde. Desde 1992 todo está en la misma moneda.</p>
+    <h3>¿Sirve para todo el Perú?</h3>
+    <p>El índice mide los precios de Lima Metropolitana, que es el indicador oficial de inflación del país y el que usa el BCRP para su meta. En otras ciudades la inflación puede ser un poco distinta.</p>
+    <h3>¿Puedo usarlo para un contrato o un juicio?</h3>
+    <p>La calculadora es una guía. Para un trámite legal o contable, confirma las cifras en el BCRP o el INEI, porque a veces se pide otro índice o un redondeo especial.</p>
+  </section>
+</main>
+
+<footer>
+  <p>Fuente de los datos: Banco Central de Reserva del Perú (BCRP), serie PN38705PM, con información del Instituto Nacional de Estadística e Informática (INEI). Simplelife no es parte del BCRP ni del INEI.</p>
+  <p><a href="../">Inicio Simplelife</a> · <a href="../glosario/">Glosario económico</a> · <a href="../tramites/">Trámite fácil Perú</a> · <a href="../transcriptor/">Transcriptor de audio</a> · <a href="../acerca.html">Acerca de</a> · <a href="../contacto.html">Contacto</a> · <a href="../privacidad.html">Privacidad</a></p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","setiembre","octubre","noviembre","diciembre"];
+  var MIN_ANIO = 1992;
+  var $ = function (id) { return document.getElementById(id); };
+  var D = null;            // datos de ipc.json
+  var ini0 = 0;            // índice (en meses) del primer dato: año*12 + mes-1
+
+  function soles(x) { return "S/ " + x.toLocaleString("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function pct(x, dec) { return (x * 100).toLocaleString("es-PE", { minimumFractionDigits: dec, maximumFractionDigits: dec }) + " %"; }
+  function nombreMes(k) { return MESES[k % 12] + " de " + Math.floor(k / 12); }
+  function ipc(k) { var i = k - ini0; return (i >= 0 && i < D.indice.length) ? D.indice[i] : null; }
+  function ultimo() { return ini0 + D.indice.length - 1; }
+  function leerMonto() {
+    var t = $("monto").value.trim().replace(/\s|S\/?/gi, "");
+    // Acepta 1,500.50 o 1.500,50 o 1500,5
+    if (/,\d{1,2}$/.test(t)) t = t.replace(/\./g, "").replace(",", "."); else t = t.replace(/,/g, "");
+    var n = Number(t);
+    return isFinite(n) && n > 0 ? n : null;
+  }
+  function llenar(selMes, selAnio) {
+    selMes.innerHTML = MESES.map(function (m, i) { return '<option value="' + i + '">' + m.charAt(0).toUpperCase() + m.slice(1) + "</option>"; }).join("");
+    var a1 = Math.floor(ultimo() / 12), html = "";
+    for (var a = a1; a >= Math.max(MIN_ANIO, Math.floor(ini0 / 12)); a--) html += '<option value="' + a + '">' + a + "</option>";
+    selAnio.innerHTML = html;
+  }
+  function poner(prefijo, k) { $("mes-" + prefijo).value = String(k % 12); $("anio-" + prefijo).value = String(Math.floor(k / 12)); }
+  function leer(prefijo) { return Number($("anio-" + prefijo).value) * 12 + Number($("mes-" + prefijo).value); }
+
+  function calcular(guardar) {
+    var monto = leerMonto(), a = leer("ini"), b = leer("fin");
+    var stats = $("stats"), acc = $("acciones");
+    function fallo(msg) { $("frase").innerHTML = '<span class="error">' + msg + "</span>"; $("cifra").textContent = ""; $("explica").textContent = ""; stats.classList.add("hidden"); acc.classList.add("hidden"); }
+    if (monto === null) return fallo("Escribe un monto válido, por ejemplo 100 o 1500,50.");
+    var pa = ipc(a), pb = ipc(b);
+    if (pa === null || pb === null) return fallo("Aún no hay dato oficial para esa fecha. El último disponible es " + nombreMes(ultimo()) + ".");
+    var f = pb / pa, valor = monto * f, meses = b - a, anios = Math.abs(meses) / 12;
+    var antes = a <= b;
+    $("frase").innerHTML = soles(monto) + " de " + nombreMes(a) + (antes ? " equivalen, en " : " equivalían, en ") + nombreMes(b) + ", a:";
+    $("cifra").textContent = soles(valor);
+    var acum = f - 1;
+    $("s-acum").textContent = (acum > 0 ? "+" : "") + pct(acum, 1);
+    $("s-anual").textContent = anios >= 1 ? pct(Math.pow(antes ? f : 1 / f, 1 / anios) - 1, 2) : "—";
+    if (antes) {
+      $("s-poder").textContent = pct(1 - 1 / f, 1);
+      $("s-poder-txt").textContent = "Poder de compra que perdió el dinero guardado sin moverse";
+    } else {
+      $("s-poder").textContent = pct(1 - f, 1);
+      $("s-poder-txt").textContent = "Poder de compra más que tenía el dinero en esa fecha";
+    }
+    var expl;
+    if (meses === 0) expl = "Elegiste la misma fecha en los dos campos.";
+    else if (antes) expl = "Es decir, lo que en " + nombreMes(a) + " costaba " + soles(monto) + ", en " + nombreMes(b) + " cuesta en promedio " + soles(valor) + ". Y si guardaste " + soles(monto) + " en un cajón desde entonces, hoy solo compras lo que antes costaba " + soles(monto / f) + ".";
+    else expl = "Es decir, con " + soles(valor) + " en " + nombreMes(b) + " comprabas lo mismo que con " + soles(monto) + " en " + nombreMes(a) + ".";
+    $("explica").textContent = expl;
+    stats.classList.remove("hidden"); acc.classList.remove("hidden");
+    if (guardar) {
+      var q = "?monto=" + encodeURIComponent(String(monto)) + "&desde=" + clave(a) + "&hasta=" + clave(b);
+      try { history.replaceState(null, "", q); } catch (e) {}
+    }
+  }
+  function clave(k) { return Math.floor(k / 12) + "-" + String(k % 12 + 1).padStart(2, "0"); }
+  function deClave(s) { var m = /^(\d{4})-(\d{2})$/.exec(s || ""); return m ? Number(m[1]) * 12 + Number(m[2]) - 1 : null; }
+
+  function hoy() {
+    var u = ultimo(), f = ipc(u) / ipc(u - 12) - 1;
+    $("h-num").textContent = pct(f, 2);
+    var dentro = f >= 0.01 && f <= 0.03;
+    $("h-txt").innerHTML = "Es la inflación de Lima Metropolitana entre " + nombreMes(u - 12) + " y " + nombreMes(u) + " (último dato oficial). " +
+      (dentro ? "Está <strong>dentro</strong> del rango meta del BCRP (1 % a 3 %)." : f > 0.03 ? "Está <strong>por encima</strong> del rango meta del BCRP (1 % a 3 %)." : "Está <strong>por debajo</strong> del rango meta del BCRP (1 % a 3 %).");
+  }
+
+  function anuales() {
+    // Inflación de diciembre a diciembre de cada año completo, y del último año en curso (acumulada).
+    var filas = [], u = ultimo(), aU = Math.floor(u / 12);
+    for (var a = MIN_ANIO; a <= aU; a++) {
+      var fin = Math.min(a * 12 + 11, u), base = (a - 1) * 12 + 11;
+      if (ipc(base) === null || ipc(fin) === null) continue;
+      filas.push({ anio: a, inf: ipc(fin) / ipc(base) - 1, parcial: fin !== a * 12 + 11, hasta: fin, prom: ipc(a * 12) });
+    }
+    return filas;
+  }
+  function tabla(filas) {
+    var u = ultimo();
+    // Valor de hoy de S/ 100 "de ese año": usamos el índice de diciembre del año (o el último mes, si el año está en curso).
+    $("tabla").innerHTML = filas.slice().reverse().map(function (r) {
+      var k = r.parcial ? r.hasta : r.anio * 12 + 11;
+      var v = 100 * ipc(u) / ipc(k);
+      return "<tr><td>" + r.anio + (r.parcial ? " <small>(a " + MESES[r.hasta % 12] + ")</small>" : "") + "</td><td>" + pct(r.inf, 2) + "</td><td>" + soles(v) + "</td></tr>";
+    }).join("");
+  }
+  function grafico(filas) {
+    var datos = filas.filter(function (r) { return r.anio >= 2000; });
+    var W = 860, H = 280, L = 40, R = 10, T = 14, B = 34;
+    var max = Math.max(0.04, Math.max.apply(null, datos.map(function (r) { return r.inf; }))) , min = Math.min(0, Math.min.apply(null, datos.map(function (r) { return r.inf; })));
+    max = Math.ceil(max * 100) / 100; min = Math.floor(min * 100) / 100;
+    var y = function (v) { return T + (max - v) / (max - min) * (H - T - B); };
+    var bw = (W - L - R) / datos.length;
+    var s = '<svg viewBox="0 0 ' + W + " " + H + '" xmlns="http://www.w3.org/2000/svg">';
+    s += '<rect class="banda" x="' + L + '" y="' + y(0.03) + '" width="' + (W - L - R) + '" height="' + (y(0.01) - y(0.03)) + '"/>';
+    var paso = max - min > 0.06 ? 0.02 : 0.01;
+    for (var t = Math.ceil(min / paso) * paso; t <= max + 1e-9; t += paso) {
+      s += '<line class="eje" x1="' + L + '" x2="' + (W - R) + '" y1="' + y(t) + '" y2="' + y(t) + '"/>';
+      s += '<text x="' + (L - 6) + '" y="' + (y(t) + 4) + '" text-anchor="end">' + Math.round(t * 100) + "%</text>";
+    }
+    datos.forEach(function (r, i) {
+      var x = L + i * bw + bw * 0.15, w = bw * 0.7, y0 = y(0), y1 = y(r.inf);
+      s += '<rect class="b' + (r.inf > 0.03 ? " fuera" : "") + '" x="' + x.toFixed(1) + '" y="' + Math.min(y0, y1).toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + Math.max(1, Math.abs(y1 - y0)).toFixed(1) + '" rx="2"><title>' + r.anio + (r.parcial ? " (hasta " + MESES[r.hasta % 12] + ")" : "") + ": " + pct(r.inf, 2) + "</title></rect>";
+      if (i % 2 === 0 || i === datos.length - 1) s += '<text x="' + (x + w / 2).toFixed(1) + '" y="' + (H - B + 16) + '" text-anchor="middle">' + (r.anio % 100 === 0 && r.anio !== 2000 ? r.anio : "’" + String(r.anio).slice(2)) + "</text>";
+    });
+    s += "</svg>";
+    $("grafico").innerHTML = s;
+  }
+  function atajos() {
+    var u = ultimo(), cont = $("atajos");
+    [[100, 2015 * 12], [1000, 2010 * 12], [500, 2020 * 12], [100, 2000 * 12], [1000, 1995 * 12]].forEach(function (e) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "chip";
+      b.textContent = "S/ " + e[0].toLocaleString("es-PE") + " de " + Math.floor(e[1] / 12);
+      b.addEventListener("click", function () { $("monto").value = String(e[0]); poner("ini", e[1]); poner("fin", u); calcular(true); });
+      cont.appendChild(b);
+    });
+  }
+
+  function iniciar(datos) {
+    D = datos;
+    var p = D.desde.split("-");
+    ini0 = Number(p[0]) * 12 + Number(p[1]) - 1;
+    llenar($("mes-ini"), $("anio-ini")); llenar($("mes-fin"), $("anio-fin"));
+    var u = ultimo(), q = new URLSearchParams(location.search);
+    var a = deClave(q.get("desde")), b = deClave(q.get("hasta"));
+    if (q.get("monto")) $("monto").value = q.get("monto");
+    poner("ini", a !== null && ipc(a) !== null && a >= MIN_ANIO * 12 ? a : 2015 * 12);
+    poner("fin", b !== null && ipc(b) !== null && b >= MIN_ANIO * 12 ? b : u);
+    ["monto", "mes-ini", "anio-ini", "mes-fin", "anio-fin"].forEach(function (id) {
+      $(id).addEventListener(id === "monto" ? "input" : "change", function () { calcular(true); });
+    });
+    $("copiar").addEventListener("click", function () {
+      var btn = this, url = location.href;
+      function ok() { btn.textContent = "¡Enlace copiado!"; setTimeout(function () { btn.textContent = "Copiar enlace de este cálculo"; }, 2000); }
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(ok, function () { prompt("Copia este enlace:", url); });
+      else prompt("Copia este enlace:", url);
+    });
+    $("invertir").addEventListener("click", function () { var a = leer("ini"), b = leer("fin"); poner("ini", b); poner("fin", a); calcular(true); });
+    atajos();
+    calcular(false);
+    hoy();
+    var filas = anuales();
+    tabla(filas); grafico(filas);
+    $("f-actual").textContent = "Último dato: " + nombreMes(u) + ". Datos revisados el " + D.revisado.split("-").reverse().join("/") + ".";
+  }
+
+  fetch("ipc.json", { cache: "no-cache" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(iniciar)
+    .catch(function () { $("frase").innerHTML = '<span class="error">No pudimos cargar los datos. Revisa tu conexión y vuelve a cargar la página.</span>'; });
+})();
+</script>
+</body>
+</html>
