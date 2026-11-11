@@ -5,7 +5,7 @@
 // La calculadora del sitio solo lee ese archivo; no se conecta al BCRP.
 // Uso: node .github/robot/actualizar-ipc.mjs   (Node 20 o más, sin instalar nada)
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 
 const RAIZ = new URL("../../", import.meta.url);
 const ARCHIVO = new URL("inflacion/ipc.json", RAIZ);
@@ -65,5 +65,6 @@ if (existsSync(ARCHIVO)) {
     process.exit(0);
   }
 }
+mkdirSync(new URL("inflacion/", RAIZ), { recursive: true });
 writeFileSync(ARCHIVO, JSON.stringify(salida) + "\n");
 console.log(`Guardado: ${meses.length} meses, de ${salida.desde} a ${salida.hasta}.`);
