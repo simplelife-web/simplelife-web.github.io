@@ -10,7 +10,8 @@
     { href: 'tramites/', texto: 'Trámites' },
     { href: 'quehagohoy/', texto: '¿Qué hago hoy?' },
     { href: 'intercambio/', texto: 'Intercambio' },
-    { href: 'inflacion/', texto: 'Inflación' }
+    { href: 'inflacion/', texto: 'Inflación' },
+    { href: 'glosario/', texto: 'Glosario' }
   ];
   var EXTRA = [
     { href: 'acerca.html', texto: 'Acerca de' },

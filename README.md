@@ -9,6 +9,7 @@ Herramientas gratuitas para hacer la vida más simple. La página principal (`in
 | `intercambio/` | Yo te enseño, tú me enseñas |
 | `quehagohoy/` | ¿Qué hago hoy? (planes gratis en Lima, en un mapa) |
 | `inflacion/` | Calculadora de inflación Perú (IPC de Lima del BCRP) |
+| `glosario/` | Glosario económico explicado en simple |
 
 ## ¿Qué hago hoy? (`/quehagohoy/`)
 
@@ -54,6 +55,16 @@ Transformers.js y ONNX Runtime: Apache 2.0 y MIT. `@ffmpeg/ffmpeg`: MIT. `@ffmpe
 ## Trámite fácil Perú (`/tramites/`)
 
 Guías sencillas de trámites del Perú (RENIEC, SUNAT, municipalidades y otras entidades), con letra grande y enlaces oficiales. Son páginas HTML estáticas en la carpeta `tramites/`, con un estilo común (`estilo.css`) y botones para agrandar la letra (`letra.js`). Cada guía indica la fecha de revisión y su fuente: los costos cambian, así que conviene revisarlos cada cierto tiempo.
+
+## Glosario económico (`/glosario/`)
+
+Conceptos de economía y finanzas explicados con palabras sencillas, con ejemplos del Perú y fórmulas. Hay una página por término (por ejemplo, `glosario/inflacion.html`) y una portada con buscador y filtros por tema.
+
+- El contenido está en `.github/glosario/terminos1.py` y `terminos2.py`. No edites a mano las páginas de `glosario/`: se generan solas.
+- Para agregar o corregir un término, cambia esos archivos y ejecuta, desde la raíz:
+  `npm i --prefix /tmp/kt katex@0.16.11` (solo la primera vez) y luego `KATEX=/tmp/kt/node_modules/katex python3 .github/glosario/generar.py`.
+  Eso rehace las páginas y actualiza `sitemap.xml`.
+- Las fórmulas se dibujan con KaTeX (licencia MIT) al generar las páginas; en `glosario/katex/` están su hoja de estilo y sus letras.
 
 ## Barra de navegación (`nav.js`)
 
