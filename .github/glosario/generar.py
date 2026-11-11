@@ -27,6 +27,7 @@ import terminos1  # noqa: E402
 import terminos2  # noqa: E402
 import terminos3  # noqa: E402
 import terminos4  # noqa: E402
+import terminos5  # noqa: E402
 from fuentes import FUENTES  # noqa: E402
 
 BCRP_GLOSARIO = "https://www.bcrp.gob.pe/docs/Publicaciones/Glosario/Glosario-BCRP.pdf"
@@ -69,7 +70,7 @@ def texto_plano(s):
     return html.unescape(re.sub(r"\s+", " ", s)).strip()
 
 
-TERMINOS = terminos1.T + terminos2.T + terminos3.T + terminos4.T
+TERMINOS = terminos1.T + terminos2.T + terminos3.T + terminos4.T + terminos5.T
 
 
 def _sin_barras(v):
