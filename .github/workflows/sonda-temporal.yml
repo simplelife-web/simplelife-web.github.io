@@ -1,7 +1,7 @@
 name: Sonda temporal (borrar)
 on:
   push:
-    paths: [.github/workflows/sonda-temporal.yml, .github/cifras/rmv.py]
+    paths: [.github/workflows/sonda-temporal.yml]
 jobs:
   sonda:
     runs-on: ubuntu-latest
@@ -10,12 +10,9 @@ jobs:
       - run: |
           set +e
           sudo apt-get install -y -qq poppler-utils >/dev/null 2>&1
-          curl -sL -m 30 -A "Mozilla/5.0" "https://www.gob.pe/institucion/mtpe/normas-legales/8691054-015-2026-tr" > p.html
-          grep -o 'href="[^"]*\.pdf[^"]*"' p.html | head -5
-          u=$(grep -o 'https://[^"]*\.pdf[^"]*' p.html | head -1); echo "PDF: $u"
-          curl -sL -m 120 -A "Mozilla/5.0" -o ds.pdf "$u"; ls -la ds.pdf
-          pdftotext ds.pdf - | grep -i -A3 "nima vital" | head -30
-          echo "=== prueba con 1130"; python3 .github/cifras/rmv.py ds.pdf 1130
-          echo "=== cuadernillos hoy"; python3 -c "
-          import sys; sys.path.insert(0,'.github/cifras'); import rmv
-          print(rmv.cuadernillos()); print(rmv.revisar(1230, []))"
+          curl -sL -m 120 -A "Mozilla/5.0" -o ds.pdf "https://cdn.www.gob.pe/uploads/document/file/10751791/8691054-ds-n-015-2026-tr.pdf?v=1791324612"
+          pdfinfo ds.pdf | head -5; pdftotext ds.pdf - | wc -c; pdftotext ds.pdf - | head -40
+          curl -sL -m 30 -A "Mozilla/5.0" "https://busquedas.elperuano.pe/" > b.html
+          grep -o 'href="/[^"]*"' b.html | sort -u | head -30
+          grep -o '"[a-z]*":"[^"]\{0,80\}NL20261111[^"]\{0,80\}"' b.html | head -5
+          grep -o '.\{300\}NL20261111_19630.\{300\}' b.html | head -2
