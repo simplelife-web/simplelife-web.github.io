@@ -158,8 +158,8 @@
    "formato": "soles",
    "fecha": "2026-10-01",
    "desde": true,
-   "fuente": "MTPE, Decreto Supremo 015-2026-TR",
-   "enlace": "https://www.gob.pe/institucion/mtpe/normas-legales"
+   "fuente": "El Peruano, Decreto Supremo N.° 015-2026-TR",
+   "enlace": "https://busquedas.elperuano.pe/dispositivo/EX/2559163-1"
   }
  },
  "terminos": {
@@ -361,5 +361,13 @@
   "rin",
   "uit",
   "rmv"
+ ],
+ "rmv_tramos": [
+  {
+   "valor": 1230,
+   "desde": "2026-10-01",
+   "norma": "Decreto Supremo N.° 015-2026-TR",
+   "enlace": "https://busquedas.elperuano.pe/dispositivo/EX/2559163-1"
+  }
  ]
 }
