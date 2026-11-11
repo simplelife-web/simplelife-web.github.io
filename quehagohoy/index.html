@@ -7,6 +7,14 @@
 <link rel="icon" href="../logo.svg" type="image/svg+xml">
 <meta name="description" content="Encuentra en un mapa planes gratis o económicos en Lima según tu distrito: museos, parques, talleres, conciertos y eventos culturales, con el enlace a su página oficial.">
 <link rel="canonical" href="https://simplelife-web.github.io/quehagohoy/">
+<meta property="og:image" content="https://simplelife-web.github.io/og-imagen.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_PE">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://simplelife-web.github.io/"},{"@type":"ListItem","position":2,"name":"¿Qué hago hoy?","item":"https://simplelife-web.github.io/quehagohoy/"}]}]}
+</script>
 <meta property="og:title" content="¿Qué hago hoy? | Planes gratis y económicos en Lima">
 <meta property="og:site_name" content="Simplelife">
 <meta property="og:description" content="Museos, parques, talleres y eventos culturales gratis o económicos en Lima, en un mapa y con su enlace oficial.">
@@ -329,8 +337,8 @@
       '<p class="meta">🕒 ' + esc(l.horario) + "</p>" +
       '<p class="meta">📍 ' + esc(l.direccion) + "</p>" +
       '<div class="acciones">' +
-        '<a class="btn mini" href="' + esc(urlSegura(l.url)) + '" target="_blank" rel="noopener">Página oficial</a>' +
-        '<a class="btn mini sec" href="' + esc(maps(l.nombre, l.direccion, l.distrito)) + '" target="_blank" rel="noopener">Cómo llegar</a>' +
+        '<a class="btn mini" href="' + esc(urlSegura(l.url)) + '" target="_blank" rel="noopener nofollow">Página oficial</a>' +
+        '<a class="btn mini sec" href="' + esc(maps(l.nombre, l.direccion, l.distrito)) + '" target="_blank" rel="noopener nofollow">Cómo llegar</a>' +
         '<button class="btn mini sec" type="button" data-ver="' + esc(l.id) + '">Ver en el mapa</button>' +
       "</div></article>";
   }
@@ -344,16 +352,16 @@
       (e.resumen ? "<p>" + esc(e.resumen) + "</p>" : "") +
       '<p class="meta">Fuente oficial: ' + esc(e.fuente) + "</p>" +
       '<div class="acciones">' +
-        '<a class="btn mini" href="' + esc(urlSegura(e.url)) + '" target="_blank" rel="noopener">Ver publicación oficial</a>' +
-        (e.lat != null ? '<a class="btn mini sec" href="' + esc(maps(e.lugar || e.fuente, e.direccion, e.distrito)) + '" target="_blank" rel="noopener">Cómo llegar</a>' +
+        '<a class="btn mini" href="' + esc(urlSegura(e.url)) + '" target="_blank" rel="noopener nofollow">Ver publicación oficial</a>' +
+        (e.lat != null ? '<a class="btn mini sec" href="' + esc(maps(e.lugar || e.fuente, e.direccion, e.distrito)) + '" target="_blank" rel="noopener nofollow">Cómo llegar</a>' +
           '<button class="btn mini sec" type="button" data-ver="' + esc(e.id) + '">Ver en el mapa</button>' : "") +
       "</div></article>";
   }
   function popup(x, esEvento) {
     var h = "<strong>" + esc(esEvento ? x.titulo : x.nombre) + "</strong>";
     h += esEvento ? esc(textoFechaEvento(x)) + "<br>" + esc(x.fuente) : esc(x.distrito) + " · " + esc(x.precio);
-    h += '<br><a href="' + esc(urlSegura(x.url)) + '" target="_blank" rel="noopener">' + (esEvento ? "Ver publicación oficial" : "Página oficial") + "</a>";
-    h += ' · <a href="' + esc(esEvento ? maps(x.lugar || x.fuente, x.direccion, x.distrito) : maps(x.nombre, x.direccion, x.distrito)) + '" target="_blank" rel="noopener">Abrir en Google Maps</a>';
+    h += '<br><a href="' + esc(urlSegura(x.url)) + '" target="_blank" rel="noopener nofollow">' + (esEvento ? "Ver publicación oficial" : "Página oficial") + "</a>";
+    h += ' · <a href="' + esc(esEvento ? maps(x.lugar || x.fuente, x.direccion, x.distrito) : maps(x.nombre, x.direccion, x.distrito)) + '" target="_blank" rel="noopener nofollow">Abrir en Google Maps</a>';
     h += '<br><a href="#t-' + esc(x.id) + '">Ver detalles abajo ↓</a>';
     return h;
   }
