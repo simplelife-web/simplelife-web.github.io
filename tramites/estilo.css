@@ -112,3 +112,42 @@ body:has(#lista) main > p, body:has(#lista) main > h1, body:has(#lista) .buscar 
 .chip:hover { border-color: var(--accent); }
 .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
 .cuenta { color: var(--muted); font-size: .9rem; margin: 8px 0 0; }
+
+/* Barra de temas: en el celular se desliza de lado; en la computadora se acomoda en filas */
+.temas { display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: thin;
+  margin: 14px 0 6px; padding: 2px 2px 10px; scroll-snap-type: x proximity; }
+.temas a { flex: 0 0 auto; scroll-snap-align: start; white-space: nowrap; text-decoration: none; color: var(--text);
+  background: var(--card); border: 2px solid var(--line); border-radius: 99px; padding: 8px 14px; min-height: 44px;
+  display: inline-flex; align-items: center; gap: 6px; font-size: .9rem; font-weight: 600; }
+.temas a:hover { border-color: var(--accent); }
+.temas a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+@media (min-width: 960px) { .temas { flex-wrap: wrap; overflow: visible; padding-bottom: 2px; } }
+.miga a { font-weight: 600; }
+.miga span { color: var(--muted); margin: 0 4px; }
+
+/* Cuadros de temas en el inicio */
+#temas-caja { margin: 22px 0 8px; }
+.temas-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+@media (min-width: 640px) { .temas-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } }
+@media (min-width: 960px) { .temas-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.tema { display: flex; align-items: center; gap: 8px; padding: 12px; min-width: 0; overflow-wrap: anywhere; hyphens: auto; border-radius: 16px; text-decoration: none; color: var(--text);
+  background: var(--soft); border: 2px solid transparent; }
+.tema:hover, .tema:focus-visible { border-color: var(--accent); }
+.tema .ic { font-size: 1.5rem; line-height: 1; flex: 0 0 auto; }
+.tema strong { display: block; line-height: 1.25; }
+.tema small { color: var(--muted); font-size: .85rem; }
+
+/* Lista agrupada por tema */
+.grupo { margin-top: 26px; }
+.grupo[hidden] { display: none; }
+.grupo h2 a { color: var(--text); text-decoration: none; }
+.grupo h2 a:hover { color: var(--accent); }
+.grupo .lista { margin-top: 8px; }
+
+/* Más trámites del mismo tema al final de cada guía */
+.mas ul { list-style: none; padding: 0; margin: 0 0 8px; display: grid; gap: 6px; }
+@media (min-width: 640px) { .mas ul { grid-template-columns: 1fr 1fr; } }
+.mas li a { display: block; padding: 10px 12px; border-radius: 12px; background: var(--soft); text-decoration: none; font-weight: 600; }
+.mas li a:hover { filter: brightness(.97); }
+.volver { display: inline-block; }
+@media print { .temas, .mas { display: none !important; } }

@@ -55,7 +55,7 @@ Transformers.js y ONNX Runtime: Apache 2.0 y MIT. `@ffmpeg/ffmpeg`: MIT. `@ffmpe
 
 ## Trámite fácil Perú (`/tramites/`)
 
-Guías sencillas de trámites del Perú (RENIEC, SUNAT, municipalidades y otras entidades), con letra grande y enlaces oficiales. Son páginas HTML estáticas en la carpeta `tramites/`, con un estilo común (`estilo.css`) y botones para agrandar la letra (`letra.js`). Cada guía indica la fecha de revisión y su fuente: los costos cambian, así que conviene revisarlos cada cierto tiempo. La portada tiene buscador y filtros por tema. Todas las páginas se generan con `.github/tramites/generar.py` (los datos de cada guía están ahí): edita ese archivo y ejecuta `python3 .github/tramites/generar.py tramites`.
+Guías sencillas de trámites del Perú (RENIEC, SUNAT, municipalidades y otras entidades), con letra grande y enlaces oficiales. Son páginas HTML estáticas en la carpeta `tramites/`, con un estilo común (`estilo.css`) y botones para agrandar la letra (`letra.js`). Cada guía indica la fecha de revisión y su fuente: los costos cambian, así que conviene revisarlos cada cierto tiempo. La portada tiene buscador y cuadros por tema; cada tema tiene su propia página (`seccion-*.html`, lista `SECC` en el generador) y cada guía muestra la barra de temas, la ruta «Trámites › Tema» y «Más trámites de este tema». Todas las páginas se generan con `.github/tramites/generar.py` (los datos de cada guía están ahí): edita ese archivo y ejecuta `python3 .github/tramites/generar.py tramites`.
 
 ## Glosario económico (`/glosario/`)
 

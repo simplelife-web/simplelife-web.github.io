@@ -605,14 +605,248 @@ T += [
   src=[("Ley 29090, Ley de Regulación de Habilitaciones Urbanas y de Edificaciones", "https://www.miraflores.gob.pe/Gestorw3b/files/pdf/5145-902-ley-29090.pdf")]),
 ]
 
+# Tanda 4 (11-11-2026)
+T += [
+ dict(N, slug="pension-contigo", ent="MIDIS", icon="♿",
+  t="Pedir la pensión Contigo por discapacidad severa",
+  r="El programa Contigo da S/ 300 cada dos meses a personas con discapacidad severa que viven en pobreza.",
+  quien="Personas con discapacidad severa, que no tienen ingresos ni pensión, y cuyo hogar está en pobreza o pobreza extrema según el SISFOH.",
+  nec=["DNI de la persona con discapacidad.",
+       "El certificado de discapacidad que diga «severa», dado por un establecimiento de salud autorizado.",
+       "La clasificación socioeconómica del hogar (SISFOH), que da la municipalidad."],
+  costo="Gratis", pago="Inscribirse no cuesta nada.",
+  pasos=["Pide el certificado de discapacidad en un hospital o centro de salud autorizado. Debe decir que la discapacidad es severa.",
+         "Pide la clasificación socioeconómica en la Unidad Local de Empadronamiento (ULE) de tu municipalidad.",
+         "Con los dos documentos, acércate a la OMAPED de tu municipalidad o llama al programa Contigo para que te inscriban.",
+         "Revisa si ya eres usuario en la consulta rápida de Contigo, solo con el DNI.",
+         "Si eres usuario, cobra en cajeros del Banco de la Nación, agentes Multired o ventanilla."],
+  links=[("Consultar si soy usuario de Contigo", "https://sicontigo.contigo.gob.pe/"),
+         ("Pensión 65 (para adultos mayores)", "pension-65.html")],
+  ojo=["Nadie puede cobrarte por inscribirte. El MIDIS avisa que el programa no pide pagos.",
+       "Consultas: teléfono (01) 644 9006.",
+       "Si la persona tiene más de 65 años, revisa también Pensión 65."],
+  verif="No pudimos abrir la página oficial de Contigo desde nuestro sistema; los pasos salen de notas de TV Perú y El Peruano. Confírmalos por teléfono antes de ir.",
+  src=[("TV Perú: cómo saber si soy beneficiario", "https://www.tvperu.gob.pe/noticias/locales/pension-del-programa-contigo-como-saber-si-soy-beneficiario-y-cuando-pagan"),
+       ("TV Perú: el MIDIS no exige pagos", "https://www.tvperu.gob.pe/noticias/economia/midis-advierte-que-el-programa-contigo-no-exige-pagos-para-tramites-o-convocatorias"),
+       ("El Peruano (monto de S/ 300)", "https://www.elperuano.pe/noticia/221550-programa-contigo-deposito-pension-de-s300-para-106-mil-personas-con-discapacidad-severa")]),
+
+ dict(N, slug="beca-18", ent="Pronabec", icon="🎓",
+  t="Postular a Beca 18",
+  r="Beca del Estado que cubre los estudios de una carrera universitaria o técnica a jóvenes con buenas notas y pocos recursos.",
+  quien="En la modalidad ordinaria: jóvenes de menos de 22 años, con alto rendimiento en la secundaria (por ejemplo, tercio superior) y hogar en pobreza o pobreza extrema según el SISFOH. Hay otras modalidades con reglas propias (por ejemplo, para comunidades nativas, Fuerzas Armadas, VRAEM o Huallaga).",
+  nec=["Tu DNI.", "Haber terminado la secundaria con alto rendimiento.",
+       "La clasificación socioeconómica de tu hogar (SISFOH), si postulas a la modalidad ordinaria.",
+       "Un correo y un celular para inscribirte por internet."],
+  costo="Gratis", pago="Inscribirte y dar el examen no cuesta nada.",
+  pasos=["Revisa en la página del Pronabec la convocatoria del año y tu modalidad.",
+         "Inscríbete por internet en las fechas de la convocatoria.",
+         "Da el Examen Nacional de Preselección.",
+         "Si pasas, ingresa a una carrera y a una universidad o instituto que estén en la lista de la beca.",
+         "Postula a la beca en la etapa de selección con tus documentos y espera los resultados."],
+  links=[("Beca 18 en la web del Pronabec", "https://www.pronabec.gob.pe/beca-18/")],
+  ojo=["Convocatoria Beca 18-2027: 6000 becas; la inscripción cerró el 18 de octubre de 2026 y el examen es el domingo 22 de noviembre de 2026.",
+       "Cada año hay una convocatoria nueva, más o menos entre setiembre y octubre. Si te la perdiste, prepárate para la siguiente.",
+       "Ayuda: WhatsApp 914 121 106 o línea gratuita 0800 000 18. En los centros MAC Express también te ayudan a inscribirte."],
+  verif="Fechas de la convocatoria Beca 18-2027; cambian cada año.",
+  src=[("El Peruano: requisitos de Beca 18-2027", "https://elperuano.pe/noticia/306716-beca-18-2027-estos-son-los-requisitos-para-postular-a-una-de-las-6000-vacantes-hasta-el-16-de-octubre"),
+       ("El Peruano: inscripción ampliada al 18 de octubre", "https://elperuano.pe/noticia/306985--lo-ultimo-pronabec-amplia-hasta-este-domingo-18-de-octubre-la-inscripcion-para-postular-a-beca-18"),
+       ("Andina: MAC Express ayuda a inscribirse", "https://andina.pe/agencia/noticia-quieres-postular-a-beca-182027-mac-express-te-ayuda-con-inscripcion-1096050.aspx")]),
+
+ dict(N, slug="inscribir-defuncion", ent="RENIEC", icon="🕊️",
+  t="Inscribir la defunción de un familiar",
+  r="Cuando alguien fallece, hay que registrarlo en el RENIEC. Así se obtiene el acta de defunción y su DNI queda como «fallecido».",
+  quien="Un familiar u otra persona que presenta el caso (el declarante), con su propio documento de identidad.",
+  nec=["El certificado de defunción firmado y sellado por un profesional de la salud. Donde no hay uno, sirve una declaración jurada de una autoridad política, judicial o religiosa.",
+       "El DNI de la persona fallecida, o una declaración jurada de pérdida firmada por el declarante.",
+       "El DNI del declarante (si es extranjero, su carné de extranjería, pasaporte o cédula)."],
+  costo="Pregunta en la oficina", pago="Si hay algún pago, te lo indican en la oficina del RENIEC.",
+  pasos=["Junta el certificado de defunción y los documentos de identidad.",
+         "Ve a una oficina del RENIEC y entrega los documentos.",
+         "El personal registra la defunción en el sistema.",
+         "En 5 a 7 días hábiles el DNI de la persona aparece como fallecido.",
+         "Si necesitas una copia del acta de defunción, pídela por internet (mira la guía de copias de actas)."],
+  links=[("Trámites de actas del RENIEC", "https://identidad.reniec.gob.pe/tramites"),
+         ("Pedir copia de un acta", "partida-nacimiento.html")],
+  ojo=["Si la persona falleció en el extranjero, el acta sellada por el consulado peruano se presenta por la mesa de partes virtual del RENIEC.",
+       "Registrar la defunción evita que la persona siga apareciendo en el padrón electoral.",
+       "Consultas del RENIEC: 315 2700 o 315 4000, anexo 1900."],
+  verif="Requisitos y pasos según TV Perú (marzo de 2025). La nota no dice si hay costo ni un plazo límite.",
+  src=[("TV Perú: cómo registrar una defunción", "https://www.tvperu.gob.pe/noticias/nacionales/como-registrar-una-defuncion-para-evitar-que-una-persona-aparezca-en-el-padron-de-elecciones-2026"),
+       ("RENIEC: preguntas frecuentes de actas", "https://identidad.reniec.gob.pe/preguntas-frecuentes-actas-de-nacimiento-matrimonio-y-defunci%C3%B3n")]),
+
+ dict(N, slug="inscribir-recien-nacido", ent="RENIEC", icon="🍼",
+  t="Inscribir a un recién nacido y sacar su primer DNI",
+  r="Registra el nacimiento de tu bebé para que tenga su acta de nacimiento y su DNI. Es gratis.",
+  quien="La madre, el padre o ambos, con su DNI.",
+  nec=["El certificado de nacido vivo que te da el hospital o la clínica (tiene un código llamado CUI).",
+       "El DNI de la madre y, si lo reconoce, el del padre."],
+  costo="Gratis", pago="La inscripción del nacimiento y la primera copia del acta son gratis por ley.",
+  pasos=["Pide en el hospital o clínica el certificado de nacido vivo.",
+         "Si el hospital tiene una oficina del RENIEC, inscribe ahí a tu bebé antes de salir. Si no, ve a una oficina del RENIEC o al registro civil de tu municipalidad.",
+         "Firma el acta de nacimiento y recibe tu copia.",
+         "Pide ahí mismo el DNI de tu bebé: toman su foto y las huellas de la mamá.",
+         "Recoge el DNI cuando te avisen."],
+  links=[("Trámites de actas del RENIEC", "https://identidad.reniec.gob.pe/tramites"),
+         ("DNI para menores de edad", "dni-menores.html")],
+  ojo=["Tienes 60 días desde el nacimiento. Después, la inscripción es «extemporánea» y lleva más pasos.",
+       "Con el programa «Nacer con identidad», el RENIEC registra a bebés en salas de maternidad durante sus primeros 5 días.",
+       "En 2026 el DNI electrónico es gratis para niños de 0 a 1 año (campaña del RENIEC).",
+       "El DNI del bebé sirve para el SIS, las vacunas, el control del niño sano y los programas sociales."],
+  verif="La gratuidad del DNI de 0 a 1 año es por campaña de 2026; puede cambiar.",
+  src=[("RENIEC: programa para registrar a bebés en sus 5 primeros días", "https://identidad.reniec.gob.pe/b/reniec-lanza-programa-para-registrar-a-bebes-durante-los-cinco-dias-de-nacidos"),
+       ("Andina: DNI electrónico gratuito para menores en 2026", "https://andina.pe/agencia/noticia-reniec-autoriza-dni-electronico-gratuito-para-menores-y-poblaciones-prioritarias-2026-1057151.aspx"),
+       ("Ley de gratuidad de la inscripción del nacimiento (RENIEC)", "https://identidad.reniec.gob.pe/documents/d/guest/modificatorias_a_la_ley_organica")]),
+
+ dict(N, slug="denuncia-perdida-documentos", ent="PNP", icon="📝",
+  t="Denunciar por internet la pérdida o robo de documentos",
+  r="Si perdiste o te robaron tu DNI, brevete, pasaporte u otros documentos, haz la denuncia policial por internet, gratis y a cualquier hora.",
+  quien="Cualquier persona que perdió o a quien le robaron sus documentos.",
+  nec=["Tu DNI (el número) o tu documento de identidad.", "Un correo electrónico.", "Los datos de los documentos que perdiste."],
+  costo="Gratis", pago="La denuncia digital no cuesta nada.",
+  pasos=["Entra a la web de Denuncias Digitales de la Policía.",
+         "Elige si fue pérdida o robo y escribe tus datos.",
+         "Marca los documentos que perdiste (DNI, brevete, pasaporte, SOAT, carné universitario, fotocheck, facturas o boletas).",
+         "Cuenta brevemente qué pasó y envía.",
+         "Descarga o guarda la denuncia que te llega. Úsala para sacar el duplicado de tus documentos."],
+  links=[("Denuncias Digitales de la PNP", "https://sistemas.policia.gob.pe/denuncias_digitales/"),
+         ("Sacar el duplicado de tu DNI", "duplicado-dni.html")],
+  ojo=["Este servicio es solo para documentos. Si te robaron otras cosas o hubo violencia, ve a una comisaría.",
+       "Decir datos falsos en una denuncia es delito.",
+       "Para el duplicado del DNI no siempre te piden denuncia; revisa la guía del duplicado."],
+  verif="Servicio activo desde setiembre de 2020 según TV Perú y Andina.",
+  src=[("TV Perú: PNP presenta servicio de denuncia digital", "https://www.tvperu.gob.pe/novedades/tvperu/policia-nacional-del-peru-presenta-servicio-de-denuncia-digital"),
+       ("TV Perú: casi 220 mil denuncias digitales", "https://www.tvperu.gob.pe/noticias/nacionales/casi-220-mil-denuncias-digitales-por-perdida-de-documentos-registro-la-pnp-este-ano"),
+       ("Andina: más de 600 mil denuncias digitales", "https://andina.pe/agencia/noticia-mas-600-mil-personas-han-denunciado-digitalmente-perdida-sus-documentos-936239.aspx")]),
+]
+
+# Tanda 5 (11-11-2026)
+T += [
+ dict(N, slug="record-conductor", ent="MTC", icon="🚦",
+  t="Ver tu récord de conductor y tus puntos",
+  r="Revisa gratis tus papeletas y los puntos que tienes acumulados en tu licencia de conducir.",
+  quien="Cualquier persona. Solo necesitas el DNI o el número de licencia.",
+  nec=["Tu DNI o tu número de licencia de conducir (también puedes buscar por apellidos y nombres)."],
+  costo="Gratis", pago="La consulta no cuesta nada.",
+  pasos=["Entra a la página del récord de conductor del MTC.",
+         "Elige cómo buscar: por DNI, por número de licencia o por nombres.",
+         "Escribe el dato y el código de la imagen (captcha), y pulsa «Buscar».",
+         "Revisa tus últimas papeletas, con fecha y falta, y los puntos de cada licencia."],
+  links=[("Récord de conductor (MTC)", "https://slcp.mtc.gob.pe/"),
+         ("Ver tus papeletas del SAT Lima", "papeletas-sat.html")],
+  ojo=["Si llegas a 100 puntos te suspenden la licencia: 6 meses la primera vez, 1 año la segunda y para siempre la tercera.",
+       "Las papeletas de Lima también se ven en el SAT; mira esa guía para pagarlas."],
+  verif="Pasos según El Comercio (abril de 2023); la página del MTC puede verse distinta hoy.",
+  src=[("El Comercio: cómo consultar tu récord de conductor", "https://elcomercio.pe/respuestas/mtc-como-consultar-online-tu-record-de-conductor-tramites-revtli-noticia/"),
+       ("gob.pe: Consulta tu récord de conductor", "https://www.gob.pe/341-consulta-tu-record-de-conductor")]),
+
+ dict(N, slug="multas-electorales", ent="JNE", icon="🗳️",
+  t="Consultar y pagar multas electorales",
+  r="Revisa si tienes multa por no votar o por no ir como miembro de mesa, y págala o pide la dispensa.",
+  quien="Cualquier persona con DNI.",
+  nec=["Tu número de DNI.", "Para pagar: tarjeta, Págalo.pe o ir al Banco de la Nación."],
+  costo="Consultar es gratis", pago="En Págalo.pe, en el Banco de la Nación, en los pagos en línea del JNE o en su sede central.",
+  pasos=["Entra a la consulta de multas del JNE.",
+         "Escribe tu DNI y el código de la imagen, acepta las condiciones y pulsa «Consultar».",
+         "Si tienes multa, mira el monto y desde cuándo la debes.",
+         "Págala en línea (JNE o Págalo.pe) o en el Banco de la Nación.",
+         "Si tuviste un motivo válido para no votar, pide una dispensa o justificación en vez de pagar."],
+  links=[("Consultar multas electorales (JNE)", "https://multas.jne.gob.pe/login"),
+         ("Pagos en línea del JNE", "https://pagosenlinea.jne.gob.pe/"), PAGALO],
+  ojo=["Por no votar se paga hasta el 2 % de la UIT del año de la elección (con la UIT de 2026, S/ 110). Puede ser menos según tu distrito.",
+       "Por no ir como miembro de mesa se paga el 5 % de la UIT.",
+       "Tener multas sin pagar trae restricciones civiles y notariales. Regularízala pronto.",
+       "Si crees que la multa no corresponde, puedes reclamar (reconsideración o apelación)."],
+  verif="Montos y lugares de pago según Andina (marzo de 2026). La multa usa la UIT del año en que no votaste.",
+  src=[("Andina: ¿Tienes multas electorales? Consulta aquí", "https://andina.pe/agencia/noticia-elecciones-2026-tienes-multas-electorales-consulta-aqui-1064098.aspx")]),
+
+ dict(N, slug="reclamo-indecopi", ent="Indecopi", icon="📣",
+  t="Reclamar a una empresa ante Indecopi",
+  r="Si una tienda o empresa no te cumplió, primero reclama en su Libro de Reclamaciones. Si no te hace caso, reclama gratis en Indecopi.",
+  quien="Cualquier consumidor que compró un producto o pagó un servicio.",
+  nec=["Tu DNI.", "La boleta, factura, contrato o estado de cuenta.",
+       "Pruebas: correos, capturas de pantalla o fotos.", "La respuesta del Libro de Reclamaciones, si la tienes."],
+  costo="Gratis", pago="Reclamar en Indecopi no cuesta nada.",
+  pasos=["Escribe tu reclamo en el Libro de Reclamaciones de la empresa (físico o virtual) y guarda la constancia.",
+         "La empresa debe responderte en un máximo de 15 días hábiles.",
+         "Si no responde o su respuesta no te sirve, entra a Reclama Virtual de Indecopi.",
+         "Elige el tipo de reclamo, responde las preguntas y sube tus pruebas.",
+         "Indecopi contacta a la empresa para buscar un acuerdo. Revisa el estado de tu reclamo en la misma página."],
+  links=[("Reclama Virtual (Indecopi)", "https://enlinea.indecopi.gob.pe/reclamavirtual/#/"),
+         ("gob.pe: Presentar reclamos en Indecopi", "https://www.gob.pe/532-presentar-reclamos-en-indecopi")],
+  ojo=["Reclama Virtual atiende las 24 horas, todos los días.",
+       "Según Indecopi, iniciar el trámite toma unos 6 días hábiles y resolverlo unos 17 días hábiles en promedio.",
+       "Consultas: Lima 224-7777; regiones 0-800-44040 (gratis).",
+       "El reclamo busca un acuerdo. Si quieres que multen a la empresa, eso es una denuncia, que es otro trámite."],
+  verif="Plazo de 15 días hábiles según la Ley 31435 (2022).",
+  src=[("Infobae: cómo reclamar ante Indecopi (junio de 2026)", "https://www.infobae.com/peru/2026/06/29/indecopi-como-reclamar-si-una-empresa-no-te-entrega-un-producto-o-servicio/"),
+       ("Andina: Reclama Virtual, sin costo", "https://andina.pe/ingles/noticia-indecopi-lanza-reclama-virtual-para-facilitar-procesos-iniciados-los-consumidores-770398.aspx"),
+       ("Ley 31435 (texto consolidado)", "https://leyes.congreso.gob.pe/Documentos/2021_2026/ADLP/Texto_Consolidado/31435-TXM.pdf")]),
+
+ dict(N, slug="devolucion-impuestos", ent="SUNAT", icon="💸",
+  t="Recibir tu devolución de impuestos",
+  r="Si te retuvieron más impuesto del que te tocaba por tu sueldo o tus recibos por honorarios, la SUNAT te devuelve la diferencia.",
+  quien="Trabajadores con renta de cuarta categoría (recibos por honorarios) o de quinta categoría (planilla) que tienen saldo a favor al cerrar el año.",
+  nec=["Tu DNI o RUC y tu Clave SOL.", "El código de cuenta interbancario (CCI) de tu cuenta bancaria."],
+  costo="Gratis", pago="No se paga nada.",
+  pasos=["Entra a SUNAT con tu Clave SOL y registra el CCI de tu cuenta.",
+         "Espera la devolución automática («de oficio»): la SUNAT te avisa en tu Buzón SOL y deposita en tu cuenta.",
+         "Para saber si tienes saldo a favor, revisa la opción «Renta Anual» en SUNAT.",
+         "Si no estás de acuerdo con el monto o no te llegó, presenta tu declaración anual y pide la devolución."],
+  links=[("gob.pe: Devolución de oficio de cuarta y quinta", "https://www.gob.pe/1203-devolucion-de-oficio-del-impuesto-a-la-renta-de-quinta-categoria"),
+         ("Sacar tu Clave SOL", "clave-sol.html")],
+  ojo=["Los gastos en restaurantes, hoteles, alquiler, servicios profesionales y aportes a EsSalud de trabajadores del hogar pueden darte más saldo a favor (hasta 3 UIT).",
+       "Para que cuenten, esos gastos deben tener boleta o recibo electrónico con tu DNI.",
+       "Las devoluciones se pagan a mitad de año, después de la declaración anual."],
+  verif="Según Bloomberg Línea (febrero de 2025) y El Peruano (abril de 2026). Las fechas cambian cada año.",
+  src=[("Bloomberg Línea: devolución de quinta categoría", "https://www.bloomberglinea.com/latinoamerica/peru/devolucion-de-renta-de-quinta-categoria-en-peru-para-quienes-aplica/"),
+       ("El Peruano: devolución de impuestos 2026", "https://elperuano.pe/noticia/292856-devolucion-de-impuestos-2026-como-saber-si-tienes-saldo-a-favor-y-que-hacer-para-recuperarlo")]),
+
+ dict(N, slug="registrar-marca", ent="Indecopi", icon="™️",
+  t="Registrar la marca de tu negocio",
+  r="Registrar tu marca en Indecopi impide que otros usen tu nombre o tu logo para lo mismo que vendes.",
+  quien="Personas o empresas con un nombre o logo para sus productos o servicios.",
+  nec=["Tu DNI o RUC.", "El nombre y, si tienes, el logo de tu marca.",
+       "Saber en qué «clase» va tu producto o servicio (Indecopi te orienta).", "El pago de la tasa."],
+  costo="S/ 534.90 por una clase (referencial)", pago="Págalo.pe o el Banco de la Nación, con el código de la tasa que indica Indecopi.",
+  pasos=["Busca si ya hay marcas parecidas en «Busca tu marca» de Indecopi.",
+         "Si tienes dudas, pide la asesoría gratuita de marcas de Indecopi.",
+         "Paga la tasa.",
+         "Envía tu solicitud por el Servicio en Línea de Indecopi o en sus oficinas.",
+         "Sigue tu trámite en la consulta de expedientes de marcas."],
+  links=[("Busca tu marca (Indecopi)", "https://enlinea.indecopi.gob.pe/buscatumarca/"),
+         ("Enviar la solicitud en línea", "https://servicio.indecopi.gob.pe/sel/login.jsf"),
+         ("gob.pe: Registrar una marca", "https://www.gob.pe/335")],
+  ojo=["El registro dura 10 años y se puede renovar.",
+       "Cada clase adicional cuesta aparte (alrededor de S/ 533).",
+       "Si otra persona se opone a tu marca, el trámite toma más tiempo."],
+  verif="Costos de 2026 según LaLey.pe (junio de 2026), un sitio privado; confírmalos en Indecopi antes de pagar.",
+  src=[("LaLey.pe: cuánto cuesta registrar una marca", "https://laley.pe/cuanto-cuesta-registrar-una-marca-en-indecopi/"),
+       ("El Peruano: guía para registrar una marca", "https://elperuano.pe/noticia/177417-registro-de-marca-guia-para-efectuar-el-tramite-ante-indecopi")]),
+]
+
 ORDEN = ["RENIEC", "SUNAT", "MTC", "SUNARP", "Migraciones", "PNP", "Poder Judicial", "INPE", "SAT Lima", "EsSalud", "SBS", "CONADIS",
-         "Ministerio de Trabajo", "SIS", "ONP", "MIDIS", "MINEDU", "SUNEDU", "Municipalidad"]
+         "Ministerio de Trabajo", "SIS", "ONP", "MIDIS", "MINEDU", "SUNEDU", "Pronabec", "Indecopi", "JNE", "Municipalidad"]
 ETIQ = {"RENIEC": "DNI y actas", "SUNAT": "Impuestos", "MTC": "Brevete y papeletas", "SUNARP": "Autos y propiedades",
-        "Migraciones": "Viajes", "PNP": "Antecedentes", "Poder Judicial": "Antecedentes", "INPE": "Antecedentes",
-        "Ministerio de Trabajo": "Trabajo", "SAT Lima": "Brevete y papeletas", "EsSalud": "Salud", "SBS": "Pensiones y finanzas", "CONADIS": "Salud", "SIS": "Salud", "ONP": "Pensiones y finanzas", "MIDIS": "Pensiones y finanzas",
-        "MINEDU": "Estudios", "SUNEDU": "Estudios", "Municipalidad": "Municipalidad"}
-GRUPOS = ["DNI y actas", "Impuestos", "Brevete y papeletas", "Autos y propiedades", "Viajes", "Antecedentes",
-          "Trabajo", "Salud", "Pensiones y finanzas", "Estudios", "Municipalidad"]
+        "Migraciones": "Viajes", "PNP": "Policía y justicia", "Poder Judicial": "Policía y justicia", "INPE": "Policía y justicia",
+        "Ministerio de Trabajo": "Trabajo", "SAT Lima": "Brevete y papeletas", "EsSalud": "Salud", "SBS": "Pensiones y finanzas", "CONADIS": "Salud", "SIS": "Salud", "ONP": "Pensiones y finanzas", "MIDIS": "Ayudas del Estado",
+        "MINEDU": "Estudios", "SUNEDU": "Estudios", "Pronabec": "Estudios", "Indecopi": "Consumidor y negocios", "JNE": "Elecciones", "Municipalidad": "Municipalidad"}
+# Secciones: nombre, archivo, ícono y una frase que explica qué hay dentro
+SECC = [("DNI y actas", "dni-y-actas", "🪪", "DNI, partidas de nacimiento, recién nacidos y defunciones (RENIEC)."),
+        ("Impuestos", "impuestos", "🧾", "RUC, Clave SOL, recibos por honorarios y devolución de impuestos (SUNAT)."),
+        ("Brevete y papeletas", "brevete-y-papeletas", "🚗", "Licencia de conducir, récord de conductor y papeletas."),
+        ("Autos y propiedades", "autos-y-propiedades", "🏠", "Vehículos, SOAT y propiedades inscritas en SUNARP."),
+        ("Viajes", "viajes", "✈️", "Pasaporte y movimiento migratorio."),
+        ("Policía y justicia", "policia-y-justicia", "👮", "Antecedentes policiales, penales y judiciales, y denuncias."),
+        ("Trabajo", "trabajo", "💼", "Certificado Único Laboral y CTS."),
+        ("Salud", "salud", "🏥", "SIS, EsSalud y carné de discapacidad."),
+        ("Ayudas del Estado", "ayudas-del-estado", "🤝", "Pensión 65 y pensión Contigo (MIDIS)."),
+        ("Pensiones y finanzas", "pensiones-y-finanzas", "💰", "ONP, AFP y reporte de deudas."),
+        ("Estudios", "estudios", "🎓", "Certificados, grados y Beca 18."),
+        ("Consumidor y negocios", "consumidor-y-negocios", "🛍️", "Reclamos a empresas y registro de marcas (Indecopi)."),
+        ("Elecciones", "elecciones", "🗳️", "Multas electorales y dispensas (JNE)."),
+        ("Municipalidad", "municipalidad", "🏛️", "Licencias de funcionamiento y de edificación.")]
+GRUPOS = [x[0] for x in SECC]
+SEC = {x[0]: {"slug": "seccion-" + x[1], "icon": x[2], "desc": x[3]} for x in SECC}
 def grp(d):
     return d.get("g") or ETIQ[d["ent"]]
 T.sort(key=lambda d: (GRUPOS.index(grp(d)), ORDEN.index(d["ent"])))
@@ -676,28 +910,58 @@ FOOT = '''</main>
 </html>
 '''
 
-def crumbs(extra=None):
+def crumbs(*extra):
     l = [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": BASE},
          {"@type": "ListItem", "position": 2, "name": "Trámite fácil Perú", "item": SITE}]
-    if extra: l.append({"@type": "ListItem", "position": 3, "name": extra[0], "item": extra[1]})
+    for i, (n, u) in enumerate(extra):
+        l.append({"@type": "ListItem", "position": 3 + i, "name": n, "item": u})
     return {"@type": "BreadcrumbList", "itemListElement": l}
+
+def usados():
+    return [g for g in GRUPOS if any(grp(d) == g for d in T)]
+
+def barra(actual=""):
+    """Barra de temas: en el celular se desliza de lado; en la computadora ocupa varias filas."""
+    it = [f'<a href="./"{" aria-current=\"page\"" if actual == "*" else ""}>Todos</a>']
+    for g in usados():
+        s = SEC[g]
+        cur = ' aria-current="page"' if g == actual else ""
+        it.append(f'<a href="{s["slug"]}.html"{cur}><span aria-hidden="true">{s["icon"]}</span> {e(g)}</a>')
+    return f'<nav class="temas" aria-label="Temas de trámites">{"".join(it)}</nav>\n'
+
+def tarjeta(d):
+    return f'''<a class="tram" href="{d["slug"]}.html" data-g="{e(grp(d))}" data-b="{e((d["t"]+" "+d["ent"]+" "+grp(d)+" "+d["r"]).lower())}">
+  <span class="ic" aria-hidden="true">{d["icon"]}</span>
+  <span><small>{e(d["ent"])}</small><strong>{e(d["t"])}</strong><em>{e(d["costo"])}</em></span>
+</a>'''
+
+def boton(n, u, sec=False):
+    c = "btn sec" if sec else "btn"
+    if u.startswith("http"):
+        return f'<a class="{c}" href="{e(u)}" target="_blank" rel="noopener">{e(n)} ↗</a>'
+    return f'<a class="{c}" href="{e(u)}">{e(n)} →</a>'
 
 def page(d):
     url = SITE + d["slug"] + ".html"
+    g = grp(d); s = SEC[g]; surl = SITE + s["slug"] + ".html"
     nec = "".join(f"<li>{e(x)}</li>" for x in d["nec"])
     pasos = "".join(f"<li>{e(x)}</li>" for x in d["pasos"])
     main, *rest = d["links"]
-    links = f'<a class="btn" href="{e(main[1])}" target="_blank" rel="noopener">{e(main[0])} ↗</a>'
-    links += "".join(f'<a class="btn sec" href="{e(u)}" target="_blank" rel="noopener">{e(n)} ↗</a>' for n, u in rest)
+    links = boton(*main) + "".join(boton(n, u, True) for n, u in rest)
     ojo = "".join(f"<li>{e(x)}</li>" for x in d["ojo"])
     src = " · ".join(f'<a href="{e(u)}" target="_blank" rel="noopener">{e(n)}</a>' for n, u in d["src"])
     verif = d.get("verif", "")
+    otros = [x for x in T if grp(x) == g and x is not d]
+    mas = "".join(f'<li><a href="{x["slug"]}.html"><span aria-hidden="true">{x["icon"]}</span> {e(x["t"])}</a></li>' for x in otros)
+    mas = (f'<section class="card mas"><h2>Más trámites de {e(g)}</h2><ul>{mas}</ul>'
+           f'<p><a href="{s["slug"]}.html">Ver la sección {e(g)} →</a> · <a href="./">Ver todos los trámites →</a></p></section>\n') if otros else \
+          f'<section class="card mas"><h2>¿Buscas otro trámite?</h2><p><a href="./">Ver todos los trámites →</a></p></section>\n'
     desc = f'{d["t"]} paso a paso, explicado con palabras sencillas: requisitos, costo y enlace oficial ({d["ent"]}).'
-    ld = {"@context": "https://schema.org", "@graph": [crumbs((d["t"], url)),
+    ld = {"@context": "https://schema.org", "@graph": [crumbs((g, surl), (d["t"], url)),
           {"@type": "Article", "headline": d["t"], "description": desc, "inLanguage": "es-PE",
            "dateModified": d.get("mod", "2026-11-10"), "mainEntityOfPage": url, "image": BASE + "og-imagen.png",
            "author": ORG, "publisher": ORG}]}
-    body = f'''<p class="miga"><a href="./">← Todos los trámites</a></p>
+    body = barra(g) + f'''<nav class="miga" aria-label="Estás aquí"><a href="./">Trámites</a> <span aria-hidden="true">›</span> <a href="{s["slug"]}.html">{e(g)}</a></nav>
 <article>
 <p class="ent">{e(d["ent"])}</p>
 <h1><span aria-hidden="true">{d["icon"]}</span> {e(d["t"])}</h1>
@@ -728,17 +992,28 @@ def page(d):
 <p class="rev">Revisado el {d.get("rev", REV)}. {e(verif)} Fuente: {src}</p>
 <p class="acciones"><button type="button" class="btn sec" onclick="window.print()">Imprimir esta guía</button></p>
 </article>
-'''
+''' + mas
     return head(f'{d["t"]} | Trámite fácil Perú', desc, url, ld) + body + FOOT
 
+def seccion(g):
+    s = SEC[g]; url = SITE + s["slug"] + ".html"
+    L = [d for d in T if grp(d) == g]
+    ld = {"@context": "https://schema.org", "@graph": [crumbs((g, url)),
+          {"@type": "ItemList", "name": f"Trámites de {g}", "numberOfItems": len(L),
+           "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": d["t"], "url": SITE + d["slug"] + ".html"} for i, d in enumerate(L)]}]}
+    body = barra(g) + f'''<nav class="miga" aria-label="Estás aquí"><a href="./">Trámites</a> <span aria-hidden="true">›</span> {e(g)}</nav>
+<h1><span aria-hidden="true">{s["icon"]}</span> {e(g)}</h1>
+<p class="lead">{e(s["desc"])} {len(L)} {"guía" if len(L) == 1 else "guías"} con requisitos, costo y enlace oficial.</p>
+<div class="lista" id="lista">{"".join(tarjeta(d) for d in L)}</div>
+<p><a class="btn sec volver" href="./">← Ver todos los temas</a></p>
+'''
+    return head(f'Trámites de {g} | Trámite fácil Perú', f'Guías sencillas de trámites de {g} en el Perú: {s["desc"]}', url, ld) + body + FOOT
+
 def index():
-    usados = [g for g in GRUPOS if any(grp(d) == g for d in T)]
-    chips = '<button type="button" class="chip" data-g="" aria-pressed="true">Todos</button>' + "".join(
-        f'<button type="button" class="chip" data-g="{e(g)}" aria-pressed="false">{e(g)}</button>' for g in usados)
-    cards = "".join(f'''<a class="tram" href="{d["slug"]}.html" data-g="{e(grp(d))}" data-b="{e((d["t"]+" "+d["ent"]+" "+grp(d)+" "+d["r"]).lower())}">
-  <span class="ic" aria-hidden="true">{d["icon"]}</span>
-  <span><small>{e(d["ent"])}</small><strong>{e(d["t"])}</strong><em>{e(d["costo"])}</em></span>
-</a>''' for d in T)
+    U = usados()
+    tiles = "".join(f'''<a class="tema" href="{SEC[g]["slug"]}.html"><span class="ic" aria-hidden="true">{SEC[g]["icon"]}</span><span><strong>{e(g)}</strong><small>{sum(grp(d) == g for d in T)} guías</small></span></a>''' for g in U)
+    grupos = "".join(f'''<section class="grupo" data-grupo="{e(g)}"><h2><a href="{SEC[g]["slug"]}.html"><span aria-hidden="true">{SEC[g]["icon"]}</span> {e(g)}</a></h2>
+<div class="lista">{"".join(tarjeta(d) for d in T if grp(d) == g)}</div></section>''' for g in U)
     ld = {"@context": "https://schema.org", "@graph": [crumbs(),
           {"@type": "ItemList", "name": "Trámites del Perú paso a paso", "numberOfItems": len(T),
            "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": d["t"], "url": SITE + d["slug"] + ".html"} for i, d in enumerate(T)]}]}
@@ -746,10 +1021,11 @@ def index():
 <p class="lead">Elige tu trámite. Te decimos qué necesitas, cuánto cuesta y te llevamos a la página oficial para hacerlo. Gratis y sin registrarte. Ya hay {len(T)} guías y seguimos agregando más.</p>
 <label class="buscar"><span>¿Qué trámite buscas?</span>
 <input type="search" id="q" placeholder="Ej.: DNI, brevete, SIS" autocomplete="off"></label>
-<div class="chips" role="group" aria-label="Filtrar por tema">{chips}</div>
 <p id="cuenta" class="cuenta" aria-live="polite"></p>
-<p id="nada" class="hidden">No encontramos ese trámite. Prueba con otra palabra o elige «Todos».</p>
-<div class="lista" id="lista">{cards}</div>
+<p id="nada" class="hidden">No encontramos ese trámite. Prueba con otra palabra o mira los temas.</p>
+<section id="temas-caja"><h2>O elige un tema</h2>
+<div class="temas-grid">{tiles}</div></section>
+<div id="lista">{grupos}</div>
 
 <section class="card ojo">
 <h2>Consejos para no caer en estafas</h2>
@@ -763,17 +1039,16 @@ def index():
 <script>
 (function(){{
   var q=document.getElementById('q'), it=document.querySelectorAll('.tram'), nada=document.getElementById('nada'),
-      cuenta=document.getElementById('cuenta'), chips=document.querySelectorAll('.chip'), g='';
+      cuenta=document.getElementById('cuenta'), gr=document.querySelectorAll('.grupo'), caja=document.getElementById('temas-caja');
   function n(s){{return s.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();}}
   function filtrar(){{
     var v=n(q.value.trim()), c=0;
-    it.forEach(function(a){{var ok=(!g||a.dataset.g===g)&&(!v||n(a.dataset.b).indexOf(v)>-1); a.hidden=!ok; if(ok)c++;}});
+    it.forEach(function(a){{var ok=!v||n(a.dataset.b).indexOf(v)>-1; a.hidden=!ok; if(ok)c++;}});
+    gr.forEach(function(s){{s.hidden=!s.querySelector('.tram:not([hidden])');}});
+    caja.hidden=!!v;
     nada.classList.toggle('hidden',c>0);
-    cuenta.textContent=c+(c===1?' trámite':' trámites');
+    cuenta.textContent=v?(c+(c===1?' trámite encontrado':' trámites encontrados')):'';
   }}
-  chips.forEach(function(b){{b.addEventListener('click',function(){{
-    g=b.dataset.g; chips.forEach(function(x){{x.setAttribute('aria-pressed',String(x===b));}}); filtrar();
-  }});}});
   q.addEventListener('input',filtrar);
   filtrar();
 }})();
@@ -786,5 +1061,7 @@ def index():
 os.makedirs(OUT, exist_ok=True)
 for d in T:
     open(os.path.join(OUT, d["slug"] + ".html"), "w").write(page(d))
+for g in usados():
+    open(os.path.join(OUT, SEC[g]["slug"] + ".html"), "w").write(seccion(g))
 open(os.path.join(OUT, "index.html"), "w").write(index())
-print(len(T), "páginas")
+print(len(T), "guías y", len(usados()), "secciones")
