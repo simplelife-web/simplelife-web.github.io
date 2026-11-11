@@ -36,6 +36,12 @@ BCRP_CAMBIO = ("Andina: el BCRP ofertó US$ 10 700 millones en 2021 para atenuar
 INDECOPI = ("Andina: el Indecopi sanciona un cártel de precios del pavo (2022)", "https://andina.pe/agencia/noticia-indecopi-sanciona-a-empresas-formaron-cartel-para-concertar-precio-del-pavo-889126.aspx")
 CANON = ("Andina: el MEF aprueba los índices de distribución del canon minero (50 % del impuesto a la renta minero)", "https://andina.pe/agencia/noticia-canon-minero-mef-aprueba-indices-distribucion-para-gobiernos-regionales-y-locales-1081257.aspx")
 MOODYS = ("El Peruano: Moody's ratifica el grado de inversión del Perú (Baa1)", "https://elperuano.pe/noticia/286016-moodys-solida-posicion-financiera-del-peru-respalda-grado-de-inversion")
+BN = ("Andina: el Banco de la Nación cumple 60 años con presencia en el 94 % del país (enero de 2026)", "https://andina.pe/agencia/noticia-banco-de-nacion-cumple-60-anos-presencia-el-94-del-pais-1060464.aspx")
+TLC_EEUU = ("Andina: décimo aniversario del TLC Perú-EE. UU., vigente desde el 1 de febrero de 2009", "https://andina.pe/ingles/noticia-cancilleria-conmemora-decimo-aniversario-vigencia-del-tlc-perueeuu-777291.aspx")
+NRUS = ("El Peruano: el Nuevo RUS, la opción para formalizarse desde S/ 20 al mes (2023)", "https://www.elperuano.pe/noticia/221899")
+TASA_425 = ("Andina: el BCRP mantuvo su tasa de referencia en 4.25 % (mayo de 2026)", "https://andina.pe/agencia/noticia-bcr-mantuvo-tasa-interes-referencia-425-1075194.aspx")
+CONST_TRIBUTOS = ("Constitución Política del Perú, capítulo «Del régimen tributario y presupuestal» (artículos 74 a 82)", "https://peru.justia.com/federales/constitucion-politica-del-peru-de-1993/titulo-iii/capitulo-iv")
+CONST_BANCA = ("Constitución Política del Perú, capítulo «De la moneda y la banca» (artículos 83 a 87)", "https://peru.justia.com/federales/constitucion-politica-del-peru-de-1993/titulo-iii/capitulo-v")
 
 FUENTES = {
     "inflacion": [ANDINA_METAS, BM_INFLACION, INEI_GLOSARIO],
@@ -82,4 +88,15 @@ FUENTES = {
     "calificacion-de-riesgo": [MOODYS],
     "reservas-internacionales": [MEF_EXTERNO],
     "hiperinflacion": [BM_INFLACION],
+    "banco-de-la-nacion": [BN],
+    "zona-de-libre-comercio": [TLC_EEUU],
+    "nuevo-rus": [NRUS],
+    "tasa-de-interes-interbancaria": [TASA_425],
+    "tributo": [CONST_TRIBUTOS],
+    "exoneracion-tributaria": [CONST_TRIBUTOS],
+    "presupuesto-publico": [CONST_TRIBUTOS],
+    "sbs": [CONST_BANCA],
+    "regimen-cambiario": [BCRP_CAMBIO],
+    "intervencion-cambiaria": [BCRP_CAMBIO],
+    "politica-anticiclica": [TASA_025],
 }
