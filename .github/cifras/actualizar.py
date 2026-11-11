@@ -40,7 +40,7 @@ BCRP = {
     "desempleo": ("PN38063GM", False, "Tasa de desempleo en Lima Metropolitana", "promedio móvil de 3 meses", "pct1"),
     "cobre": ("PD04701XD", True, "Precio del cobre (Londres)", "dólares por libra", "cobre"),
     "oro": ("PD04704XD", True, "Precio del oro (Londres)", "dólares por onza troy", "oro"),
-    "embig": ("PD04709XD", True, "Riesgo país del Perú (EMBIG)", "puntos básicos", "entero"),
+    "embig": ("PN01129XM", False, "Riesgo país del Perú (EMBIG, promedio del mes)", "", "entero"),
 }
 # Índice de precios sin alimentos y energía: la inflación subyacente se calcula a 12 meses.
 SUBYACENTE = "PN38707PM"

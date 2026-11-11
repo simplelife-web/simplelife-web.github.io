@@ -402,5 +402,9 @@ if __name__ == "__main__":
             fallas.append(nombre)
     if len(fallas) == 3:
         sys.exit(1)
+    # Fecha de la revisión de hoy (la página la muestra como "Actualizado el…"),
+    # aunque las fuentes no hayan publicado datos nuevos.
+    with open(os.path.join(CARPETA, "revisado.json"), "w", encoding="utf-8") as f:
+        json.dump({"revisado": HOY.isoformat(), "fallaron": fallas}, f, ensure_ascii=False)
     if fallas:
         print("Se actualizó lo demás. Fallaron: " + ", ".join(fallas))

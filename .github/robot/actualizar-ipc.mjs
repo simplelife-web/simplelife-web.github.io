@@ -58,11 +58,12 @@ const salida = {
   indice: meses.map(([, v]) => v)
 };
 
+// Se guarda todos los días: si no hay mes nuevo, solo cambia "revisado" (la fecha que
+// muestra la página como "Actualizado el…").
 if (existsSync(ARCHIVO)) {
   const antes = JSON.parse(readFileSync(ARCHIVO, "utf8"));
   if (antes.hasta === salida.hasta && JSON.stringify(antes.indice) === JSON.stringify(salida.indice)) {
-    console.log(`Sin cambios: el último dato sigue siendo ${salida.hasta}.`);
-    process.exit(0);
+    console.log(`Sin mes nuevo: el último dato sigue siendo ${salida.hasta}. Solo se anota la revisión de hoy.`);
   }
 }
 mkdirSync(new URL("inflacion/", RAIZ), { recursive: true });
