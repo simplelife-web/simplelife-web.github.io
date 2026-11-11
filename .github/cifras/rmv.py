@@ -37,8 +37,11 @@ def _monto(txt):
 
 
 def buscar_en_texto(texto, actual):
-    """Devuelve [{valor, desde, norma}] de los decretos -TR que fijan una RMV nueva.
+    """Devuelve [{valor, desde, norma}] de los decretos -TR que fijan una RMV con fecha de inicio.
 
+    Solo cuenta un monto si viene seguido de «a partir del <fecha>», como en
+    «…pasa a ascender a S/ 1,230.00 (Un Mil Doscientos Treinta y 00/100 Soles), a partir del
+    1 de octubre de 2026». Así no se confunde con montos de los considerandos o metas futuras.
     actual: la RMV vigente; solo se aceptan montos razonables (entre 90 % y 150 % de ella).
     """
     t = _plano(texto)
@@ -46,24 +49,17 @@ def buscar_en_texto(texto, actual):
     cabeceras = list(re.finditer(r"decreto supremo\s*n[^0-9]{0,4}(\d{3}-\d{4}-tr)\b", t))
     for i, cab in enumerate(cabeceras):
         fin = cabeceras[i + 1].start() if i + 1 < len(cabeceras) else min(len(t), cab.end() + 15000)
-        seg = t[max(0, cab.start() - 600):fin]  # la sumilla va justo antes del número
+        seg = t[cab.start():fin]
         if "remuneracion minima vital" not in seg:
             continue
-        montos = []
-        for m in re.finditer(r"remuneracion minima vital", seg):
-            ventana = seg[m.start():m.start() + 700]
-            for a in re.finditer(r"s/\s?(\d[\d .,]{2,10}\d)", ventana):
-                v = _monto(a.group(1))
-                if v and actual * 0.9 <= v <= actual * 1.5:
-                    montos.append(v)
-        if not montos:
-            continue
-        valor = max(montos)
-        desde = None
-        f = re.search(r"a partir del?\s+(\d{1,2})\s*[o°º]?\s+de\s+([a-z]+)\s+(?:de|del)\s+(?:ano\s+)?(\d{4})", seg)
-        if f and f.group(2) in MESES:
-            desde = "%s-%02d-%02d" % (f.group(3), MESES[f.group(2)], int(f.group(1)))
-        hallados.append({"valor": valor, "desde": desde, "norma": "Decreto Supremo N.° " + cab.group(1).upper()})
+        for m in re.finditer(r"s/\s?(\d[\d .,]{2,10}\d)\s*(?:\([^)]{0,120}\))?\s*,?\s*a partir del?\s+(\d{1,2})\s*[o°º]?\s+de\s+([a-z]+)\s+(?:de|del)\s+(?:ano\s+)?(\d{4})", seg):
+            v = _monto(m.group(1))
+            if not v or not actual * 0.9 <= v <= actual * 1.5 or m.group(3) not in MESES:
+                continue
+            if "remuneracion minima vital" not in seg[max(0, m.start() - 400):m.start()]:
+                continue
+            desde = "%s-%02d-%02d" % (m.group(4), MESES[m.group(3)], int(m.group(2)))
+            hallados.append({"valor": v, "desde": desde, "norma": "Decreto Supremo N.° " + cab.group(1).upper()})
     return hallados
 
 
@@ -82,7 +78,7 @@ def pdf_a_texto(datos):
 
 def dispositivos(fechas, max_paginas=15):
     """Normas de esas fechas (AAAAMMDD), ediciones ordinaria (NL) y extraordinaria (EX), cuya
-    sumilla menciona la Remuneración Mínima Vital. Devuelve [(código, url_pdf, sumilla)]."""
+    sumilla menciona la Remuneración Mínima Vital. Devuelve [(página, url_pdf, sumilla)]."""
     hallados = {}
     for f in fechas:
         for tipo in ("NL", "EX"):
@@ -105,23 +101,23 @@ def dispositivos(fechas, max_paginas=15):
                     previo = m.end()
                     vistos_pag.add(m.group(1))
                     if "remuneracion minima vital" in _plano(contexto):
-                        hallados[m.group(1)] = (m.group(1), PORTADA.rstrip("/") + m.group(0),
+                        hallados[m.group(1)] = (f"{PORTADA}dispositivo/{tipo}/{m.group(1)}", PORTADA.rstrip("/") + m.group(0),
                                                 re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", contexto))[-300:])
             print(f"  El Peruano {f} {tipo}: {len(vistos_pag)} normas revisadas")
     return list(hallados.values())
 
 
 def revisar(actual, fechas):
-    """Busca decretos nuevos de la RMV en El Peruano en esas fechas. Devuelve [{valor, desde, norma, pdf}]."""
+    """Busca decretos nuevos de la RMV en El Peruano en esas fechas. Devuelve [{valor, desde, norma, enlace}]."""
     salida = []
-    for codigo, url, _ in dispositivos(fechas):
+    for pagina, url, _ in dispositivos(fechas):
         try:
             texto = pdf_a_texto(traer(url))
         except Exception as e:  # noqa: BLE001
             print(f"  aviso: no se pudo leer {url}: {e}")
             continue
         for h in buscar_en_texto(texto, actual):
-            h["pdf"] = url
+            h["enlace"] = pagina
             salida.append(h)
     return salida
 

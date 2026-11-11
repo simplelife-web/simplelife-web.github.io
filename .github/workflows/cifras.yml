@@ -1,6 +1,7 @@
 # Robot de "Cifras al día" del Glosario económico: cada día descarga las cifras
 # oficiales vigentes (tipo de cambio, tasa de referencia, reservas, inflación, PBI,
-# desempleo, cobre, oro, UIT...) y actualiza glosario/cifras.json. No toca las
+# desempleo, cobre, oro, UIT y el sueldo mínimo, que busca en el diario oficial
+# El Peruano) y actualiza glosario/cifras.json. No toca las
 # definiciones del glosario. Es gratis y no necesitas hacer nada.
 # Para lanzarlo a mano: pestaña Actions → "Robot cifras del glosario" → Run workflow.
 name: Robot cifras del glosario
@@ -28,6 +29,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Instalar lector de PDF (para leer El Peruano)
+        run: sudo apt-get install -y -qq poppler-utils
       - name: Descargar cifras oficiales
         run: python3 .github/cifras/actualizar.py
       - name: Guardar los datos nuevos

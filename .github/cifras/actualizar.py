@@ -1,7 +1,7 @@
 """Robot de "Cifras al día" del Glosario económico (Simplelife).
 
 Cada día descarga las cifras oficiales vigentes (tipo de cambio, tasa de referencia,
-reservas, inflación, PBI, desempleo, cobre, oro, UIT...) y las guarda en
+reservas, inflación, PBI, desempleo, cobre, oro, UIT y sueldo mínimo) y las guarda en
 glosario/cifras.json. El archivo glosario/cifras.js las muestra en un recuadro
 "Cifra oficial al día" dentro de cada término relacionado. Las definiciones del
 glosario NO se tocan: viven en .github/glosario/ (otro generador).
@@ -14,8 +14,12 @@ import json
 import os
 import re
 import time
+import sys
 import urllib.request
 from datetime import date, timedelta
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import rmv  # noqa: E402
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", ".."))
 ARCHIVO = os.path.join(RAIZ, "glosario", "cifras.json")
@@ -46,10 +50,12 @@ BCRP = {
 SUBYACENTE = "PN38707PM"
 
 # ---------- Cifras fijadas por norma ----------
-# La UIT se lee de la tabla de la SUNAT. La remuneración mínima no tiene una fuente
-# que se pueda leer de forma automática: se cambia aquí cuando sale un nuevo decreto.
-RMV = {"valor": 1230, "desde": "2026-10-01", "norma": "Decreto Supremo 015-2026-TR",
-       "enlace": "https://www.gob.pe/institucion/mtpe/normas-legales"}
+# La UIT se lee de la tabla de la SUNAT. La remuneración mínima vital (RMV) se busca cada
+# día en el diario oficial El Peruano (ver rmv.py): si sale un decreto nuevo, se agrega solo
+# a "rmv_tramos" de cifras.json. Este es el punto de partida, por si ese archivo no existe.
+RMV_INICIAL = [{"valor": 1230, "desde": "2026-10-01", "norma": "Decreto Supremo N.° 015-2026-TR",
+                "enlace": "https://busquedas.elperuano.pe/dispositivo/EX/2559163-1"}]
+DIAS_EL_PERUANO = 3  # hoy y los 2 días anteriores (por si un día el robot no pudo correr)
 
 # ---------- Qué cifras se muestran en cada término del glosario ----------
 TERMINOS = {
@@ -148,10 +154,12 @@ def uit():
 
 
 def main():
-    antes = {}
+    antes, tramos = {}, list(RMV_INICIAL)
     if os.path.exists(ARCHIVO):
         with open(ARCHIVO, encoding="utf-8") as f:
-            antes = json.load(f).get("cifras", {})
+            previo = json.load(f)
+        antes = previo.get("cifras", {})
+        tramos = previo.get("rmv_tramos") or tramos
     cifras = {}
 
     for clave, (cod, diaria, nombre, unidad, formato) in BCRP.items():
@@ -198,8 +206,25 @@ def main():
         if "uit" in antes:
             cifras["uit"] = antes["uit"]
 
-    cifras["rmv"] = {"nombre": "Remuneración mínima vital", "valor": RMV["valor"], "unidad": "al mes", "formato": "soles",
-                     "fecha": RMV["desde"], "desde": True, "fuente": "MTPE, " + RMV["norma"], "enlace": RMV["enlace"]}
+    # Remuneración mínima vital: decretos nuevos en El Peruano
+    vigentes = [t for t in tramos if t["desde"] <= HOY.isoformat()] or tramos[:1]
+    try:
+        fechas = [(HOY - timedelta(days=d)).strftime("%Y%m%d") for d in range(DIAS_EL_PERUANO)]
+        for h in rmv.revisar(vigentes[-1]["valor"], fechas):
+            if not any(t["norma"] == h["norma"] and t["desde"] == h["desde"] for t in tramos):
+                print(f"RMV NUEVA: S/ {h['valor']} desde {h['desde']} ({h['norma']})")
+                tramos.append(h)
+        tramos.sort(key=lambda t: t["desde"])
+    except Exception as e:  # noqa: BLE001
+        print(f"aviso: no se pudo revisar El Peruano: {e}")
+    vigentes = [t for t in tramos if t["desde"] <= HOY.isoformat()] or tramos[:1]
+    v = vigentes[-1]
+    cifras["rmv"] = {"nombre": "Remuneración mínima vital", "valor": v["valor"], "unidad": "al mes", "formato": "soles",
+                     "fecha": v["desde"], "desde": True, "fuente": "El Peruano, " + v["norma"], "enlace": v["enlace"]}
+    futuros = [t for t in tramos if t["desde"] > HOY.isoformat()]
+    if futuros:
+        cifras["rmv"]["proximo"] = {"valor": futuros[0]["valor"], "desde": futuros[0]["desde"]}
+    print(f"rmv: {v['valor']} ({v['desde']})" + (f", luego {futuros[0]['valor']} ({futuros[0]['desde']})" if futuros else ""))
 
     if len(cifras) < 10:
         raise SystemExit(f"Solo {len(cifras)} cifras: algo anda mal, no se guarda nada")
@@ -208,7 +233,8 @@ def main():
               "nota": "Cifras oficiales vigentes. Las diarias se publican cada día hábil; las mensuales, una vez al mes.",
               "cifras": cifras,
               "terminos": {k: [c for c in v if c in cifras] for k, v in TERMINOS.items()},
-              "portada": [c for c in PORTADA if c in cifras]}
+              "portada": [c for c in PORTADA if c in cifras],
+              "rmv_tramos": tramos}
     with open(ARCHIVO, "w", encoding="utf-8") as f:
         json.dump(salida, f, ensure_ascii=False, indent=1)
         f.write("\n")
