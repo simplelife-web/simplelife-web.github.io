@@ -69,6 +69,22 @@ def texto_plano(s):
 
 
 TERMINOS = terminos1.T + terminos2.T + terminos3.T
+
+
+def _sin_barras(v):
+    # En las cadenas r"..." un \" queda con la barra; en el HTML debe ser solo ".
+    if isinstance(v, str):
+        return v.replace('\\"', '"')
+    if isinstance(v, list):
+        return [_sin_barras(x) for x in v]
+    if isinstance(v, tuple):
+        return tuple(_sin_barras(x) for x in v)
+    if isinstance(v, dict):
+        return {k: _sin_barras(x) for k, x in v.items()}
+    return v
+
+
+TERMINOS = [_sin_barras(t) for t in TERMINOS]
 TERMINOS.sort(key=lambda t: sin_tildes(t["t"]))
 POR_SLUG = {t["slug"]: t for t in TERMINOS}
 assert len(POR_SLUG) == len(TERMINOS), "Hay slugs repetidos"
