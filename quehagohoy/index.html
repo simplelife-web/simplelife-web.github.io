@@ -264,7 +264,7 @@
 
   // ---- Estado ----
   var F = { cuando: "hoy", tipo: "", publico: "", gratis: false, distrito: "" };
-  var LUGARES = [], EVENTOS = [], marcadores = {}, yo = null;
+  var LUGARES = [], EVENTOS = [], DISTRITOS = {}, marcadores = {}, yo = null;
 
   // ---- Mapa ----
   var mapa = L.map("mapa", { scrollWheelZoom: false, tap: true }).setView([-12.07, -77.03], 11);
@@ -282,8 +282,8 @@
   function lugarAbiertoEn(l, d) { return !l.dias || l.dias.indexOf(d.getDay()) > -1; }
   function diasDeFiltro() { return F.cuando === "hoy" ? [HOY] : F.cuando === "finde" ? (HOY.getDay() === 0 ? [HOY] : [SAB, DOM]) : null; }
 
-  function pasaLugar(l) {
-    if (F.distrito && l.distrito !== F.distrito) return false;
+  function pasaLugar(l, sinDistrito) {
+    if (!sinDistrito && F.distrito && l.distrito !== F.distrito) return false;
     if (F.tipo && F.tipo !== l.tipo) return false;
     if (F.publico && l.publico.indexOf(F.publico) < 0) return false;
     var ds = diasDeFiltro();
@@ -370,22 +370,32 @@
     var h = Math.sin(x / 2) * Math.sin(x / 2) + Math.cos(a * Math.PI / 180) * Math.cos(c * Math.PI / 180) * Math.sin(y / 2) * Math.sin(y / 2);
     return 2 * R * Math.asin(Math.sqrt(h));
   }
-  function ordenarPorCercania(arr) {
-    if (!yo) return arr;
+  function ordenarPorCercania(arr, centro) {
+    var c = centro || yo;
+    if (!c) return arr;
     return arr.slice().sort(function (p, q) {
-      var dp = p.lat == null ? 1e9 : distanciaKm(yo[0], yo[1], p.lat, p.lon), dq = q.lat == null ? 1e9 : distanciaKm(yo[0], yo[1], q.lat, q.lon);
+      var dp = p.lat == null ? 1e9 : distanciaKm(c[0], c[1], p.lat, p.lon), dq = q.lat == null ? 1e9 : distanciaKm(c[0], c[1], q.lat, q.lon);
       return dp - dq;
     });
   }
 
   var visibles = [];
   function pintar() {
-    var lu = ordenarPorCercania(LUGARES.filter(pasaLugar));
-    var ev = ordenarPorCercania(EVENTOS.filter(pasaEvento));
+    var centro = F.distrito && DISTRITOS[F.distrito] ? DISTRITOS[F.distrito] : null;
+    var lu = ordenarPorCercania(LUGARES.filter(function (l) { return pasaLugar(l); }), centro);
+    var ev = ordenarPorCercania(EVENTOS.filter(pasaEvento), centro);
     if (F.tipo === "evento") lu = [];
     if (F.tipo && F.tipo !== "evento" && F.tipo !== "cultura") ev = [];
 
-    document.getElementById("listaLugares").innerHTML = lu.length ? lu.map(tarjetaLugar).join("") :
+    // Si el distrito todavía no tiene lugares, mostramos los más cercanos a él
+    var cercanos = false;
+    if (centro && !lu.length && F.tipo !== "evento") {
+      lu = ordenarPorCercania(LUGARES.filter(function (l) { return pasaLugar(l, true); }), centro).slice(0, 6);
+      cercanos = lu.length > 0;
+    }
+    var nota = cercanos ? '<p class="vacio" style="grid-column:1/-1">Todavía no tenemos lugares dentro de ' + esc(F.distrito) +
+      '. Estos son los más cercanos (a unos ' + Math.round(distanciaKm(centro[0], centro[1], lu[0].lat, lu[0].lon)) + ' km o más):</p>' : "";
+    document.getElementById("listaLugares").innerHTML = lu.length ? nota + lu.map(tarjetaLugar).join("") :
       '<p class="vacio">No hay lugares con estos filtros. Prueba con «Cualquier día» u otro distrito.</p>';
     document.getElementById("listaEventos").innerHTML = ev.length ? ev.map(tarjetaEvento).join("") :
       '<p class="vacio">' + (EVENTOS.length ? "No hay eventos con estos filtros. Prueba con «Cualquier día» u otro distrito." :
@@ -408,12 +418,15 @@
       m.addTo(capa); marcadores[e.id] = m; puntos.push([lat, lon]); visibles.push(e);
     });
     if (yo) { L.marker(yo, { icon: icono("yo"), title: "Tú estás aquí" }).bindPopup("Tú estás aquí").addTo(capa); }
+
+    if (centro && cercanos) L.circleMarker(centro, { radius: 10, color: "#2a7de1", weight: 3, fillOpacity: .15 }).bindTooltip(F.distrito, { permanent: true, direction: "top" }).addTo(capa);
+    if (centro && cercanos) puntos.push(centro);
     if (puntos.length && !yo) mapa.fitBounds(puntos, { padding: [30, 30], maxZoom: 15 });
 
     var n = lu.length + ev.length;
     document.getElementById("resumen").textContent = n + (n === 1 ? " plan encontrado" : " planes encontrados") +
       (F.cuando === "hoy" ? " para hoy, " + bonita(HOY) : F.cuando === "finde" ? " para este fin de semana" : "") +
-      (F.distrito ? " en " + F.distrito : "") + ".";
+      (F.distrito ? (cercanos ? " cerca de " : " en ") + F.distrito : "") + ".";
   }
 
   function verEnMapa(id) {
@@ -459,15 +472,28 @@
 
   // ---- Cargar datos ----
   function cargar(url) { return fetch(url, { cache: "no-cache" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
-  Promise.all([cargar("lugares.json"), cargar("eventos.json").catch(function () { return { eventos: [] }; })]).then(function (res) {
+  Promise.all([cargar("lugares.json"), cargar("eventos.json").catch(function () { return { eventos: [] }; }),
+               cargar("distritos.json").catch(function () { return { provincias: {} }; })]).then(function (res) {
     LUGARES = res[0].lugares || [];
     var datos = res[1] || {};
     EVENTOS = (datos.eventos || []).map(function (e, i) { e.id = "ev" + i; return e; });
-    var distritos = {};
-    LUGARES.concat(EVENTOS).forEach(function (x) { if (x.distrito && x.distrito !== "Lima") distritos[x.distrito] = 1; });
+    // Lista con los 43 distritos de Lima y los 7 del Callao; entre paréntesis, cuántos lugares tiene cada uno
+    var prov = res[2].provincias || {}, cuenta = {};
+    LUGARES.forEach(function (l) { cuenta[l.distrito] = (cuenta[l.distrito] || 0) + 1; });
     var sel = document.getElementById("distrito");
-    Object.keys(distritos).sort(function (a, b) { return norm(a).localeCompare(norm(b)); }).forEach(function (d) {
-      var o = document.createElement("option"); o.value = d; o.textContent = d; sel.appendChild(o);
+    Object.keys(prov).forEach(function (p) {
+      var g = document.createElement("optgroup"); g.label = p;
+      Object.keys(prov[p]).sort(function (a, b) { return norm(a).localeCompare(norm(b)); }).forEach(function (d) {
+        DISTRITOS[d] = prov[p][d];
+        var o = document.createElement("option"); o.value = d; o.textContent = d + (cuenta[d] ? " (" + cuenta[d] + ")" : ""); g.appendChild(o);
+      });
+      sel.appendChild(g);
+    });
+    // Distritos de los datos que no estén en la lista (por si acaso)
+    LUGARES.concat(EVENTOS).forEach(function (x) {
+      if (x.distrito && x.distrito !== "Lima" && !DISTRITOS[x.distrito]) {
+        DISTRITOS[x.distrito] = null; var o = document.createElement("option"); o.value = x.distrito; o.textContent = x.distrito; sel.appendChild(o);
+      }
     });
     if (datos.actualizado) {
       var d = new Date(datos.actualizado);

@@ -17,6 +17,7 @@ Mapa de planes gratis o económicos en Lima (OpenStreetMap con Leaflet, copiado 
 
 - `quehagohoy/lugares.json`: lugares fijos (museos, parques, paseos) con su enlace oficial.
 - `quehagohoy/fuentes.json`: páginas oficiales que revisa el robot.
+- `quehagohoy/distritos.json`: los 43 distritos de Lima y los 7 del Callao con su centro aproximado. Si un distrito aún no tiene lugares, la página muestra los más cercanos.
 - `quehagohoy/eventos.json`: lo escribe solo el robot. No se edita a mano.
 - Robot: `.github/robot/buscar-eventos.mjs`, lanzado por `.github/workflows/quehagohoy.yml` cada día a las 6:00 a. m. de Lima (GitHub Actions, gratis). Lee la agenda solo si la página la publica en formato abierto (calendario de WordPress o RSS) y respeta su `robots.txt`. Cada evento enlaza a su publicación oficial; los vencidos se ocultan solos.
 - El primer domingo de cada mes (Museos Abiertos, Ley 30599) lo calcula la propia página.
