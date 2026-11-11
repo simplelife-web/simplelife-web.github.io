@@ -80,47 +80,52 @@ def pdf_a_texto(datos):
     return r.stdout.decode("utf-8", "replace")
 
 
-def cuadernillos(fechas):
-    """Lista de (nombre, url) de los cuadernillos de Normas Legales (NL y EX) de esas fechas (AAAAMMDD)."""
-    vistos = {}
+def dispositivos(fechas, max_paginas=15):
+    """Normas de esas fechas (AAAAMMDD), ediciones ordinaria (NL) y extraordinaria (EX), cuya
+    sumilla menciona la Remuneración Mínima Vital. Devuelve [(código, url_pdf, sumilla)]."""
+    hallados = {}
     for f in fechas:
         for tipo in ("NL", "EX"):
-            url = f"{PORTADA}?fechaIni={f}&fechaFin={f}&tipoPublicacion={tipo}&ci=ONLY&start=0"
-            try:
-                html = traer(url, 60).decode("utf-8", "replace")
-            except Exception as e:  # noqa: BLE001
-                print(f"  aviso: no se pudo abrir {url}: {e}")
-                continue
-            for m in re.finditer(r'(/api/archivo/file/[^"\\\s]+?/((?:NL|EX)(\d{8})[^"\\/\s]*\.pdf))', html):
-                if m.group(3) == f:
-                    vistos[m.group(2)] = PORTADA.rstrip("/") + m.group(1)
-    return sorted(vistos.items())
+            vistos_pag = set()
+            for pag in range(max_paginas):
+                url = f"{PORTADA}?fechaIni={f}&fechaFin={f}&tipoPublicacion={tipo}&ci=ONLY&start={pag * 20}"
+                try:
+                    html = traer(url, 60).decode("utf-8", "replace").replace('\\"', '"')
+                except Exception as e:  # noqa: BLE001
+                    print(f"  aviso: no se pudo abrir {url}: {e}")
+                    break
+                pdfs = list(re.finditer(r'/api/archivo/file/[^"\s]+?/\*/(\d+-\d+)\.PDF', html))
+                nuevos = [m for m in pdfs if m.group(1) not in vistos_pag]
+                if not nuevos:
+                    break
+                previo = 0
+                for m in pdfs:
+                    contexto = html[max(previo, m.start() - 1500):m.start()]
+                    previo = m.end()
+                    vistos_pag.add(m.group(1))
+                    if "remuneracion minima vital" in _plano(contexto):
+                        hallados[m.group(1)] = (m.group(1), PORTADA.rstrip("/") + m.group(0),
+                                                re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", contexto))[-300:])
+            print(f"  El Peruano {f} {tipo}: {len(vistos_pag)} normas revisadas")
+    return list(hallados.values())
 
 
-def revisar(actual, ya_vistos, fechas):
-    """Revisa los cuadernillos nuevos. Devuelve (hallados, nombres_revisados)."""
-    hallados, revisados = [], []
-    for nombre, url in cuadernillos(fechas):
-        if nombre in ya_vistos:
-            continue
+def revisar(actual, fechas):
+    """Busca decretos nuevos de la RMV en El Peruano en esas fechas. Devuelve [{valor, desde, norma, pdf}]."""
+    salida = []
+    for codigo, url, _ in dispositivos(fechas):
         try:
             texto = pdf_a_texto(traer(url))
         except Exception as e:  # noqa: BLE001
-            print(f"  aviso: no se pudo leer {nombre}: {e}")
+            print(f"  aviso: no se pudo leer {url}: {e}")
             continue
-        if len(texto) < 2000:
-            print(f"  aviso: {nombre} casi sin texto; se intentará otra vez")
-            continue
-        revisados.append(nombre)
         for h in buscar_en_texto(texto, actual):
-            h["edicion"] = nombre
-            hallados.append(h)
-        print(f"  El Peruano {nombre}: revisado")
-    return hallados, revisados
+            h["pdf"] = url
+            salida.append(h)
+    return salida
 
 
 if __name__ == "__main__":
-    # Prueba: python3 rmv.py archivo.pdf 1130
+    # Prueba: python3 rmv.py 1130 20260928 [más fechas]
     import sys
-    datos = open(sys.argv[1], "rb").read()
-    print(buscar_en_texto(pdf_a_texto(datos), int(sys.argv[2])))
+    print(revisar(int(sys.argv[1]), sys.argv[2:]))
