@@ -1,7 +1,7 @@
 // Robot de la "Calculadora de inflación Perú"
 // Descarga del BCRP (Banco Central de Reserva del Perú) la serie oficial
-// PN01270PM: Índice de Precios al Consumidor de Lima Metropolitana
-// (índice, base diciembre 2021 = 100, fuente INEI) y la guarda en inflacion/ipc.json.
+// PN38705PM: Índice de Precios al Consumidor de Lima Metropolitana
+// (índice, base diciembre 2021 = 100, fuente INEI; empieza en enero de 1991) y la guarda en inflacion/ipc.json.
 // La calculadora del sitio solo lee ese archivo; no se conecta al BCRP.
 // Uso: node .github/robot/actualizar-ipc.mjs   (Node 20 o más, sin instalar nada)
 
@@ -9,12 +9,12 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 
 const RAIZ = new URL("../../", import.meta.url);
 const ARCHIVO = new URL("inflacion/ipc.json", RAIZ);
-const SERIE = "PN01270PM";
+const SERIE = "PN38705PM";
 const UA = "SimplelifeBot/1.0 (+https://simplelife-web.github.io/inflacion/)";
 const MES = { ene: 1, feb: 2, mar: 3, abr: 4, may: 5, jun: 6, jul: 7, ago: 8, sep: 9, set: 9, oct: 10, nov: 11, dic: 12 };
 
 const hoy = new Date();
-const url = `https://estadisticas.bcrp.gob.pe/estadisticas/series/api/${SERIE}/json/1949-1/${hoy.getUTCFullYear()}-12/esp`;
+const url = `https://estadisticas.bcrp.gob.pe/estadisticas/series/api/${SERIE}/json/1991-1/${hoy.getUTCFullYear()}-12/esp`;
 
 async function traer() {
   for (let intento = 1; intento <= 4; intento++) {
@@ -39,7 +39,7 @@ for (const p of datos.periods || []) {
 meses.sort((a, b) => a[0].localeCompare(b[0]));
 
 // Controles para no guardar datos rotos: meses seguidos, sin huecos, y suficientes.
-if (meses.length < 120) throw new Error(`Muy pocos meses (${meses.length}); no se guarda nada`);
+if (meses.length < 400) throw new Error(`Muy pocos meses (${meses.length}); no se guarda nada`);
 for (let i = 1; i < meses.length; i++) {
   const [a, ma] = meses[i - 1][0].split("-").map(Number);
   const [b, mb] = meses[i][0].split("-").map(Number);
