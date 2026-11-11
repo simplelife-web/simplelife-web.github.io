@@ -12,7 +12,8 @@
     { href: 'intercambio/', texto: 'Intercambio' }
   ];
   var EXTRA = [
-    { href: 'acerca.html', texto: 'Acerca y contacto' },
+    { href: 'acerca.html', texto: 'Acerca de' },
+    { href: 'contacto.html', texto: 'Contacto' },
     { href: 'privacidad.html', texto: 'Privacidad' }
   ];
 
