@@ -42,16 +42,38 @@
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text);
     font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  main { max-width: 980px; margin: 0 auto; padding: 32px 16px 64px; }
-  .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
-  .brand img { width: 64px; height: 64px; }
-  .brand span { font-size: 2rem; font-weight: 700; letter-spacing: -.01em; }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 56px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .brand img { width: 48px; height: 48px; }
+  .brand span { font-size: 1.6rem; font-weight: 700; letter-spacing: -.01em; }
   .brand span b { color: var(--accent); }
-  h1 { font-size: 2rem; line-height: 1.2; margin: 22px 0 8px; max-width: 22ch; }
-  .lead { color: var(--muted); margin: 0 0 28px; max-width: 60ch; font-size: 1.08rem; }
+  h1 { font-size: 2.1rem; line-height: 1.18; margin: 12px 0 8px; max-width: 24ch; }
+  .lead { color: var(--muted); margin: 0; max-width: 58ch; font-size: 1.08rem; }
+
+  /* Encabezado en dos columnas: texto a la izquierda, ventajas a la derecha */
+  .hero { display: grid; grid-template-columns: 1.35fr 1fr; gap: 28px; align-items: center; margin-bottom: 26px; }
+  .perks { list-style: none; margin: 0; padding: 18px 20px; display: grid; gap: 14px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px; }
+  .perks li { display: flex; gap: 14px; align-items: center; line-height: 1.4; color: var(--muted); font-size: .97rem; }
+  .perks b { color: var(--text); font-size: 1.02rem; }
+  .dot { flex: 0 0 46px; height: 46px; border-radius: 14px; display: grid; place-items: center;
+    font-weight: 700; font-size: 1.05rem; }
+  .d1 { background: #dff2e8; color: #1f6f5c; font-size: .9rem; }
+  .d2 { background: #fff1dc; color: #9a5a12; }
+  .d3 { background: #fde8ec; color: #b23a55; }
+  @media (prefers-color-scheme: dark) {
+    .d1 { background: #1f3a2f; color: #4fb596; } .d2 { background: #3d2e1a; color: #e2a85c; } .d3 { background: #3a1f26; color: #f08aa0; }
+  }
+  @media (max-width: 820px) { .hero { grid-template-columns: 1fr; gap: 18px; } }
+  @media (max-width: 560px) {
+    .perks { grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px 10px; }
+    .perks li { flex-direction: column; gap: 6px; text-align: center; font-size: .85rem; }
+    .perks b { font-size: .88rem; } .perks .desc { display: none; }
+    .dot { flex-basis: 38px; width: 38px; height: 38px; border-radius: 12px; }
+  }
 
   /* Cuadrados de herramientas */
-  .tools { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; margin: 0; padding: 0; list-style: none; }
+  .tools { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; margin: 0; padding: 0; list-style: none; }
   .tool { display: flex; flex-direction: column; height: 100%; padding: 22px; border-radius: 18px;
     background: var(--card); border: 1px solid var(--line); color: var(--text); text-decoration: none;
     transition: transform .15s, box-shadow .15s, border-color .15s; }
@@ -70,7 +92,7 @@
   .t4 .icon { background: linear-gradient(135deg, #e3f0fb, #c9e0f5); --b1: #b4d3ef; --b2: #f0f7fd; }
   .t6 .icon { background: linear-gradient(135deg, #fde8ec, #f9cdd6); --b1: #f4b6c3; --b2: #fff3f5; }
   .t5 .icon { background: linear-gradient(135deg, #def3f3, #bfe5e6); --b1: #a9dadb; --b2: #effafa; }
-  .soon .icon { background: linear-gradient(135deg, #eef6f1, #e0efe6); --b1: #d3e9dc; --b2: #f6fbf8; width: calc(100% + 16px); }
+  .soon .icon { background: linear-gradient(135deg, #eef6f1, #e0efe6); --b1: #d3e9dc; --b2: #f6fbf8; }
   @media (prefers-color-scheme: dark) {
     .t1 .icon { background: linear-gradient(135deg, #1f3a2f, #18302a); --b1: #24473a; --b2: #2a4c3f; }
     .t2 .icon { background: linear-gradient(135deg, #3d2e1a, #332614); --b1: #4a3820; --b2: #4f3d24; }
@@ -85,24 +107,42 @@
   .go { margin-top: auto; font-weight: 600; color: var(--accent); }
   .soon { border-style: dashed; background: transparent; align-items: center; justify-content: center; text-align: center; color: var(--muted); }
   .soon h2 { color: var(--text); }
+  /* "Próximamente" ocupa toda la fila, en horizontal, para no dejar huecos */
+  .soon-li { grid-column: 1 / -1; }
+  .soon { flex-direction: row; gap: 22px; padding: 14px 22px; text-align: left; justify-content: flex-start; }
+  .soon .icon { flex: 0 0 160px; width: 160px; height: 96px; margin: 0; }
+  .soon .icon svg { width: 84px; height: 84px; }
+  .soon p { margin: 0; }
+  @media (max-width: 560px) { .soon { flex-direction: column; text-align: center; } .soon .icon { width: 100%; flex-basis: auto; } }
 
-  .about { margin-top: 40px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px 24px; }
+  .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 6px 28px; }
+
+  .about { margin-top: 32px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px 24px; }
   .about h2 { font-size: 1.25rem; margin: 0 0 8px; }
   .about h3 { font-size: 1.05rem; margin: 18px 0 4px; }
   .about p { margin: 4px 0; }
   footer { color: var(--muted); font-size: .9rem; margin-top: 28px; }
   footer p { margin: 6px 0; }
   footer a, .about a, .soon a { color: var(--accent); }
-  @media (max-width: 560px) { h1 { font-size: 1.6rem; } .brand span { font-size: 1.7rem; } .brand img { width: 54px; height: 54px; } }
+  @media (max-width: 560px) { h1 { font-size: 1.6rem; } .brand span { font-size: 1.5rem; } .brand img { width: 44px; height: 44px; } }
   @media (prefers-reduced-motion: reduce) { .tool, .icon svg { transition: none; } a.tool:hover, a.tool:hover .icon svg { transform: none; } }
 </style>
 </head>
 <body>
 <script src="nav.js"></script>
 <main>
-  <a class="brand" href="./"><img src="logo.svg" alt="" width="64" height="64"><span>Simple<b>life</b></span></a>
-  <h1>Herramientas gratuitas para hacer la vida más simple</h1>
-  <p class="lead">Elige una herramienta. Todas son gratis, no piden registrarte y están hechas para que cualquier persona las use sin complicarse.</p>
+  <header class="hero">
+    <div class="hero-text">
+      <a class="brand" href="./"><img src="logo.svg" alt="" width="64" height="64"><span>Simple<b>life</b></span></a>
+      <h1>Herramientas gratuitas para hacer la vida más simple</h1>
+      <p class="lead">Elige una herramienta. Todas son gratis, no piden registrarte y están hechas para que cualquier persona las use sin complicarse.</p>
+    </div>
+    <ul class="perks" aria-label="Por qué usar Simplelife">
+      <li><span class="dot d1" aria-hidden="true">S/0</span><div><b>100&nbsp;% gratis</b><span class="desc"><br>Sin pagos ni pruebas que vencen.</span></div></li>
+      <li><span class="dot d2" aria-hidden="true">✓</span><div><b>Sin registro</b><span class="desc"><br>Entras y la usas al instante.</span></div></li>
+      <li><span class="dot d3" aria-hidden="true">♥</span><div><b>Cuidamos tus datos</b><span class="desc"><br>Lo tuyo se queda contigo.</span></div></li>
+    </ul>
+  </header>
 
   <!--
     Para agregar una herramienta nueva: copia uno de los bloques <li>...</li>,
@@ -228,7 +268,7 @@
         <span class="go">Ver el glosario →</span>
       </a>
     </li>
-    <li>
+    <li class="soon-li">
       <div class="tool soon">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 128 128"><g>
 <path d="M64 84V56" stroke="#2f7a4f" stroke-width="3.5" stroke-linecap="round"/>
@@ -239,8 +279,10 @@
 <path d="M40 84h48l-6 30H46z" fill="#e0952f"/><rect x="36" y="80" width="56" height="10" rx="4" fill="#c97d1f"/>
 <path d="M24 30l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM104 70l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="#f6c94a"/>
 </g></svg></span>
-        <h2>Próximamente</h2>
-        <p>Estamos preparando más herramientas gratuitas. ¿Tienes una idea? <a href="contacto.html">Cuéntanos</a>.</p>
+        <div class="soon-text">
+          <h2>Próximamente</h2>
+          <p>Estamos preparando más herramientas gratuitas. ¿Tienes una idea? <a href="contacto.html">Cuéntanos</a>.</p>
+        </div>
       </div>
     </li>
   </ul>
@@ -248,12 +290,14 @@
   <section class="about">
     <h2>¿Qué es Simplelife?</h2>
     <p>Simplelife reúne herramientas web pequeñas y gratuitas que resuelven tareas del día a día. Cada una hace una sola cosa y la explica con palabras sencillas.</p>
-    <h3>Gratis y sin registro</h3>
-    <p>No necesitas crear una cuenta ni pagar nada. El sitio se mantiene con anuncios discretos.</p>
-    <h3>Cuidamos tus datos</h3>
-    <p>El transcriptor procesa tus audios en tu propio equipo, y en el intercambio tu correo y teléfono nunca se publican. Lee la <a href="privacidad.html">política de privacidad</a>.</p>
-    <h3>¿Buscabas el transcriptor?</h3>
-    <p>Ahora tiene su propia página: <a href="transcriptor/">simplelife-web.github.io/transcriptor</a>. Funciona igual que antes.</p>
+    <div class="about-grid">
+    <div><h3>Gratis y sin registro</h3>
+    <p>No necesitas crear una cuenta ni pagar nada. El sitio se mantiene con anuncios discretos.</p></div>
+    <div><h3>Cuidamos tus datos</h3>
+    <p>El transcriptor procesa tus audios en tu propio equipo, y en el intercambio tu correo y teléfono nunca se publican. Lee la <a href="privacidad.html">política de privacidad</a>.</p></div>
+    <div><h3>¿Buscabas el transcriptor?</h3>
+    <p>Ahora tiene su propia página: <a href="transcriptor/">simplelife-web.github.io/transcriptor</a>. Funciona igual que antes.</p></div>
+    </div>
   </section>
 
   <footer>

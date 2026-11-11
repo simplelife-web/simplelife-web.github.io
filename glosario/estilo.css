@@ -136,3 +136,10 @@ ul.donde li { margin: 6px 0; }
 .fuentes ul { margin: 0 0 6px; padding-left: 22px; font-size: .92rem; }
 .fuentes li { margin: 4px 0; }
 .fuentes p { font-size: .92rem; color: var(--muted); margin: 0 0 6px; }
+
+/* Portada de la sección (la que tiene el buscador y la lista): más ancha y en 3 columnas
+   para aprovechar la pantalla de la computadora. Las páginas de cada tema siguen angostas
+   para que se lean cómodas. */
+body:has(#lista) .top, body:has(#lista) main, body:has(#lista) footer { max-width: 1100px; }
+body:has(#lista) main > p, body:has(#lista) main > h1, body:has(#lista) .buscar { max-width: 760px; }
+@media (min-width: 960px) { body:has(#lista) .lista { grid-template-columns: repeat(3, 1fr); } }
