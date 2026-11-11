@@ -9,5 +9,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           sudo apt-get install -y -qq poppler-utils >/dev/null 2>&1
-          python3 .github/cifras/rmv.py 1130 20260928
-          python3 .github/cifras/rmv.py 1230 20261110 20261111
+          curl -sL -A "Mozilla/5.0" -o d.pdf "https://busquedas.elperuano.pe/api/archivo/file/6wU_yN6ra7nAo43VnCuccT/*/2559163-1.PDF"; pdftotext d.pdf - | tr -s '\n' ' ' | head -c 5000
+          echo; python3 -c "
+          import sys; sys.path.insert(0,'.github/cifras'); import rmv
+          print(len(rmv.dispositivos(['20261111'])))"

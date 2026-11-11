@@ -86,9 +86,9 @@ def dispositivos(fechas, max_paginas=15):
     hallados = {}
     for f in fechas:
         for tipo in ("NL", "EX"):
-            vistos_pag = set()
-            for pag in range(max_paginas):
-                url = f"{PORTADA}?fechaIni={f}&fechaFin={f}&tipoPublicacion={tipo}&ci=ONLY&start={pag * 20}"
+            vistos_pag, inicio = set(), 0
+            for _ in range(max_paginas):
+                url = f"{PORTADA}?fechaIni={f}&fechaFin={f}&tipoPublicacion={tipo}&ci=ONLY&start={inicio}"
                 try:
                     html = traer(url, 60).decode("utf-8", "replace").replace('\\"', '"')
                 except Exception as e:  # noqa: BLE001
@@ -98,6 +98,7 @@ def dispositivos(fechas, max_paginas=15):
                 nuevos = [m for m in pdfs if m.group(1) not in vistos_pag]
                 if not nuevos:
                     break
+                inicio += len({m.group(1) for m in pdfs})
                 previo = 0
                 for m in pdfs:
                     contexto = html[max(previo, m.start() - 1500):m.start()]
