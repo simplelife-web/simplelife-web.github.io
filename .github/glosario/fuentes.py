@@ -34,6 +34,8 @@ POBREZA = ("El Peruano: según el INEI, la pobreza afectó al 25.7 % de peruanos
 MEF_MMM = ("Andina: Marco Macroeconómico Multianual 2026-2029 del MEF (deuda y déficit)", "https://andina.pe/agencia/noticia-mef-deuda-publica-seria-321-del-pbi-una-las-mas-bajas-america-latina-1042739.aspx")
 BCRP_CAMBIO = ("Andina: el BCRP ofertó US$ 10 700 millones en 2021 para atenuar la volatilidad del dólar", "https://andina.pe/agencia/noticia-bcr-oferto-10700-millones-el-ano-para-atenuar-volatilidad-dolar-857532.aspx")
 INDECOPI = ("Andina: el Indecopi sanciona un cártel de precios del pavo (2022)", "https://andina.pe/agencia/noticia-indecopi-sanciona-a-empresas-formaron-cartel-para-concertar-precio-del-pavo-889126.aspx")
+CANON = ("Andina: el MEF aprueba los índices de distribución del canon minero (50 % del impuesto a la renta minero)", "https://andina.pe/agencia/noticia-canon-minero-mef-aprueba-indices-distribucion-para-gobiernos-regionales-y-locales-1081257.aspx")
+MOODYS = ("El Peruano: Moody's ratifica el grado de inversión del Perú (Baa1)", "https://elperuano.pe/noticia/286016-moodys-solida-posicion-financiera-del-peru-respalda-grado-de-inversion")
 
 FUENTES = {
     "inflacion": [ANDINA_METAS, BM_INFLACION, INEI_GLOSARIO],
@@ -75,4 +77,9 @@ FUENTES = {
     "balanza-comercial": [INEI_GLOSARIO, MEF_EXTERNO, COBRE],
     "terminos-de-intercambio": [INEI_GLOSARIO],
     "pobreza-monetaria": [POBREZA],
+    "canon": [CANON],
+    "grado-de-inversion": [MOODYS],
+    "calificacion-de-riesgo": [MOODYS],
+    "reservas-internacionales": [MEF_EXTERNO],
+    "hiperinflacion": [BM_INFLACION],
 }

@@ -25,7 +25,10 @@ sys.path.insert(0, AQUI)
 
 import terminos1  # noqa: E402
 import terminos2  # noqa: E402
+import terminos3  # noqa: E402
 from fuentes import FUENTES  # noqa: E402
+
+BCRP_GLOSARIO = "https://www.bcrp.gob.pe/docs/Publicaciones/Glosario/Glosario-BCRP.pdf"
 
 SITIO = "https://simplelife-web.github.io"
 BASE = SITIO + "/glosario/"
@@ -65,7 +68,7 @@ def texto_plano(s):
     return html.unescape(re.sub(r"\s+", " ", s)).strip()
 
 
-TERMINOS = terminos1.T + terminos2.T
+TERMINOS = terminos1.T + terminos2.T + terminos3.T
 TERMINOS.sort(key=lambda t: sin_tildes(t["t"]))
 POR_SLUG = {t["slug"]: t for t in TERMINOS}
 assert len(POR_SLUG) == len(TERMINOS), "Hay slugs repetidos"
@@ -228,7 +231,9 @@ def pagina_termino(t, i):
     o.append('<a class="sig" href="%s.html"><small>Siguiente →</small>%s</a>' % (sig["slug"], esc(sig["t"])) if sig else "<span></span>")
     o.append("</nav>\n\n")
 
-    fs = FUENTES.get(t["slug"])
+    fs = list(FUENTES.get(t["slug"], []))
+    if t.get("bcrp"):
+        fs.insert(0, ("BCRP, Glosario de términos económicos: «%s» (definición redactada aquí con palabras propias)" % t["bcrp"], BCRP_GLOSARIO))
     o.append('<section class="fuentes">\n<h2>Fuentes</h2>\n')
     if fs:
         o.append("<ul>" + "".join('<li><a href="%s" target="_blank" rel="noopener">%s</a></li>' % (esc(u), esc(n)) for n, u in fs) + "</ul>\n")
@@ -279,7 +284,7 @@ def pagina_indice():
     o.append("""<section class="card">
 <h2>¿Cómo está hecho este glosario?</h2>
 <p>Cada término tiene una frase corta para entenderlo rápido, una explicación más completa, un ejemplo con situaciones del Perú y, cuando hace falta, su fórmula con el significado de cada letra y un cálculo paso a paso.</p>
-<p>Cada página termina con sus <strong>fuentes</strong>: normas publicadas en El Peruano (como la Constitución o las leyes de la TCEA y de pensiones), publicaciones del INEI y la SUNAT, y notas de la agencia estatal Andina con datos del BCRP o del INEI. Los datos que cambian con el tiempo, como la UIT o el sueldo mínimo, indican su año. Los demás números son ejemplos para practicar.</p>
+<p>Cada página termina con sus <strong>fuentes</strong>: el Glosario de términos económicos del BCRP (que usamos como guía, explicando cada término con nuestras propias palabras), normas publicadas en El Peruano (como la Constitución o las leyes de la TCEA y de pensiones), publicaciones del INEI y la SUNAT, y notas de la agencia estatal Andina con datos del BCRP o del INEI. Los datos que cambian con el tiempo, como la UIT o el sueldo mínimo, indican su año. Los demás números son ejemplos para practicar.</p>
 <p>¿Falta una palabra o encontraste un error? <a href="../contacto.html">Escríbenos</a> y la revisamos.</p>
 </section>
 <script>
