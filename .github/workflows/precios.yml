@@ -1,0 +1,39 @@
+# Robot de "Precios del Perú y del mundo": cada día revisa si el BCRP, el Banco Mundial,
+# la FAO o el FMI publicaron datos nuevos y, si hay cambios, actualiza precios/*.json.
+# Es gratis y no necesitas hacer nada. Para lanzarlo a mano:
+# pestaña Actions → "Robot precios" → Run workflow.
+name: Robot precios
+
+on:
+  schedule:
+    - cron: "0 13 * * *"   # 8:00 a. m. de Lima, todos los días
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/precios/**
+      - .github/workflows/precios.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: robot-precios
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Descargar precios oficiales
+        run: python3 .github/precios/actualizar.py
+      - name: Guardar los datos nuevos
+        run: |
+          git config user.name "robot-precios"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add precios/*.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Robot: actualizar precios del Perú y del mundo"
+          for i in 1 2 3; do git pull --rebase -q && git push && exit 0; sleep 5; done
+          exit 1
