@@ -1,6 +1,28 @@
 {
- "actualizado": "2026-11-10T18:29:57.496Z",
- "eventos": [],
+ "actualizado": "2026-11-11T18:32:42.027Z",
+ "eventos": [
+  {
+   "titulo": "Municipalidad de Lima presentará proyección especial en honor al Papa León XIV",
+   "url": "https://www.serpar.gob.pe/noticias/municipalidad-de-lima-presentara-proyeccion-especial-en-honor-al-papa-leon-xiv/",
+   "fecha": "2026-11-11",
+   "fechaFin": "",
+   "hora": "",
+   "publicado": "2026-11-11",
+   "lugar": "",
+   "direccion": "",
+   "lat": null,
+   "lon": null,
+   "precio": "",
+   "tipo": "cine",
+   "publico": [
+    "f"
+   ],
+   "resumen": "A través de SERPAR, el Circuito Mágico del Agua proyectará pasajes de la vida y el mensaje del Pontífice en su icónica Fuente de la Fantasía este 11 de noviembre. En el marco de la histórica visita de Su Santidad León…",
+   "fuente": "SERPAR (parques de Lima)",
+   "fuenteWeb": "https://www.serpar.gob.pe",
+   "distrito": "Lima"
+  }
+ ],
  "fuentes": [
   {
    "fuente": "Casa de la Literatura Peruana",
@@ -30,7 +52,7 @@
   {
    "fuente": "SERPAR (parques de Lima)",
    "estado": "rss",
-   "n": 0
+   "n": 1
   },
   {
    "fuente": "Museo de Arte de Lima (MALI)",
