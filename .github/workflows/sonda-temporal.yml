@@ -1,0 +1,11 @@
+name: Sonda temporal (borrar)
+on:
+  push:
+    paths: [.github/workflows/sonda-temporal.yml]
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for st in 0 10 20 30; do curl -sL -m 30 -A "Mozilla/5.0" "https://busquedas.elperuano.pe/?fechaIni=20260928&fechaFin=20260928&tipoPublicacion=NL&ci=ONLY&start=$st" > p$st.html; echo "start=$st: $(grep -o '[0-9]*-[0-9]\.PDF' p$st.html | sort -u | tr '\n' ' ')"; done
+          grep -o -i '.\{80\}resultados.\{80\}' p0.html | head -3; grep -o '"total[^,]*' p0.html | head -3; grep -o 'start=[0-9]*' p0.html | sort -u
