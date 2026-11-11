@@ -80,19 +80,27 @@ def pdf_a_texto(datos):
     return r.stdout.decode("utf-8", "replace")
 
 
-def cuadernillos():
-    """Lista de (nombre, url) de los cuadernillos de Normas Legales en la portada de búsquedas."""
-    html = traer(PORTADA, 60).decode("utf-8", "replace")
+def cuadernillos(fechas):
+    """Lista de (nombre, url) de los cuadernillos de Normas Legales (NL y EX) de esas fechas (AAAAMMDD)."""
     vistos = {}
-    for m in re.finditer(r'(/api/archivo/file/[^"\\\s]+?/((?:NL|EX)\d{8}[^"\\/\s]*\.pdf))', html):
-        vistos[m.group(2)] = PORTADA.rstrip("/") + m.group(1)
+    for f in fechas:
+        for tipo in ("NL", "EX"):
+            url = f"{PORTADA}?fechaIni={f}&fechaFin={f}&tipoPublicacion={tipo}&ci=ONLY&start=0"
+            try:
+                html = traer(url, 60).decode("utf-8", "replace")
+            except Exception as e:  # noqa: BLE001
+                print(f"  aviso: no se pudo abrir {url}: {e}")
+                continue
+            for m in re.finditer(r'(/api/archivo/file/[^"\\\s]+?/((?:NL|EX)(\d{8})[^"\\/\s]*\.pdf))', html):
+                if m.group(3) == f:
+                    vistos[m.group(2)] = PORTADA.rstrip("/") + m.group(1)
     return sorted(vistos.items())
 
 
-def revisar(actual, ya_vistos):
+def revisar(actual, ya_vistos, fechas):
     """Revisa los cuadernillos nuevos. Devuelve (hallados, nombres_revisados)."""
     hallados, revisados = [], []
-    for nombre, url in cuadernillos():
+    for nombre, url in cuadernillos(fechas):
         if nombre in ya_vistos:
             continue
         try:

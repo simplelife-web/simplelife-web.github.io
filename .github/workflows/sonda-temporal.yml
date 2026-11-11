@@ -8,11 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          set +e
           sudo apt-get install -y -qq poppler-utils >/dev/null 2>&1
-          curl -sL -m 120 -A "Mozilla/5.0" -o ds.pdf "https://cdn.www.gob.pe/uploads/document/file/10751791/8691054-ds-n-015-2026-tr.pdf?v=1791324612"
-          pdfinfo ds.pdf | head -5; pdftotext ds.pdf - | wc -c; pdftotext ds.pdf - | head -40
-          curl -sL -m 30 -A "Mozilla/5.0" "https://busquedas.elperuano.pe/" > b.html
-          grep -o 'href="/[^"]*"' b.html | sort -u | head -30
-          grep -o '"[a-z]*":"[^"]\{0,80\}NL20261111[^"]\{0,80\}"' b.html | head -5
-          grep -o '.\{300\}NL20261111_19630.\{300\}' b.html | head -2
+          python3 -c "
+          import sys; sys.path.insert(0,'.github/cifras'); import rmv
+          fs=['20260926','20260927','20260928','20260929']
+          print(rmv.cuadernillos(fs)); print(rmv.revisar(1130, [], fs))"
