@@ -2,7 +2,7 @@ name: Explorar fuentes (temporal)
 on:
   push:
     branches: [claude/project-thread-pvisai]
-    paths: [.github/explorar/**]
+    paths: [.github/explorar/explorar.py]
 jobs:
   x:
     runs-on: ubuntu-latest
