@@ -1,0 +1,41 @@
+# Robot de "Cifras al día" del Glosario económico: cada día descarga las cifras
+# oficiales vigentes (tipo de cambio, tasa de referencia, reservas, inflación, PBI,
+# desempleo, cobre, oro, UIT...) y actualiza glosario/cifras.json. No toca las
+# definiciones del glosario. Es gratis y no necesitas hacer nada.
+# Para lanzarlo a mano: pestaña Actions → "Robot cifras del glosario" → Run workflow.
+name: Robot cifras del glosario
+
+on:
+  schedule:
+    - cron: "45 12 * * *"   # 7:45 a. m. de Lima, todos los días
+    - cron: "30 23 * * *"   # 6:30 p. m. de Lima, para tomar el tipo de cambio del mismo día
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/cifras/**
+      - .github/workflows/cifras.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: robot-cifras
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Descargar cifras oficiales
+        run: python3 .github/cifras/actualizar.py
+      - name: Guardar los datos nuevos
+        run: |
+          git config user.name "robot-cifras"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add glosario/cifras.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Robot: actualizar cifras del glosario"
+          for i in 1 2 3; do git pull --rebase -q && git push && exit 0; sleep 5; done
+          exit 1

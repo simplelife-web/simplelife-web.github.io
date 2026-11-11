@@ -1,0 +1,365 @@
+{
+ "revisado": "2026-11-11",
+ "nota": "Cifras oficiales vigentes. Las diarias se publican cada día hábil; las mensuales, una vez al mes.",
+ "cifras": {
+  "tc": {
+   "nombre": "Tipo de cambio (venta, sistema bancario)",
+   "valor": 3.421,
+   "unidad": "soles por dólar",
+   "formato": "tc",
+   "fecha": "2026-11-10",
+   "fuente": "BCRP, serie PD04640PD",
+   "oficial": "Tipo de cambio - TC Sistema bancario SBS (S/ por US$) - Venta",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04640PD/html"
+  },
+  "tasa_ref": {
+   "nombre": "Tasa de referencia del BCRP",
+   "valor": 4.25,
+   "unidad": "anual",
+   "formato": "pct2",
+   "fecha": "2026-11-11",
+   "fuente": "BCRP, serie PD12301MD",
+   "oficial": "Tasas de interés - Tasa de Referencia de la Política Monetaria",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD12301MD/html"
+  },
+  "interbancaria": {
+   "nombre": "Tasa interbancaria en soles",
+   "valor": 4.25,
+   "unidad": "anual",
+   "formato": "pct2",
+   "fecha": "2026-11-10",
+   "fuente": "BCRP, serie PD04692MD",
+   "oficial": "Tasas de interés - Interbancaria, S/",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04692MD/html"
+  },
+  "rin": {
+   "nombre": "Reservas internacionales netas",
+   "valor": 96645.428609,
+   "unidad": "millones de dólares",
+   "formato": "millones",
+   "fecha": "2026-11-10",
+   "fuente": "BCRP, serie PD04650MD",
+   "oficial": "Reservas internacionales (millones US$) - Reservas internacionales netas",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04650MD/html"
+  },
+  "inflacion12": {
+   "nombre": "Inflación de los últimos 12 meses (Lima)",
+   "valor": 5.251005,
+   "unidad": "",
+   "formato": "pct2",
+   "fecha": "2026-10",
+   "fuente": "BCRP, serie PN01273PM",
+   "oficial": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01273PM/html"
+  },
+  "inflacion_mes": {
+   "nombre": "Inflación del mes (Lima)",
+   "valor": 0.571497,
+   "unidad": "",
+   "formato": "pct2",
+   "fecha": "2026-10",
+   "fuente": "BCRP, serie PN01271PM",
+   "oficial": "Índice de precios Lima Metropolitana (var% mensual) - IPC",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01271PM/html"
+  },
+  "tamn": {
+   "nombre": "TAMN: tasa promedio de los préstamos en soles",
+   "valor": 16.9868,
+   "unidad": "efectiva anual",
+   "formato": "pct2",
+   "fecha": "2026-10",
+   "fuente": "BCRP, serie PN07807NM",
+   "oficial": "Tasas de interés activas y pasivas promedio de las empresas bancarias en MN (términos efectivos anuales) - Activas - TAMN",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN07807NM/html"
+  },
+  "tipmn": {
+   "nombre": "TIPMN: tasa promedio de los depósitos en soles",
+   "valor": 2.0048,
+   "unidad": "efectiva anual",
+   "formato": "pct2",
+   "fecha": "2026-10",
+   "fuente": "BCRP, serie PN07816NM",
+   "oficial": "Tasas de interés activas y pasivas promedio de las empresas bancarias en MN (términos efectivos anuales) - Pasivas - TIPMN",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN07816NM/html"
+  },
+  "pbi": {
+   "nombre": "Crecimiento del PBI (frente al mismo mes del año anterior)",
+   "valor": 3.232764,
+   "unidad": "",
+   "formato": "pct1",
+   "fecha": "2026-08",
+   "fuente": "BCRP, serie PN01728AM",
+   "oficial": "Producto bruto interno y demanda interna (variación porcentual interanual) - PBI",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01728AM/html"
+  },
+  "desempleo": {
+   "nombre": "Tasa de desempleo en Lima Metropolitana",
+   "valor": 4.37168,
+   "unidad": "promedio móvil de 3 meses",
+   "formato": "pct1",
+   "fecha": "2026-09",
+   "fuente": "BCRP, serie PN38063GM",
+   "oficial": "Empleo Mensual en Lima Metropolitana - Promedio móvil tres meses (porcentaje) - Tasa de Desempleo (%)",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN38063GM/html"
+  },
+  "cobre": {
+   "nombre": "Precio del cobre (Londres)",
+   "valor": 636.390101,
+   "unidad": "dólares por libra",
+   "formato": "cobre",
+   "fecha": "2026-11-09",
+   "fuente": "BCRP, serie PD04701XD",
+   "oficial": "Cotizaciones internacionales - Cobre (Londres, cUS$ por libras)",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04701XD/html"
+  },
+  "oro": {
+   "nombre": "Precio del oro (Londres)",
+   "valor": 4139.82,
+   "unidad": "dólares por onza troy",
+   "formato": "oro",
+   "fecha": "2026-11-09",
+   "fuente": "BCRP, serie PD04704XD",
+   "oficial": "Cotizaciones internacionales - Oro (Londres, US$ por onzas troy)",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04704XD/html"
+  },
+  "embig": {
+   "nombre": "Riesgo país del Perú (EMBIG, promedio del mes)",
+   "valor": 107.328392,
+   "unidad": "",
+   "formato": "entero",
+   "fecha": "2026-09",
+   "fuente": "BCRP, serie PN01129XM",
+   "oficial": "Indicadores de riesgo para países emergentes: EMBIG - Diferencial de Rendimientos del Índice de Bonos de Mercados Emergentes (EMBIG) - Perú",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01129XM/html"
+  },
+  "subyacente": {
+   "nombre": "Inflación sin alimentos ni energía, últimos 12 meses (Lima)",
+   "valor": 4.635952,
+   "unidad": "",
+   "formato": "pct2",
+   "fecha": "2026-10",
+   "fuente": "BCRP, serie PN38707PM (cálculo de Simplelife)",
+   "oficial": "Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - IPC Sin Alimentos y Energía",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN38707PM/html"
+  },
+  "uit": {
+   "nombre": "UIT 2026",
+   "valor": 5500,
+   "unidad": "",
+   "formato": "soles",
+   "fecha": "2026",
+   "fuente": "SUNAT, Decreto Supremo N.° 301-2025-EF",
+   "enlace": "https://www.sunat.gob.pe/indicestasas/uit.html"
+  },
+  "rmv": {
+   "nombre": "Remuneración mínima vital",
+   "valor": 1230,
+   "unidad": "al mes",
+   "formato": "soles",
+   "fecha": "2026-10-01",
+   "desde": true,
+   "fuente": "MTPE, Decreto Supremo 015-2026-TR",
+   "enlace": "https://www.gob.pe/institucion/mtpe/normas-legales"
+  }
+ },
+ "terminos": {
+  "tipo-de-cambio": [
+   "tc"
+  ],
+  "depreciacion-y-apreciacion": [
+   "tc"
+  ],
+  "tipo-de-cambio-real": [
+   "tc",
+   "inflacion12"
+  ],
+  "dolarizacion": [
+   "tc"
+  ],
+  "efecto-traspaso": [
+   "tc",
+   "inflacion12"
+  ],
+  "intervencion-cambiaria": [
+   "tc",
+   "rin"
+  ],
+  "tasa-de-referencia": [
+   "tasa_ref",
+   "inflacion12"
+  ],
+  "politica-monetaria": [
+   "tasa_ref",
+   "inflacion12"
+  ],
+  "regla-de-taylor": [
+   "tasa_ref",
+   "inflacion12",
+   "subyacente"
+  ],
+  "bcrp": [
+   "tasa_ref",
+   "rin",
+   "inflacion12"
+  ],
+  "puntos-basicos": [
+   "tasa_ref"
+  ],
+  "tasa-de-interes": [
+   "tasa_ref",
+   "tamn",
+   "tipmn"
+  ],
+  "tasa-de-interes-interbancaria": [
+   "interbancaria",
+   "tasa_ref"
+  ],
+  "tasa-de-interes-activa-y-pasiva": [
+   "tamn",
+   "tipmn"
+  ],
+  "tasa-de-interes-real": [
+   "tasa_ref",
+   "inflacion12"
+  ],
+  "tea": [
+   "tamn"
+  ],
+  "tcea": [
+   "tamn"
+  ],
+  "trea": [
+   "tipmn"
+  ],
+  "deposito-a-plazo": [
+   "tipmn"
+  ],
+  "creditos-de-consumo": [
+   "tamn"
+  ],
+  "credito-hipotecario": [
+   "tamn"
+  ],
+  "encaje-bancario": [
+   "tasa_ref"
+  ],
+  "reservas-internacionales": [
+   "rin",
+   "tc"
+  ],
+  "balanza-de-pagos": [
+   "rin"
+  ],
+  "inflacion": [
+   "inflacion12",
+   "inflacion_mes"
+  ],
+  "ipc": [
+   "inflacion_mes",
+   "inflacion12"
+  ],
+  "inflacion-subyacente": [
+   "subyacente",
+   "inflacion12"
+  ],
+  "poder-adquisitivo": [
+   "inflacion12"
+  ],
+  "valor-nominal-y-real": [
+   "inflacion12"
+  ],
+  "deflacion": [
+   "inflacion_mes",
+   "inflacion12"
+  ],
+  "hiperinflacion": [
+   "inflacion12"
+  ],
+  "estanflacion": [
+   "inflacion12",
+   "pbi"
+  ],
+  "expectativas": [
+   "inflacion12",
+   "tasa_ref"
+  ],
+  "pbi": [
+   "pbi"
+  ],
+  "crecimiento-economico": [
+   "pbi"
+  ],
+  "ciclo-economico": [
+   "pbi"
+  ],
+  "recesion": [
+   "pbi"
+  ],
+  "brecha-del-producto": [
+   "pbi"
+  ],
+  "pbi-per-capita": [
+   "pbi"
+  ],
+  "tasa-de-desempleo": [
+   "desempleo"
+  ],
+  "pea": [
+   "desempleo"
+  ],
+  "subempleo": [
+   "desempleo"
+  ],
+  "terminos-de-intercambio": [
+   "cobre",
+   "oro"
+  ],
+  "exportaciones-tradicionales-y-no-tradicionales": [
+   "cobre",
+   "oro"
+  ],
+  "canon": [
+   "cobre",
+   "oro"
+  ],
+  "balanza-comercial": [
+   "cobre",
+   "oro"
+  ],
+  "riesgo-pais": [
+   "embig"
+  ],
+  "grado-de-inversion": [
+   "embig"
+  ],
+  "bono-soberano": [
+   "embig"
+  ],
+  "calificacion-de-riesgo": [
+   "embig"
+  ],
+  "uit": [
+   "uit"
+  ],
+  "impuesto-a-la-renta": [
+   "uit"
+  ],
+  "remuneracion-minima-vital": [
+   "rmv"
+  ],
+  "gratificacion": [
+   "rmv"
+  ],
+  "cts": [
+   "rmv"
+  ]
+ },
+ "portada": [
+  "tc",
+  "tasa_ref",
+  "inflacion12",
+  "rin",
+  "uit",
+  "rmv"
+ ]
+}

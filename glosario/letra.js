@@ -16,3 +16,10 @@
     poner(nuevo);
   });
 })();
+
+// Carga el recuadro "Cifra oficial al día" (cifras.js lee cifras.json, que un robot actualiza cada día)
+(function () {
+  var s = document.createElement('script');
+  s.src = 'cifras.js'; s.defer = true;
+  document.head.appendChild(s);
+})();
