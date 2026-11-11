@@ -8,10 +8,14 @@ jobs:
     steps:
       - run: |
           set +e
-          which pdftotext; pdftotext -v 2>&1 | head -1
+          sudo apt-get install -y -qq poppler-utils >/dev/null 2>&1; pdftotext -v 2>&1 | head -1
           curl -sL -m 30 -A "Mozilla/5.0" "https://busquedas.elperuano.pe/" > b.html
-          for js in $(grep -o '/_next/static/[^"]*\.js' b.html | sort -u); do curl -sL -m 30 "https://busquedas.elperuano.pe$js" | grep -o '"/api/[^"]*"\|`/api/[^`]*`' ; done | sort -u | head -30
-          echo "=== NL de hoy"; u=$(grep -o '/api/archivo/file/[^"\\]*NL2026[^"\\]*\.pdf' b.html | head -1); echo $u
-          curl -sL -m 120 -A "Mozilla/5.0" -o nl.pdf "https://busquedas.elperuano.pe$u"; ls -la nl.pdf; pdftotext -layout nl.pdf nl.txt; wc -l nl.txt; grep -n -i "DECRETO SUPREMO N" nl.txt | head -15
-          echo "=== probar DS 015-2026-TR (busqueda)"
-          for q in "api/search?q=remuneracion%20minima%20vital" "api/busqueda?query=remuneracion%20minima%20vital" "api/normas?q=remuneracion"; do curl -sL -m 30 -o r.txt -w "$q %{http_code} %{content_type}\n" "https://busquedas.elperuano.pe/$q"; head -c 300 r.txt; echo; done
+          grep -o '/api/archivo/file/[^"\\]*\.pdf' b.html | sort -u
+          u=$(grep -o '/api/archivo/file/[^"\\]*NL2026[^"\\]*\.pdf' b.html | head -1)
+          curl -sL -m 120 -A "Mozilla/5.0" -o nl.pdf "https://busquedas.elperuano.pe$u"; pdftotext nl.pdf nl.txt; wc -l nl.txt; grep -n "DECRETO SUPREMO N" nl.txt | head -5; grep -n -i "S/ [0-9]" nl.txt | head -5
+          echo "=== gob.pe 015-2026-TR"
+          curl -sL -m 30 -A "Mozilla/5.0" "https://www.gob.pe/busquedas.json?contenido[]=normas&term=015-2026-TR" > g.json
+          python3 -c "
+          import json,re;d=json.load(open('g.json'))
+          for r in (d['data']['attributes'].get('results') or [])[:5]: print(r.get('publication'), '|', r.get('url','')[:300])
+          "
