@@ -1,0 +1,24 @@
+name: Sonda temporal (borrar)
+on:
+  push:
+    paths: [.github/workflows/sonda-temporal.yml]
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: python3 {0}
+        run: |
+          import json, urllib.request, time
+          def ver(s, rango):
+              try:
+                  r = urllib.request.urlopen(urllib.request.Request(f"https://estadisticas.bcrp.gob.pe/estadisticas/series/api/{s}/json/{rango}/esp", headers={"User-Agent":"SimplelifeBot/1.0"}), timeout=60)
+                  d = json.loads(r.read().decode("utf-8-sig"))
+                  ps = [(p["name"], p["values"][0]) for p in d.get("periods", []) if p["values"][0] not in ("n.d.", "")]
+                  print(s, "|", d["config"]["series"][0]["name"], "|", ps[-2:] if ps else "VACIA")
+              except Exception as e:
+                  print(s, "ERROR", e)
+          for n in range(4706, 4716):
+              ver(f"PD{n:05d}XD", "2026-10-01/2026-11-11")
+          ver("PD04709XD", "2024-01-01/2026-11-11")
+          for s in "PN01129XM PN01130XM PN01131XM PN01132XM PN01133XM PN01134XM PN01135XM PN01136XM PN01137XM PN01138XM PN01139XM PN01140XM".split():
+              ver(s, "2025-1/2026-12")
