@@ -71,6 +71,11 @@
       a.href = c.enlace; a.target = '_blank'; a.rel = 'noopener';
       s.appendChild(a);
       li.appendChild(s);
+      if (c.proximo) {
+        var f = String(c.proximo.desde).split('-');
+        li.appendChild(el('small', 'prox', 'Sube a ' + valor({ valor: c.proximo.valor, formato: c.formato, unidad: c.unidad }) +
+          ' desde el ' + Number(f[2]) + ' de ' + MESES[Number(f[1]) - 1] + ' de ' + f[0] + '.'));
+      }
       ul.appendChild(li);
     });
     caja.appendChild(ul);
