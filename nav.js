@@ -45,7 +45,11 @@
     '.sl-links a[aria-current]{background:var(--sl-soft);color:var(--sl-accent);font-weight:600;}' +
     '.sl-sep{width:1px;background:var(--sl-line);margin:4px 2px;}' +
     '.sl-logo,.sl-home{flex:0 0 auto;}' +
-    '@media (max-width:860px){.sl-in{flex-wrap:wrap;}.sl-links{order:3;flex-basis:100%;margin:0 -16px;padding:0 12px 2px;width:calc(100% + 32px);flex-basis:calc(100% + 32px);-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent);}}';
+    '@media (max-width:860px){.sl-in{flex-wrap:wrap;}.sl-links{order:3;flex-basis:100%;margin:0 -16px;padding:0 12px 2px;width:calc(100% + 32px);flex-basis:calc(100% + 32px);-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent);}}' +
+    // En computadoras medianas todo debe caber en una fila: botón de inicio solo con la casita y enlaces más juntos
+    '@media (min-width:861px){.sl-home span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}.sl-home{padding:8px 10px;}.sl-links a{padding:6px 8px;}.sl-in{gap:6px 10px;}}' +
+    // Si aún no cabe, Acerca de, Contacto y Privacidad quedan solo en el pie de página
+    '@media (min-width:861px) and (max-width:1120px){.sl-x{display:none;}}';
 
   var st = document.createElement('style');
   st.textContent = css;
@@ -79,17 +83,18 @@
   lista.className = 'sl-links';
   HERRAMIENTAS.forEach(function (h) { lista.appendChild(enlace(h)); });
   var sep = document.createElement('li');
-  sep.className = 'sl-sep';
+  sep.className = 'sl-sep sl-x';
   sep.setAttribute('aria-hidden', 'true');
   lista.appendChild(sep);
-  EXTRA.forEach(function (h) { lista.appendChild(enlace(h)); });
+  EXTRA.forEach(function (h) { var li = enlace(h); li.className = 'sl-x'; lista.appendChild(li); });
   dentro.appendChild(lista);
 
   if (!enInicio) {
     var casa = document.createElement('a');
     casa.className = 'sl-home';
     casa.href = base.href;
-    casa.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>Volver al inicio';
+    casa.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span>Volver al inicio</span>';
+    casa.title = 'Volver al inicio de Simplelife';
     dentro.appendChild(casa);
   }
 
