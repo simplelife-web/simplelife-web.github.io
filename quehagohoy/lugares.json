@@ -224,7 +224,7 @@
     },
     {
       "id": "pz-huiracocha",
-      "nombre": "Club Metropolitano Huiracocha (ex Parque Zonal)",
+      "nombre": "Club Metropolitano Huiracocha",
       "distrito": "San Juan de Lurigancho",
       "direccion": "Av. Próceres de la Independencia, San Juan de Lurigancho",
       "tipo": "parque",
@@ -246,7 +246,7 @@
     },
     {
       "id": "pz-cahuide",
-      "nombre": "Club Metropolitano Cahuide (ex Parque Zonal)",
+      "nombre": "Club Metropolitano Cahuide",
       "distrito": "Ate",
       "direccion": "Ate",
       "tipo": "parque",
@@ -267,7 +267,7 @@
     },
     {
       "id": "pz-sinchiroca",
-      "nombre": "Club Metropolitano Sinchi Roca (ex Parque Zonal)",
+      "nombre": "Club Metropolitano Sinchi Roca",
       "distrito": "Comas",
       "direccion": "Comas",
       "tipo": "parque",
@@ -289,7 +289,7 @@
     },
     {
       "id": "pz-huascar",
-      "nombre": "Club Metropolitano Huáscar (ex Parque Zonal)",
+      "nombre": "Club Metropolitano Huáscar",
       "distrito": "Villa El Salvador",
       "direccion": "Villa El Salvador",
       "tipo": "parque",
@@ -310,7 +310,7 @@
     },
     {
       "id": "pz-lloqueyupanqui",
-      "nombre": "Club Metropolitano Lloque Yupanqui (ex Parque Zonal)",
+      "nombre": "Club Metropolitano Lloque Yupanqui",
       "distrito": "Los Olivos",
       "direccion": "Los Olivos",
       "tipo": "parque",
@@ -331,7 +331,7 @@
     },
     {
       "id": "pz-capacyupanqui",
-      "nombre": "Club Metropolitano Cápac Yupanqui (ex Parque Zonal)",
+      "nombre": "Club Metropolitano Cápac Yupanqui",
       "distrito": "Rímac",
       "direccion": "Rímac",
       "tipo": "parque",
@@ -461,9 +461,8 @@
       "desc": "200 hectáreas de lomas costeras con rutas de caminata y deportes de aventura. Lleva zapatillas, agua y bloqueador.",
       "url": "https://www.munimolina.gob.pe/",
       "fuente": "Municipalidad de La Molina; datos de La República (2024)",
-      "lat": null,
-      "lon": null,
-      "osm": "Parque Ecológico de La Molina"
+      "lat": -12.1191,
+      "lon": -76.9293
     },
     {
       "id": "amistad",
@@ -483,9 +482,8 @@
       "desc": "Parque con laguna, patos, mirador, glorieta y shows en el escenario. Tiene patio de comidas.",
       "url": "https://www.munisurco.gob.pe/",
       "fuente": "Municipalidad de Surco; datos de Andina (2023)",
-      "lat": null,
-      "lon": null,
-      "osm": "Parque de la Amistad, Santiago de Surco"
+      "lat": -12.1318,
+      "lon": -76.9817
     },
     {
       "id": "pz-mancocapac",
@@ -505,53 +503,8 @@
       "desc": "Club de Lima Norte con áreas verdes, juegos y losas deportivas.",
       "url": "https://www.serpar.gob.pe/",
       "fuente": "SERPAR; precios y horario de Infobae (dic. 2025)",
-      "lat": null,
-      "lon": null,
-      "osm": "Club Metropolitano Manco Cápac"
-    },
-    {
-      "id": "pz-sanpedro",
-      "nombre": "Club Metropolitano San Pedro",
-      "distrito": "Ancón",
-      "direccion": "Ancón",
-      "tipo": "parque",
-      "precio": "S/ 3 de lunes a viernes; S/ 4 sábados, domingos y feriados (referencial). Gratis: mayores de 60 y niños de 0 a 4 años, según tarifario SERPAR.",
-      "serpar": true,
-      "dias": null,
-      "horario": "Todos los días, de 9:00 a. m. a 6:00 p. m. (referencial).",
-      "publico": [
-        "j",
-        "f",
-        "m"
-      ],
-      "desc": "Club metropolitano de Ancón con áreas verdes y espacios para la familia.",
-      "url": "https://www.serpar.gob.pe/",
-      "fuente": "SERPAR; precios y horario de Infobae (dic. 2025)",
-      "lat": null,
-      "lon": null,
-      "osm": "Club Metropolitano San Pedro"
-    },
-    {
-      "id": "pz-santarosa",
-      "nombre": "Club Metropolitano Santa Rosa",
-      "distrito": "Santa Rosa",
-      "direccion": "Santa Rosa",
-      "tipo": "parque",
-      "precio": "S/ 3 de lunes a viernes; S/ 4 sábados, domingos y feriados (referencial). Gratis: mayores de 60 y niños de 0 a 4 años, según tarifario SERPAR.",
-      "serpar": true,
-      "dias": null,
-      "horario": "Todos los días, de 9:00 a. m. a 6:00 p. m. (referencial).",
-      "publico": [
-        "j",
-        "f",
-        "m"
-      ],
-      "desc": "Club metropolitano del norte de Lima, cerca del mar.",
-      "url": "https://www.serpar.gob.pe/",
-      "fuente": "SERPAR; precios y horario de Infobae (dic. 2025)",
-      "lat": null,
-      "lon": null,
-      "osm": "Club Metropolitano Santa Rosa"
+      "lat": -11.8881,
+      "lon": -77.026
     },
     {
       "id": "pz-pascuala",
@@ -571,9 +524,8 @@
       "desc": "Club metropolitano de Ate con juegos y losas deportivas.",
       "url": "https://www.serpar.gob.pe/",
       "fuente": "SERPAR; precios y horario de Infobae (dic. 2025)",
-      "lat": null,
-      "lon": null,
-      "osm": "Club Metropolitano Pascuala Rosado Cornejo"
+      "lat": -12.0142,
+      "lon": -76.8284
     },
     {
       "id": "pz-floramancaes",
@@ -593,9 +545,8 @@
       "desc": "Club metropolitano de Lima Sur con áreas verdes y juegos.",
       "url": "https://www.serpar.gob.pe/",
       "fuente": "SERPAR; precios y horario de Infobae (dic. 2025)",
-      "lat": null,
-      "lon": null,
-      "osm": "Club Metropolitano Flor de Amancaes"
+      "lat": -12.1881,
+      "lon": -76.9215
     },
     {
       "id": "pz-huaynacapac",
@@ -615,9 +566,8 @@
       "desc": "Club metropolitano de Lima Sur con áreas verdes, juegos y losas deportivas.",
       "url": "https://www.serpar.gob.pe/",
       "fuente": "SERPAR; precios y horario de Infobae (dic. 2025)",
-      "lat": null,
-      "lon": null,
-      "osm": "Club Metropolitano Huayna Cápac"
+      "lat": -12.1912,
+      "lon": -76.9687
     },
     {
       "id": "lince-castilla",
@@ -637,9 +587,8 @@
       "desc": "Parque grande y tranquilo con laguna, árboles y la Biblioteca Municipal al lado.",
       "url": "https://www.munilince.gob.pe/",
       "fuente": "Municipalidad de Lince",
-      "lat": null,
-      "lon": null,
-      "osm": "Parque Ramón Castilla, Lince"
+      "lat": -12.0862,
+      "lon": -77.034
     },
     {
       "id": "chorrillos-malecon",
@@ -659,9 +608,8 @@
       "desc": "Paseo frente al mar con vista a la bahía, el Morro Solar y el muelle de pescadores.",
       "url": "https://www.munichorrillos.gob.pe/",
       "fuente": "Municipalidad de Chorrillos",
-      "lat": null,
-      "lon": null,
-      "osm": "Playa Agua Dulce, Chorrillos"
+      "lat": -12.1623,
+      "lon": -77.027
     },
     {
       "id": "la-punta",
@@ -681,9 +629,8 @@
       "desc": "Malecón tranquilo con vista a la isla San Lorenzo, casonas antiguas y playa de piedras.",
       "url": "https://www.munilapunta.gob.pe/",
       "fuente": "Municipalidad de La Punta",
-      "lat": null,
-      "lon": null,
-      "osm": "Malecón Figueredo, La Punta"
+      "lat": -12.0692,
+      "lon": -77.1626
     },
     {
       "id": "callao-monumental",
@@ -702,9 +649,8 @@
       "desc": "Casonas del Callao antiguo llenas de murales, galerías y cafés. Mejor ir de día.",
       "url": "https://www.municallao.gob.pe/",
       "fuente": "Municipalidad Provincial del Callao",
-      "lat": null,
-      "lon": null,
-      "osm": "Callao Monumental, Callao"
+      "lat": -12.0597,
+      "lon": -77.148
     },
     {
       "id": "pucusana",
@@ -722,11 +668,10 @@
         "m"
       ],
       "desc": "Caleta de pescadores con lobos marinos y pelícanos. El paseo en bote se paga aparte.",
-      "url": "https://www.munipucusana.gob.pe/",
+      "url": "https://www.gob.pe/busquedas?term=Municipalidad%20Distrital%20de%20Pucusana",
       "fuente": "Municipalidad de Pucusana",
-      "lat": null,
-      "lon": null,
-      "osm": "Pucusana, Lima"
+      "lat": -12.4685,
+      "lon": -76.7725
     },
     {
       "id": "san-bartolo",
@@ -746,9 +691,8 @@
       "desc": "Playa en forma de bahía con malecón y bajada peatonal. Ideal en verano.",
       "url": "https://www.munisanbartolo.gob.pe/",
       "fuente": "Municipalidad de San Bartolo",
-      "lat": null,
-      "lon": null,
-      "osm": "Playa San Bartolo"
+      "lat": -12.3886,
+      "lon": -76.7818
     }
   ]
 }
