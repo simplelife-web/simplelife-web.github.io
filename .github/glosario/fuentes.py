@@ -104,4 +104,10 @@ FUENTES = {
     "tasa-impositiva-marginal": [SUNAT_TASAS, UIT],
     "servicio-de-deuda": [CONST_TRIBUTOS],
     "miedo-a-flotar": [BCRP_CAMBIO],
+    "estabilidad-monetaria": [CONSTITUCION],
+    "impuesto-de-promocion-municipal": [SUNAT_IGV],
+    "inflacion-sin-alimentos-y-energia": [TASA_425],
+    "libre-competencia": [INDECOPI],
+    "materias-primas": [COBRE],
+    "gasto-corriente-y-de-capital": [CONST_TRIBUTOS],
 }
