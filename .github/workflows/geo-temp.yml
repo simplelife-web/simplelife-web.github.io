@@ -1,0 +1,14 @@
+name: geo-temp
+on:
+  push:
+    branches: [claude/project-thread-1c1nza]
+    paths: [".github/robot/geo-temp.mjs"]
+jobs:
+  geo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24 }
+      - run: node .github/robot/geo-temp.mjs
