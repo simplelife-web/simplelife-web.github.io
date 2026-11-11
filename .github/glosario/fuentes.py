@@ -150,4 +150,5 @@ BCRP_TITULOS = {
     "pobreza-monetaria": "Pobreza",
     "coeficiente-de-gini": "Coeficiente Gini",
     "afp-y-onp": "Oficina de Normalización Provisional - ONP",
+    "valor-nominal-y-real": "Valor nominal",
 }
