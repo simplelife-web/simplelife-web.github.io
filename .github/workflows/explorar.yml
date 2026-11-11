@@ -1,0 +1,12 @@
+name: Explorar fuentes (temporal)
+on:
+  push:
+    branches: [claude/project-thread-pvisai]
+    paths: [.github/explorar/**]
+jobs:
+  x:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 .github/explorar/explorar.py
