@@ -99,4 +99,9 @@ FUENTES = {
     "regimen-cambiario": [BCRP_CAMBIO],
     "intervencion-cambiaria": [BCRP_CAMBIO],
     "politica-anticiclica": [TASA_025],
+    "meta-de-inflacion": [ANDINA_METAS, TASA_425],
+    "tasa-de-actividad": [INEI_EMPLEO],
+    "tasa-impositiva-marginal": [SUNAT_TASAS, UIT],
+    "servicio-de-deuda": [CONST_TRIBUTOS],
+    "miedo-a-flotar": [BCRP_CAMBIO],
 }

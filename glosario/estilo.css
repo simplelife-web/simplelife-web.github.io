@@ -34,7 +34,7 @@ a { color: var(--accent); }
   background: var(--card); border: 2px solid var(--line); border-radius: 12px; cursor: pointer; }
 .letra button:hover, .letra button:focus-visible { border-color: var(--accent); }
 main { padding-top: 18px; padding-bottom: 32px; }
-h1 { font-size: 1.75rem; line-height: 1.2; margin: 8px 0 10px; }
+h1 { font-size: 1.75rem; line-height: 1.2; margin: 8px 0 10px; overflow-wrap: break-word; hyphens: auto; }
 h2 { font-size: 1.25rem; margin: 0 0 10px; }
 .lead { font-size: 1.08rem; color: var(--muted); margin: 0 0 22px; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
