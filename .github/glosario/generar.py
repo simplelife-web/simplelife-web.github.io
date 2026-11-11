@@ -25,6 +25,7 @@ sys.path.insert(0, AQUI)
 
 import terminos1  # noqa: E402
 import terminos2  # noqa: E402
+from fuentes import FUENTES  # noqa: E402
 
 SITIO = "https://simplelife-web.github.io"
 BASE = SITIO + "/glosario/"
@@ -227,10 +228,14 @@ def pagina_termino(t, i):
     o.append('<a class="sig" href="%s.html"><small>Siguiente →</small>%s</a>' % (sig["slug"], esc(sig["t"])) if sig else "<span></span>")
     o.append("</nav>\n\n")
 
-    fuente = ""
-    if t.get("fuente"):
-        fuente = ' Para saber más: <a href="%s" target="_blank" rel="noopener">%s</a>.' % (esc(t["fuente"][1]), esc(t["fuente"][0]))
-    o.append('<p class="rev">Revisado el %s.%s</p>\n' % (REVISADO, fuente))
+    fs = FUENTES.get(t["slug"])
+    o.append('<section class="fuentes">\n<h2>Fuentes</h2>\n')
+    if fs:
+        o.append("<ul>" + "".join('<li><a href="%s" target="_blank" rel="noopener">%s</a></li>' % (esc(u), esc(n)) for n, u in fs) + "</ul>\n")
+    else:
+        o.append("<p>Es un concepto de teoría económica general, que no depende de una norma ni de una cifra oficial del Perú. "
+                 "Los números del ejemplo son para practicar.</p>\n")
+    o.append('<p class="rev">Revisado el %s.</p>\n</section>\n' % REVISADO)
     o.append('<p class="acciones"><button type="button" class="btn sec" onclick="window.print()">Imprimir este término</button></p>\n')
     o.append("</article>\n")
     o.append(PIE)
@@ -274,7 +279,7 @@ def pagina_indice():
     o.append("""<section class="card">
 <h2>¿Cómo está hecho este glosario?</h2>
 <p>Cada término tiene una frase corta para entenderlo rápido, una explicación más completa, un ejemplo con situaciones del Perú y, cuando hace falta, su fórmula con el significado de cada letra y un cálculo paso a paso.</p>
-<p>Los datos que cambian con el tiempo, como la UIT o el sueldo mínimo, indican su año y su fuente oficial. Los demás números son ejemplos para practicar.</p>
+<p>Cada página termina con sus <strong>fuentes</strong>: normas publicadas en El Peruano (como la Constitución o las leyes de la TCEA y de pensiones), publicaciones del INEI y la SUNAT, y notas de la agencia estatal Andina con datos del BCRP o del INEI. Los datos que cambian con el tiempo, como la UIT o el sueldo mínimo, indican su año. Los demás números son ejemplos para practicar.</p>
 <p>¿Falta una palabra o encontraste un error? <a href="../contacto.html">Escríbenos</a> y la revisamos.</p>
 </section>
 <script>
