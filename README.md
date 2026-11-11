@@ -8,6 +8,7 @@ Herramientas gratuitas para hacer la vida más simple. La página principal (`in
 | `tramites/` | Trámite fácil Perú |
 | `intercambio/` | Yo te enseño, tú me enseñas |
 | `quehagohoy/` | ¿Qué hago hoy? (planes gratis en Lima, en un mapa) |
+| `inflacion/` | Calculadora de inflación Perú (IPC de Lima del BCRP) |
 
 ## ¿Qué hago hoy? (`/quehagohoy/`)
 
@@ -57,3 +58,10 @@ Guías sencillas de trámites del Perú (RENIEC, SUNAT, municipalidades y otras 
 ## Barra de navegación (`nav.js`)
 
 La barra de arriba (logo, herramientas, Acerca, Privacidad y "Volver al inicio") sale de un solo archivo, `nav.js`, que cargan todas las páginas. Para sumar una herramienta nueva a la barra, agrégala a la lista `HERRAMIENTAS` de ese archivo, y en su página pon `<script src="../nav.js"></script>` justo después de `<body>`.
+
+## Calculadora de inflación Perú (`/inflacion/`)
+
+Calcula cuánto valen hoy soles de una fecha pasada con el IPC de Lima Metropolitana (serie PN38705PM del BCRP, índice dic. 2021 = 100, desde enero de 1991).
+
+- `inflacion/ipc.json`: un número por mes desde `desde`. Lo escribe solo el robot; no se edita a mano.
+- Robot: `.github/robot/actualizar-ipc.mjs`, lanzado por `.github/workflows/inflacion.yml` del 1 al 15 de cada mes a las 7:30 a. m. de Lima. Si el BCRP no responde o los datos vienen con huecos, no guarda nada.
