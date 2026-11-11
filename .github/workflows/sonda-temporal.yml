@@ -8,13 +8,10 @@ jobs:
     steps:
       - run: |
           set +e
-          curl -sL -m 30 -A "Mozilla/5.0" "https://diariooficial.elperuano.pe/Normas" > n.html; wc -c n.html
-          sed 's/<[^>]*>/\n/g' n.html | grep -v "^\s*$" | grep -i -B1 -A2 "decreto supremo\|resoluci" | head -40
-          echo "=== enlaces"; grep -o 'href="[^"]*"' n.html | sort -u | grep -i "norma\|dispositivo\|api\|json" | head -20
-          echo "=== busquedas next"; curl -sL -m 30 -A "Mozilla/5.0" "https://busquedas.elperuano.pe/" > b.html; grep -o '"[^"]*api[^"]*"' b.html | sort -u | head; grep -o 'src="/_next[^"]*"' b.html | head -3
-          echo "=== busquedas consulta"; curl -sL -m 30 -A "Mozilla/5.0" -o q.html -w "%{http_code}\n" "https://busquedas.elperuano.pe/?q=remuneraci%C3%B3n%20m%C3%ADnima%20vital"; sed 's/<[^>]*>/\n/g' q.html | grep -i -A2 "m.nima vital" | head -20
-          echo "=== gob.pe DS"; curl -sL -m 30 -A "Mozilla/5.0" "https://www.gob.pe/busquedas.json?contenido[]=normas&term=%22remuneraci%C3%B3n+m%C3%ADnima+vital%22&sort_by=recent" > g.json
-          python3 -c "
-          import json,re;d=json.load(open('g.json'))
-          for r in (d['data']['attributes'].get('results') or [])[:10]: print(r.get('publication'), '|', re.sub('<[^>]+>','',r.get('url',''))[:120], '|', re.sub('<[^>]+>','',str(r.get('description') or r.get('summary') or ''))[:250])
-          "
+          which pdftotext; pdftotext -v 2>&1 | head -1
+          curl -sL -m 30 -A "Mozilla/5.0" "https://busquedas.elperuano.pe/" > b.html
+          for js in $(grep -o '/_next/static/[^"]*\.js' b.html | sort -u); do curl -sL -m 30 "https://busquedas.elperuano.pe$js" | grep -o '"/api/[^"]*"\|`/api/[^`]*`' ; done | sort -u | head -30
+          echo "=== NL de hoy"; u=$(grep -o '/api/archivo/file/[^"\\]*NL2026[^"\\]*\.pdf' b.html | head -1); echo $u
+          curl -sL -m 120 -A "Mozilla/5.0" -o nl.pdf "https://busquedas.elperuano.pe$u"; ls -la nl.pdf; pdftotext -layout nl.pdf nl.txt; wc -l nl.txt; grep -n -i "DECRETO SUPREMO N" nl.txt | head -15
+          echo "=== probar DS 015-2026-TR (busqueda)"
+          for q in "api/search?q=remuneracion%20minima%20vital" "api/busqueda?query=remuneracion%20minima%20vital" "api/normas?q=remuneracion"; do curl -sL -m 30 -o r.txt -w "$q %{http_code} %{content_type}\n" "https://busquedas.elperuano.pe/$q"; head -c 300 r.txt; echo; done
