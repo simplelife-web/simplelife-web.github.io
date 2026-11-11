@@ -6,10 +6,11 @@ jobs:
   sonda:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - run: |
-          sudo apt-get install -y -qq poppler-utils >/dev/null 2>&1
-          python3 -c "
-          import sys; sys.path.insert(0,'.github/cifras'); import rmv
-          fs=['20260926','20260927','20260928','20260929']
-          print(rmv.cuadernillos(fs)); print(rmv.revisar(1130, [], fs))"
+          set +e
+          curl -sL -m 30 -A "Mozilla/5.0" "https://busquedas.elperuano.pe/?fechaIni=20260928&fechaFin=20260928&tipoPublicacion=EX&ci=ONLY&start=0" > q.html; wc -c q.html
+          grep -o 'api/[^"\\ ]*' q.html | sort -u | head -20
+          grep -o '.\{200\}015-2026-TR.\{400\}' q.html | head -3
+          curl -sL -m 30 -A "Mozilla/5.0" "https://busquedas.elperuano.pe/cuadernillo/EX/20260928" > c.html; wc -c c.html; grep -o 'api/archivo/file[^"\\ ]*' c.html | sort -u | head
+          curl -sL -m 30 -A "Mozilla/5.0" "https://busquedas.elperuano.pe/cuadernillo/NL/20260928" > c2.html; grep -o 'api/archivo/file[^"\\ ]*' c2.html | sort -u | head
+          curl -sL -m 30 -A "Mozilla/5.0" "https://busquedas.elperuano.pe/?q=015-2026-TR" > q2.html; grep -o 'api/[^"\\ ]*' q2.html | sort -u | head; grep -o '.\{200\}015-2026-TR.\{400\}' q2.html | head -2
