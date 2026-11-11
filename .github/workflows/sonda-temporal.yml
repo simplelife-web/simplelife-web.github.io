@@ -1,0 +1,20 @@
+name: Sonda temporal (borrar)
+on:
+  push:
+    paths: [.github/workflows/sonda-temporal.yml]
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          set +e
+          for u in "https://diariooficial.elperuano.pe/Normas" "https://busquedas.elperuano.pe/" "https://busquedas.elperuano.pe/api/v1/elasticsearch?query=remuneracion%20minima%20vital" "https://diariooficial.elperuano.pe/feeds/NormasLegales.xml" "https://www.elperuano.pe/rss" ; do
+            echo "=== $u"; curl -sL -m 30 -A "Mozilla/5.0" -o out.txt -w "%{http_code} %{content_type}\n" "$u"; head -c 600 out.txt | tr '\n' ' '; echo
+          done
+          echo "=== gob.pe normas MTPE"
+          curl -sL -m 30 -A "Mozilla/5.0" "https://www.gob.pe/busquedas.json?contenido[]=normas&institucion[]=mtpe&term=remuneraci%C3%B3n+m%C3%ADnima+vital&sort_by=recent" > g.json
+          python3 -c "
+          import json;d=json.load(open('g.json'))
+          a=d['data']['attributes']; print(list(a.keys()))
+          for r in (a.get('results') or [])[:8]: print(json.dumps(r,ensure_ascii=False)[:400])
+          "
