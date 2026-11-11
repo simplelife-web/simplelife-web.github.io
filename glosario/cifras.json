@@ -122,6 +122,16 @@
    "oficial": "Cotizaciones internacionales - Oro (Londres, US$ por onzas troy)",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04704XD/html"
   },
+  "embig": {
+   "nombre": "Riesgo país del Perú (EMBIG, promedio del mes)",
+   "valor": 107.328392,
+   "unidad": "",
+   "formato": "entero",
+   "fecha": "2026-09",
+   "fuente": "BCRP, serie PN01129XM",
+   "oficial": "Indicadores de riesgo para países emergentes: EMBIG - Diferencial de Rendimientos del Índice de Bonos de Mercados Emergentes (EMBIG) - Perú",
+   "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01129XM/html"
+  },
   "subyacente": {
    "nombre": "Inflación sin alimentos ni energía, últimos 12 meses (Lima)",
    "valor": 4.635952,
@@ -316,10 +326,18 @@
    "cobre",
    "oro"
   ],
-  "riesgo-pais": [],
-  "grado-de-inversion": [],
-  "bono-soberano": [],
-  "calificacion-de-riesgo": [],
+  "riesgo-pais": [
+   "embig"
+  ],
+  "grado-de-inversion": [
+   "embig"
+  ],
+  "bono-soberano": [
+   "embig"
+  ],
+  "calificacion-de-riesgo": [
+   "embig"
+  ],
   "uit": [
    "uit"
   ],
