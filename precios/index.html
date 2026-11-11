@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Precios del Perú y del mundo | Gráficos que se actualizan solos</title>
+<link rel="icon" href="../logo.svg" type="image/svg+xml">
+<meta name="description" content="Gráficos gratis de precios: inflación por rubro en Lima (alimentos, combustibles, transporte, educación), tipo de cambio y precios mundiales del cobre, oro, petróleo, trigo, café y 70 productos más. Datos del BCRP, INEI, Banco Mundial, FAO y FMI que se actualizan solos.">
+<link rel="canonical" href="https://simplelife-web.github.io/precios/">
+<meta property="og:image" content="https://simplelife-web.github.io/og-imagen.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_PE">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://simplelife-web.github.io/"},{"@type":"ListItem","position":2,"name":"Precios del Perú y del mundo","item":"https://simplelife-web.github.io/precios/"}]},{"@type":"WebApplication","name":"Precios del Perú y del mundo de Simplelife","url":"https://simplelife-web.github.io/precios/","applicationCategory":"FinanceApplication","operatingSystem":"Navegador web","description":"Gráficos estadísticos de precios del Perú (IPC de Lima por rubro y tipo de cambio) y del mundo (materias primas, alimentos e inflación por país), con datos oficiales que se actualizan solos.","inLanguage":"es-PE","isBasedOn":["https://estadisticas.bcrp.gob.pe/estadisticas/series/","https://www.worldbank.org/en/research/commodity-markets","https://www.fao.org/worldfoodsituation/foodpricesindex/es/","https://www.imf.org/external/datamapper/PCPIPCH@WEO"],"offers":{"@type":"Offer","price":"0","priceCurrency":"PEN"},"publisher":{"@type":"Organization","name":"Simplelife","url":"https://simplelife-web.github.io/","logo":"https://simplelife-web.github.io/logo.svg","email":"simplelifecontacto899@gmail.com"}},{"@type":"Dataset","name":"Precios del Perú y del mundo (recopilación de Simplelife)","description":"Variación mensual del IPC de Lima Metropolitana por rubro, tipo de cambio, precios mensuales de unas 70 materias primas, índice de precios de los alimentos de la FAO e inflación anual por país.","url":"https://simplelife-web.github.io/precios/","inLanguage":"es","isAccessibleForFree":true,"creator":{"@type":"Organization","name":"Simplelife","url":"https://simplelife-web.github.io/"},"license":"https://simplelife-web.github.io/acerca.html","temporalCoverage":"1990-01/..","spatialCoverage":"Perú y el mundo","distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://simplelife-web.github.io/precios/peru.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://simplelife-web.github.io/precios/mundo.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://simplelife-web.github.io/precios/paises.json"}]}]}
+</script>
+<meta property="og:title" content="Precios del Perú y del mundo | Gráficos que se actualizan solos">
+<meta property="og:site_name" content="Simplelife">
+<meta property="og:description" content="¿Cuánto subieron los alimentos en Lima? ¿Y el cobre, el oro o el trigo en el mundo? Gráficos gratis con datos oficiales.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simplelife-web.github.io/precios/">
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9798339025422593"
+     crossorigin="anonymous"></script>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f6f5f1; --card: #ffffff; --text: #1d1d1b; --muted: #5c5a54;
+    --line: #dedbd2; --grid: #ecebe5; --accent: #1f6f5c; --accent-text: #ffffff; --soft: #e7f1ed;
+    --warm: #c2410c; --warm-soft: #fdeee4;
+    --up: #c2410c; --down: #1f6f5c;
+    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #6250d6; --s5: #e34948; --s6: #eda100;
+    --bar-up: #eb6834; --bar-down: #2a78d6; --bar-hi: #6250d6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #151614; --card: #1e1f1d; --text: #ecebe6; --muted: #b0aea7;
+      --line: #34352f; --grid: #2a2b27; --accent: #4fb596; --accent-text: #0d1a15; --soft: #1f2d28;
+      --warm: #f59e62; --warm-soft: #33241a;
+      --up: #f59e62; --down: #4fb596;
+      --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #9085e9; --s5: #e66767; --s6: #c98500;
+      --bar-up: #d95926; --bar-down: #3987e5; --bar-hi: #9085e9;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent); }
+  .saltar { position: absolute; left: -999px; }
+  .saltar:focus { left: 16px; top: 8px; background: var(--card); padding: 8px 12px; z-index: 9999; }
+  .top, main, footer { max-width: 1100px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
+  .top { display: flex; align-items: center; gap: 12px; padding-top: 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .brand span { font-size: 1.45rem; font-weight: 700; line-height: 1.1; }
+  .brand b { color: var(--accent); }
+  .brand a { display: inline-flex; align-items: center; text-decoration: none; color: inherit; }
+  .hoja img { transition: transform .2s; }
+  .hoja:hover img, .hoja:focus-visible img { transform: scale(1.1) rotate(-4deg); }
+  @media (prefers-reduced-motion: reduce) { .hoja img { transition: none; } }
+  .brand small { display: block; font-size: .72rem; font-weight: 500; color: var(--muted); }
+  main { padding-top: 14px; padding-bottom: 32px; }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 8px 0 8px; }
+  h2 { font-size: 1.3rem; line-height: 1.3; margin: 0 0 6px; }
+  h3 { font-size: 1.05rem; margin: 18px 0 4px; }
+  .lead { color: var(--muted); margin: 0 0 16px; max-width: 72ch; font-size: 1.05rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; margin-bottom: 18px; min-width: 0; }
+  .nota { color: var(--muted); font-size: .92rem; margin: 0 0 12px; }
+  .fuente { color: var(--muted); font-size: .85rem; margin: 10px 0 0; }
+  .dos { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .dos > .card { margin-bottom: 0; }
+  .dos + .card, .dos + .dos { margin-top: 18px; }
+  @media (max-width: 860px) { .dos { grid-template-columns: 1fr; } }
+
+  /* Pestañas */
+  .tabs { display: flex; gap: 8px; margin: 4px 0 18px; flex-wrap: wrap; position: sticky; top: 0; z-index: 5;
+    background: var(--bg); padding: 8px 0; }
+  .tab { font: inherit; font-weight: 600; font-size: 1rem; padding: 9px 18px; min-height: 44px; border-radius: 99px; cursor: pointer;
+    background: var(--card); color: var(--text); border: 2px solid var(--line); }
+  @media (max-width: 700px) {
+    .tabs { position: static; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: 6px; }
+    .tab { padding: 7px 12px; font-size: .9rem; white-space: nowrap; min-height: 42px; }
+    .kpi b { font-size: 1.35rem; }
+  }
+  .tab[aria-selected="true"] { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+  .tab:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  /* Cifras */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+  .kpi small { display: block; color: var(--muted); font-size: .88rem; line-height: 1.35; }
+  .kpi b { display: block; font-size: 1.7rem; line-height: 1.2; margin: 4px 0 2px; font-variant-numeric: tabular-nums; }
+  .kpi span { font-size: .85rem; color: var(--muted); }
+  @media (max-width: 860px) { .kpis { grid-template-columns: 1fr 1fr; } }
+  .sube { color: var(--up); } .baja { color: var(--down); }
+
+  /* Controles */
+  .ctrl { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; margin: 10px 0 12px; }
+  .ctrl label { font-size: .9rem; color: var(--muted); font-weight: 600; }
+  select, input[type=search] { font: inherit; font-size: .95rem; min-height: 42px; padding: 6px 10px; border-radius: 12px;
+    border: 2px solid var(--line); background: var(--bg); color: var(--text); max-width: 100%; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font: inherit; font-size: .88rem; padding: 5px 12px; min-height: 36px; border-radius: 99px; cursor: pointer;
+    background: var(--bg); color: var(--text); border: 2px solid var(--line); display: inline-flex; align-items: center; gap: 6px; }
+  .chip:hover { border-color: var(--accent); }
+  .chip[aria-pressed="true"] { border-color: var(--accent); background: var(--soft); font-weight: 600; }
+  .chip i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  .seg { display: inline-flex; border: 2px solid var(--line); border-radius: 99px; overflow: hidden; }
+  .seg button { font: inherit; font-size: .86rem; padding: 5px 11px; min-height: 36px; border: 0; background: var(--bg); color: var(--text); cursor: pointer; }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); font-weight: 600; }
+
+  /* Gráficos */
+  .graf { position: relative; }
+  .graf svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .graf text { fill: var(--muted); font-size: 11px; font-family: inherit; }
+  .graf .grid { stroke: var(--grid); }
+  .graf .base { stroke: var(--line); }
+  .graf .linea { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .graf .cruz { stroke: var(--muted); stroke-dasharray: 3 3; }
+  .graf .etq { font-size: 11.5px; font-weight: 600; fill: var(--text); }
+  .graf .bn { font-size: 11.5px; fill: var(--text); font-variant-numeric: tabular-nums; }
+  .graf .bl { font-size: 12px; fill: var(--text); }
+  .graf .bl.yo { font-weight: 700; }
+  .tip { position: absolute; pointer-events: none; background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 8px 10px; font-size: .84rem; line-height: 1.4; box-shadow: 0 6px 18px rgba(0,0,0,.12); min-width: 150px; max-width: 260px; z-index: 3; }
+  .tip b { display: block; margin-bottom: 2px; }
+  .tip div { display: flex; gap: 8px; justify-content: space-between; }
+  .tip i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; margin-right: 5px; }
+  .tip span:last-child { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .leyenda { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .86rem; color: var(--muted); margin-top: 8px; }
+  .leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+  /* Tablas */
+  .tabla-cont { max-height: 460px; overflow: auto; border: 1px solid var(--line); border-radius: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  th, td { padding: 7px 10px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  th:first-child, td:first-child { text-align: left; white-space: normal; }
+  td.izq, th.izq { text-align: left; }
+  thead th { position: sticky; top: 0; background: var(--card); font-size: .85rem; color: var(--muted); }
+  th button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+  tbody tr:nth-child(odd) { background: var(--bg); }
+  tbody tr.clic { cursor: pointer; }
+  tbody tr.clic:hover { background: var(--soft); }
+  tbody tr.sel { background: var(--soft); font-weight: 600; }
+  .tag { display: inline-block; font-size: .72rem; font-weight: 700; padding: 1px 7px; border-radius: 99px; margin-left: 6px; vertical-align: 1px; }
+  .tag.ex { background: #dff2e8; color: #1f6f5c; }
+  .tag.im { background: #fff1dc; color: #9a5a12; }
+  @media (prefers-color-scheme: dark) { .tag.ex { background: #1f3a2f; color: #4fb596; } .tag.im { background: #3d2e1a; color: #e2a85c; } }
+  .muted { color: var(--muted); }
+  .aviso { background: var(--warm-soft); border-radius: 12px; padding: 10px 14px; font-size: .95rem; }
+  .incluye { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 28px; }
+  .incluye ul { margin: 4px 0 0; padding-left: 20px; }
+  @media (max-width: 760px) { .incluye { grid-template-columns: 1fr; } }
+  footer { color: var(--muted); font-size: .9rem; padding-bottom: 40px; }
+  footer p { margin: 6px 0; }
+  .hidden { display: none !important; }
+  [role=tabpanel] { scroll-margin-top: 72px; }
+  .error { color: var(--warm); font-weight: 600; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+<a class="saltar" href="#contenido">Ir al contenido</a>
+<script src="../nav.js"></script>
+<header class="top">
+  <span class="brand"><a class="hoja" href="../" title="Ir al inicio de Simplelife"><img src="../logo.svg" alt="Inicio Simplelife" width="48" height="48"></a><a class="brand-txt" href="../" title="Ir al inicio de Simplelife"><span>Precios del <b>Perú y del mundo</b><small>Gráficos · de Simplelife</small></span></a></span>
+</header>
+
+<main id="contenido">
+  <h1>Precios del Perú y del mundo en gráficos</h1>
+  <p class="lead">Mira cuánto subieron los alimentos, los combustibles o la educación en Lima, y cómo cambian los precios mundiales del cobre, el oro, el petróleo, el trigo, el café y unos 70 productos más. Los datos son oficiales y un robot los pone al día solo.</p>
+
+  <div class="tabs" role="tablist" aria-label="Elegir sección">
+    <button class="tab" role="tab" id="tab-peru" aria-controls="peru" aria-selected="true">🇵🇪 Perú</button>
+    <button class="tab" role="tab" id="tab-mundo" aria-controls="mundo" aria-selected="false">🌎 Productos del mundo</button>
+    <button class="tab" role="tab" id="tab-paises" aria-controls="paises" aria-selected="false">📊 Inflación por país</button>
+  </div>
+
+  <!-- ===================== PERÚ ===================== -->
+  <section id="peru" role="tabpanel" aria-labelledby="tab-peru">
+    <div class="kpis" id="p-kpis"><div class="kpi"><small>Cargando datos del BCRP…</small></div></div>
+
+    <div class="card">
+      <h2>¿Qué subió más en Lima en los últimos 12 meses?</h2>
+      <p class="nota" id="p-barras-nota">Variación de precios por rubro.</p>
+      <div class="graf" id="p-barras" role="img" aria-label="Barras de la variación de precios en 12 meses por rubro"></div>
+      <div class="leyenda"><span><i style="background:var(--bar-up)"></i>Subió</span><span><i style="background:var(--bar-down)"></i>Bajó</span><span><i style="background:var(--bar-hi)"></i>Inflación total</span></div>
+      <p class="fuente">Fuente: BCRP con datos del INEI. Índice de precios al consumidor de Lima Metropolitana.</p>
+    </div>
+
+    <div class="card">
+      <h2>¿Cómo cambiaron los precios por rubro?</h2>
+      <p class="nota">Elige hasta 4 rubros y desde cuándo comparar. Todos empiezan en 100: si una línea llega a 130, ese rubro está 30 % más caro que al inicio.</p>
+      <div class="ctrl"><label for="p-desde">Desde</label><select id="p-desde"></select></div>
+      <div class="chips" id="p-chips" aria-label="Rubros"></div>
+      <div class="graf" id="p-lineas" role="img" aria-label="Líneas de precios por rubro"></div>
+      <div class="leyenda" id="p-ley"></div>
+      <p class="fuente">Fuente: BCRP con datos del INEI. Índices calculados por Simplelife encadenando la variación mensual oficial de cada rubro.</p>
+    </div>
+
+    <div class="card">
+      <h2>Tabla: precios por rubro</h2>
+      <p class="nota" id="p-tabla-nota"></p>
+      <div class="tabla-cont">
+        <table>
+          <thead><tr><th scope="col">Rubro</th><th scope="col">Último mes</th><th scope="col">En el año</th><th scope="col">12 meses</th><th scope="col">5 años</th></tr></thead>
+          <tbody id="p-tabla"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Tipo de cambio: soles por dólar</h2>
+      <p class="nota">Promedio mensual del tipo de cambio bancario. Si la línea sube, el dólar está más caro.</p>
+      <div class="ctrl"><div class="seg" id="tc-rango"></div></div>
+      <div class="graf" id="tc-graf" role="img" aria-label="Línea del tipo de cambio"></div>
+      <p class="fuente">Fuente: BCRP, serie PN01210PM.</p>
+    </div>
+  </section>
+
+  <!-- ===================== MUNDO ===================== -->
+  <section id="mundo" role="tabpanel" aria-labelledby="tab-mundo" class="hidden">
+    <div class="card">
+      <h2>Precio internacional de un producto</h2>
+      <p class="nota">Precios mensuales en los mercados del mundo (promedio del mes). Elige un producto de la lista o haz clic en la tabla de abajo.</p>
+      <div class="ctrl">
+        <label for="m-prod">Producto</label><select id="m-prod"></select>
+        <div class="seg" id="m-rango" aria-label="Periodo"></div>
+        <div class="seg" id="m-mon" aria-label="Moneda"></div>
+      </div>
+      <div class="kpis" id="m-kpis"></div>
+      <div class="graf" id="m-graf" role="img" aria-label="Línea del precio del producto"></div>
+      <p class="fuente" id="m-fuente"></p>
+    </div>
+
+    <div class="card">
+      <h2>Todos los productos</h2>
+      <div class="ctrl">
+        <label for="m-grupo">Grupo</label><select id="m-grupo"></select>
+        <label for="m-buscar" class="sr">Buscar producto</label><input id="m-buscar" type="search" placeholder="Buscar: cobre, café, trigo…" autocomplete="off">
+      </div>
+      <h3 style="margin-top:6px">Variación en 12 meses</h3>
+      <p class="nota" id="m-barras-nota"></p>
+      <div class="graf" id="m-barras" role="img" aria-label="Barras de variación de precios en 12 meses"></div>
+      <div class="leyenda"><span><i style="background:var(--bar-up)"></i>Subió</span><span><i style="background:var(--bar-down)"></i>Bajó</span><span><span class="tag ex">Perú exporta</span></span><span><span class="tag im">Perú importa</span></span></div>
+      <h3>Tabla</h3>
+      <div class="tabla-cont">
+        <table>
+          <thead><tr><th scope="col">Producto</th><th scope="col" class="izq">Unidad</th><th scope="col">Último precio</th><th scope="col">1 mes</th><th scope="col">12 meses</th><th scope="col">Dato de</th></tr></thead>
+          <tbody id="m-tabla"></tbody>
+        </table>
+      </div>
+      <p class="fuente" id="m-tabla-fuente"></p>
+    </div>
+
+    <div class="dos">
+      <div class="card">
+        <h2>Índices del Banco Mundial</h2>
+        <p class="nota">Cómo se mueven los grandes grupos de productos (2010 = 100). Elige hasta 4.</p>
+        <div class="chips" id="i-chips"></div>
+        <div class="graf" id="i-graf" role="img" aria-label="Líneas de índices de precios de materias primas"></div>
+        <div class="leyenda" id="i-ley"></div>
+        <p class="fuente">Fuente: Banco Mundial, Pink Sheet.</p>
+      </div>
+      <div class="card">
+        <h2>Precios de los alimentos en el mundo</h2>
+        <p class="nota">Índice de la FAO (2014-2016 = 100). Elige hasta 4.</p>
+        <div class="chips" id="f-chips"></div>
+        <div class="graf" id="f-graf" role="img" aria-label="Líneas del índice de precios de los alimentos de la FAO"></div>
+        <div class="leyenda" id="f-ley"></div>
+        <p class="fuente" id="f-fuente">Fuente: FAO.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PAÍSES ===================== -->
+  <section id="paises" role="tabpanel" aria-labelledby="tab-paises" class="hidden">
+    <div class="card">
+      <h2>Inflación en América Latina</h2>
+      <p class="nota" id="c-nota">Variación anual de los precios al consumidor.</p>
+      <div class="ctrl"><label for="c-anio">Año</label><select id="c-anio"></select></div>
+      <div class="graf" id="c-barras" role="img" aria-label="Barras de inflación por país de América Latina"></div>
+      <p class="fuente">Fuente: FMI, Perspectivas de la Economía Mundial. Gráfico con escala recortada en 30 %: los países con inflación muy alta muestran su cifra al lado.</p>
+    </div>
+
+    <div class="card">
+      <h2>Compara un país con el Perú</h2>
+      <p class="nota">Haz clic en un país de la tabla o elígelo aquí. La parte punteada son proyecciones del FMI.</p>
+      <div class="ctrl"><label for="c-pais">País</label><select id="c-pais"></select></div>
+      <div class="graf" id="c-graf" role="img" aria-label="Líneas de inflación anual de un país y del Perú"></div>
+      <div class="leyenda" id="c-ley"></div>
+    </div>
+
+    <div class="card">
+      <h2>Tabla: inflación de todos los países</h2>
+      <div class="ctrl">
+        <label for="c-region">Región</label><select id="c-region"></select>
+        <label for="c-buscar" class="sr">Buscar país</label><input id="c-buscar" type="search" placeholder="Buscar país…" autocomplete="off">
+      </div>
+      <div class="tabla-cont">
+        <table>
+          <thead><tr><th scope="col"><button type="button" data-orden="nombre">País ↕</button></th><th scope="col" class="izq">Región</th><th scope="col"><button type="button" data-orden="v" id="c-th-v">Año ↕</button></th><th scope="col"><button type="button" data-orden="a" id="c-th-a">Año anterior ↕</button></th></tr></thead>
+          <tbody id="c-tabla"></tbody>
+        </table>
+      </div>
+      <p class="fuente" id="c-fuente"></p>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="t-incluye">
+    <h2 id="t-incluye">¿Qué incluye y qué no?</h2>
+    <p>No existe una base de datos gratuita con el precio de <em>todos</em> los bienes y servicios del mundo. Aquí reunimos lo más completo que publican, gratis y con actualización regular, las fuentes oficiales:</p>
+    <div class="incluye">
+      <div>
+        <h3>Sí incluye</h3>
+        <ul>
+          <li><strong>Perú:</strong> 16 rubros del índice de precios al consumidor de Lima (alimentos, comidas fuera de casa, combustibles, transporte, luz y agua, alquiler, educación, salud, ropa, electrodomésticos y más), precios al por mayor y tipo de cambio, desde 1992.</li>
+          <li><strong>Mundo:</strong> precios mensuales de unas 70 materias primas (energía, metales, granos, aceites, bebidas, carnes, azúcar, madera y fertilizantes), desde 1990.</li>
+          <li>Índice de precios de los alimentos de la FAO, desde 1990.</li>
+          <li>Inflación anual de unos 190 países, desde el año 2000, con proyecciones del FMI.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>No incluye</h3>
+        <ul>
+          <li>El precio de una marca o tienda en particular (por ejemplo, un celular o un pasaje concreto).</li>
+          <li>Precios de otras ciudades del Perú (el IPC oficial que usa el BCRP es el de Lima).</li>
+          <li>Precios al consumidor dentro de otros países: para el mundo mostramos precios de mercados internacionales y la inflación de cada país.</li>
+          <li>Datos diarios: las fuentes publican promedios mensuales o anuales.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="t-preg">
+    <h2 id="t-preg">Preguntas frecuentes</h2>
+    <h3>¿Cada cuánto se actualiza?</h3>
+    <p>Un robot de Simplelife revisa las fuentes todos los días. El INEI y el BCRP publican la inflación de Lima el primer día de cada mes; el Banco Mundial actualiza los precios de materias primas los primeros días hábiles del mes; la FAO, a inicios de mes; y el FMI, dos veces al año (abril y octubre). <span id="f-revisado"></span></p>
+    <h3>¿Por qué los rubros del Perú empiezan en 100?</h3>
+    <p>El BCRP publica cuánto varió cada rubro mes a mes. Simplelife junta esas variaciones en un índice que vale 100 en la fecha que eliges. Así puedes comparar rubros distintos en la misma escala: es lo mismo que usa la <a href="../inflacion/">calculadora de inflación</a>.</p>
+    <h3>¿Por qué el precio del pollo o del arroz del mundo no es el del mercado de mi barrio?</h3>
+    <p>Porque son precios de grandes compras entre países, en dólares y por tonelada o por kilo, sin transporte, impuestos ni ganancias de los comercios. Sirven para ver la tendencia: cuando el trigo sube en el mundo, después suele subir el pan en el Perú.</p>
+    <h3>¿Qué significa «Perú exporta» y «Perú importa»?</h3>
+    <p>Marcamos los productos que más pesan en el comercio del Perú. Si sube un producto que el Perú exporta, como el cobre o el oro, entran más dólares al país; si sube uno que importa, como el petróleo o el trigo, nos cuesta más. Lee más en el glosario: <a href="../glosario/terminos-de-intercambio.html">términos de intercambio</a> y <a href="../glosario/balanza-comercial.html">balanza comercial</a>.</p>
+    <h3>¿Qué es la inflación?</h3>
+    <p>Es la subida general de los precios. Lee el <a href="../glosario/inflacion.html">glosario: inflación</a>, <a href="../glosario/ipc.html">IPC</a>, <a href="../glosario/tipo-de-cambio.html">tipo de cambio</a> y <a href="../glosario/oferta-y-demanda.html">oferta y demanda</a>, o calcula cuánto valen hoy tus soles con la <a href="../inflacion/">calculadora de inflación Perú</a>.</p>
+    <h3>¿Puedo usar estos datos en un trabajo de la universidad?</h3>
+    <p>Sí, pero cita la fuente original (BCRP, INEI, Banco Mundial, FAO o FMI) y su fecha, que aparecen debajo de cada gráfico. Para un trabajo formal, confirma la cifra en la página oficial.</p>
+  </section>
+</main>
+
+<footer>
+  <p>Fuentes: Banco Central de Reserva del Perú (BCRP) con datos del Instituto Nacional de Estadística e Informática (INEI); Banco Mundial, <a href="https://www.worldbank.org/en/research/commodity-markets" rel="noopener" target="_blank">Commodity Price Data (Pink Sheet)</a>; FAO, <a href="https://www.fao.org/worldfoodsituation/foodpricesindex/es/" rel="noopener" target="_blank">Índice de precios de los alimentos</a>; FMI, <a href="https://www.imf.org/external/datamapper/PCPIPCH@WEO" rel="noopener" target="_blank">World Economic Outlook</a>. Simplelife no es parte de estas instituciones.</p>
+  <p><a href="../">Inicio Simplelife</a> · <a href="../inflacion/">Calculadora de inflación</a> · <a href="../glosario/">Glosario económico</a> · <a href="../tramites/">Trámite fácil Perú</a> · <a href="../acerca.html">Acerca de</a> · <a href="../contacto.html">Contacto</a> · <a href="../privacidad.html">Privacidad</a></p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "set", "oct", "nov", "dic"];
+  var MESES_L = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "setiembre", "octubre", "noviembre", "diciembre"];
+  var COLORES = ["var(--s1)", "var(--s2)", "var(--s3)", "var(--s4)"];
+  var P = null, M = null, C = null;
+
+  // ---------- utilidades ----------
+  function km(s) { return Number(s.slice(0, 4)) * 12 + Number(s.slice(5, 7)) - 1; }
+  function mesCorto(k) { return MESES[k % 12] + " " + Math.floor(k / 12); }
+  function mesLargo(k) { return MESES_L[k % 12] + " de " + Math.floor(k / 12); }
+  function nf(x, d) { return x.toLocaleString("es-PE", { minimumFractionDigits: d, maximumFractionDigits: d }); }
+  function dec(x) { var a = Math.abs(x); return a >= 1000 ? 0 : a >= 100 ? 1 : a >= 10 ? 2 : a >= 1 ? 2 : 3; }
+  function precio(x) { return nf(x, dec(x)); }
+  function pct(x, d) { if (x == null || !isFinite(x)) return "—"; d = d == null ? 1 : d; return (x > 0 ? "+" : "") + nf(x, d) + " %"; }
+  function clsVar(x) { return x == null ? "" : x > 0 ? "sube" : x < 0 ? "baja" : ""; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  // Serie {desde, valores} -> mapa k->valor
+  function puntos(desde, valores) { var a = km(desde), out = []; valores.forEach(function (v, i) { if (v != null) out.push([a + i, v]); }); return out; }
+  function valorEn(pts, k) { for (var i = pts.length - 1; i >= 0; i--) { if (pts[i][0] === k) return pts[i][1]; if (pts[i][0] < k) return null; } return null; }
+  function ultimo(pts) { return pts.length ? pts[pts.length - 1] : null; }
+  function variacion(pts, meses) { var u = ultimo(pts); if (!u) return null; var a = valorEn(pts, u[0] - meses); return a ? (u[1] / a - 1) * 100 : null; }
+  // Encadena variaciones % mensuales en un índice (base 100 en el mes anterior al primer dato)
+  function indiceDeVar(r) { var a = km(r.desde), v = 100, out = [[a - 1, 100]]; r.var.forEach(function (x, i) { if (x == null) return; v *= 1 + x / 100; out.push([a + i, v]); }); return out; }
+  function niceTicks(min, max, n) {
+    var span = max - min || Math.abs(max) || 1, step = Math.pow(10, Math.floor(Math.log10(span / n))), err = span / n / step;
+    if (err >= 7.5) step *= 10; else if (err >= 3.5) step *= 5; else if (err >= 1.5) step *= 2;
+    var t = [], s = Math.floor(min / step) * step;
+    for (var x = s; x <= max + step * 0.5; x += step) t.push(Math.round(x * 1e6) / 1e6);
+    return t;
+  }
+
+  // ---------- gráfico de líneas con cursor ----------
+  // series: [{nombre, color, pts:[[k,v]], punteadoDesde?}] ; opts: {fmt, alto, anual}
+  function lineas(cont, series, opts) {
+    opts = opts || {};
+    var fmt = opts.fmt || function (v) { return precio(v); };
+    var W = Math.max(320, cont.clientWidth || 700), H = opts.alto || (W < 560 ? 260 : 320);
+    var L = 52, R = series.length > 1 && W >= 560 ? 120 : 16, T = 12, B = 26;
+    var xs = [], ys = [];
+    series.forEach(function (s) { s.pts.forEach(function (p) { xs.push(p[0]); ys.push(p[1]); }); });
+    if (!xs.length) { cont.innerHTML = '<p class="muted">Sin datos para este periodo.</p>'; return; }
+    var x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs);
+    var y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys);
+    if (opts.cero && y0 > 0) y0 = 0;
+    var pad = (y1 - y0) * 0.06 || 1; y0 -= pad; y1 += pad;
+    var ticks = niceTicks(y0, y1, 5); y0 = Math.min(y0, ticks[0]); y1 = Math.max(y1, ticks[ticks.length - 1]);
+    var X = function (k) { return L + (x1 === x0 ? 0.5 : (k - x0) / (x1 - x0)) * (W - L - R); };
+    var Y = function (v) { return T + (y1 - v) / (y1 - y0) * (H - T - B); };
+    var s = '<svg viewBox="0 0 ' + W + " " + H + '" xmlns="http://www.w3.org/2000/svg">';
+    ticks.forEach(function (t) {
+      if (t < y0 || t > y1) return;
+      s += '<line class="grid" x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(t) + '" y2="' + Y(t) + '"/>';
+      s += '<text x="' + (L - 6) + '" y="' + (Y(t) + 4) + '" text-anchor="end">' + esc(opts.fmtEje ? opts.fmtEje(t) : nf(t, Math.abs(ticks[1] - ticks[0]) < 1 ? 1 : 0)) + "</text>";
+    });
+    if (y0 < 0 && y1 > 0) s += '<line class="base" x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(0) + '" y2="' + Y(0) + '"/>';
+    // eje de años
+    var anios = (x1 - x0) / 12, paso = anios > 24 ? 5 : anios > 12 ? 2 : anios > 4 ? 1 : 0;
+    if (opts.anual) { paso = anios > 20 ? 5 : anios > 10 ? 2 : 1; }
+    if (paso) {
+      for (var a = Math.ceil(x0 / 12 / paso) * paso; a * 12 <= x1; a += paso) {
+        var xx = X(a * 12); s += '<line class="grid" x1="' + xx + '" x2="' + xx + '" y1="' + T + '" y2="' + (H - B) + '"/>';
+        s += '<text x="' + xx + '" y="' + (H - 8) + '" text-anchor="middle">' + a + "</text>";
+      }
+    } else {
+      for (var k = x0; k <= x1; k++) { if ((k - x0) % (x1 - x0 > 14 ? 3 : 2)) continue; s += '<text x="' + X(k) + '" y="' + (H - 8) + '" text-anchor="middle">' + mesCorto(k) + "</text>"; }
+    }
+    series.forEach(function (se) {
+      var tramos = [], cur = [], prev = null;
+      se.pts.forEach(function (p) { if (prev != null && p[0] - prev > (opts.anual ? 12 : 1)) { tramos.push(cur); cur = []; } cur.push(p); prev = p[0]; });
+      tramos.push(cur);
+      tramos.forEach(function (tr) {
+        if (se.punteadoDesde != null) {
+          var real = tr.filter(function (p) { return p[0] <= se.punteadoDesde; }), proy = tr.filter(function (p) { return p[0] >= se.punteadoDesde - (opts.anual ? 12 : 1); });
+          if (real.length) s += '<path class="linea" stroke="' + se.color + '" d="' + camino(real) + '"/>';
+          if (proy.length > 1) s += '<path class="linea" stroke="' + se.color + '" stroke-dasharray="5 4" d="' + camino(proy) + '"/>';
+        } else if (tr.length) s += '<path class="linea" stroke="' + se.color + '" d="' + camino(tr) + '"/>';
+      });
+      if (se.pts.length === 1) { var p1 = se.pts[0]; s += '<circle cx="' + X(p1[0]) + '" cy="' + Y(p1[1]) + '" r="4" fill="' + se.color + '"/>'; }
+    });
+    // etiquetas directas al final (si hay espacio)
+    if (R > 16) {
+      var fin = series.map(function (se) { var u = ultimo(se.pts); return { y: Y(u[1]), n: se.nombre, c: se.color }; }).sort(function (a, b) { return a.y - b.y; });
+      for (var i = 1; i < fin.length; i++) if (fin[i].y - fin[i - 1].y < 14) fin[i].y = fin[i - 1].y + 14;
+      fin.forEach(function (f) { var t = f.n.length > 17 ? f.n.slice(0, 16) + "…" : f.n; s += '<circle cx="' + (W - R + 8) + '" cy="' + (f.y - 4) + '" r="4" fill="' + f.c + '"/><text class="etq" x="' + (W - R + 16) + '" y="' + f.y + '">' + esc(t) + "</text>"; });
+    }
+    s += '<line class="cruz hidden" id="cz" x1="0" x2="0" y1="' + T + '" y2="' + (H - B) + '"/>';
+    s += '<g id="pz"></g><rect x="' + L + '" y="' + T + '" width="' + (W - L - R) + '" height="' + (H - T - B) + '" fill="transparent" class="capa"/>';
+    s += "</svg>";
+    cont.innerHTML = s + '<div class="tip hidden"></div>';
+    function camino(pts) { return pts.map(function (p, i) { return (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1); }).join(""); }
+    var svg = cont.querySelector("svg"), tip = cont.querySelector(".tip"), cz = svg.querySelector(".cruz"), pz = svg.querySelector("#pz");
+    function mover(ev) {
+      var r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * W / r.width;
+      var k = Math.round(x0 + (px - L) / (W - L - R) * (x1 - x0));
+      if (opts.anual) k = Math.round(k / 12) * 12;
+      k = Math.max(x0, Math.min(x1, k));
+      var filas = [], dots = "";
+      series.forEach(function (se) { var v = valorEn(se.pts, k); if (v == null) return; filas.push('<div><span><i style="background:' + se.color + '"></i>' + esc(se.nombre) + "</span><span>" + esc(fmt(v, se, k)) + "</span></div>"); dots += '<circle cx="' + X(k) + '" cy="' + Y(v) + '" r="4.5" fill="' + se.color + '" stroke="var(--card)" stroke-width="2"/>'; });
+      if (!filas.length) { ocultar(); return; }
+      cz.setAttribute("x1", X(k)); cz.setAttribute("x2", X(k)); cz.classList.remove("hidden"); pz.innerHTML = dots;
+      var titulo = opts.anual ? String(k / 12) + (opts.proyDesde != null && k / 12 >= opts.proyDesde ? " (proyección)" : "") : mesLargo(k);
+      tip.innerHTML = "<b>" + titulo + "</b>" + filas.join("");
+      tip.classList.remove("hidden");
+      var cx = X(k) * r.width / W, tw = tip.offsetWidth;
+      tip.style.left = Math.max(0, Math.min(r.width - tw, cx + (cx > r.width / 2 ? -tw - 12 : 12))) + "px";
+      tip.style.top = "8px";
+    }
+    function ocultar() { tip.classList.add("hidden"); cz.classList.add("hidden"); pz.innerHTML = ""; }
+    svg.addEventListener("pointermove", mover);
+    svg.addEventListener("pointerdown", mover);
+    svg.addEventListener("pointerleave", ocultar);
+  }
+
+  // ---------- barras horizontales ----------
+  // items: [{nombre, valor, color?, yo?, nota?, clic?}]
+  function barras(cont, items, opts) {
+    opts = opts || {};
+    if (!items.length) { cont.innerHTML = '<p class="muted">No hay productos con este filtro.</p>'; return; }
+    var W = Math.max(320, cont.clientWidth || 700), fila = 26, T = 6, H = T + items.length * fila + 6;
+    var lab = W < 560 ? 112 : 210, numW = W < 560 ? 54 : 64;
+    var vals = items.map(function (i) { return opts.tope ? Math.max(-opts.tope, Math.min(opts.tope, i.valor)) : i.valor; });
+    var min = Math.min(0, Math.min.apply(null, vals)), max = Math.max(0, Math.max.apply(null, vals));
+    if (max === min) max = min + 1;
+    var X = function (v) { return lab + numW * (min < 0 ? 1 : 0) + (v - min) / (max - min) * (W - lab - numW * (min < 0 ? 2 : 1) - 4); };
+    var s = '<svg viewBox="0 0 ' + W + " " + H + '" xmlns="http://www.w3.org/2000/svg">';
+    s += '<line class="base" x1="' + X(0) + '" x2="' + X(0) + '" y1="' + T + '" y2="' + (H - 4) + '"/>';
+    items.forEach(function (it, i) {
+      var y = T + i * fila, v = vals[i], xa = X(Math.min(0, v)), xb = X(Math.max(0, v)), w = Math.max(1, xb - xa);
+      var col = it.color || (it.valor >= 0 ? "var(--bar-up)" : "var(--bar-down)");
+      var nom = it.nombre.length > (W < 560 ? 16 : 30) ? it.nombre.slice(0, W < 560 ? 15 : 29) + "…" : it.nombre;
+      s += '<g class="b"><title>' + esc(it.nombre + ": " + pct(it.valor) + (it.nota ? " · " + it.nota : "")) + "</title>";
+      s += '<text class="bl' + (it.yo ? " yo" : "") + '" x="' + (lab - 8) + '" y="' + (y + 17) + '" text-anchor="end">' + esc(nom) + "</text>";
+      s += '<rect x="' + xa + '" y="' + (y + 5) + '" width="' + w + '" height="' + (fila - 10) + '" rx="3" fill="' + col + '"/>';
+      var tx = v >= 0 ? xb + 5 : xa - 5;
+      s += '<text class="bn" x="' + tx + '" y="' + (y + 17) + '" text-anchor="' + (v >= 0 ? "start" : "end") + '">' + esc(pct(it.valor)) + (opts.tope && Math.abs(it.valor) > opts.tope ? " ▸" : "") + "</text>";
+      s += '<rect x="0" y="' + y + '" width="' + W + '" height="' + fila + '" fill="transparent"' + (it.clic ? ' style="cursor:pointer" data-i="' + i + '"' : "") + "/></g>";
+    });
+    cont.innerHTML = s + "</svg>";
+    if (opts.clic) cont.querySelectorAll("[data-i]").forEach(function (r) { r.addEventListener("click", function () { opts.clic(items[Number(r.getAttribute("data-i"))]); }); });
+  }
+
+  function segmentado(cont, opciones, valor, alCambiar) {
+    cont.innerHTML = opciones.map(function (o) { return '<button type="button" data-v="' + o[0] + '" aria-pressed="' + (String(o[0]) === String(valor)) + '">' + o[1] + "</button>"; }).join("");
+    cont.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () { cont.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); }); alCambiar(b.getAttribute("data-v")); });
+    });
+  }
+
+  // Selector de hasta 4 series: el color se queda con la serie mientras esté elegida.
+  function selectorMulti(chipsEl, nombres, iniciales, alCambiar) {
+    var elegidos = iniciales.map(function (i, j) { return { i: i, c: j }; });
+    function pintar() {
+      chipsEl.innerHTML = nombres.map(function (n, i) {
+        var e = elegidos.filter(function (x) { return x.i === i; })[0];
+        return '<button type="button" class="chip" data-i="' + i + '" aria-pressed="' + !!e + '">' + (e ? '<i style="background:' + COLORES[e.c] + '"></i>' : "") + esc(n) + "</button>";
+      }).join("");
+      chipsEl.querySelectorAll(".chip").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var i = Number(b.getAttribute("data-i")), pos = elegidos.findIndex(function (x) { return x.i === i; });
+          if (pos >= 0) { if (elegidos.length > 1) elegidos.splice(pos, 1); }
+          else {
+            if (elegidos.length >= 4) elegidos.shift();
+            var libres = [0, 1, 2, 3].filter(function (c) { return !elegidos.some(function (x) { return x.c === c; }); });
+            elegidos.push({ i: i, c: libres[0] });
+          }
+          pintar(); alCambiar(elegidos);
+        });
+      });
+    }
+    pintar();
+    return function () { return elegidos; };
+  }
+  function leyenda(el, items) { el.innerHTML = items.map(function (x) { return '<span><i style="background:' + x.color + '"></i>' + esc(x.nombre) + "</span>"; }).join(""); }
+
+  // ======================= PERÚ =======================
+  var pIdx = [], pSel = null, pDesde = null;
+  function iniciarPeru() {
+    pIdx = P.rubros.map(function (r) { return indiceDeVar(r); });
+    var total = pIdx[0], u = ultimo(total)[0];
+    var buscar = function (cod) { for (var i = 0; i < P.rubros.length; i++) if (P.rubros[i].codigo === cod) return i; return -1; };
+    var iAli = buscar("PN01383PM"), iComb = buscar("PN01309PM");
+    var tc = puntos(P.tipo_cambio.desde, P.tipo_cambio.valores), tcu = ultimo(tc);
+    var kp = [
+      ["Inflación de Lima en 12 meses", pct(variacion(total, 12), 2), "a " + mesLargo(u), variacion(total, 12)],
+      ["Alimentos y bebidas en 12 meses", pct(variacion(pIdx[iAli], 12), 2), "a " + mesLargo(u), variacion(pIdx[iAli], 12)],
+      ["Combustibles en 12 meses", pct(variacion(pIdx[iComb], 12), 2), "a " + mesLargo(u), variacion(pIdx[iComb], 12)],
+      ["Dólar (promedio del mes)", "S/ " + nf(tcu[1], 3), mesLargo(tcu[0]) + " · " + pct(variacion(tc, 12)) + " en 12 meses", null]
+    ];
+    $("p-kpis").innerHTML = kp.map(function (x) { return '<div class="kpi"><small>' + x[0] + '</small><b class="' + clsVar(x[3]) + '">' + x[1] + "</b><span>" + x[2] + "</span></div>"; }).join("");
+
+    // Barras 12 meses
+    var its = P.rubros.map(function (r, i) { return { nombre: r.nombre, valor: variacion(pIdx[i], 12), color: i === 0 ? "var(--bar-hi)" : null, yo: i === 0, nota: r.incluye }; })
+      .filter(function (x) { return x.valor != null; }).sort(function (a, b) { return b.valor - a.valor; });
+    $("p-barras-nota").textContent = "Variación de precios entre " + mesLargo(u - 12) + " y " + mesLargo(u) + ", por rubro.";
+    var dibBarras = function () { barras($("p-barras"), its); };
+
+    // Líneas por rubro
+    var anioU = Math.floor(u / 12), opciones = [[anioU - 1, "Hace 1 año"], [anioU - 5, "Hace 5 años"], [anioU - 10, "Hace 10 años"], [2010, "2010"], [2000, "2000"], [1995, "1995"]];
+    $("p-desde").innerHTML = opciones.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + (String(o[1]).length > 4 ? " (" + o[0] + ")" : "") + "</option>"; }).join("");
+    pDesde = anioU - 5; $("p-desde").value = String(pDesde);
+    pSel = selectorMulti($("p-chips"), P.rubros.map(function (r) { return r.nombre; }), [0, iAli, iComb, buscar("PN01303PM")], dibLineas);
+    $("p-desde").addEventListener("change", function () { pDesde = Number(this.value); dibLineas(); });
+    function dibLineas() {
+      var k0 = pDesde * 12 - 1; // base: diciembre del año anterior
+      var ser = pSel().map(function (e) {
+        var pts = pIdx[e.i], b = valorEn(pts, k0);
+        if (b == null) b = pts[0][1];
+        return { nombre: P.rubros[e.i].nombre, color: COLORES[e.c], pts: pts.filter(function (p) { return p[0] >= k0; }).map(function (p) { return [p[0], p[1] / b * 100]; }) };
+      });
+      lineas($("p-lineas"), ser, { fmt: function (v) { return nf(v, 1) + " (" + pct(v - 100) + ")"; } });
+      leyenda($("p-ley"), ser);
+    }
+
+    // Tabla
+    var anioIni = Math.floor(u / 12) * 12 - 1;
+    $("p-tabla").innerHTML = P.rubros.map(function (r, i) {
+      var pts = pIdx[i], v1 = variacion(pts, 1), vA = valorEn(pts, anioIni) ? (ultimo(pts)[1] / valorEn(pts, anioIni) - 1) * 100 : null;
+      return "<tr><td><strong>" + esc(r.nombre) + '</strong><br><small class="muted">' + esc(r.incluye) + "</small></td>" +
+        [v1, vA, variacion(pts, 12), variacion(pts, 60)].map(function (x) { return '<td class="' + clsVar(x) + '">' + pct(x, 2) + "</td>"; }).join("") + "</tr>";
+    }).join("");
+    $("p-tabla-nota").textContent = "Datos a " + mesLargo(u) + ". «En el año» compara con diciembre de " + (Math.floor(u / 12) - 1) + ".";
+
+    // Tipo de cambio
+    var tcRango = 10;
+    segmentado($("tc-rango"), [[1, "1 año"], [5, "5 años"], [10, "10 años"], [99, "Todo"]], tcRango, function (v) { tcRango = Number(v); dibTc(); });
+    function dibTc() {
+      var desde = tcu[0] - tcRango * 12;
+      lineas($("tc-graf"), [{ nombre: "Soles por dólar", color: "var(--s1)", pts: tc.filter(function (p) { return p[0] >= desde; }) }], { fmt: function (v) { return "S/ " + nf(v, 3); }, fmtEje: function (t) { return nf(t, 2); } });
+    }
+    return function () { dibBarras(); dibLineas(); dibTc(); };
+  }
+
+  // ======================= MUNDO =======================
+  var mSel = 0, mRango = 10, mMon = "usd", mGrupo = "Todos", mBuscar = "";
+  function iniciarMundo() {
+    var prods = M.productos.map(function (p) { var pts = puntos(p.desde, p.valores); return { p: p, pts: pts, u: ultimo(pts) }; });
+    var finGlobal = Math.max.apply(null, prods.map(function (x) { return x.u[0]; }));
+    var tc = P ? puntos(P.tipo_cambio.desde, P.tipo_cambio.valores) : [];
+    var tcUlt = tc.length ? ultimo(tc) : null;
+    function tcEn(k) { var v = valorEn(tc, k); return v != null ? v : (tcUlt && k > tcUlt[0] ? tcUlt[1] : null); }
+    var grupos = ["Todos", "Importantes para el Perú"].concat(M.productos.map(function (p) { return p.grupo; }).filter(function (g, i, a) { return a.indexOf(g) === i; }));
+    $("m-grupo").innerHTML = grupos.map(function (g) { return "<option>" + esc(g) + "</option>"; }).join("");
+    // lista de productos agrupada
+    var porGrupo = {};
+    prods.forEach(function (x, i) { (porGrupo[x.p.grupo] = porGrupo[x.p.grupo] || []).push(i); });
+    $("m-prod").innerHTML = Object.keys(porGrupo).map(function (g) { return '<optgroup label="' + esc(g) + '">' + porGrupo[g].map(function (i) { return '<option value="' + i + '">' + esc(prods[i].p.nombre) + "</option>"; }).join("") + "</optgroup>"; }).join("");
+    // producto inicial: el de la URL (?p=copper) o cobre
+    var q = new URLSearchParams(location.search).get("p");
+    var buscarId = function (id) { for (var i = 0; i < prods.length; i++) if (prods[i].p.id === id) return i; return -1; };
+    mSel = buscarId(q || ""); if (mSel < 0) mSel = Math.max(0, buscarId("copper"));
+    $("m-prod").value = String(mSel);
+    $("m-prod").addEventListener("change", function () { elegir(Number(this.value), false); });
+    segmentado($("m-rango"), [[1, "1 año"], [5, "5 años"], [10, "10 años"], [20, "20 años"], [99, "Desde 1990"]], mRango, function (v) { mRango = Number(v); dibProducto(); });
+    segmentado($("m-mon"), [["usd", "US$"], ["pen", "S/"]], mMon, function (v) { mMon = v; dibProducto(); });
+    $("m-grupo").addEventListener("change", function () { mGrupo = this.value; dibLista(); });
+    $("m-buscar").addEventListener("input", function () { mBuscar = this.value.trim().toLowerCase(); dibLista(); });
+
+    function etiquetaPeru(p) { return p.peru === "exporta" ? '<span class="tag ex">Perú exporta</span>' : p.peru === "importa" ? '<span class="tag im">Perú importa</span>' : ""; }
+    function unidad(p) { return mMon === "pen" && p.unidad.indexOf("US$") === 0 ? p.unidad.replace("US$", "S/") : p.unidad; }
+    function elegir(i, subir) {
+      mSel = i; $("m-prod").value = String(i);
+      try { history.replaceState(null, "", "?p=" + prods[i].p.id + "#mundo"); } catch (e) { /* sin historial */ }
+      dibProducto(); dibLista();
+      if (subir) $("m-prod").scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    function dibProducto() {
+      var x = prods[mSel], p = x.p, conv = mMon === "pen" && p.unidad.indexOf("US$") === 0;
+      var pts = x.pts.filter(function (q) { return q[0] >= x.u[0] - mRango * 12; });
+      if (conv) pts = pts.map(function (q) { var t = tcEn(q[0]); return t ? [q[0], q[1] * t] : null; }).filter(Boolean);
+      var u = ultimo(pts), max = pts.reduce(function (a, q) { return q[1] > a[1] ? q : a; }, pts[0]), min = pts.reduce(function (a, q) { return q[1] < a[1] ? q : a; }, pts[0]);
+      var simb = conv ? "S/ " : (p.unidad.indexOf("US$") === 0 ? "US$ " : "");
+      var viejo = x.u[0] < finGlobal - 3;
+      $("m-kpis").innerHTML = [
+        ["Último precio", simb + precio(u[1]), unidad(p) + " · " + mesLargo(u[0]), null],
+        ["Cambio en 1 mes", pct(variacion(pts, 1)), "frente a " + mesLargo(u[0] - 1), variacion(pts, 1)],
+        ["Cambio en 12 meses", pct(variacion(pts, 12)), "frente a " + mesLargo(u[0] - 12), variacion(pts, 12)],
+        ["Precio más alto del periodo", simb + precio(max[1]), mesLargo(max[0]) + " · el más bajo: " + simb + precio(min[1]) + " (" + mesCorto(min[0]) + ")", null]
+      ].map(function (k) { return '<div class="kpi"><small>' + k[0] + '</small><b class="' + clsVar(k[3]) + '">' + k[1] + "</b><span>" + k[2] + "</span></div>"; }).join("");
+      lineas($("m-graf"), [{ nombre: p.nombre, color: "var(--s1)", pts: pts }], { fmt: function (v) { return simb + precio(v); } });
+      $("m-fuente").innerHTML = "Fuente: Banco Mundial, Pink Sheet (" + esc(p.ingles) + ", " + esc(p.unidad) + ")" + (M.publicado ? ", publicado el " + esc(fechaIngles(M.publicado)) : "") + "." +
+        (conv ? " Convertido a soles con el tipo de cambio promedio de cada mes del BCRP." : "") +
+        (viejo ? ' <strong>El Banco Mundial dejó de publicar este precio en ' + mesLargo(x.u[0]) + ".</strong>" : "");
+    }
+    function filtrados() {
+      return prods.map(function (x, i) { return i; }).filter(function (i) {
+        var p = prods[i].p;
+        if (mGrupo === "Importantes para el Perú" && !p.peru) return false;
+        if (mGrupo !== "Todos" && mGrupo !== "Importantes para el Perú" && p.grupo !== mGrupo) return false;
+        if (mBuscar && (p.nombre + " " + p.ingles + " " + p.grupo).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").indexOf(mBuscar.normalize("NFD").replace(/[̀-ͯ]/g, "")) < 0) return false;
+        return true;
+      });
+    }
+    function dibLista() {
+      var ids = filtrados();
+      var its = ids.filter(function (i) { return prods[i].u[0] >= finGlobal - 3 && variacion(prods[i].pts, 12) != null; })
+        .map(function (i) { return { nombre: prods[i].p.nombre, valor: variacion(prods[i].pts, 12), id: i, clic: true, yo: i === mSel, nota: prods[i].p.unidad }; })
+        .sort(function (a, b) { return b.valor - a.valor; });
+      // Con muchos productos, mostramos los 12 que más subieron y los 12 que más bajaron.
+      var corto = its.length > 30, vis = corto ? its.slice(0, 12).concat(its.slice(-12)) : its;
+      $("m-barras-nota").textContent = corto ? "Los 12 productos que más subieron y los 12 que más bajaron. Elige un grupo para verlos todos; la tabla de abajo tiene la lista completa." : "Haz clic en una barra para ver su gráfico.";
+      barras($("m-barras"), vis, { tope: 150, clic: function (it) { elegir(it.id, true); } });
+      $("m-tabla").innerHTML = ids.map(function (i) {
+        var x = prods[i], p = x.p, v1 = variacion(x.pts, 1), v12 = variacion(x.pts, 12);
+        return '<tr class="clic' + (i === mSel ? " sel" : "") + '" data-i="' + i + '" tabindex="0"><td>' + esc(p.nombre) + etiquetaPeru(p) + '</td><td class="izq muted">' + esc(p.unidad) + "</td><td>" + precio(x.u[1]) +
+          '</td><td class="' + clsVar(v1) + '">' + pct(v1) + '</td><td class="' + clsVar(v12) + '">' + pct(v12) + '</td><td class="muted">' + mesCorto(x.u[0]) + "</td></tr>";
+      }).join("") || '<tr><td colspan="6" class="muted">Ningún producto coincide con la búsqueda.</td></tr>';
+      $("m-tabla").querySelectorAll("tr.clic").forEach(function (tr) {
+        var ir = function () { elegir(Number(tr.getAttribute("data-i")), true); };
+        tr.addEventListener("click", ir);
+        tr.addEventListener("keydown", function (e) { if (e.key === "Enter") ir(); });
+      });
+    }
+    $("m-tabla-fuente").textContent = "Fuente: Banco Mundial, Commodity Price Data (The Pink Sheet)" + (M.publicado ? ", actualizado el " + fechaIngles(M.publicado) : "") + ". Precios en dólares de EE. UU.; la variación se calcula sobre el promedio mensual.";
+
+    // Índices y FAO
+    var idx = M.indices.map(function (s) { return { nombre: s.nombre, pts: puntos(s.desde, s.valores) }; });
+    var iSel = selectorMulti($("i-chips"), idx.map(function (s) { return s.nombre; }), [1, 6, 11, 13].filter(function (i) { return i < idx.length; }), dibIdx);
+    function dibIdx() { var ser = iSel().map(function (e) { return { nombre: idx[e.i].nombre, color: COLORES[e.c], pts: idx[e.i].pts.filter(function (p) { return p[0] >= 2000 * 12; }) }; }); lineas($("i-graf"), ser, { alto: 300 }); leyenda($("i-ley"), ser); }
+    var fao = (M.fao && M.fao.series || []).map(function (s) { return { nombre: s.nombre, pts: puntos(s.desde, s.valores) }; });
+    var fSel = fao.length ? selectorMulti($("f-chips"), fao.map(function (s) { return s.nombre; }), [0, 3, 4].filter(function (i) { return i < fao.length; }), dibFao) : null;
+    function dibFao() {
+      if (!fSel) { $("f-graf").innerHTML = '<p class="muted">Datos de la FAO no disponibles por ahora.</p>'; return; }
+      var ser = fSel().map(function (e) { return { nombre: fao[e.i].nombre, color: COLORES[e.c], pts: fao[e.i].pts.filter(function (p) { return p[0] >= 2000 * 12; }) }; });
+      lineas($("f-graf"), ser, { alto: 300 }); leyenda($("f-ley"), ser);
+      var u = ultimo(fao[0].pts);
+      $("f-fuente").innerHTML = 'Fuente: <a href="https://www.fao.org/worldfoodsituation/foodpricesindex/es/" rel="noopener" target="_blank">FAO, Índice de precios de los alimentos</a>. Último dato: ' + mesLargo(u[0]) + ".";
+    }
+    return function () { dibProducto(); dibLista(); dibIdx(); dibFao(); };
+  }
+  function fechaIngles(s) {
+    var m = /^([A-Za-z]+) (\d+), (\d{4})$/.exec(s || ""); if (!m) return s;
+    var en = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+    var i = en.indexOf(m[1].toLowerCase()); return i < 0 ? s : Number(m[2]) + " de " + MESES_L[i] + " de " + m[3];
+  }
+
+  // ======================= PAÍSES =======================
+  var cAnio = null, cPais = null, cRegion = "Todas", cBuscar = "", cOrden = ["v", -1];
+  function iniciarPaises() {
+    var anios = C.anios, proy = C.proyeccion_desde;
+    var real = proy - 1;
+    // último año con dato para la mayoría
+    $("c-anio").innerHTML = anios.slice().reverse().map(function (a) { return '<option value="' + a + '">' + a + (a >= proy ? " (proyección)" : "") + "</option>"; }).join("");
+    cAnio = real; $("c-anio").value = String(cAnio);
+    var peru = C.paises.filter(function (p) { return p.iso === "PER"; })[0];
+    var regiones = ["Todas"].concat(C.paises.map(function (p) { return p.region; }).filter(function (r, i, a) { return a.indexOf(r) === i; }).sort());
+    $("c-region").innerHTML = regiones.map(function (r) { return "<option>" + esc(r) + "</option>"; }).join("");
+    $("c-pais").innerHTML = C.paises.filter(function (p) { return p.iso !== "PER"; }).map(function (p) { return '<option value="' + p.iso + '">' + esc(p.nombre) + "</option>"; }).join("");
+    cPais = "CHL"; $("c-pais").value = cPais;
+    $("c-anio").addEventListener("change", function () { cAnio = Number(this.value); dibBarras(); dibTabla(); });
+    $("c-pais").addEventListener("change", function () { cPais = this.value; dibComp(); dibTabla(); });
+    $("c-region").addEventListener("change", function () { cRegion = this.value; dibTabla(); });
+    $("c-buscar").addEventListener("input", function () { cBuscar = this.value.trim().toLowerCase(); dibTabla(); });
+    document.querySelectorAll("[data-orden]").forEach(function (b) { b.addEventListener("click", function () { var o = b.getAttribute("data-orden"); cOrden = [o, cOrden[0] === o ? -cOrden[1] : (o === "nombre" ? 1 : -1)]; dibTabla(); }); });
+    function v(p, a) { var i = anios.indexOf(a); return i < 0 ? null : p.valores[i]; }
+    function dibBarras() {
+      var lat = C.paises.filter(function (p) { return /Am[eé]rica Latina/.test(p.region) && v(p, cAnio) != null; });
+      var its = lat.map(function (p) { return { nombre: p.nombre, valor: v(p, cAnio), yo: p.iso === "PER", color: p.iso === "PER" ? "var(--bar-hi)" : null, iso: p.iso, clic: true }; }).sort(function (a, b) { return b.valor - a.valor; });
+      barras($("c-barras"), its, { tope: 30, clic: function (it) { if (it.iso !== "PER") { cPais = it.iso; $("c-pais").value = cPais; dibComp(); dibTabla(); $("c-pais").scrollIntoView({ behavior: "smooth", block: "center" }); } } });
+      $("c-nota").textContent = "Variación de los precios al consumidor en " + cAnio + (cAnio >= proy ? " (proyección del FMI)" : "") + ". El Perú está resaltado.";
+    }
+    function dibComp() {
+      var otro = C.paises.filter(function (p) { return p.iso === cPais; })[0];
+      var ser = [peru, otro].filter(Boolean).map(function (p, j) {
+        return { nombre: p.nombre, color: COLORES[j], punteadoDesde: (proy - 1) * 12, pts: anios.map(function (a, i) { return p.valores[i] == null ? null : [a * 12, p.valores[i]]; }).filter(Boolean) };
+      });
+      lineas($("c-graf"), ser, { anual: true, proyDesde: proy, fmt: function (x) { return nf(x, 1) + " %"; }, fmtEje: function (t) { return nf(t, 0) + " %"; } });
+      leyenda($("c-ley"), ser);
+    }
+    function dibTabla() {
+      $("c-th-v").textContent = cAnio + (cAnio >= proy ? "*" : "") + " ↕"; $("c-th-a").textContent = (cAnio - 1) + (cAnio - 1 >= proy ? "*" : "") + " ↕";
+      var norm = function (s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); };
+      var filas = C.paises.filter(function (p) { return (cRegion === "Todas" || p.region === cRegion) && (!cBuscar || norm(p.nombre).indexOf(norm(cBuscar)) >= 0); })
+        .map(function (p) { return { p: p, v: v(p, cAnio), a: v(p, cAnio - 1) }; });
+      filas.sort(function (x, y) {
+        if (cOrden[0] === "nombre") return cOrden[1] * x.p.nombre.localeCompare(y.p.nombre, "es");
+        var a = x[cOrden[0]], b = y[cOrden[0]]; if (a == null) return 1; if (b == null) return -1; return cOrden[1] * (a - b);
+      });
+      $("c-tabla").innerHTML = filas.map(function (f) {
+        var p = f.p, cls = p.iso === "PER" || p.iso === cPais ? " sel" : "";
+        var celda = function (x) { return x == null ? '<td class="muted">—</td>' : "<td>" + nf(x, 1) + " %</td>"; };
+        return '<tr class="clic' + cls + '" data-iso="' + p.iso + '" tabindex="0"><td>' + esc(p.nombre) + '</td><td class="izq muted">' + esc(p.region) + "</td>" + celda(f.v) + celda(f.a) + "</tr>";
+      }).join("") || '<tr><td colspan="4" class="muted">Ningún país coincide.</td></tr>';
+      $("c-tabla").querySelectorAll("tr.clic").forEach(function (tr) {
+        var ir = function () { var iso = tr.getAttribute("data-iso"); if (iso === "PER") return; cPais = iso; $("c-pais").value = iso; dibComp(); dibTabla(); $("c-pais").scrollIntoView({ behavior: "smooth", block: "center" }); };
+        tr.addEventListener("click", ir); tr.addEventListener("keydown", function (e) { if (e.key === "Enter") ir(); });
+      });
+      $("c-fuente").textContent = "Fuente: FMI, Perspectivas de la Economía Mundial (WEO). * Estimación o proyección del FMI. Nombres de países: Banco Mundial.";
+    }
+    return function () { dibBarras(); dibComp(); dibTabla(); };
+  }
+
+  // ======================= pestañas y carga =======================
+  var dibujar = {};
+  var TABS = ["peru", "mundo", "paises"];
+  function mostrar(id, guardar) {
+    TABS.forEach(function (t) { $(t).classList.toggle("hidden", t !== id); $("tab-" + t).setAttribute("aria-selected", String(t === id)); });
+    if (guardar) { try { history.replaceState(null, "", (id === "mundo" ? location.search : "") + "#" + id); } catch (e) { /* nada */ } }
+    if (dibujar[id]) dibujar[id]();
+  }
+  TABS.forEach(function (t) { $("tab-" + t).addEventListener("click", function () { mostrar(t, true); }); });
+  document.querySelector(".tabs").addEventListener("keydown", function (e) {
+    var i = TABS.indexOf(document.activeElement.id.replace("tab-", "")); if (i < 0) return;
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { var n = TABS[(i + (e.key === "ArrowRight" ? 1 : 2)) % 3]; $("tab-" + n).focus(); mostrar(n, true); }
+  });
+  window.addEventListener("hashchange", function () { var h = location.hash.replace("#", ""); if (TABS.indexOf(h) >= 0) mostrar(h, false); });
+  function inicial() { var h = location.hash.replace("#", ""); return TABS.indexOf(h) >= 0 ? h : (new URLSearchParams(location.search).get("p") ? "mundo" : "peru"); }
+  function json(url) { return fetch(url, { cache: "no-cache" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  function fallo(sec, txt) { $(sec).insertAdjacentHTML("afterbegin", '<p class="aviso error">' + txt + "</p>"); }
+
+  json("peru.json").then(function (d) { P = d; }).catch(function () { fallo("peru", "No se pudieron cargar los datos del Perú. Recarga la página en un momento."); })
+    .then(function () {
+      if (P) dibujar.peru = iniciarPeru();
+      return json("mundo.json").then(function (d) { M = d; dibujar.mundo = iniciarMundo(); }).catch(function (e) { console.error(e); fallo("mundo", "No se pudieron cargar los precios del mundo. Recarga la página en un momento."); });
+    })
+    .then(function () { return json("paises.json").then(function (d) { C = d; dibujar.paises = iniciarPaises(); }).catch(function (e) { console.error(e); fallo("paises", "No se pudieron cargar los datos por país. Recarga la página en un momento."); }); })
+    .then(function () {
+      var fechas = [P && P.revisado, M && M.revisado, C && C.revisado].filter(Boolean).sort();
+      if (fechas.length) { var f = fechas[fechas.length - 1].split("-"); $("f-revisado").textContent = "Última revisión del robot con cambios: " + Number(f[2]) + " de " + MESES_L[Number(f[1]) - 1] + " de " + f[0] + "."; }
+      mostrar(inicial(), false);
+    });
+  var t0 = null;
+  window.addEventListener("resize", function () { clearTimeout(t0); t0 = setTimeout(function () { var id = TABS.filter(function (t) { return !$(t).classList.contains("hidden"); })[0]; if (dibujar[id]) dibujar[id](); }, 150); });
+})();
+</script>
+</body>
+</html>
