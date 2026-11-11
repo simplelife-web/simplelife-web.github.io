@@ -2,7 +2,7 @@
 # Términos del glosario (parte 2): finanzas personales, trabajo, impuestos,
 # Estado, comercio exterior, mercados y bienestar. Mismo formato que terminos1.py.
 
-from terminos1 import BCRP_GLOSARIO
+
 
 T = []
 
@@ -113,7 +113,6 @@ tex=r"PBI=C+\boxed{I}+G+(X-M)",
 donde=[(r"I", "inversión, uno de los componentes del gasto del PBI")],
 ),
 rel=["pbi", "ahorro", "crecimiento-economico", "van", "politica-fiscal"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -122,7 +121,7 @@ alias="rmv sueldo minimo salario minimo",
 corto="Es el sueldo mensual más bajo que se puede pagar por una jornada completa en el sector privado. Desde el 1 de octubre de 2026 es S/ 1230.",
 simple=[
 r"La remuneración mínima vital (RMV) es el <strong>piso legal</strong> del sueldo de un trabajador del régimen privado con jornada completa (8 horas diarias o 48 semanales). La fija el Gobierno por decreto supremo.",
-r"Desde el <strong>1 de octubre de 2026</strong>, la RMV es de <strong>S/ 1230</strong>; antes era de S/ 1130. El Gobierno anunció un segundo aumento, hasta S/ 1300, para después del fenómeno El Niño.",
+r"Desde el <strong>1 de octubre de 2026</strong>, la RMV es de <strong>S/ 1230</strong>; antes era de S/ 1130. Lo fijó el Decreto Supremo 015-2026-TR, que también anuncia un segundo aumento de S/ 70, hasta S/ 1300, mediante otro decreto durante el primer semestre de 2027.",
 r"La RMV también sirve de referencia para otros pagos, como la asignación familiar, que es el 10 % de la RMV para quien tiene hijos menores de edad o que estudian.",
 ],
 ejemplo=[
@@ -135,7 +134,6 @@ calculo=[r"0.10\times 1230=123\ \text{soles}"],
 ),
 ojo=["Mucha gente trabaja en la informalidad y no recibe la RMV: la ley solo se cumple si el empleo es formal."],
 rel=["informalidad", "poder-adquisitivo", "cts", "gratificacion", "afp-y-onp"],
-fuente=("El Peruano: el Gobierno oficializa el aumento del sueldo mínimo a S/ 1230", "https://elperuano.pe/noticia/305675-gobierno-oficializa-aumento-del-sueldo-minimo-vital-subira-a-s1230-a-partir-del-1-de-octubre"),
 ))
 
 T.append(dict(
@@ -145,7 +143,7 @@ corto="Es un ahorro obligatorio que tu empleador deposita en mayo y noviembre en
 simple=[
 r"La CTS funciona como un <strong>seguro de desempleo</strong>: es un dinero que el empleador deposita dos veces al año en una cuenta CTS que tú eliges (banco, caja o financiera). La idea es que la uses cuando dejes de trabajar.",
 r"Se deposita en los <strong>primeros 15 días de mayo y de noviembre</strong>. Cada depósito equivale, más o menos, a medio sueldo si trabajaste todo el semestre. Para calcularla se usa la «remuneración computable», que suma tu sueldo y un sexto de tu última gratificación.",
-r"Le corresponde a los trabajadores del régimen privado con jornada de al menos 4 horas diarias en promedio. En las microempresas el régimen puede ser distinto.",
+r"Le corresponde a los trabajadores del régimen privado que trabajan, en promedio, al menos 4 horas diarias y tienen por lo menos un mes de servicios. No la reciben, por ejemplo, quienes cobran una remuneración integral anual que ya incluye la CTS ni los trabajadores de microempresas inscritas en el Remype contratados después de su inscripción.",
 ],
 ejemplo=[
 r"Lucía gana S/ 2400 al mes y recibió S/ 2400 de gratificación en julio. Su remuneración computable es S/ 2400 + S/ 400 = S/ 2800. Si trabajó los 6 meses completos (mayo a octubre), en noviembre le depositan S/ 1400.",
@@ -155,7 +153,8 @@ tex=r"CTS=\frac{R+\frac{1}{6}G}{12}\times m",
 donde=[(r"R", "sueldo mensual"), (r"G", "última gratificación recibida"), (r"m", "meses completos trabajados en el semestre")],
 calculo=[r"CTS=\frac{2400+\frac{2400}{6}}{12}\times 6=\frac{2800}{12}\times 6=1400\ \text{soles}"],
 ),
-ojo=["El retiro libre de la CTS lo autorizan leyes especiales que cambian con el tiempo; confirma en la página del Ministerio de Trabajo o de tu banco cuánto puedes sacar hoy."],
+ojo=["Si el 15 cae domingo o feriado, el plazo pasa al siguiente día hábil (en noviembre de 2026 vence el lunes 16).",
+     "La Ley 32322 permite retirar libremente el 100 % de la CTS hasta el 31 de diciembre de 2026. Después de esa fecha, revisa qué regla está vigente."],
 rel=["gratificacion", "remuneracion-minima-vital", "afp-y-onp", "ahorro"],
 ))
 
@@ -166,7 +165,7 @@ corto="Es un sueldo extra que recibes en julio (Fiestas Patrias) y otro en dicie
 simple=[
 r"Los trabajadores del régimen privado reciben dos gratificaciones al año: una en <strong>julio</strong> y otra en <strong>diciembre</strong>, pagadas en la primera quincena. Si trabajaste todo el semestre, cada una equivale a un sueldo completo.",
 r"Si trabajaste menos meses, recibes la parte proporcional: un sexto del sueldo por cada mes completo. Además, como la gratificación no paga aporte a EsSalud, ese 9 % se te entrega como <strong>bonificación extraordinaria</strong>.",
-r"La gratificación sí paga impuesto a la renta de quinta categoría, pero no se le descuenta el aporte a la AFP o a la ONP.",
+r"Según la Ley 27735, la gratificación no tiene aportaciones ni descuentos (ni AFP, ni ONP, ni EsSalud), salvo los que ordene la ley o un juez, como una pensión de alimentos. Lo que sí hace es sumar a tu ingreso anual para el impuesto a la renta de quinta categoría.",
 ],
 ejemplo=[
 r"Jorge gana S/ 2000 y trabajó de enero a junio. En julio recibe S/ 2000 de gratificación más S/ 180 de bonificación (9 %): en total, S/ 2180. Si hubiera entrado en marzo (4 meses completos), recibiría S/ 1333.33 más S/ 120.",
@@ -197,7 +196,8 @@ tex=r"\text{Aporte ONP}=0.13\times R,\qquad \text{Aporte AFP}=0.10\times R+\text
 donde=[(r"R", "remuneración mensual")],
 calculo=[r"0.13\times 3000=390,\qquad 0.10\times 3000=300\ \text{soles}"],
 ),
-ojo=["Las reglas de las pensiones cambian con nuevas leyes. Antes de decidir, revisa la información de la SBS y de la ONP."],
+ojo=["La Ley 32123 (2024), de modernización del sistema de pensiones, mantiene estos porcentajes y crea, entre otras cosas, un aporte por consumo (1 % de tus boletas electrónicas con DNI, pagado por el Estado) y una pensión mínima. Varias de sus reglas entran en vigor poco a poco.",
+     "Antes de decidir entre AFP y ONP, revisa la información de la SBS y de la ONP."],
 rel=["ahorro", "interes-compuesto", "remuneracion-minima-vital", "cts", "informalidad"],
 ))
 
@@ -207,7 +207,7 @@ alias="pea fuerza laboral poblacion en edad de trabajar pet",
 corto="Son las personas en edad de trabajar que tienen trabajo o lo están buscando activamente.",
 simple=[
 r"En el Perú, el INEI considera <strong>población en edad de trabajar</strong> (PET) a las personas de <strong>14 años a más</strong>. De ellas, la <strong>PEA</strong> es la que participa en el mercado laboral: los que trabajan (<strong>ocupados</strong>) y los que no trabajan pero buscan empleo (<strong>desocupados</strong>).",
-r"Quienes no trabajan ni buscan trabajo, como muchos estudiantes, jubilados o personas dedicadas solo a su hogar, forman la <strong>PEA inactiva</strong>.",
+r"Para el INEI basta con haber trabajado <strong>al menos una hora</strong> en la semana de la encuesta para contar como ocupado. Quienes no trabajan ni buscan trabajo, como muchos estudiantes, jubilados o personas dedicadas solo a su hogar, forman la <strong>población económicamente inactiva</strong>.",
 ],
 ejemplo=[
 r"Una estudiante universitaria que solo estudia es PEA inactiva. Si consigue unas prácticas pagadas, pasa a ser PEA ocupada. Si termina las prácticas y empieza a buscar trabajo, es PEA desocupada.",
@@ -244,7 +244,7 @@ alias="empleo informal economia informal",
 corto="Es el trabajo o la actividad económica que no está registrada ante el Estado: sin contrato, sin seguro de salud y sin aportes para la jubilación.",
 simple=[
 r"Un empleo es <strong>informal</strong> cuando el trabajador no tiene los beneficios de ley: no está en planilla, no tiene seguro de salud pagado por el empleador ni aporta a una AFP o a la ONP. Un negocio es informal cuando no tiene RUC ni está registrado.",
-r"El Perú tiene una de las tasas de informalidad más altas de la región: según el INEI, alrededor de <strong>7 de cada 10 trabajadores</strong> tienen un empleo informal. Las causas incluyen la baja productividad de muchos negocios pequeños, los costos y trámites de formalizarse y la poca fiscalización.",
+r"El Perú tiene una de las tasas de informalidad más altas de la región: con datos de la Encuesta Nacional de Hogares (ENAHO) del INEI, se estima que el <strong>72 %</strong> de la PEA trabaja en la informalidad, es decir, más de 7 de cada 10 personas. Las causas incluyen la baja productividad de muchos negocios pequeños, los costos y trámites de formalizarse y la poca fiscalización.",
 r"La informalidad deja a las personas sin protección ante una enfermedad o la vejez, y reduce lo que el Estado recauda en impuestos.",
 ],
 ejemplo=[
@@ -260,7 +260,7 @@ corto="Es un monto de referencia que fija el Estado cada año para calcular impu
 simple=[
 r"La UIT no es un impuesto: es una <strong>unidad de medida</strong> en soles. Muchas normas no dicen «S/ 27 500», sino «5 UIT». Así, cuando la UIT se actualiza cada año, los límites se actualizan solos.",
 r"Para el año <strong>2026</strong>, la UIT es de <strong>S/ 5500</strong>, según el Decreto Supremo 301-2025-EF del Ministerio de Economía y Finanzas.",
-r"Se usa, por ejemplo, para calcular el <a href=\"impuesto-a-la-renta.html\">impuesto a la renta</a> (las primeras 7 UIT del sueldo anual no pagan), las multas de tránsito y tributarias, y los topes de algunos trámites.",
+r"Se usa, por ejemplo, para calcular el <a href=\"impuesto-a-la-renta.html\">impuesto a la renta</a> (se restan 7 UIT a los ingresos anuales del trabajo antes de calcular el impuesto), las multas y los topes de algunos trámites.",
 ],
 ejemplo=[
 r"Si un trabajador gana menos de 7 UIT al año (S/ 38 500 en 2026), no paga impuesto a la renta de quinta categoría.",
@@ -270,7 +270,6 @@ tex=r"7\ UIT=7\times 5500=38\,500\ \text{soles (2026)}",
 donde=[(r"UIT", "valor de la UIT del año")],
 ),
 rel=["impuesto-a-la-renta", "igv", "politica-fiscal"],
-fuente=("El Peruano: el MEF establece en S/ 5500 la UIT para 2026", "https://elperuano.pe/noticia/285208-mef-establece-en-s-5-500-la-unidad-impositiva-tributaria-para-2026"),
 ))
 
 T.append(dict(
@@ -280,7 +279,7 @@ corto="Es el impuesto que se paga al comprar la mayoría de bienes y servicios. 
 simple=[
 r"El IGV es un impuesto al <strong>consumo</strong>: lo pagas tú al comprar, aunque quien lo entrega a la SUNAT es el vendedor. La tasa total es <strong>18 %</strong>: 16 % de IGV propiamente dicho más 2 % de Impuesto de Promoción Municipal (IPM).",
 r"Es un impuesto al <strong>valor agregado</strong>: en cada etapa de la cadena (productor, mayorista, tienda) se paga el impuesto solo sobre lo que esa etapa añade, porque cada empresa descuenta el IGV que ya pagó en sus compras (el «crédito fiscal»).",
-r"Algunos productos están exonerados, como muchos alimentos frescos que se venden sin procesar (frutas, verduras, tubérculos).",
+r"La ley exonera algunos bienes y servicios. Además, hay tasas especiales: en 2026, los restaurantes, hoteles y alojamientos turísticos que son mype y cumplen ciertos requisitos pagan 10.5 % (8 % de IGV más 2.5 % de IPM).",
 ],
 ejemplo=[
 r"Una mochila cuesta S/ 100 sin impuesto. Con IGV, pagas S/ 118. Y al revés: si una boleta dice S/ 59 en total, el IGV incluido es S/ 9 y el valor de venta, S/ 50.",
@@ -300,7 +299,7 @@ corto="Es el impuesto que se paga sobre los ingresos: sueldos, honorarios, alqui
 simple=[
 r"En el Perú los ingresos se ordenan en <strong>categorías</strong>: alquileres (primera), ganancias de capital (segunda), empresas (tercera), trabajo independiente con recibos por honorarios (cuarta) y trabajo en planilla (<strong>quinta</strong>).",
 r"Para la quinta categoría, a tu ingreso anual (12 sueldos más gratificaciones) se le restan <strong>7 UIT</strong>. Sobre lo que queda se aplica una escala <strong>progresiva</strong>: quien gana más paga una tasa mayor, pero solo sobre la parte que pasa cada tramo.",
-r"Escala para 2026: hasta 5 UIT, 8 %; de 5 a 20 UIT, 14 %; de 20 a 35 UIT, 17 %; de 35 a 45 UIT, 20 %; más de 45 UIT, 30 %. Además, puedes deducir hasta 3 UIT por ciertos gastos (alquiler, restaurantes, médicos y otros) si pides comprobante electrónico.",
+r"La escala de la SUNAT es: hasta 5 UIT, 8 %; más de 5 hasta 20 UIT, 14 %; más de 20 hasta 35 UIT, 17 %; más de 35 hasta 45 UIT, 20 %; más de 45 UIT, 30 %. Además, puedes deducir hasta 3 UIT más por gastos pagados con comprobante electrónico: el 30 % del alquiler de tu vivienda, el 30 % de los honorarios de profesionales independientes (como médicos o psicólogos), el 15 % de lo que gastas en restaurantes, bares y hoteles, y los aportes a EsSalud por trabajadores del hogar.",
 ],
 ejemplo=[
 r"Rosa gana S/ 4000 al mes en planilla. Al año: 12 sueldos más 2 gratificaciones = S/ 56 000. Le restan 7 UIT (S/ 38 500) y queda S/ 17 500. Como no pasa de 5 UIT (S/ 27 500), paga 8 %: S/ 1400 al año, que su empleador le retiene poco a poco cada mes.",
@@ -321,13 +320,12 @@ corto="Son las decisiones del Estado sobre cuánto gastar y cuánto cobrar en im
 simple=[
 r"Con la política fiscal, el Estado decide su <strong>presupuesto</strong>: cuánto recauda (impuestos como el <a href=\"igv.html\">IGV</a> y el <a href=\"impuesto-a-la-renta.html\">impuesto a la renta</a>) y en qué gasta (sueldos públicos, colegios, hospitales, carreteras, programas sociales).",
 r"Es <strong>expansiva</strong> cuando el Estado gasta más o cobra menos impuestos, para animar la economía, y <strong>contractiva</strong> cuando gasta menos o cobra más, por ejemplo para reducir el déficit.",
-r"El Perú tiene <strong>reglas fiscales</strong>: límites legales al déficit y a la deuda pública, para que las cuentas del Estado se mantengan sanas.",
+r"El Perú tiene <strong>reglas fiscales</strong>: límites legales al déficit y a la deuda pública, para que las cuentas del Estado se mantengan sanas. Por ejemplo, la regla de mediano plazo pide un déficit de 1 % del PBI, y el Decreto Legislativo 1621 (2024) fija cómo volver a ella poco a poco después de la pandemia.",
 ],
 ejemplo=[
 r"En 2020, durante la pandemia, el Estado peruano entregó bonos a millones de familias y aumentó el gasto en salud. Fue una política fiscal expansiva, que aumentó el déficit y la deuda.",
 ],
 rel=["deficit-fiscal", "deuda-publica", "politica-monetaria", "igv", "impuesto-a-la-renta"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -340,13 +338,13 @@ r"Se suele expresar como <strong>porcentaje del PBI</strong>, para comparar entr
 ],
 ejemplo=[
 r"Si en un año el Estado recauda 200 mil millones de soles y gasta 220 mil millones, el déficit es de 20 mil millones. Si el PBI es de 1000 mil millones, el déficit es 2 % del PBI.",
+r"Con datos reales: en su Marco Macroeconómico Multianual 2026-2029, el MEF proyectó un déficit de 2.2 % del PBI para 2025 y de 1.8 % para 2026, bajando hacia la regla de 1 %.",
 ],
 formula=dict(
 tex=r"\text{Resultado fiscal}=\text{Ingresos}-\text{Gastos},\qquad \frac{\text{Déficit}}{PBI}\times 100",
 calculo=[r"200-220=-20,\qquad \frac{20}{1000}\times 100=2\ \%\ \text{del PBI}"],
 ),
 rel=["politica-fiscal", "deuda-publica", "pbi", "riesgo-pais"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -355,17 +353,16 @@ alias="deuda del estado bonos soberanos endeudamiento",
 corto="Es todo lo que el Estado debe, dentro y fuera del país. Se mide como porcentaje del PBI.",
 simple=[
 r"Cuando el Estado tiene <a href=\"deficit-fiscal.html\">déficit</a>, pide prestado: emite <strong>bonos</strong> (papeles que prometen devolver el dinero con intereses) o toma préstamos de organismos como el Banco Mundial. La suma de todo eso es la deuda pública.",
-r"Lo importante no es el monto en soles, sino su tamaño frente a la economía (<strong>deuda / PBI</strong>) y si se puede pagar sin problemas. Comparada con la de muchos países de la región, la deuda pública peruana es baja, lo que le permite al Perú pedir prestado a tasas más bajas.",
+r"Lo importante no es el monto en soles, sino su tamaño frente a la economía (<strong>deuda / PBI</strong>) y si se puede pagar sin problemas. El Ministerio de Economía y Finanzas (MEF) destaca el bajo nivel de deuda del Perú como una de sus fortalezas, y eso ayuda a que el país pague tasas de interés más bajas cuando se endeuda.",
 ],
 ejemplo=[
-r"Si el Estado debe 330 mil millones de soles y el PBI es de 1000 mil millones, la deuda es 33 % del PBI.",
+r"Si el Estado debe 330 mil millones de soles y el PBI es de 1000 mil millones, la deuda es 33 % del PBI. En la realidad, el MEF proyectó la deuda pública peruana en 32.1 % del PBI para 2025 y 2026, una de las más bajas de América Latina.",
 ],
 formula=dict(
 tex=r"\text{Ratio de deuda}=\frac{\text{Deuda pública}}{PBI}\times 100",
 calculo=[r"\frac{330}{1000}\times 100=33\ \%"],
 ),
 rel=["deficit-fiscal", "politica-fiscal", "riesgo-pais", "pbi"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -375,7 +372,7 @@ corto="Mide cuánto más interés piden los inversionistas para prestarle a un p
 simple=[
 r"Prestarle al Gobierno de Estados Unidos se considera casi sin riesgo. Prestarle a otro país tiene más riesgo, así que los inversionistas piden una tasa más alta. Esa diferencia es el <strong>riesgo país</strong>.",
 r"Se expresa en <strong>puntos básicos</strong>: 100 puntos básicos son 1 punto porcentual. El indicador más usado es el EMBIG de J. P. Morgan. Si el riesgo país sube, al Estado y a las empresas les cuesta más endeudarse.",
-r"En los últimos años, el riesgo país del Perú ha estado entre los más bajos de América Latina, gracias a su deuda baja y a la autonomía de su banco central.",
+r"Según el BCRP, en junio de 2026 el riesgo país del Perú bajó a 108 puntos básicos, su nivel más bajo en 19 años, frente a un promedio de 294 en América Latina. En la región, solo Chile tuvo uno menor.",
 ],
 ejemplo=[
 r"Si los bonos de Estados Unidos rinden 4.0 % y los bonos del Perú en dólares rinden 5.5 %, el riesgo país es 1.5 puntos porcentuales, es decir, 150 puntos básicos.",
@@ -386,7 +383,6 @@ donde=[(r"i", "rendimiento de los bonos del gobierno, en %")],
 calculo=[r"(5.5-4.0)\times 100=150\ \text{pb}"],
 ),
 rel=["deuda-publica", "deficit-fiscal", "tasa-de-interes", "bcrp"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -395,8 +391,8 @@ alias="exportaciones importaciones superavit comercial",
 corto="Es la diferencia entre lo que un país vende al exterior (exportaciones) y lo que compra (importaciones).",
 simple=[
 r"Si un país exporta más de lo que importa, tiene <strong>superávit comercial</strong>; si importa más, tiene <strong>déficit comercial</strong>.",
-r"El Perú exporta sobre todo <strong>minerales</strong> (cobre, oro, zinc), además de productos agrícolas como arándanos, uvas y paltas, harina de pescado y textiles. Importa combustibles, maquinaria, vehículos, insumos y bienes de consumo. Su principal socio comercial es China, seguida de Estados Unidos.",
-r"Cuando los precios de los metales están altos, la balanza comercial peruana suele tener un superávit grande.",
+r"El Perú exporta sobre todo <strong>minerales</strong>: el cobre es cerca del 30 % de las exportaciones, y China compra alrededor de tres cuartas partes de ese cobre. Le siguen el oro, el zinc, la plata, los productos agrícolas (como arándanos, uvas y paltas) y los pesqueros. Importa bienes de capital (maquinaria), insumos, combustibles y bienes de consumo.",
+r"Cuando los precios de los metales están altos, la balanza comercial peruana tiene un superávit grande: según el BCRP, entre junio de 2025 y mayo de 2026 llegó a un récord de unos US$ 44 000 millones.",
 ],
 ejemplo=[
 r"Si en un año el Perú exporta 70 mil millones de dólares e importa 50 mil millones, su balanza comercial tiene un superávit de 20 mil millones de dólares.",
@@ -407,7 +403,6 @@ donde=[(r"X", "exportaciones"), (r"M", "importaciones")],
 calculo=[r"BC=70-50=20\ \text{mil millones de US\$}"],
 ),
 rel=["terminos-de-intercambio", "pbi", "tipo-de-cambio", "depreciacion-y-apreciacion"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -426,7 +421,6 @@ tex=r"TI=\frac{\text{Índice de precios de exportación}}{\text{Índice de preci
 calculo=[r"TI=\frac{110}{102}\times 100\approx 107.8"],
 ),
 rel=["balanza-comercial", "ciclo-economico", "tipo-de-cambio", "crecimiento-economico"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -479,6 +473,7 @@ r"En el Perú, el <strong>Indecopi</strong> defiende la libre competencia: inves
 ],
 ejemplo=[
 r"Si en un pueblo hay una sola empresa de transporte hacia la ciudad, puede cobrar pasajes altos. Cuando entra una segunda empresa, el pasaje suele bajar.",
+r"Un caso real de cártel: en 2022 el Indecopi multó con más de S/ 17 millones a cuatro cadenas de supermercados y a un proveedor por acordar un precio mínimo del pavo entero en las campañas navideñas de 2009 a 2016 (sanción en primera instancia).",
 ],
 rel=["oferta-y-demanda", "elasticidad-precio", "punto-de-equilibrio"],
 ))
@@ -512,11 +507,11 @@ r"La <strong>pobreza extrema</strong> usa una línea más baja: solo el costo de
 r"La pobreza monetaria es una de varias formas de medir la pobreza. Otras miran carencias como no tener agua potable, desagüe o acceso a la escuela.",
 ],
 ejemplo=[
-r"Si la línea de pobreza fuera de S/ 500 por persona al mes, un hogar de 4 personas que gasta S/ 1800 al mes (S/ 450 por persona) sería pobre. El valor oficial de la línea lo actualiza el INEI cada año en su informe de pobreza.",
+r"Según el INEI, en 2025 la línea de pobreza fue de S/ 462 por persona al mes (S/ 1848 para un hogar de 4) y la de pobreza extrema, S/ 260. Con esas líneas, el 25.7 % de los peruanos era pobre y el 4.7 %, pobre extremo. Un hogar de 4 personas que gasta S/ 1800 al mes (S/ 450 por persona) está por debajo de la línea: es pobre.",
 ],
 formula=dict(
 tex=r"\text{Pobre si}\quad \frac{\text{Gasto del hogar}}{\text{N.° de miembros}}<\text{Línea de pobreza}",
-calculo=[r"\frac{1800}{4}=450<500\ \Rightarrow\ \text{pobre}"],
+calculo=[r"\frac{1800}{4}=450<462\ \Rightarrow\ \text{pobre}"],
 ),
 rel=["coeficiente-de-gini", "pbi-per-capita", "informalidad", "inflacion"],
 ))
@@ -528,7 +523,7 @@ corto="Mide qué tan desigual es la distribución del ingreso: va de 0 (todos ga
 simple=[
 r"El coeficiente de Gini resume en un número cómo se reparte el «pastel» del ingreso. Si es <strong>0</strong>, todos tienen lo mismo (igualdad perfecta). Si es <strong>1</strong>, una sola persona tiene todo (desigualdad total).",
 r"Se calcula a partir de la <strong>curva de Lorenz</strong>, que muestra qué porcentaje del ingreso total recibe el 10 %, 20 %, 30 %… más pobre de la población. Mientras más se aleja esa curva de la línea de igualdad, mayor es el Gini.",
-r"América Latina es una de las regiones más desiguales del mundo; los países nórdicos de Europa tienen Gini bajos, cerca de 0.25.",
+r"Se puede expresar de 0 a 1 o de 0 a 100 (multiplicado por 100). América Latina es una de las regiones más desiguales del mundo.",
 ],
 ejemplo=[
 r"Si el área entre la línea de igualdad y la curva de Lorenz (A) es 0.2 y el área bajo la curva de Lorenz (B) es 0.3, el Gini es 0.2 ÷ 0.5 = 0.40.",

@@ -131,3 +131,8 @@ ul.donde li { margin: 6px 0; }
 .pasar .sig { text-align: right; }
 .botones { margin: 0 0 16px; }
 @media print { .filtros, .pasar, .chips, .botones { display: none !important; } }
+.fuentes { border-top: 1px solid var(--line); padding-top: 12px; margin-top: 8px; }
+.fuentes h2 { font-size: 1.05rem; margin: 0 0 6px; }
+.fuentes ul { margin: 0 0 6px; padding-left: 22px; font-size: .92rem; }
+.fuentes li { margin: 4px 0; }
+.fuentes p { font-size: .92rem; color: var(--muted); margin: 0 0 6px; }

@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # Términos del glosario (parte 1): precios, producción, dinero y bancos.
 # Matemática en el texto: \( ... \). Fórmulas grandes: campo "formula".
-# Campos: slug, t (término), cat, ic (emoji), corto, simple [párrafos],
+# Campos: slug, t (término), cat, ic (emoji), corto, simple [párrafos], (fuentes: fuentes.py)
 # ejemplo [párrafos], formula {tex, donde [(símbolo, significado)], calculo [líneas TeX]},
 # ojo [puntos], rel [slugs], fuente (texto, url), alias (palabras para el buscador),
 # herramienta (texto, url) opcional.
 
-BCRP_GLOSARIO = ("BCRP, Glosario de términos económicos", "https://www.bcrp.gob.pe/docs/Publicaciones/Glosario/Glosario-BCRP.pdf")
 
 T = []
 
@@ -20,7 +19,7 @@ r"Cuando hay inflación, tu dinero pierde <strong>poder de compra</strong>: con 
 r"En el Perú, la inflación se mide con el <a href=\"ipc.html\">índice de precios al consumidor (IPC)</a>, que calcula el INEI cada mes. El Banco Central de Reserva del Perú (BCRP) tiene como meta mantener la inflación anual entre <strong>1 % y 3 %</strong>, es decir, una inflación baja y estable.",
 ],
 ejemplo=[
-r"A fines de los años ochenta, el Perú vivió una <strong>hiperinflación</strong>: en 1990 los precios subieron más de 7000 % en el año. Los precios cambiaban de un día a otro y la gente corría a gastar su sueldo apenas lo cobraba. Desde que el BCRP trabaja con metas de inflación, la inflación peruana ha sido de las más bajas de América Latina.",
+r"A fines de los años ochenta, el Perú vivió una <strong>hiperinflación</strong>: según el Banco Mundial, en 1990 los precios subieron más de 7000 % en el año. Los precios cambiaban de un día a otro y la gente corría a gastar su sueldo apenas lo cobraba. En cambio, desde 2002 el BCRP trabaja con metas de inflación, y el Perú suma más de 25 años seguidos con inflación anual de un solo dígito.",
 r"Un ejemplo de bolsillo: si un menú costaba S/ 12.00 el año pasado y hoy cuesta S/ 12.60, su precio subió 5 %. Si casi todo sube parecido, la inflación del año fue de alrededor de 5 %.",
 ],
 formula=dict(
@@ -31,7 +30,6 @@ calculo=[r"IPC_{2025}=100,\quad IPC_{2026}=103", r"\pi=\frac{103-100}{100}\times
 ojo=["Que la inflación baje no significa que los precios bajen: significa que suben más despacio. Cuando los precios bajan de verdad, se llama deflación.",
      "Un poco de inflación (alrededor de 2 % al año) se considera normal y sano para la economía."],
 rel=["ipc", "deflacion", "poder-adquisitivo", "tasa-de-interes-real", "bcrp", "politica-monetaria"],
-fuente=BCRP_GLOSARIO,
 herramienta=("Calcula cuánto valen hoy tus soles de otro año", "../inflacion/"),
 ))
 
@@ -52,9 +50,8 @@ tex=r"IPC_t=\frac{\sum_{j} p_{j,t}\,q_{j,0}}{\sum_{j} p_{j,0}\,q_{j,0}}\times 10
 donde=[(r"p_{j,t}", "precio de hoy del producto j"), (r"p_{j,0}", "precio del producto j en el año base"), (r"q_{j,0}", "cantidad del producto j que compraba la familia en el año base")],
 calculo=[r"IPC=\frac{2180}{2000}\times 100=109"],
 ),
-ojo=["Esta fórmula se llama índice de Laspeyres: mantiene fija la canasta del año base. Por eso, cada cierto tiempo el INEI actualiza la canasta con nuevas encuestas de gasto."],
+ojo=["Esta fórmula es la idea básica de un índice de precios con canasta fija (índice de Laspeyres). Como los hábitos de gasto cambian, cada cierto tiempo el INEI actualiza la canasta con nuevas encuestas a los hogares."],
 rel=["inflacion", "deflacion", "poder-adquisitivo", "valor-nominal-y-real"],
-fuente=BCRP_GLOSARIO,
 herramienta=("Usa el IPC para actualizar montos de otros años", "../inflacion/"),
 ))
 
@@ -76,7 +73,6 @@ donde=[(r"\pi_t", "inflación anual medida con el IPC")],
 calculo=[r"IPC_{2025}=100,\quad IPC_{2026}=99", r"\pi=\frac{99-100}{100}\times 100=-1\ \%\ \Rightarrow \text{deflación}"],
 ),
 rel=["inflacion", "ipc", "recesion", "politica-monetaria"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -96,7 +92,6 @@ donde=[(r"\text{Sueldo nominal}", "lo que dice tu boleta, en soles de hoy"), (r"
 calculo=[r"\frac{2060}{105}\times 100\approx 1962\ \text{soles de 2025}"],
 ),
 rel=["inflacion", "ipc", "valor-nominal-y-real", "remuneracion-minima-vital"],
-fuente=BCRP_GLOSARIO,
 herramienta=("Calcula cuánto valen hoy tus soles de otro año", "../inflacion/"),
 ))
 
@@ -117,7 +112,6 @@ donde=[(r"\text{Índice de precios}", "IPC u otro índice, con el año base igua
 calculo=[r"g_{\text{real}}\approx g_{\text{nominal}}-\pi=7\ \%-3\ \%=4\ \%"],
 ),
 rel=["inflacion", "ipc", "pbi", "poder-adquisitivo", "tasa-de-interes-real"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -140,7 +134,6 @@ calculo=[r"C=650,\ I=200,\ G=150,\quad X=280,\ M=250", r"PBI=650+200+150+(280-25
 ojo=["Los números del ejemplo son inventados para practicar; las cifras oficiales están en el INEI y el BCRP.",
      "El PBI mide producción, no bienestar: no cuenta el trabajo de casa no pagado ni cómo se reparte el ingreso."],
 rel=["pbi-per-capita", "crecimiento-economico", "recesion", "valor-nominal-y-real", "balanza-comercial"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -160,7 +153,6 @@ donde=[(r"PBI_{pc}", "PBI por habitante")],
 calculo=[r"\frac{1\,030\,000\,000\,000}{34\,000\,000}\approx 30\,294\ \text{soles}"],
 ),
 rel=["pbi", "crecimiento-economico", "coeficiente-de-gini", "pobreza-monetaria"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -172,7 +164,7 @@ r"Cuando se dice «la economía creció 3 %», se habla del aumento del <a href=
 r"A largo plazo, un país crece cuando tiene más trabajadores, más máquinas e infraestructura (capital) y, sobre todo, cuando aprende a producir mejor (productividad), gracias a la educación, la tecnología y las buenas instituciones.",
 ],
 ejemplo=[
-r"Entre los años 2002 y 2013 el Perú creció rápido, impulsado por los altos precios de los minerales y la inversión. En 2020, por la pandemia, el PBI peruano cayó alrededor de 11 %, y en 2021 se recuperó con fuerza.",
+r"Entre los años 2002 y 2013 el Perú creció rápido, impulsado por los altos precios de los minerales y la inversión. En 2020, por la pandemia, el PBI peruano cayó 11.12 % según el INEI, la peor caída en tres décadas, y en 2021 se recuperó con fuerza.",
 ],
 formula=dict(
 tex=r"g_t=\frac{PBI_t-PBI_{t-1}}{PBI_{t-1}}\times 100",
@@ -180,7 +172,6 @@ donde=[(r"g_t", "tasa de crecimiento del año t, en %"), (r"PBI_t", "PBI real de
 calculo=[r"PBI_{t-1}=500,\ PBI_t=515", r"g=\frac{515-500}{500}\times 100=3\ \%"],
 ),
 rel=["pbi", "pbi-per-capita", "recesion", "ciclo-economico", "inversion"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -193,10 +184,9 @@ r"Una regla práctica muy usada dice que hay recesión cuando el <a href=\"pbi.h
 r"Si la caída es muy profunda y larga, se habla de <strong>depresión</strong>, como la Gran Depresión de los años treinta.",
 ],
 ejemplo=[
-r"En 2023 la economía peruana cayó levemente (menos de 1 % en el año), afectada por los conflictos sociales de inicios de año y por el clima, que golpeó la pesca y la agricultura. En 2020, con la pandemia, la caída fue mucho más fuerte.",
+r"Según el INEI, en 2023 el PBI peruano cayó 0.55 %; bajaron sobre todo la manufactura, la construcción, la pesca y el agro. En 2020, con la pandemia, la caída fue mucho más fuerte: 11.12 %.",
 ],
 rel=["ciclo-economico", "crecimiento-economico", "pbi", "tasa-de-desempleo", "politica-fiscal"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -211,7 +201,6 @@ ejemplo=[
 r"En el Perú, el ciclo depende mucho de los precios de los minerales. Cuando el cobre y el oro suben de precio, entran más dólares, crecen la inversión y el empleo; cuando bajan, la economía se enfría.",
 ],
 rel=["recesion", "crecimiento-economico", "politica-monetaria", "politica-fiscal", "terminos-de-intercambio"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -221,7 +210,7 @@ corto="Es el precio del dinero: lo que pagas por usar dinero prestado, o lo que 
 simple=[
 r"Si pides un préstamo, la tasa de interés es lo que pagas de más por usar un dinero que no es tuyo. Si ahorras en un banco, es lo que el banco te paga por usar tu dinero. Se expresa como un porcentaje por un periodo: por año, por mes, etc.",
 r"Las tasas de los préstamos son más altas que las de los ahorros: esa diferencia (el <em>spread</em>) cubre los costos del banco, el riesgo de que no le paguen y su ganancia.",
-r"En el Perú, por transparencia, los bancos deben informarte la <a href=\"tea.html\">TEA</a>, la <a href=\"tcea.html\">TCEA</a> (si te prestan) y la <a href=\"trea.html\">TREA</a> (si ahorras).",
+r"En el Perú, por la Ley 29888, los bancos deben informarte la <a href=\"tea.html\">TEA</a>, la <a href=\"tcea.html\">TCEA</a> (si te prestan) y la <a href=\"trea.html\">TREA</a> (si ahorras).",
 ],
 ejemplo=[
 r"Si prestas S/ 1000 a una tasa de 10 % al año, al final del año te deben devolver S/ 1100: los S/ 1000 más S/ 100 de interés.",
@@ -232,7 +221,6 @@ donde=[(r"i", "tasa de interés del periodo, en decimal (10 % = 0.10)")],
 calculo=[r"1000\times 0.10=100\ \text{soles}"],
 ),
 rel=["interes-simple", "interes-compuesto", "tea", "tcea", "trea", "tasa-de-referencia", "tasa-de-interes-real"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -291,7 +279,6 @@ donde=[(r"TEM", "tasa efectiva mensual"), (r"TEA", "tasa efectiva anual, en deci
 calculo=[r"TEM=(1+0.60)^{1/12}-1\approx 0.0399=3.99\ \%", r"TEA=(1+TEM)^{12}-1"],
 ),
 rel=["tcea", "trea", "interes-compuesto", "tasa-de-interes"],
-fuente=("SBS, Aprende con la SBS: créditos", "https://www.sbs.gob.pe/usuarios/aprende-con-la-sbs/aprende-sobre-creditos"),
 ))
 
 T.append(dict(
@@ -300,8 +287,8 @@ alias="tcea costo del credito prestamo tarjeta comisiones",
 corto="Es el costo total de un crédito en un año: incluye los intereses, las comisiones y los gastos, como los seguros.",
 simple=[
 r"La TCEA es la tasa que debes mirar para <strong>comparar préstamos y tarjetas</strong>. A diferencia de la <a href=\"tea.html\">TEA</a>, no solo cuenta el interés: también suma comisiones, el seguro de desgravamen y otros cobros obligatorios.",
-r"En el Perú, la Superintendencia de Banca, Seguros y AFP (SBS) obliga a los bancos y financieras a informarte la TCEA antes de que firmes. Entre dos ofertas, la que tiene <strong>menor TCEA</strong> es la más barata.",
-r"Técnicamente, la TCEA es la tasa que iguala el dinero que recibes con el valor presente de todas las cuotas que pagarás.",
+r"En el Perú, la Ley 29888 obliga a los bancos y financieras a mostrar la TCEA de forma clara en toda oferta de crédito, incluso si te la dan de palabra. La Superintendencia de Banca, Seguros y AFP (SBS) supervisa que lo cumplan. Entre dos ofertas, la que tiene <strong>menor TCEA</strong> es la más barata.",
+r"Técnicamente, según la ley, la TCEA es la tasa que iguala el valor actual de todas las cuotas que pagarás con el monto que realmente recibiste del préstamo.",
 ],
 ejemplo=[
 r"El banco A te ofrece un préstamo con TEA de 25 % y el banco B con TEA de 23 %. Parece mejor el B, pero si cobra un seguro y comisiones altas, su TCEA puede ser 30 % y la del A, 27 %. En ese caso, el A es más barato.",
@@ -312,7 +299,6 @@ donde=[(r"P", "monto que recibes del préstamo"), (r"c_k", "cuota total del mes 
 ),
 ojo=["Los intereses moratorios y las penalidades por atraso no entran en la TCEA: si te atrasas, pagarás más."],
 rel=["tea", "tasa-de-interes", "valor-presente-y-valor-futuro", "tir"],
-fuente=("SBS, Aprende con la SBS: créditos", "https://www.sbs.gob.pe/usuarios/aprende-con-la-sbs/aprende-sobre-creditos"),
 ))
 
 T.append(dict(
@@ -320,7 +306,7 @@ slug="trea", t="Tasa de rendimiento efectivo anual (TREA)", cat="dinero", ic="�
 alias="trea ahorro plazo fijo rendimiento cuenta de ahorros",
 corto="Es lo que realmente gana tu ahorro en un año, después de restar comisiones y gastos de la cuenta.",
 simple=[
-r"La TREA es la hermana de la <a href=\"tcea.html\">TCEA</a>, pero para los <strong>ahorros</strong>. Te dice cuánto crece tu dinero en un año después de descontar las comisiones de mantenimiento y otros cobros.",
+r"La TREA es la hermana de la <a href=\"tcea.html\">TCEA</a>, pero para los <strong>ahorros</strong>. Te dice cuánto crece tu dinero en un año después de descontar las comisiones de mantenimiento y otros cobros. La Ley 29888 obliga a los bancos a informarla en sus ofertas de cuentas y depósitos.",
 r"Si la cuenta cobra comisiones y tienes poco dinero, la TREA puede ser incluso <strong>negativa</strong>: tu saldo baja en vez de subir. Para comparar cuentas y depósitos a plazo, elige la de <strong>mayor TREA</strong>.",
 ],
 ejemplo=[
@@ -332,7 +318,6 @@ donde=[(r"C", "monto depositado"), (r"M", "monto al cabo de un año, ya sin comi
 calculo=[r"M=5000\,(1+0.05)=5250\ \text{soles}"],
 ),
 rel=["tea", "interes-compuesto", "ahorro", "tasa-de-interes-real"],
-fuente=("SBS, Aprende con la SBS: créditos", "https://www.sbs.gob.pe/usuarios/aprende-con-la-sbs/aprende-sobre-creditos"),
 ))
 
 T.append(dict(
@@ -352,7 +337,6 @@ donde=[(r"r", "tasa de interés real"), (r"i", "tasa de interés nominal"), (r"\
 calculo=[r"r=\frac{1.05}{1.02}-1\approx 0.0294=2.94\ \%"],
 ),
 rel=["inflacion", "tasa-de-interes", "trea", "valor-nominal-y-real", "tasa-de-referencia"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -361,14 +345,13 @@ alias="bcrp banco central reserva emisor del sol",
 corto="Es la institución que cuida el valor del sol: controla la inflación, emite los billetes y monedas y administra las reservas internacionales.",
 simple=[
 r"El BCRP es el <strong>banco central</strong> del Perú. No atiende al público ni da préstamos a las personas: su trabajo es mantener la <strong>estabilidad monetaria</strong>, es decir, que el sol conserve su valor y la inflación sea baja.",
-r"Según la Constitución (artículo 84), es una institución <strong>autónoma</strong>: el Gobierno no puede ordenarle que imprima dinero para financiar al Estado. Esa regla nació de la mala experiencia de la hiperinflación de fines de los ochenta.",
-r"Sus funciones principales son: regular la cantidad de dinero, fijar la <a href=\"tasa-de-referencia.html\">tasa de referencia</a>, emitir billetes y monedas, administrar las <strong>reservas internacionales</strong> e informar sobre las finanzas del país.",
+r"Según la Constitución (artículo 84), su finalidad es <strong>preservar la estabilidad monetaria</strong> y es una institución <strong>autónoma</strong>. Además, tiene prohibido financiar al Tesoro Público: no puede prestarle dinero al Gobierno (solo puede comprar bonos del Tesoro en el mercado secundario, con un límite que fija su ley).",
+r"La Constitución le encarga regular la moneda y el crédito del sistema financiero, administrar las <strong>reservas internacionales</strong>, emitir billetes y monedas e informar periódicamente al país sobre las finanzas nacionales. Para regular el crédito usa, sobre todo, la <a href=\"tasa-de-referencia.html\">tasa de referencia</a>.",
 ],
 ejemplo=[
 r"Cada mes, el Directorio del BCRP anuncia si sube, baja o mantiene la tasa de referencia, según cómo vea la inflación. Además, publica gratis estadísticas como el tipo de cambio, las tasas de interés y el PBI.",
 ],
 rel=["politica-monetaria", "tasa-de-referencia", "inflacion", "encaje-bancario", "tipo-de-cambio"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -380,10 +363,9 @@ r"La tasa de referencia es la meta que el BCRP fija para la tasa de interés a l
 r"Si la <a href=\"inflacion.html\">inflación</a> sube demasiado, el BCRP <strong>sube</strong> la tasa: los créditos se encarecen, la gente y las empresas gastan menos y los precios se calman. Si la economía está débil y la inflación baja, la <strong>baja</strong> para animar el crédito y el gasto.",
 ],
 ejemplo=[
-r"Entre 2021 y 2023, cuando la inflación peruana superó con creces la meta, el BCRP subió su tasa varias veces seguidas. Cuando la inflación volvió al rango de 1 % a 3 %, empezó a bajarla. El valor actual se publica en la nota de prensa del programa monetario de cada mes.",
+r"En abril de 2020, por la pandemia, el BCRP bajó su tasa a 0.25 %, la más baja de su historia, para abaratar el crédito. Entre 2021 y 2023, cuando la inflación superó con creces la meta, la subió varias veces seguidas; cuando la inflación volvió al rango de 1 % a 3 %, empezó a bajarla. El valor actual se publica en la nota de prensa del programa monetario de cada mes.",
 ],
 rel=["bcrp", "politica-monetaria", "tasa-de-interes", "inflacion", "tasa-de-interes-real"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -393,13 +375,12 @@ corto="Son las decisiones del banco central sobre las tasas de interés y la can
 simple=[
 r"La política monetaria la hace el <a href=\"bcrp.html\">BCRP</a>. Su herramienta principal es la <a href=\"tasa-de-referencia.html\">tasa de referencia</a>; también usa el <a href=\"encaje-bancario.html\">encaje</a> y compra o vende dólares para evitar saltos bruscos del tipo de cambio.",
 r"Es <strong>expansiva</strong> cuando baja tasas para que haya más crédito y gasto, y <strong>contractiva</strong> cuando las sube para frenar la inflación.",
-r"Desde 2002 el Perú usa un esquema de <strong>metas explícitas de inflación</strong>: el BCRP anuncia una meta (hoy, entre 1 % y 3 % al año) y orienta sus decisiones a cumplirla.",
+r"Desde 2002 el Perú usa un esquema de <strong>metas explícitas de inflación</strong>: el BCRP anuncia una meta y orienta sus decisiones a cumplirla. Desde 2007, esa meta es un rango de entre 1 % y 3 % al año.",
 ],
 ejemplo=[
-r"Durante la pandemia de 2020, el BCRP bajó su tasa a un mínimo histórico y apoyó programas como Reactiva Perú para que las empresas pudieran conseguir préstamos y no cortar la cadena de pagos.",
+r"Durante la pandemia de 2020, el BCRP bajó su tasa de referencia a 0.25 %, la más baja de su historia, y apoyó programas como Reactiva Perú para que las empresas pudieran conseguir préstamos y no cortar la cadena de pagos.",
 ],
 rel=["bcrp", "tasa-de-referencia", "politica-fiscal", "encaje-bancario", "inflacion"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -408,7 +389,7 @@ alias="encaje reservas bancarias multiplicador bancario",
 corto="Es la parte de los depósitos que los bancos no pueden prestar y deben guardar en sus bóvedas o en el BCRP.",
 simple=[
 r"Cuando depositas dinero, el banco no lo guarda todo: presta una parte a otras personas. El encaje es la porción que <strong>sí debe guardar</strong>, para tener siempre efectivo y devolver el dinero a quien lo pida.",
-r"El BCRP fija la tasa de encaje. Si la sube, los bancos tienen menos para prestar; si la baja, pueden prestar más. En el Perú el encaje en dólares suele ser más alto que en soles, para desanimar el crédito en dólares, que es más riesgoso para quien gana en soles.",
+r"El BCRP fija la tasa de encaje. Si la sube, los bancos tienen menos para prestar; si la baja, pueden prestar más. Además, aplica encajes adicionales a los créditos en dólares para reducir poco a poco la <a href=\"dolarizacion.html\">dolarización</a> del crédito, que es más riesgoso para quien gana en soles.",
 ],
 ejemplo=[
 r"Si la tasa de encaje fuera 10 % y depositas S/ 1000, el banco guarda S/ 100 y puede prestar S/ 900. Ese préstamo vuelve a depositarse en algún banco, que guarda 10 % y presta el resto, y así sucesivamente. Así se «multiplica» el dinero en la economía.",
@@ -420,7 +401,6 @@ calculo=[r"m=\frac{1}{0.10}=10,\quad 1000\times 10=10\,000\ \text{soles (máximo
 ),
 ojo=["Es una versión de libro de texto: en la realidad la gente también guarda efectivo y los bancos no prestan todo, así que el multiplicador es menor."],
 rel=["bcrp", "politica-monetaria", "dolarizacion", "tasa-de-interes"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -429,14 +409,13 @@ alias="desdolarizacion dolares ahorro en dolares credito en dolares",
 corto="Es el uso del dólar en lugar de la moneda nacional para ahorrar, prestar o poner precios dentro de un país.",
 simple=[
 r"Después de la hiperinflación de los ochenta, muchos peruanos dejaron de confiar en la moneda nacional y se pasaron al dólar para ahorrar, prestar y fijar precios de casas o autos. A eso se le llama dolarización.",
-r"La dolarización es un riesgo cuando alguien <strong>gana en soles y debe en dólares</strong>: si el dólar sube, su deuda en soles crece de golpe. Por eso el BCRP ha impulsado la <strong>desdolarización</strong>, con encajes más altos para los préstamos en dólares.",
-r"Gracias a la inflación baja de las últimas décadas, hoy la mayor parte del crédito y del ahorro en el Perú está en soles.",
+r"La dolarización es un riesgo cuando alguien <strong>gana en soles y debe en dólares</strong>: si el dólar sube, su deuda en soles crece de golpe. Por eso el BCRP ha impulsado la <strong>desdolarización</strong>, con encajes adicionales que encarecen prestar en dólares.",
+r"Con la inflación baja de las últimas décadas, el sol recuperó la confianza de la gente y hoy los peruanos usan mucho más el sol que en los años noventa.",
 ],
 ejemplo=[
 r"Pedro gana S/ 3000 y tiene un crédito hipotecario con cuota de US$ 500. Con el dólar a S/ 3.50, paga S/ 1750 al mes. Si el dólar sube a S/ 4.00, la cuota pasa a S/ 2000, aunque su sueldo siga igual.",
 ],
 rel=["tipo-de-cambio", "depreciacion-y-apreciacion", "encaje-bancario", "bcrp"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -445,8 +424,7 @@ alias="precio del dolar compra venta cambio de moneda",
 corto="Es el precio de una moneda expresado en otra. En el Perú, normalmente es cuántos soles cuesta un dólar.",
 simple=[
 r"Si el tipo de cambio es 3.50, necesitas S/ 3.50 para comprar un dólar. En las casas de cambio y los bancos verás dos precios: el de <strong>compra</strong> (lo que te pagan por tus dólares) y el de <strong>venta</strong> (lo que te cobran por darte dólares). La venta siempre es un poco más alta: esa diferencia es su ganancia.",
-r"En el Perú el tipo de cambio es <strong>flexible</strong>: lo fijan la oferta y la demanda de dólares. El BCRP no fija un precio, pero interviene comprando o vendiendo dólares para evitar subidas o bajadas demasiado bruscas.",
-r"Para trámites tributarios se usa el tipo de cambio que publica la SUNAT con datos de la SBS.",
+r"En el Perú el tipo de cambio es <strong>flexible</strong>: lo fijan la oferta y la demanda de dólares. El BCRP no fija un precio, pero interviene en el mercado para «atenuar la volatilidad»: por ejemplo, en 2021, con la incertidumbre política, ofreció más de US$ 10 000 millones para calmar la subida del dólar.",
 ],
 ejemplo=[
 r"Quieres comprar US$ 200 y la casa de cambio vende a S/ 3.52: pagarás S/ 704. Si al día siguiente vendes esos US$ 200 a un precio de compra de S/ 3.48, recibirás S/ 696.",
@@ -457,7 +435,6 @@ donde=[(r"TC", "tipo de cambio en soles por dólar")],
 calculo=[r"200\times 3.52=704\ \text{soles}"],
 ),
 rel=["depreciacion-y-apreciacion", "dolarizacion", "bcrp", "balanza-comercial"],
-fuente=BCRP_GLOSARIO,
 ))
 
 T.append(dict(
@@ -478,5 +455,4 @@ donde=[(r"TC", "tipo de cambio en soles por dólar")],
 calculo=[r"\frac{3.80-3.50}{3.50}\times 100\approx 8.6\ \%\ \Rightarrow\ \text{el sol se depreció}"],
 ),
 rel=["tipo-de-cambio", "dolarizacion", "balanza-comercial", "terminos-de-intercambio"],
-fuente=BCRP_GLOSARIO,
 ))
