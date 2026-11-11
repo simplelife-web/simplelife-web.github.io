@@ -7,13 +7,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: BCRP series
+        shell: python3 {0}
         run: |
-          for s in PD04640PD PD04639PD PD04638PD PD12301MD PN00026MM PN00027MM PD04650MD PD04651MD PN01273PM PN01271PM PD04709XD PD04708XD PD04704XD PD04703XD PD04705XD PN07807NM PN07816NM PN07817NM PD04721XD PD04722XD PD04725XD PN01770AM PN01728AM PN01731AM PN38063GM PN38064GM PN01652XM PN38714BM PN38723BM PN01207PM PN01287PM PN07819NM PN07818NM PD38000XD PN09816XM PN07885NM PN07836NM PN07837NM PN38035BM; do
-            echo "== $s"; curl -s -A "SimplelifeBot/1.0" "https://estadisticas.bcrp.gob.pe/estadisticas/series/api/$s/json/2026-1/2026-12/esp" | head -c 700; echo; sleep 1
-          done
+          import json, urllib.request, time
+          S = "PD04640PD PD04639PD PD04638PD PD04637PD PD04641PD PD04642PD PD12301MD PN00026MM PN00027MM PD04650MD PD04651MD PN01273PM PN01271PM PD04709XD PD04708XD PD04704XD PD04703XD PD04705XD PD04701XD PD04702XD PN07807NM PN07816NM PN07817NM PD04721XD PD04722XD PD04725XD PN01770AM PN01728AM PN01731AM PN38063GM PN38064GM PN01652XM PN38714BM PN07819NM PN07818NM PN09816XM PN07885NM PN07836NM PN07837NM PN38035BM PN01274PM PN01275PM PN38706PM PN38707PM PD04692MD PD04693MD PN00178MM PN00180MM PN38923BM".split()
+          for s in S:
+              try:
+                  r = urllib.request.urlopen(urllib.request.Request(f"https://estadisticas.bcrp.gob.pe/estadisticas/series/api/{s}/json/2025-6/2026-12/esp", headers={"User-Agent":"SimplelifeBot/1.0"}), timeout=60)
+                  d = json.loads(r.read().decode("utf-8-sig"))
+                  nom = d["config"]["series"][0]["name"]
+                  ps = [(p["name"], p["values"][0]) for p in d.get("periods", []) if p["values"][0] not in ("n.d.", "")]
+                  print(s, "|", d["config"]["title"], "|", nom, "|", ps[-3:] if ps else "VACIA", "| n=", len(d.get("periods", [])))
+              except Exception as e:
+                  print(s, "ERROR", e)
+              time.sleep(0.5)
       - name: SUNAT UIT
         run: |
-          curl -sL -A "Mozilla/5.0" https://www.sunat.gob.pe/indicestasas/uit.html | iconv -f latin1 -t utf-8 | sed 's/<[^>]*>/ /g' | grep -i "20[12][0-9]" | head -30
-      - name: gob.pe RMV
+          curl -sL -A "Mozilla/5.0" https://www.sunat.gob.pe/indicestasas/uit.html | iconv -f latin1 -t utf-8 | sed 's/<[^>]*>/ /g' | tr -s ' \r\n' ' ' | head -c 1500; echo
+      - name: gob.pe
         run: |
-          curl -sL -A "Mozilla/5.0" "https://www.gob.pe/institucion/mtpe/normas-legales" | head -c 500; echo
+          curl -sL -o /dev/null -w "%{http_code}\n" -A "Mozilla/5.0" "https://www.gob.pe/institucion/mtpe/normas-legales"
+          curl -sL -A "Mozilla/5.0" "https://www.gob.pe/busquedas.json?contenido[]=normas&institucion[]=mtpe&term=remuneracion+minima" | head -c 800; echo
