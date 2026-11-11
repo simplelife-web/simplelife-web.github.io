@@ -44,6 +44,10 @@ CONST_TRIBUTOS = ("Constitución Política del Perú, capítulo «Del régimen t
 CONST_BANCA = ("Constitución Política del Perú, capítulo «De la moneda y la banca» (artículos 83 a 87)", "https://peru.justia.com/federales/constitucion-politica-del-peru-de-1993/titulo-iii/capitulo-v")
 
 FUENTES = {
+    "deposito-overnight": [TASA_425],
+    "programa-monetario": [TASA_425],
+    "mecanismos-de-transmision": [TASA_025],
+    "politica-monetaria-expansiva-y-contractiva": [TASA_025],
     "inflacion": [ANDINA_METAS, BM_INFLACION, INEI_GLOSARIO],
     "ipc": [INEI_GLOSARIO],
     "deflacion": [INEI_GLOSARIO],
@@ -110,4 +114,40 @@ FUENTES = {
     "libre-competencia": [INDECOPI],
     "materias-primas": [COBRE],
     "gasto-corriente-y-de-capital": [CONST_TRIBUTOS],
+}
+
+# Títulos del Glosario del BCRP para los términos originales (sin campo bcrp).
+BCRP_TITULOS = {
+    "inflacion": "Inflación",
+    "deflacion": "Deflación",
+    "poder-adquisitivo": "Poder adquisitivo",
+    "pbi": "PBI",
+    "pbi-per-capita": "Producto Bruto Interno per cápita",
+    "crecimiento-economico": "Tasa de crecimiento económico",
+    "recesion": "Recesión",
+    "tasa-de-interes": "Tasa de interés",
+    "interes-simple": "Interés simple",
+    "interes-compuesto": "Interés compuesto",
+    "tasa-de-interes-real": "Tasa de interés real",
+    "tea": "Tasa de interés efectiva",
+    "tasa-de-referencia": "Tasa de Interés de Referencia del BCRP",
+    "politica-monetaria": "Política monetaria",
+    "encaje-bancario": "Encaje",
+    "dolarizacion": "Dolarización",
+    "tipo-de-cambio": "Tipo de cambio nominal",
+    "depreciacion-y-apreciacion": "Depreciación de la moneda",
+    "inversion": "Inversión",
+    "remuneracion-minima-vital": "Salario mínimo",
+    "tasa-de-desempleo": "Desempleo",
+    "impuesto-a-la-renta": "Impuesto a la renta",
+    "igv": "Impuesto general a las ventas o impuesto al valor agregado",
+    "politica-fiscal": "Política fiscal",
+    "deficit-fiscal": "Déficit fiscal",
+    "deuda-publica": "Deuda pública",
+    "riesgo-pais": "Riesgo país",
+    "balanza-comercial": "Balanza comercial",
+    "terminos-de-intercambio": "Términos de intercambio",
+    "pobreza-monetaria": "Pobreza",
+    "coeficiente-de-gini": "Coeficiente Gini",
+    "afp-y-onp": "Oficina de Normalización Provisional - ONP",
 }
