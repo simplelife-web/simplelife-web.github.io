@@ -523,15 +523,99 @@ T += [
   src=[("El Peruano, 6 de noviembre de 2023", "https://www.elperuano.pe/noticia/227156-consulta-tu-afp-conoce-aqui-cuanto-tienes-acumulado-en-tu-fondo-de-pensiones-en-2023-links")]),
 ]
 
-ORDEN = ["RENIEC", "SUNAT", "MTC", "SUNARP", "Migraciones", "PNP", "Poder Judicial", "INPE", "SAT Lima", "EsSalud", "SBS",
+# ---------- Tanda 4 (11/11/2026, tarde) ----------
+T += [
+ dict(N, slug="cts", ent="Ministerio de Trabajo", icon="💰",
+  t="Revisar y retirar tu CTS",
+  r="La CTS es un ahorro que tu empleador deposita en mayo y noviembre. En 2026 puedes retirar el 100 %.",
+  quien="Trabajadores del régimen privado que trabajan en promedio 4 horas diarias o más y tienen al menos un mes en la empresa.",
+  nec=["Tu DNI.", "Saber en qué banco o caja te depositan la CTS."],
+  costo="Gratis", pago="No se paga nada por retirarla.",
+  pasos=["Calcula cuánto te toca: tu sueldo de octubre más 1/6 de la gratificación de julio, dividido entre 12 y multiplicado por los meses trabajados del semestre (hasta 6).",
+         "Revisa el depósito en tu banco. El plazo de noviembre de 2026 vence el lunes 16.",
+         "Si quieres, retira tu dinero en tu banco o caja: hasta el 31 de diciembre de 2026 puedes sacar el 100 %."],
+  links=[("Ministerio de Trabajo (gob.pe)", "https://www.gob.pe/mtpe")],
+  ojo=["Ejemplo: con S/ 2 000 de sueldo y el semestre completo, la CTS es unos S/ 1 000 (sin contar la gratificación).", "No reciben CTS quienes trabajan menos de 4 horas diarias ni quienes cobran remuneración integral anual.", "Puedes elegir el banco donde te depositan.", "Si tu empleador no deposita, pide orientación al Ministerio de Trabajo o a la SUNAFIL."],
+  src=[("El Peruano, 25 de octubre de 2026", "https://elperuano.pe/noticia/307575-cts-de-noviembre-quienes-la-reciben-como-se-calcula-hasta-cuando-se-puede-retirar"),
+       ("Andina, noviembre de 2026", "https://andina.pe/agencia/noticia-cts-noviembre-2026-mira-quienes-reciben-cuanto-y-hasta-cuando-se-puede-retirar-1097292.aspx")]),
+
+ dict(N, slug="carne-conadis", ent="CONADIS", icon="♿",
+  t="Sacar el carné de discapacidad (CONADIS)",
+  r="El carné del CONADIS te inscribe en el Registro Nacional de la Persona con Discapacidad y te da acceso a beneficios de ley.",
+  quien="Personas con discapacidad que ya tienen su Certificado de Discapacidad. Puede tramitarlo otra persona con carta poder simple.",
+  nec=["El Certificado de Discapacidad (lo da un establecimiento de salud certificador).", "Tu DNI.", "Para hacerlo por internet: el certificado y el DNI escaneados (JPG o PNG) y un celular o correo."],
+  costo="Gratis", pago="No se paga nada.",
+  pasos=["Saca primero tu Certificado de Discapacidad en un establecimiento de salud certificador.",
+         "Entra a la plataforma «Mi Registro en todo el Perú» del CONADIS y elige inscripción.",
+         "Llena el formulario y sube el certificado y el DNI escaneados.",
+         "Recibe tu carné digital en tu celular o correo. El físico se coordina contigo.",
+         "Si prefieres ir en persona: sede del CONADIS (Av. Arequipa 375, Lima), su oficina regional o la OMAPED de tu municipalidad."],
+  links=[("Mi Registro en todo el Perú (CONADIS)", "https://sirnpdpide.conadisperu.gob.pe/")],
+  ojo=["Carné celeste: discapacidad leve o moderada. Carné amarillo: discapacidad severa.", "Algunos beneficios: pase libre en transporte público (discapacidad severa), tarifas preferenciales, distintivo vehicular, becas y la pensión Contigo (discapacidad severa).", "En 2026 el DNI también es gratis para personas con discapacidad que lo acrediten."],
+  verif="Pasos según Andina (septiembre de 2023); en diciembre de 2025 el CONADIS seguía atendiendo en su sede de Av. Arequipa.",
+  src=[("Andina, 3 de septiembre de 2023", "https://andina.pe/agencia/noticia-sin-costo-estos-son-los-pasos-para-tramitar-carne-conadis-y-acceder-a-beneficios-953844.aspx"),
+       ("Andina, 12 de diciembre de 2025", "https://andina.pe/agencia/noticia-conadis-obten-carne-discapacidad-tan-solo-30-minutos-donde-1055133.aspx")]),
+
+ dict(N, slug="reporte-soat", ent="SBS", g="Autos y propiedades", icon="🛡️",
+  t="Ver el SOAT y los choques de un auto",
+  r="Con la placa ves el SOAT y los seguros que tuvo un vehículo en los últimos 5 años, y si tuvo accidentes. Útil antes de comprar un auto usado.",
+  quien="Cualquier persona.",
+  nec=["El número de placa."],
+  costo="Gratis", pago="No se paga nada.",
+  pasos=["Entra al Reporte SOAT/CAT y Seguro Vehicular de la SBS (botón verde de abajo).",
+         "Escribe la placa.",
+         "Revisa la aseguradora o AFOCAT, el número de póliza, la vigencia y los siniestros."],
+  links=[("Reporte SOAT/CAT (SBS)", "https://www.sbs.gob.pe/usuarios/nuestros-servicios/reporte-vehicular")],
+  ojo=["Revisa también los datos del auto en la guía «Ver los datos de un auto con su placa» (SUNARP)."],
+  src=[("Andina, 2 de julio de 2025", "https://andina.pe/agencia/noticia-sabias-puedes-solicitar-gratis-reporte-seguro-vehicular-portal-sbs-1035758.aspx")]),
+
+ dict(N, slug="reporte-deudas", ent="SBS", icon="📋",
+  t="Ver tu reporte de deudas (central de riesgos)",
+  r="La SBS te muestra gratis tus deudas con bancos, cajas y financieras, y las tarjetas o líneas de crédito que tienes sin usar.",
+  quien="Cualquier persona con DNI o carné de extranjería.",
+  nec=["Tu DNI.", "Un correo electrónico."],
+  costo="Gratis", pago="No se paga nada.",
+  pasos=["Entra a Servicios SBS en línea y regístrate con tu DNI y tu correo.",
+         "Elige el reporte de deudas.",
+         "Revisa tus deudas y su calificación (normal, con problemas potenciales, etc.).",
+         "Si ves una deuda que no reconoces, reclama primero a esa entidad."],
+  links=[("Servicios SBS en línea", "https://servicios.sbs.gob.pe/serviciosenlinea")],
+  ojo=["Si te suscribes, la SBS te avisa por correo cuando cambia tu reporte.", "Nadie puede «limpiarte» de la central de riesgos a cambio de dinero."],
+  verif="La nota oficial es de 2018; los pasos son un resumen. Sigue las indicaciones de la plataforma de la SBS.",
+  src=[("TV Perú, 23 de agosto de 2018", "https://www.tvperu.gob.pe/noticias/economia/sbs-brinda-detalles-para-conocer-tu-reporte-de-deudas")]),
+
+ dict(N, slug="licencia-edificacion", ent="Municipalidad", icon="🏗️",
+  t="Sacar la licencia para construir o ampliar tu casa",
+  r="Antes de construir, ampliar o demoler, necesitas la licencia de edificación de tu municipalidad. Para una casa pequeña el trámite es más simple (modalidad A).",
+  quien="Dueños del terreno o sus representantes.",
+  nec=["El Formulario Único de Edificación (FUE) firmado.",
+       "La copia literal de tu propiedad (ver la guía de SUNARP).",
+       "Los planos firmados por un arquitecto o ingeniero colegiado, o un proyecto del banco de proyectos de tu municipalidad.",
+       "El pago de la licencia."],
+  costo="Depende de tu municipalidad", pago="Lo indica tu municipalidad en su TUPA.",
+  pasos=["Revisa la modalidad. La modalidad A sirve, por ejemplo, para una vivienda unifamiliar de hasta 120 m² que sea la única en el lote, o ampliaciones que no pasen de 200 m² en total.",
+         "Busca en el TUPA de tu municipalidad los requisitos y el costo actuales.",
+         "Prepara el formulario, la copia literal y los planos.",
+         "Presenta todo en la municipalidad y paga.",
+         "Guarda tu licencia en la obra."],
+  links=[("Buscar el trámite en gob.pe", "https://www.gob.pe/busquedas?term=licencia+de+edificacion"),
+         ("Ley 29090 (texto)", "https://www.miraflores.gob.pe/Gestorw3b/files/pdf/5145-902-ley-29090.pdf")],
+  ojo=["Si la obra lleva sótano o excavaciones de más de 1,50 m junto a otras casas, ya no es modalidad A.", "La licencia dura 36 meses y se puede ampliar 12 meses más una sola vez.", "Construir sin licencia puede traer multas o la demolición."],
+  verif="Requisitos generales de la Ley 29090 y sus cambios; la ley se ha modificado varias veces. Tu municipalidad tiene los requisitos vigentes en su TUPA.",
+  src=[("Ley 29090, Ley de Regulación de Habilitaciones Urbanas y de Edificaciones", "https://www.miraflores.gob.pe/Gestorw3b/files/pdf/5145-902-ley-29090.pdf")]),
+]
+
+ORDEN = ["RENIEC", "SUNAT", "MTC", "SUNARP", "Migraciones", "PNP", "Poder Judicial", "INPE", "SAT Lima", "EsSalud", "SBS", "CONADIS",
          "Ministerio de Trabajo", "SIS", "ONP", "MIDIS", "MINEDU", "SUNEDU", "Municipalidad"]
 ETIQ = {"RENIEC": "DNI y actas", "SUNAT": "Impuestos", "MTC": "Brevete y papeletas", "SUNARP": "Autos y propiedades",
         "Migraciones": "Viajes", "PNP": "Antecedentes", "Poder Judicial": "Antecedentes", "INPE": "Antecedentes",
-        "Ministerio de Trabajo": "Trabajo", "SAT Lima": "Brevete y papeletas", "EsSalud": "Salud", "SBS": "Pensiones", "SIS": "Salud", "ONP": "Pensiones", "MIDIS": "Pensiones",
-        "MINEDU": "Estudios", "SUNEDU": "Estudios", "Municipalidad": "Negocios"}
+        "Ministerio de Trabajo": "Trabajo", "SAT Lima": "Brevete y papeletas", "EsSalud": "Salud", "SBS": "Pensiones y finanzas", "CONADIS": "Salud", "SIS": "Salud", "ONP": "Pensiones y finanzas", "MIDIS": "Pensiones y finanzas",
+        "MINEDU": "Estudios", "SUNEDU": "Estudios", "Municipalidad": "Municipalidad"}
 GRUPOS = ["DNI y actas", "Impuestos", "Brevete y papeletas", "Autos y propiedades", "Viajes", "Antecedentes",
-          "Trabajo", "Salud", "Pensiones", "Estudios", "Negocios"]
-T.sort(key=lambda d: (GRUPOS.index(ETIQ[d["ent"]]), ORDEN.index(d["ent"])))
+          "Trabajo", "Salud", "Pensiones y finanzas", "Estudios", "Municipalidad"]
+def grp(d):
+    return d.get("g") or ETIQ[d["ent"]]
+T.sort(key=lambda d: (GRUPOS.index(grp(d)), ORDEN.index(d["ent"])))
 
 e = html.escape
 BASE = "https://simplelife-web.github.io/"
@@ -648,10 +732,10 @@ def page(d):
     return head(f'{d["t"]} | Trámite fácil Perú', desc, url, ld) + body + FOOT
 
 def index():
-    usados = [g for g in GRUPOS if any(ETIQ[d["ent"]] == g for d in T)]
+    usados = [g for g in GRUPOS if any(grp(d) == g for d in T)]
     chips = '<button type="button" class="chip" data-g="" aria-pressed="true">Todos</button>' + "".join(
         f'<button type="button" class="chip" data-g="{e(g)}" aria-pressed="false">{e(g)}</button>' for g in usados)
-    cards = "".join(f'''<a class="tram" href="{d["slug"]}.html" data-g="{e(ETIQ[d["ent"]])}" data-b="{e((d["t"]+" "+d["ent"]+" "+ETIQ[d["ent"]]+" "+d["r"]).lower())}">
+    cards = "".join(f'''<a class="tram" href="{d["slug"]}.html" data-g="{e(grp(d))}" data-b="{e((d["t"]+" "+d["ent"]+" "+grp(d)+" "+d["r"]).lower())}">
   <span class="ic" aria-hidden="true">{d["icon"]}</span>
   <span><small>{e(d["ent"])}</small><strong>{e(d["t"])}</strong><em>{e(d["costo"])}</em></span>
 </a>''' for d in T)
