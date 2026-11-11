@@ -29,7 +29,8 @@ import terminos3  # noqa: E402
 import terminos4  # noqa: E402
 import terminos5  # noqa: E402
 import terminos6  # noqa: E402
-from fuentes import FUENTES  # noqa: E402
+import terminos7  # noqa: E402
+from fuentes import FUENTES, BCRP_TITULOS  # noqa: E402
 
 BCRP_GLOSARIO = "https://www.bcrp.gob.pe/docs/Publicaciones/Glosario/Glosario-BCRP.pdf"
 
@@ -71,7 +72,7 @@ def texto_plano(s):
     return html.unescape(re.sub(r"\s+", " ", s)).strip()
 
 
-TERMINOS = terminos1.T + terminos2.T + terminos3.T + terminos4.T + terminos5.T + terminos6.T
+TERMINOS = terminos1.T + terminos2.T + terminos3.T + terminos4.T + terminos5.T + terminos6.T + terminos7.T
 
 
 def _sin_barras(v):
@@ -251,8 +252,9 @@ def pagina_termino(t, i):
     o.append("</nav>\n\n")
 
     fs = list(FUENTES.get(t["slug"], []))
-    if t.get("bcrp"):
-        fs.insert(0, ("BCRP, Glosario de términos económicos: «%s» (definición redactada aquí con palabras propias)" % t["bcrp"], BCRP_GLOSARIO))
+    titulo_bcrp = t.get("bcrp") or BCRP_TITULOS.get(t["slug"])
+    if titulo_bcrp:
+        fs.insert(0, ("BCRP, Glosario de términos económicos: «%s» (definición redactada aquí con palabras propias)" % titulo_bcrp, BCRP_GLOSARIO))
     o.append('<section class="fuentes">\n<h2>Fuentes</h2>\n')
     if fs:
         o.append("<ul>" + "".join('<li><a href="%s" target="_blank" rel="noopener">%s</a></li>' % (esc(u), esc(n)) for n, u in fs) + "</ul>\n")
