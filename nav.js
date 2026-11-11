@@ -11,6 +11,7 @@
     { href: 'quehagohoy/', texto: '¿Qué hago hoy?' },
     { href: 'intercambio/', texto: 'Intercambio' },
     { href: 'inflacion/', texto: 'Inflación' },
+    { href: 'precios/', texto: 'Precios' },
     { href: 'glosario/', texto: 'Glosario' }
   ];
   var EXTRA = [
