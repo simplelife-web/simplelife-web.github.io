@@ -1,26 +1,24 @@
 {
- "actualizado": "2026-11-11T18:32:42.027Z",
+ "actualizado": "2026-11-12T18:48:46.646Z",
  "eventos": [
   {
-   "titulo": "Municipalidad de Lima presentará proyección especial en honor al Papa León XIV",
-   "url": "https://www.serpar.gob.pe/noticias/municipalidad-de-lima-presentara-proyeccion-especial-en-honor-al-papa-leon-xiv/",
-   "fecha": "2026-11-11",
-   "fechaFin": "",
+   "titulo": "Diez cámaras de seguridad monitorearán recorrido del «Nazareno Móvil» por Miraflores",
+   "url": "https://www.miraflores.gob.pe/diez-camaras-de-seguridad-monitorearan-recorrido-del-nazareno-movil-por-miraflores/",
+   "fecha": "2026-11-10",
+   "fechaFin": "2026-11-15",
    "hora": "",
-   "publicado": "2026-11-11",
+   "publicado": "2026-11-12",
    "lugar": "",
    "direccion": "",
-   "lat": null,
-   "lon": null,
+   "lat": -12.1211,
+   "lon": -77.0297,
    "precio": "",
-   "tipo": "cine",
-   "publico": [
-    "f"
-   ],
-   "resumen": "A través de SERPAR, el Circuito Mágico del Agua proyectará pasajes de la vida y el mensaje del Pontífice en su icónica Fuente de la Fantasía este 11 de noviembre. En el marco de la histórica visita de Su Santidad León…",
-   "fuente": "SERPAR (parques de Lima)",
-   "fuenteWeb": "https://www.serpar.gob.pe",
-   "distrito": "Lima"
+   "tipo": "concierto",
+   "publico": [],
+   "resumen": "Este domingo 15 de noviembre, Miraflores recibirá la imagen del Señor de los Milagros a bordo del vehículo […] La entrada Diez cámaras de seguridad monitorearán recorrido del «Nazareno Móvil» por Miraflores se publicó…",
+   "fuente": "Municipalidad de Miraflores",
+   "fuenteWeb": "https://www.miraflores.gob.pe",
+   "distrito": "Miraflores"
   }
  ],
  "fuentes": [
@@ -52,7 +50,7 @@
   {
    "fuente": "SERPAR (parques de Lima)",
    "estado": "rss",
-   "n": 1
+   "n": 0
   },
   {
    "fuente": "Museo de Arte de Lima (MALI)",
@@ -87,7 +85,7 @@
   {
    "fuente": "Municipalidad de Miraflores",
    "estado": "rss",
-   "n": 0
+   "n": 1
   },
   {
    "fuente": "Municipalidad de Lima",
