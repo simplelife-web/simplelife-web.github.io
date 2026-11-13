@@ -1,5 +1,5 @@
 {
- "revisado": "2026-11-12",
+ "revisado": "2026-11-13",
  "nota": "Cifras oficiales vigentes. Las diarias se publican cada día hábil; las mensuales, una vez al mes.",
  "cifras": {
   "tc": {
@@ -104,20 +104,20 @@
   },
   "cobre": {
    "nombre": "Precio del cobre (Londres)",
-   "valor": 636.390101,
+   "valor": 634.66645,
    "unidad": "dólares por libra",
    "formato": "cobre",
-   "fecha": "2026-11-09",
+   "fecha": "2026-11-10",
    "fuente": "BCRP, serie PD04701XD",
    "oficial": "Cotizaciones internacionales - Cobre (Londres, cUS$ por libras)",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04701XD/html"
   },
   "oro": {
    "nombre": "Precio del oro (Londres)",
-   "valor": 4139.82,
+   "valor": 4032.83,
    "unidad": "dólares por onza troy",
    "formato": "oro",
-   "fecha": "2026-11-09",
+   "fecha": "2026-11-10",
    "fuente": "BCRP, serie PD04704XD",
    "oficial": "Cotizaciones internacionales - Oro (Londres, US$ por onzas troy)",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04704XD/html"
