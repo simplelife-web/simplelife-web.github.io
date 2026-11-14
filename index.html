@@ -180,7 +180,7 @@
   <aside class="frase" id="frase" aria-label="Frase célebre">
     <span class="frase-foto" id="frase-foto" aria-hidden="true">AS</span>
     <div class="frase-texto">
-      <span class="frase-etiqueta">Frase para hoy</span>
+      <span class="frase-etiqueta" id="frase-etiqueta">Frase para hoy · Economía</span>
       <blockquote id="frase-cita">«Ninguna sociedad puede ser floreciente y feliz si la mayor parte de sus miembros son pobres y miserables».</blockquote>
       <p class="frase-autor"><span id="frase-autor"><b>Adam Smith</b>, economista · <i>La riqueza de las naciones</i> (1776)</span>
         <button class="frase-otra" id="frase-otra" type="button">Otra frase ↻</button></p>
@@ -370,40 +370,75 @@
   </footer>
 </main>
 <script>
-/* Frases célebres verificadas (traducción propia al español). Fotos de dominio público
+/* Frases célebres verificadas de varios ámbitos (las que no son del español, con traducción propia). Fotos de dominio público
    en Wikimedia Commons. Para sumar una frase, copia una línea y cambia sus datos. */
 (function () {
   var FRASES = [
-    { cita: "Ninguna sociedad puede ser floreciente y feliz si la mayor parte de sus miembros son pobres y miserables.",
-      autor: "Adam Smith", rol: "economista", obra: "La riqueza de las naciones", anio: "1776", ini: "AS",
-      foto: "Adam_Smith_The_Muir_portrait.jpg" },
-    { cita: "No es de la benevolencia del carnicero, del cervecero o del panadero de donde esperamos nuestra cena, sino de su propio interés.",
-      autor: "Adam Smith", rol: "economista", obra: "La riqueza de las naciones", anio: "1776", ini: "AS",
-      foto: "Adam_Smith_The_Muir_portrait.jpg" },
-    { cita: "Recuerda que el tiempo es dinero.",
-      autor: "Benjamin Franklin", rol: "inventor y político", obra: "Consejos a un joven comerciante", anio: "1748", ini: "BF",
-      foto: "Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg" },
-    { cita: "La economía es el estudio de la humanidad en los asuntos ordinarios de la vida.",
-      autor: "Alfred Marshall", rol: "economista", obra: "Principios de economía", anio: "1890", ini: "AM",
-      foto: "Alfred_Marshall.jpg" },
-    { cita: "El valor de un Estado, a la larga, es el valor de las personas que lo componen.",
+    { amb: "Ciencia", cita: "La imaginación es más importante que el conocimiento.",
+      autor: "Albert Einstein", rol: "físico, Premio Nobel", obra: "entrevista en The Saturday Evening Post", anio: "1929", ini: "AE",
+      foto: "Albert_Einstein_Head.jpg" },
+    { amb: "Ciencia", cita: "Si he visto más lejos, es porque estoy sobre hombros de gigantes.",
+      autor: "Isaac Newton", rol: "físico y matemático", obra: "carta a Robert Hooke", anio: "1676", ini: "IN",
+      foto: "GodfreyKneller-IsaacNewton-1689.jpg" },
+    { amb: "Ciencia", cita: "La vida no es fácil para ninguno de nosotros. Pero ¿qué importa? Hay que tener perseverancia y, sobre todo, confianza en uno mismo.",
+      autor: "Marie Curie", rol: "científica, dos veces Premio Nobel", obra: "carta citada por su hija Eve Curie en Madame Curie", anio: "1937", ini: "MC",
+      foto: "Marie_Curie_c1920.jpg" },
+    { amb: "Historia del Perú", cita: "El Perú es desde este momento libre e independiente por la voluntad general de los pueblos y por la justicia de su causa que Dios defiende.",
+      autor: "José de San Martín", rol: "libertador del Perú", obra: "proclamación de la Independencia, Lima", anio: "1821", ini: "SM",
+      foto: "Portrait_of_General_José_de_San_Martín_(1818).jpg" },
+    { amb: "Literatura peruana", cita: "Hay golpes en la vida, tan fuertes... ¡Yo no sé!",
+      autor: "César Vallejo", rol: "poeta peruano", obra: "Los heraldos negros", anio: "1918", ini: "CV",
+      foto: "Cesar_vallejo_1929.jpg" },
+    { amb: "Literatura peruana", cita: "Aprendí a leer a los cinco años [...]. Es la cosa más importante que me ha pasado en la vida.",
+      autor: "Mario Vargas Llosa", rol: "escritor peruano, Premio Nobel", obra: "discurso del Nobel «Elogio de la lectura y la ficción»", anio: "2010", ini: "VL",
+      foto: "Mario_Vargas_Llosa_(crop_2).jpg" },
+    { amb: "Literatura", cita: "El que lee mucho y anda mucho, ve mucho y sabe mucho.",
+      autor: "Miguel de Cervantes", rol: "escritor", obra: "Don Quijote de la Mancha, segunda parte", anio: "1615", ini: "MC",
+      foto: "Cervantes_Jáuregui.jpg" },
+    { amb: "Política", cita: "La educación es el arma más poderosa que puedes usar para cambiar el mundo.",
+      autor: "Nelson Mandela", rol: "presidente de Sudáfrica, Premio Nobel de la Paz", obra: "discurso en Johannesburgo", anio: "2003", ini: "NM",
+      foto: "Nelson_Mandela_1994.jpg" },
+    { amb: "Política", cita: "Que el gobierno del pueblo, por el pueblo y para el pueblo no desaparezca de la Tierra.",
+      autor: "Abraham Lincoln", rol: "presidente de Estados Unidos", obra: "discurso de Gettysburg", anio: "1863", ini: "AL",
+      foto: "Abraham_Lincoln_O-77_matte_collodion_print.jpg" },
+    { amb: "Derechos civiles", cita: "Tengo un sueño: que mis cuatro hijos pequeños vivirán un día en una nación donde no serán juzgados por el color de su piel, sino por su carácter.",
+      autor: "Martin Luther King Jr.", rol: "líder de los derechos civiles, Premio Nobel de la Paz", obra: "discurso «Tengo un sueño», Washington", anio: "1963", ini: "MK",
+      foto: "Martin_Luther_King,_Jr..jpg" },
+    { amb: "Filosofía", cita: "El ser humano es por naturaleza un animal político.",
+      autor: "Aristóteles", rol: "filósofo griego", obra: "Política, libro I", anio: "siglo IV a. C.", ini: "Ar",
+      foto: "Aristotle_Altemps_Inv8575.jpg" },
+    { amb: "Filosofía", cita: "El valor de un Estado, a la larga, es el valor de las personas que lo componen.",
       autor: "John Stuart Mill", rol: "filósofo y economista", obra: "Sobre la libertad", anio: "1859", ini: "JM",
       foto: "John_Stuart_Mill_by_London_Stereoscopic_Company,_c1870.jpg" },
-    { cita: "La vida no es fácil para ninguno de nosotros. Pero ¿qué importa? Hay que tener perseverancia y, sobre todo, confianza en uno mismo.",
-      autor: "Marie Curie", rol: "científica, dos veces Premio Nobel", obra: "carta citada por su hija Eve Curie en Madame Curie", anio: "1937", ini: "MC",
-      foto: "Marie_Curie_c1920.jpg" }
+    { amb: "Arte", cita: "Pies, ¿para qué los quiero si tengo alas pa' volar?",
+      autor: "Frida Kahlo", rol: "pintora mexicana", obra: "su diario", anio: "1953", ini: "FK",
+      foto: "Frida_Kahlo,_by_Guillermo_Kahlo.jpg" },
+    { amb: "Deporte", cita: "Flota como una mariposa, pica como una abeja.",
+      autor: "Muhammad Ali", rol: "boxeador, campeón mundial", obra: "antes de su pelea con Sonny Liston", anio: "1964", ini: "MA",
+      foto: "Muhammad_Ali_NYWTS.jpg" },
+    { amb: "Economía", cita: "Ninguna sociedad puede ser floreciente y feliz si la mayor parte de sus miembros son pobres y miserables.",
+      autor: "Adam Smith", rol: "economista", obra: "La riqueza de las naciones", anio: "1776", ini: "AS",
+      foto: "Adam_Smith_The_Muir_portrait.jpg" },
+    { amb: "Economía", cita: "La economía es el estudio de la humanidad en los asuntos ordinarios de la vida.",
+      autor: "Alfred Marshall", rol: "economista", obra: "Principios de economía", anio: "1890", ini: "AM",
+      foto: "Alfred_Marshall.jpg" },
+    { amb: "Economía", cita: "Recuerda que el tiempo es dinero.",
+      autor: "Benjamin Franklin", rol: "inventor y político", obra: "Consejos a un joven comerciante", anio: "1748", ini: "BF",
+      foto: "Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg" }
   ];
   var caja = document.getElementById("frase");
   if (!caja) return;
   try { if (sessionStorage.getItem("frase-cerrada") === "1") { caja.hidden = true; return; } } catch (e) {}
-  var foto = document.getElementById("frase-foto"), cita = document.getElementById("frase-cita"), autor = document.getElementById("frase-autor");
+  var foto = document.getElementById("frase-foto"), cita = document.getElementById("frase-cita"), autor = document.getElementById("frase-autor"), etiqueta = document.getElementById("frase-etiqueta");
   var actual = -1;
   function mostrar() {
     var i;
     do { i = Math.floor(Math.random() * FRASES.length); } while (i === actual && FRASES.length > 1);
     actual = i;
     var f = FRASES[i];
-    cita.textContent = "«" + f.cita.replace(/\.$/, "") + "».";
+    var t = f.cita.replace(/\.$/, "");
+    cita.textContent = "«" + t + "»" + (/[!?]$/.test(t) ? "" : ".");
+    etiqueta.textContent = "Frase para hoy · " + f.amb;
     var pagina = "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(f.foto);
     autor.innerHTML = "<b></b>, " + f.rol + " · <i></i> (" + f.anio + ") · <a rel=\"nofollow noopener\" target=\"_blank\">foto</a>";
     autor.querySelector("b").textContent = f.autor;
