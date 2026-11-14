@@ -9,7 +9,7 @@
     { href: 'transcriptor/', texto: 'Transcriptor' },
     { href: 'tramites/', texto: 'Trámites' },
     { href: 'quehagohoy/', texto: '¿Qué hago hoy?' },
-    { href: 'intercambio/', texto: 'Intercambio' },
+    { href: 'youtube/', texto: 'YouTube a texto' },
     { href: 'inflacion/', texto: 'Inflación' },
     { href: 'precios/', texto: 'Precios' },
     { href: 'glosario/', texto: 'Glosario' }

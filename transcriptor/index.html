@@ -261,7 +261,7 @@
   </section>
 
   <footer>
-    <p><a href="../">Todas las herramientas de Simplelife</a> · <a href="../acerca.html">Acerca de</a> · <a href="../contacto.html">Contacto</a> · <a href="../privacidad.html">Política de privacidad</a> · <a href="../tramites/">Trámite fácil Perú: trámites paso a paso</a> · <a href="../intercambio/">Yo te enseño, tú me enseñas</a></p>
+    <p><a href="../">Todas las herramientas de Simplelife</a> · <a href="../acerca.html">Acerca de</a> · <a href="../contacto.html">Contacto</a> · <a href="../privacidad.html">Política de privacidad</a> · <a href="../tramites/">Trámite fácil Perú: trámites paso a paso</a> · <a href="../youtube/">Transcribir videos de YouTube</a></p>
     <p>La primera vez se descarga el modelo de reconocimiento de voz (Whisper, de código abierto). Luego queda guardado en tu navegador y las siguientes veces empieza al instante.</p>
     <p>Funciona mejor en Chrome o Edge de escritorio. En audios muy largos, deja esta pestaña abierta hasta que termine.</p>
   </footer>
@@ -815,7 +815,8 @@ async function startPrivate() {
     const res = new Float32Array(Math.max(0, n));
     for (let i = 0; i < n; i++) {
       const x = pos + i * ratio, j = Math.floor(x), f = x - j;
-      res[i] = inp[j] * (1 - f) + (inp[j + 1] ?? inp[j]) * f;
+      const a0 = inp[Math.max(0, j)], a1 = inp[Math.min(inp.length - 1, Math.max(0, j + 1))];
+      res[i] = a0 * (1 - f) + a1 * f;
     }
     pos = pos + n * ratio - inp.length;
     let s = 0;
