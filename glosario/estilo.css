@@ -84,6 +84,11 @@ ol.pasos li::before { content: counter(p); position: absolute; left: 0; top: 0; 
 .ojo { background: var(--warn-bg); border-color: var(--warn-line); }
 .ojo ul { margin: 0; padding-left: 22px; }
 .ojo li { margin: 6px 0; }
+.var dl { margin: 0; }
+.var dt { font-weight: 700; margin-top: 14px; scroll-margin-top: 80px; }
+.var dt:first-child { margin-top: 4px; }
+.var dd { margin: 4px 0 0; }
+.var .nota { color: var(--muted); font-size: .92rem; margin-top: 0; }
 .rev { font-size: .88rem; color: var(--muted); }
 .acciones .btn { display: inline-block; }
 a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
