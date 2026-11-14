@@ -161,3 +161,19 @@ body:has(#lista) main > p, body:has(#lista) main > h1, body:has(#lista) .buscar 
 .cifras .rev { margin: 12px 0 0; font-size: .82rem; }
 .cifras .prox { margin-top: 4px; color: var(--text); font-weight: 600; }
 @media print { .cifras { break-inside: avoid; } }
+
+/* Celular y computadora: lista más liviana y menos desplazamiento en pantallas chicas */
+.lista .tram { content-visibility: auto; contain-intrinsic-size: auto 170px; }
+@media (max-width: 639px) {
+  .filtros { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    margin-left: -16px; margin-right: -16px; padding: 2px 16px 8px;
+    -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+  .filtros::-webkit-scrollbar { display: none; }
+  .filtros button { flex: 0 0 auto; white-space: nowrap; min-height: 44px; }
+  .cifras { padding: 16px; }
+  .cifras ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .cifras li { padding: 10px 11px; overflow-wrap: anywhere; }
+  .cifras .n { font-size: .78rem; line-height: 1.35; }
+  .cifras strong { font-size: 1.08rem; margin: 2px 0; }
+  .cifras small { font-size: .74rem; line-height: 1.45; }
+}
