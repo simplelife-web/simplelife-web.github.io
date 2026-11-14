@@ -180,7 +180,7 @@
   <aside class="frase" id="frase" aria-label="Frase célebre">
     <span class="frase-foto" id="frase-foto" aria-hidden="true">AS</span>
     <div class="frase-texto">
-      <span class="frase-etiqueta">Frase para hoy</span>
+      <span class="frase-etiqueta" id="frase-etiqueta">Frase para hoy · Economía</span>
       <blockquote id="frase-cita">«Ninguna sociedad puede ser floreciente y feliz si la mayor parte de sus miembros son pobres y miserables».</blockquote>
       <p class="frase-autor"><span id="frase-autor"><b>Adam Smith</b>, economista · <i>La riqueza de las naciones</i> (1776)</span>
         <button class="frase-otra" id="frase-otra" type="button">Otra frase ↻</button></p>
@@ -369,47 +369,49 @@
     <p>Simplelife · Herramientas gratuitas para hacer la vida más simple.</p>
   </footer>
 </main>
+<script src="frases.js"></script>
 <script>
-/* Frases célebres verificadas (traducción propia al español). Fotos de dominio público
-   en Wikimedia Commons. Para sumar una frase, copia una línea y cambia sus datos. */
+/* Frase célebre al azar. La lista está en frases.js (una línea por frase).
+   No se repite ninguna hasta que la persona haya visto todas: las vistas se guardan en su navegador. */
 (function () {
-  var FRASES = [
-    { cita: "Ninguna sociedad puede ser floreciente y feliz si la mayor parte de sus miembros son pobres y miserables.",
-      autor: "Adam Smith", rol: "economista", obra: "La riqueza de las naciones", anio: "1776", ini: "AS",
-      foto: "Adam_Smith_The_Muir_portrait.jpg" },
-    { cita: "No es de la benevolencia del carnicero, del cervecero o del panadero de donde esperamos nuestra cena, sino de su propio interés.",
-      autor: "Adam Smith", rol: "economista", obra: "La riqueza de las naciones", anio: "1776", ini: "AS",
-      foto: "Adam_Smith_The_Muir_portrait.jpg" },
-    { cita: "Recuerda que el tiempo es dinero.",
-      autor: "Benjamin Franklin", rol: "inventor y político", obra: "Consejos a un joven comerciante", anio: "1748", ini: "BF",
-      foto: "Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg" },
-    { cita: "La economía es el estudio de la humanidad en los asuntos ordinarios de la vida.",
-      autor: "Alfred Marshall", rol: "economista", obra: "Principios de economía", anio: "1890", ini: "AM",
-      foto: "Alfred_Marshall.jpg" },
-    { cita: "El valor de un Estado, a la larga, es el valor de las personas que lo componen.",
-      autor: "John Stuart Mill", rol: "filósofo y economista", obra: "Sobre la libertad", anio: "1859", ini: "JM",
-      foto: "John_Stuart_Mill_by_London_Stereoscopic_Company,_c1870.jpg" },
-    { cita: "La vida no es fácil para ninguno de nosotros. Pero ¿qué importa? Hay que tener perseverancia y, sobre todo, confianza en uno mismo.",
-      autor: "Marie Curie", rol: "científica, dos veces Premio Nobel", obra: "carta citada por su hija Eve Curie en Madame Curie", anio: "1937", ini: "MC",
-      foto: "Marie_Curie_c1920.jpg" }
-  ];
+  var LISTA = (window.FRASES || []).map(function (r) {
+    return { amb: r[0], cita: r[1], autor: r[2], rol: r[3], obra: r[4], anio: r[5], foto: r[6] || "" };
+  });
   var caja = document.getElementById("frase");
-  if (!caja) return;
+  if (!caja || !LISTA.length) return;
   try { if (sessionStorage.getItem("frase-cerrada") === "1") { caja.hidden = true; return; } } catch (e) {}
-  var foto = document.getElementById("frase-foto"), cita = document.getElementById("frase-cita"), autor = document.getElementById("frase-autor");
+  var foto = document.getElementById("frase-foto"), cita = document.getElementById("frase-cita"), autor = document.getElementById("frase-autor"), etiqueta = document.getElementById("frase-etiqueta");
+  function clave(f) { return f.autor + "|" + f.cita.slice(0, 40); }
+  function leerVistas() { try { return JSON.parse(localStorage.getItem("frases-vistas") || "[]"); } catch (e) { return []; } }
+  function guardarVistas(v) { try { localStorage.setItem("frases-vistas", JSON.stringify(v)); } catch (e) {} }
+  function iniciales(n) { var p = n.replace(/[^A-Za-zÁÉÍÓÚÑáéíóúñü ]/g, "").split(" ").filter(Boolean); return (p.length > 1 ? p[0][0] + p[p.length - 1][0] : (p[0] || "?").slice(0, 2)).toUpperCase(); }
   var actual = -1;
   function mostrar() {
-    var i;
-    do { i = Math.floor(Math.random() * FRASES.length); } while (i === actual && FRASES.length > 1);
+    var vistas = leerVistas();
+    var libres = [];
+    for (var k = 0; k < LISTA.length; k++) if (k !== actual && vistas.indexOf(clave(LISTA[k])) < 0) libres.push(k);
+    if (!libres.length) { vistas = actual >= 0 ? [clave(LISTA[actual])] : []; for (k = 0; k < LISTA.length; k++) if (k !== actual) libres.push(k); }
+    var i = libres.length ? libres[Math.floor(Math.random() * libres.length)] : 0;
+    vistas.push(clave(LISTA[i])); guardarVistas(vistas);
     actual = i;
-    var f = FRASES[i];
-    cita.textContent = "«" + f.cita.replace(/\.$/, "") + "».";
-    var pagina = "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(f.foto);
-    autor.innerHTML = "<b></b>, " + f.rol + " · <i></i> (" + f.anio + ") · <a rel=\"nofollow noopener\" target=\"_blank\">foto</a>";
+    var f = LISTA[i];
+    var t = f.cita.replace(/\.$/, "");
+    cita.textContent = "«" + t + "»" + (/[!?]$/.test(t) ? "" : ".");
+    etiqueta.textContent = "Frase para hoy · " + f.amb;
+    autor.innerHTML = "<b></b>, <span></span> · <i></i> (<span></span>)";
+    var sp = autor.querySelectorAll("span");
     autor.querySelector("b").textContent = f.autor;
+    sp[0].textContent = f.rol; sp[1].textContent = f.anio;
     autor.querySelector("i").textContent = f.obra;
-    var a = autor.querySelector("a"); a.href = pagina; a.title = "Imagen de dominio público en Wikimedia Commons";
-    foto.textContent = f.ini;
+    if (f.foto) {
+      var a = document.createElement("a");
+      a.href = "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(f.foto);
+      a.rel = "nofollow noopener"; a.target = "_blank"; a.textContent = "foto";
+      a.title = "Imagen libre en Wikimedia Commons";
+      autor.appendChild(document.createTextNode(" · ")); autor.appendChild(a);
+    }
+    foto.textContent = iniciales(f.autor);
+    if (!f.foto) return;
     var img = new Image();
     img.alt = "";
     img.onload = function () { if (actual === i) { foto.textContent = ""; foto.appendChild(img); } };
