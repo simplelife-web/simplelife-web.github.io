@@ -1,5 +1,5 @@
 # Robot de "¿Qué hago hoy?": cada mañana busca eventos en las páginas oficiales
-# de quehagohoy/fuentes.json y actualiza quehagohoy/eventos.json. Es gratis
+# y ticketeras de quehagohoy/fuentes.json y actualiza quehagohoy/eventos.json. Es gratis
 # (GitHub Actions en un repositorio público) y no necesitas hacer nada.
 # También puedes lanzarlo a mano: pestaña Actions → "Robot ¿Qué hago hoy?" → Run workflow.
 name: Robot ¿Qué hago hoy?
@@ -19,7 +19,7 @@ concurrency:
 jobs:
   buscar:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,5 +31,5 @@ jobs:
         run: |
           git config user.name "robot-quehagohoy"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add quehagohoy/eventos.json
+          git add quehagohoy/eventos.json quehagohoy/geocache.json
           git diff --cached --quiet || (git commit -m "Robot: actualizar eventos de ¿Qué hago hoy?" && git push)

@@ -1,14 +1,18 @@
 // Robot de "¿Qué hago hoy?"
-// Cada mañana revisa las páginas OFICIALES de quehagohoy/fuentes.json,
-// lee su agenda si la publican en formato abierto (calendario de WordPress o RSS)
-// y guarda los eventos en quehagohoy/eventos.json. Cada evento lleva el enlace
-// a su publicación oficial. Respeta el robots.txt de cada página.
+// Cada mañana revisa las páginas de quehagohoy/fuentes.json: agendas oficiales
+// (calendario de WordPress o RSS) y ticketeras que publican sus eventos con datos
+// abiertos (schema.org "Event": fecha, lugar y precio). Guarda todo en
+// quehagohoy/eventos.json. Cada evento lleva el enlace a su publicación de origen.
+// Respeta el robots.txt de cada página. No lee Instagram, Facebook, TikTok ni X:
+// sus reglas prohíben los robots o piden iniciar sesión.
 // Uso: node .github/robot/buscar-eventos.mjs   (Node 20 o más, sin instalar nada)
 
 import { readFileSync, writeFileSync, existsSync, appendFileSync } from "node:fs";
 
 const RAIZ = new URL("../../", import.meta.url);
 const ARCHIVO = new URL("quehagohoy/eventos.json", RAIZ);
+const ARCHIVO_GEO = new URL("quehagohoy/geocache.json", RAIZ);
+const DISTRITOS = Object.values(JSON.parse(readFileSync(new URL("quehagohoy/distritos.json", RAIZ), "utf8")).provincias).reduce((a, p) => Object.assign(a, p), {});
 const { fuentes } = JSON.parse(readFileSync(new URL("quehagohoy/fuentes.json", RAIZ), "utf8"));
 const UA = "SimplelifeBot/1.0 (+https://simplelife-web.github.io/quehagohoy/)";
 const DIAS_NOVEDAD = 15;    // si no encontramos fecha, mostramos la publicación 15 días
@@ -171,8 +175,8 @@ function itemsRSS(xml) {
 }
 
 async function leerRSS(f) {
-  for (const ruta of ["/feed/", "/rss.xml", "/feed", "/index.php/feed/"]) {
-    const url = f.web + ruta;
+  for (const ruta of f.feed ? [f.feed] : ["/feed/", "/rss.xml", "/feed", "/index.php/feed/"]) {
+    const url = /^https?:/.test(ruta) ? ruta : f.web + ruta;
     if (!(await permitido(url))) continue;
     const r = await traer(url);
     if (!r.ok || !/<(rss|feed|rdf:RDF)\b/i.test(r.texto.slice(0, 2000))) continue;
@@ -213,16 +217,107 @@ async function leerRSS(f) {
   return null;
 }
 
+// ---------- ticketeras con datos abiertos (sitemap + schema.org Event) ----------
+const espera = (ms) => new Promise((r) => setTimeout(r, ms));
+const sinTildes = (s) => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+// Coordenadas de cada dirección con OpenStreetMap (Nominatim): gratis, 1 consulta por segundo,
+// y se guardan en geocache.json para no repetir la misma consulta.
+const GEO = existsSync(ARCHIVO_GEO) ? JSON.parse(readFileSync(ARCHIVO_GEO, "utf8")) : {};
+let geoNuevas = 0;
+async function coordenadas(lugar, direccion) {
+  const claves = [[lugar, direccion].filter(Boolean).join(", "), direccion, lugar].filter(Boolean);
+  for (const q of claves) {
+    const k = sinTildes(q);
+    if (k in GEO) { if (GEO[k]) return GEO[k]; continue; }
+    if (geoNuevas >= 250) return null; // tope por día; el resto se busca mañana
+    geoNuevas++;
+    await espera(1100);
+    const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=pe&viewbox=-77.25,-11.70,-76.60,-12.55&bounded=1&q=" + encodeURIComponent(q.replace(/,?\s*(Lima|Peru|Perú)\s*$/gi, "") + ", Lima, Perú");
+    const r = await traer(url, "json");
+    let res = null;
+    try { const j = JSON.parse(r.texto || "[]"); if (j[0]) res = [+(+j[0].lat).toFixed(5), +(+j[0].lon).toFixed(5)]; } catch {}
+    GEO[k] = res;
+    if (res) return res;
+  }
+  return null;
+}
+// El distrito: primero si la dirección lo nombra como parte propia ("Calle X 123, Miraflores, Lima");
+// si no, el distrito cuyo centro está más cerca del puntito.
+function distritoDe(direccion, lat, lon) {
+  const partes = String(direccion || "").split(",").slice(1).map((x) => sinTildes(x).replace(/\d+/g, "").trim());
+  for (const parte of partes.reverse()) for (const d of Object.keys(DISTRITOS)) if (sinTildes(d) === parte) return d;
+  if (lat == null) return "Lima";
+  let mejor = "Lima", dist = 1e9;
+  for (const [d, [a, b]] of Object.entries(DISTRITOS)) { const x = (a - lat) ** 2 + (b - lon) ** 2; if (x < dist) { dist = x; mejor = d; } }
+  return mejor;
+}
+const TIPO_CATEGORIA = { concerts: "concierto", festivales: "concierto", "stand-up": "teatro", theater: "teatro", cine: "cine", "art-culture": "cultura", "cursos-talleres": "taller", "seminarios-conferencias": "taller", sports: "deporte", futbol: "deporte", party: "fiesta", "trip-adventure": "paseo", entertainment: "entretenimiento" };
+
+async function leerTicketera(f) {
+  if (!(await permitido(f.sitemap))) return { metodo: "ticketera", bloqueado: true, eventos: [] };
+  const r = await traer(f.sitemap);
+  if (!r.ok) return null;
+  const filtro = new RegExp(f.filtroUrl || ".", "i"), excluir = f.excluir ? new RegExp(f.excluir, "i") : null;
+  const urls = [...new Set([...r.texto.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1].replace(/&amp;/g, "&")))]
+    .filter((u) => filtro.test(u) && !(excluir && excluir.test(u))).slice(0, f.maximo || 400);
+  const eventos = [];
+  for (const url of urls) {
+    if (!(await permitido(url))) continue;
+    await espera(300);
+    const p = await traer(url);
+    if (!p.ok) continue;
+    let ev = null;
+    for (const m of p.texto.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)) {
+      try {
+        const j = JSON.parse(m[1]);
+        const lista = [].concat(j["@graph"] || j);
+        ev = lista.find((x) => /Event$/.test(String(x["@type"]))) || ev;
+      } catch {}
+      if (ev) break;
+    }
+    if (!ev || !ev.startDate) continue;
+    if (/Cancelled|Postponed/i.test(ev.eventStatus || "")) continue;
+    if (/Online/i.test(ev.eventAttendanceMode || "")) continue;
+    const titulo = limpiar(ev.name);
+    if (!titulo || (excluir && excluir.test(titulo))) continue;
+    // La ticketera guarda la hora de Lima aunque le ponga "Z": la tomamos tal cual
+    const fecha = ev.startDate.slice(0, 10), fechaFin = (ev.endDate || "").slice(0, 10);
+    const hora = /T\d\d:\d\d/.test(ev.startDate) && !/T00:00/.test(ev.startDate) ? ev.startDate.slice(11, 16) : "";
+    if ((fechaFin || fecha) < HOY_ISO) continue;
+    if (deIsoNode(fecha) - HOY > DIAS_ADELANTE * 864e5) continue;
+    const loc = [].concat(ev.location || [])[0] || {};
+    const dir = loc.address && typeof loc.address === "object" ? limpiar(loc.address.streetAddress || "") : limpiar(loc.address || "");
+    const lugar = limpiar(loc.name || "");
+    let lat = loc.geo ? +loc.geo.latitude : null, lon = loc.geo ? +loc.geo.longitude : null;
+    if (!(lat && lon)) { const c = await coordenadas(lugar, dir); lat = c ? c[0] : null; lon = c ? c[1] : null; }
+    const of = [].concat(ev.offers || [])[0] || {};
+    const minimo = of.lowPrice ?? of.price;
+    const precioMin = minimo === null || minimo === undefined || minimo === "" ? null : +minimo;
+    const precio = precioMin === 0 ? "Gratis" : precioMin > 0 ? "Desde S/ " + (Number.isInteger(precioMin) ? precioMin : precioMin.toFixed(2)) : "";
+    const cat = (url.match(/\/events\/([^/]+)\//) || [])[1];
+    const desc = limpiar(ev.description || "");
+    eventos.push({
+      titulo, url, fecha, fechaFin: fechaFin && fechaFin !== fecha ? fechaFin : "", hora, publicado: "",
+      lugar, direccion: dir, lat, lon, precio, precioMin: Number.isFinite(precioMin) ? precioMin : null,
+      tipo: TIPO_CATEGORIA[cat] || tipoDe(titulo + " " + desc, f.tipo), publico: publicoDe(titulo + " " + desc),
+      resumen: corto(desc), distrito: distritoDe(dir, lat, lon), imagen: [].concat(ev.image || [])[0] || "",
+    });
+  }
+  return { metodo: "ticketera", eventos };
+}
+function deIsoNode(s) { const [a, m, d] = s.split("-").map(Number); return new Date(a, m - 1, d); }
+
 // ---------- principal ----------
 const todos = [], informe = [];
 for (const f of fuentes) {
   let res = null;
-  try { res = (await leerCalendarioWP(f)) || (await leerRSS(f)); }
+  try { res = f.lector === "ticketera" ? await leerTicketera(f) : (await leerCalendarioWP(f)) || (await leerRSS(f)); }
   catch (e) { console.log(`! ${f.nombre}: error ${e.message}`); }
   if (!res) { informe.push({ fuente: f.nombre, estado: "sin agenda abierta", n: 0 }); console.log(`- ${f.nombre}: no publica agenda en formato abierto (se salta)`); continue; }
   if (res.bloqueado) { informe.push({ fuente: f.nombre, estado: "su robots.txt no lo permite", n: 0 }); console.log(`- ${f.nombre}: robots.txt no lo permite (se respeta)`); continue; }
   for (const e of res.eventos) {
-    todos.push({ ...e, fuente: f.nombre, fuenteWeb: f.web, distrito: f.distrito, lat: e.lat ?? f.lat, lon: e.lon ?? f.lon });
+    todos.push({ ...e, fuente: f.nombre, fuenteWeb: f.web, fuenteTipo: f.clase || "oficial", distrito: e.distrito || f.distrito, lat: e.lat ?? f.lat, lon: e.lon ?? f.lon });
   }
   informe.push({ fuente: f.nombre, estado: res.metodo, n: res.eventos.length });
   console.log(`✓ ${f.nombre}: ${res.metodo}, ${res.eventos.length} actividades`);
@@ -234,7 +329,7 @@ const eventos = todos
   .filter((e) => { const k = e.url; if (vistos.has(k)) return false; vistos.add(k); return true; })
   .filter((e) => (e.fechaFin || e.fecha || HOY_ISO) >= HOY_ISO)
   .sort((a, b) => (a.fecha || a.publicado || "9").localeCompare(b.fecha || b.publicado || "9"))
-  .slice(0, 300);
+  .slice(0, 700);
 
 const anterior = existsSync(ARCHIVO) ? JSON.parse(readFileSync(ARCHIVO, "utf8")) : {};
 const igual = JSON.stringify(anterior.eventos || []) === JSON.stringify(eventos) && JSON.stringify(anterior.fuentes || []) === JSON.stringify(informe);
@@ -243,6 +338,7 @@ else {
   writeFileSync(ARCHIVO, JSON.stringify({ actualizado: new Date().toISOString(), eventos, fuentes: informe }, null, 1) + "\n");
   console.log(`\nGuardados ${eventos.length} eventos en quehagohoy/eventos.json`);
 }
+if (geoNuevas) { writeFileSync(ARCHIVO_GEO, JSON.stringify(GEO, null, 1) + "\n"); console.log(`Direcciones nuevas buscadas en OpenStreetMap: ${geoNuevas}`); }
 if (process.env.GITHUB_STEP_SUMMARY) {
   appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## Robot ¿Qué hago hoy?\n\n| Fuente | Cómo se leyó | Actividades |\n|---|---|---|\n${informe.map((i) => `| ${i.fuente} | ${i.estado} | ${i.n} |`).join("\n")}\n\nTotal guardado: ${eventos.length}\n`);
 }
