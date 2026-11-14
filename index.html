@@ -368,7 +368,7 @@
    Se recorren todas en un orden mezclado fijo, sin repetir hasta terminar la lista. */
 (function () {
   var LISTA = (window.FRASES || []).map(function (r) {
-    return { amb: r[0], cita: r[1], autor: r[2], rol: r[3], obra: r[4], anio: r[5], foto: r[6] || "" };
+    return { amb: r[0], cita: r[1], autor: r[2], rol: r[3], obra: r[4], anio: r[5], foto: r[6] || "", wiki: r[7] || "" };
   });
   var caja = document.getElementById("frase");
   if (!caja || !LISTA.length) return;
@@ -391,19 +391,33 @@
     autor.querySelector("b").textContent = f.autor;
     sp[0].textContent = f.rol; sp[1].textContent = f.anio;
     autor.querySelector("i").textContent = f.obra;
-    if (f.foto) {
-      var a = document.createElement("a");
-      a.href = "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(f.foto);
-      a.rel = "nofollow noopener"; a.target = "_blank"; a.textContent = "foto";
-      a.title = "Imagen libre en Wikimedia Commons";
-      autor.appendChild(document.createTextNode(" · ")); autor.appendChild(a);
-    }
     foto.textContent = iniciales(f.autor);
-    if (!f.foto) return;
-    var img = new Image();
-    img.alt = "";
-    img.onload = function () { foto.textContent = ""; foto.appendChild(img); };
-    img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(f.foto) + "?width=160";
+    function ponerFoto(src, archivo) {
+      var img = new Image();
+      img.alt = "";
+      img.onload = function () {
+        foto.textContent = ""; foto.appendChild(img);
+        var a = document.createElement("a");
+        a.href = "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(archivo);
+        a.rel = "nofollow noopener"; a.target = "_blank"; a.textContent = "foto";
+        a.title = "Imagen libre en Wikimedia Commons";
+        autor.appendChild(document.createTextNode(" · ")); autor.appendChild(a);
+      };
+      img.src = src;
+    }
+    if (f.foto) {
+      ponerFoto("https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(f.foto) + "?width=160", f.foto);
+    } else if (window.fetch) {
+      // Sin foto en la lista: se toma la imagen principal del artículo de Wikipedia en español.
+      // Wikipedia en español solo usa imágenes libres (no admite imágenes con derechos reservados).
+      fetch("https://es.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&piprop=thumbnail%7Cname&pithumbsize=160&titles=" + encodeURIComponent(f.wiki || f.autor))
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var pags = (d.query && d.query.pages) || {};
+          for (var id in pags) { var pg = pags[id]; if (pg.thumbnail && pg.pageimage) { ponerFoto(pg.thumbnail.source, pg.pageimage); return; } }
+        })
+        .catch(function () {});
+    }
   }
   mostrar();
 })();

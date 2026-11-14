@@ -1,5 +1,6 @@
 /* Base de frases célebres de la portada de Simplelife.
-   Cada línea: [ámbito, frase, autor, quién fue, obra o lugar, año, foto de Wikimedia Commons (o "")].
+   Cada línea: [ámbito, frase, autor, quién fue, obra o lugar, año, foto de Wikimedia Commons (o ""), título en Wikipedia si no es el nombre (opcional)].
+   Si no hay foto, la página busca sola la imagen del artículo del autor en Wikipedia en español.
    Solo frases verificadas en la obra, carta o discurso que se cita. Las que no son del español van con traducción propia.
    Las fotos son de dominio público o con licencia libre; si una no carga, se muestran las iniciales.
    Para sumar una frase: copia una línea, cambia sus datos y deja la coma al final. */
@@ -101,5 +102,118 @@ window.FRASES = [
   ["Economía", "El curioso cometido de la economía es demostrar a los hombres lo poco que saben sobre lo que imaginan que pueden diseñar.", "Friedrich Hayek", "economista, Premio Nobel", "La fatal arrogancia", "1988", ""],
   ["Economía", "El desarrollo puede concebirse como un proceso de expansión de las libertades reales de que disfrutan los individuos.", "Amartya Sen", "economista, Premio Nobel", "Desarrollo y libertad", "1999", ""],
   ["Economía", "Se puede ver la era de las computadoras en todas partes, menos en las estadísticas de productividad.", "Robert Solow", "economista, Premio Nobel", "reseña en The New York Times Book Review", "1987", ""],
-  ["Economía", "El precio es lo que pagas; el valor es lo que obtienes.", "Warren Buffett", "inversionista", "carta a los accionistas de Berkshire Hathaway", "2008", ""]
+  ["Economía", "El precio es lo que pagas; el valor es lo que obtienes.", "Warren Buffett", "inversionista", "carta a los accionistas de Berkshire Hathaway", "2008", ""],
+
+  // ===== Tanda 2 (2026-11-14) =====
+  // Ciencia y tecnología
+  ["Ciencia", "Estoy convencido de que Él no juega a los dados.", "Albert Einstein", "físico, Premio Nobel", "carta a Max Born", "1926", "Albert_Einstein_Head.jpg"],
+  ["Ciencia", "La vida es como andar en bicicleta: para mantener el equilibrio hay que seguir moviéndose.", "Albert Einstein", "físico, Premio Nobel", "carta a su hijo Eduard", "1930", "Albert_Einstein_Head.jpg"],
+  ["Ciencia", "El hombre que se atreve a desperdiciar una hora de tiempo no ha descubierto el valor de la vida.", "Charles Darwin", "naturalista", "carta a su hermana Susan", "1836", "Charles_Darwin_seated_crop.jpg"],
+  ["Ciencia", "La vida es breve; el arte, largo.", "Hipócrates", "médico griego", "Aforismos", "siglo V a. C.", ""],
+  ["Ciencia", "La sabiduría es hija de la experiencia.", "Leonardo da Vinci", "pintor, inventor y científico", "sus cuadernos de notas", "c. 1490", ""],
+  ["Ciencia", "Una nueva verdad científica no triunfa porque convenza a sus opositores, sino porque estos acaban muriendo y crece una nueva generación familiarizada con ella.", "Max Planck", "físico, Premio Nobel", "Autobiografía científica", "1948", ""],
+  ["Ciencia", "En la naturaleza nada existe solo.", "Rachel Carson", "bióloga y escritora", "Primavera silenciosa", "1962", ""],
+  ["Ciencia", "Las afirmaciones extraordinarias requieren pruebas extraordinarias.", "Carl Sagan", "astrónomo y divulgador", "serie Cosmos, capítulo 12", "1980", ""],
+  ["Ciencia", "Estamos hechos de materia de estrellas.", "Carl Sagan", "astrónomo y divulgador", "serie Cosmos, capítulo 1", "1980", ""],
+  ["Ciencia", "Es un pequeño paso para el hombre, pero un gran salto para la humanidad.", "Neil Armstrong", "astronauta", "al pisar la Luna", "1969", ""],
+  ["Ciencia", "¡Vámonos!", "Yuri Gagarin", "primer ser humano en viajar al espacio", "al despegar en el Vostok 1", "1961", ""],
+  ["Ciencia", "La ciencia no tiene patria.", "Louis Pasteur", "químico y microbiólogo", "brindis en Milán", "1876", ""],
+  ["Tecnología", "La mejor forma de predecir el futuro es inventarlo.", "Alan Kay", "informático, pionero de la computadora personal", "reunión en el centro de investigación Xerox PARC", "1971", ""],
+  ["Tecnología", "La frase más peligrosa del idioma es: «Siempre lo hemos hecho así».", "Grace Hopper", "informática y almirante de la Marina de EE. UU.", "entrevista en la revista Computerworld", "1976", ""],
+  ["Tecnología", "El contenido es el rey.", "Bill Gates", "cofundador de Microsoft", "ensayo publicado en el sitio de Microsoft", "1996", ""],
+  ["Tecnología", "Cualquier tecnología suficientemente avanzada es indistinguible de la magia.", "Arthur C. Clarke", "escritor de ciencia ficción", "Perfiles del futuro", "1973", ""],
+  ["Literatura", "La violencia es el último recurso del incompetente.", "Isaac Asimov", "escritor y bioquímico", "Fundación", "1951", ""],
+
+  // Literatura
+  ["Literatura", "Cada uno es artífice de su ventura.", "Miguel de Cervantes", "escritor", "Don Quijote de la Mancha, segunda parte", "1615", "Cervantes_Jáuregui.jpg"],
+  ["Literatura", "Estamos hechos de la misma materia que los sueños.", "William Shakespeare", "dramaturgo y poeta", "La tempestad", "1611", "Shakespeare.jpg"],
+  ["Literatura", "El mundo entero es un escenario.", "William Shakespeare", "dramaturgo y poeta", "Como gustéis", "c. 1599", "Shakespeare.jpg"],
+  ["Literatura", "Toda la vida es sueño, y los sueños, sueños son.", "Pedro Calderón de la Barca", "dramaturgo español", "La vida es sueño", "1635", ""],
+  ["Literatura", "Muchos años después, frente al pelotón de fusilamiento, el coronel Aureliano Buendía había de recordar aquella tarde remota en que su padre lo llevó a conocer el hielo.", "Gabriel García Márquez", "escritor colombiano, Premio Nobel", "Cien años de soledad", "1967", ""],
+  ["Literatura", "Que otros se jacten de las páginas que han escrito; a mí me enorgullecen las que he leído.", "Jorge Luis Borges", "escritor argentino", "poema «Un lector»", "1969", ""],
+  ["Literatura", "Andábamos sin buscarnos, pero sabiendo que andábamos para encontrarnos.", "Julio Cortázar", "escritor argentino", "Rayuela", "1963", ""],
+  ["Literatura", "Dame la mano y danzaremos.", "Gabriela Mistral", "poeta chilena, Premio Nobel", "Ternura", "1924", ""],
+  ["Literatura", "Es tan corto el amor, y es tan largo el olvido.", "Pablo Neruda", "poeta chileno, Premio Nobel", "Veinte poemas de amor y una canción desesperada", "1924", ""],
+  ["Literatura", "La soledad es el fondo último de la condición humana.", "Octavio Paz", "poeta mexicano, Premio Nobel", "El laberinto de la soledad", "1950", ""],
+  ["Literatura", "Vine a Comala porque me dijeron que acá vivía mi padre, un tal Pedro Páramo.", "Juan Rulfo", "escritor mexicano", "Pedro Páramo", "1955", ""],
+  ["Literatura", "Hoy es siempre todavía.", "Antonio Machado", "poeta español", "Nuevas canciones", "1924", ""],
+  ["Literatura", "Es una verdad universalmente reconocida que un hombre soltero, poseedor de una gran fortuna, necesita una esposa.", "Jane Austen", "novelista inglesa", "Orgullo y prejuicio", "1813", ""],
+  ["Literatura", "Un libro tiene que ser el hacha que rompa el mar helado que llevamos dentro.", "Franz Kafka", "escritor", "carta a Oskar Pollak", "1904", ""],
+  ["Literatura", "Lo que has heredado de tus padres, conquístalo para poseerlo.", "Johann Wolfgang von Goethe", "escritor alemán", "Fausto", "1808", ""],
+  ["Literatura", "La fortuna favorece a los audaces.", "Virgilio", "poeta romano", "Eneida, libro X", "siglo I a. C.", ""],
+  ["Literatura", "Aprovecha el día y confía lo menos posible en el mañana.", "Horacio", "poeta romano", "Odas, libro I", "23 a. C.", ""],
+  ["Literatura", "Puedo resistirlo todo, excepto la tentación.", "Oscar Wilde", "escritor irlandés", "El abanico de lady Windermere", "1892", ""],
+  ["Literatura", "Todos estamos en el fango, pero algunos miramos a las estrellas.", "Oscar Wilde", "escritor irlandés", "El abanico de lady Windermere", "1892", ""],
+  ["Literatura", "El hombre no está hecho para la derrota. Un hombre puede ser destruido, pero no derrotado.", "Ernest Hemingway", "escritor, Premio Nobel", "El viejo y el mar", "1952", ""],
+  ["Literatura", "Todos los animales son iguales, pero algunos animales son más iguales que otros.", "George Orwell", "escritor inglés", "Rebelión en la granja", "1945", ""],
+  ["Literatura", "No todos los que vagan están perdidos.", "J. R. R. Tolkien", "escritor y filólogo", "La comunidad del anillo", "1954", ""],
+  ["Literatura", "Todo lo que tenemos que decidir es qué hacer con el tiempo que se nos ha dado.", "J. R. R. Tolkien", "escritor y filólogo", "La comunidad del anillo", "1954", ""],
+  ["Literatura", "Aquí hace falta correr todo cuanto se pueda para permanecer en el mismo sitio.", "Lewis Carroll", "escritor y matemático", "A través del espejo", "1871", ""],
+  ["Literatura", "Qué maravilloso es que nadie tenga que esperar ni un solo momento para empezar a mejorar el mundo.", "Ana Frank", "autora de su diario", "Diario", "1944", ""],
+  ["Literatura", "La vida es una aventura atrevida o no es nada.", "Helen Keller", "escritora y activista", "Let Us Have Faith", "1940", ""],
+  ["Literatura", "La utopía está en el horizonte. Camino dos pasos, ella se aleja dos pasos. ¿Para qué sirve la utopía? Para eso sirve: para caminar.", "Eduardo Galeano", "escritor uruguayo", "Las palabras andantes (citando a Fernando Birri)", "1993", ""],
+  ["Literatura peruana", "Hay, hermanos, muchísimo que hacer.", "César Vallejo", "poeta peruano", "Poemas humanos, «Los nueve monstruos»", "1939", "Cesar_vallejo_1929.jpg"],
+  ["Literatura peruana", "Me moriré en París con aguacero, un día del cual tengo ya el recuerdo.", "César Vallejo", "poeta peruano", "Poemas humanos, «Piedra negra sobre una piedra blanca»", "1939", "Cesar_vallejo_1929.jpg"],
+  ["Literatura peruana", "Yo soy el cantor de América autóctono y salvaje.", "José Santos Chocano", "poeta peruano", "Alma América, «Blasón»", "1906", ""],
+
+  // Filosofía y pensamiento
+  ["Filosofía", "El principio es la parte más importante de la obra.", "Platón", "filósofo griego", "La República, libro II", "siglo IV a. C.", ""],
+  ["Filosofía", "Todos los seres humanos desean por naturaleza saber.", "Aristóteles", "filósofo griego", "Metafísica, libro I", "siglo IV a. C.", "Aristotle_Altemps_Inv8575.jpg"],
+  ["Filosofía", "Si tienes un jardín y una biblioteca, tienes todo lo que necesitas.", "Cicerón", "orador y filósofo romano", "carta a Varrón", "46 a. C.", ""],
+  ["Filosofía", "Mientras enseñamos, aprendemos.", "Séneca", "filósofo romano", "Cartas a Lucilio, carta 7", "c. 65", ""],
+  ["Filosofía", "Cada hombre lleva en sí la forma entera de la condición humana.", "Michel de Montaigne", "filósofo y ensayista", "Ensayos, libro III", "1588", ""],
+  ["Filosofía", "El conocimiento es poder.", "Francis Bacon", "filósofo y político inglés", "Meditationes sacrae", "1597", ""],
+  ["Filosofía", "La vida del hombre es solitaria, pobre, desagradable, brutal y breve.", "Thomas Hobbes", "filósofo inglés", "Leviatán", "1651", ""],
+  ["Filosofía", "La razón es, y solo debe ser, esclava de las pasiones.", "David Hume", "filósofo escocés", "Tratado de la naturaleza humana", "1739", ""],
+  ["Filosofía", "Obra solo según aquella máxima por la cual puedas querer al mismo tiempo que se convierta en ley universal.", "Immanuel Kant", "filósofo", "Fundamentación de la metafísica de las costumbres", "1785", "Immanuel_Kant_(painted_portrait).jpg"],
+  ["Filosofía", "La lechuza de Minerva solo alza su vuelo al caer el crepúsculo.", "G. W. F. Hegel", "filósofo alemán", "Principios de la filosofía del derecho", "1820", "", "Georg Wilhelm Friedrich Hegel"],
+  ["Filosofía", "La vida solo puede ser comprendida mirando hacia atrás, pero ha de ser vivida mirando hacia adelante.", "Søren Kierkegaard", "filósofo danés", "sus diarios", "1843", ""],
+  ["Filosofía", "Lo que no me mata me hace más fuerte.", "Friedrich Nietzsche", "filósofo", "Crepúsculo de los ídolos", "1889", ""],
+  ["Filosofía", "Los filósofos no han hecho más que interpretar el mundo de diversos modos; de lo que se trata es de transformarlo.", "Karl Marx", "filósofo y economista", "Tesis sobre Feuerbach", "1845", ""],
+  ["Filosofía", "Los límites de mi lenguaje significan los límites de mi mundo.", "Ludwig Wittgenstein", "filósofo", "Tractatus logico-philosophicus", "1921", ""],
+  ["Filosofía", "El hombre está condenado a ser libre.", "Jean-Paul Sartre", "filósofo y escritor", "El existencialismo es un humanismo", "1946", ""],
+  ["Filosofía", "Hay que imaginarse a Sísifo feliz.", "Albert Camus", "escritor y filósofo, Premio Nobel", "El mito de Sísifo", "1942", ""],
+  ["Filosofía", "En medio del invierno aprendí por fin que había en mí un verano invencible.", "Albert Camus", "escritor y filósofo, Premio Nobel", "Retorno a Tipasa", "1952", ""],
+  ["Filosofía", "Todo lo excelso es tan difícil como raro.", "Baruch Spinoza", "filósofo", "Ética", "1677", ""],
+  ["Filosofía", "Quienes no pueden recordar el pasado están condenados a repetirlo.", "George Santayana", "filósofo y escritor", "La vida de la razón", "1905", ""],
+  ["Filosofía", "El problema del mundo moderno es que los estúpidos están muy seguros de sí mismos, mientras que los inteligentes están llenos de dudas.", "Bertrand Russell", "filósofo, Premio Nobel", "artículo «El triunfo de la estupidez»", "1933", ""],
+  ["Filosofía", "Mi vida es mi mensaje.", "Mahatma Gandhi", "líder de la independencia de la India", "nota escrita en Bengala", "1947", ""],
+  ["Filosofía", "Conoce al enemigo y conócete a ti mismo, y en cien batallas no correrás peligro.", "Sun Tzu", "estratega chino", "El arte de la guerra", "siglo V a. C.", ""],
+  ["Filosofía", "La banalidad del mal.", "Hannah Arendt", "filósofa", "Eichmann en Jerusalén", "1963", ""],
+
+  // Política e historia
+  ["Historia", "Llegué, vi, vencí.", "Julio César", "general y gobernante romano", "según Plutarco y Suetonio", "47 a. C.", ""],
+  ["Política", "No tengo nada que ofrecer, salvo sangre, esfuerzo, lágrimas y sudor.", "Winston Churchill", "primer ministro británico", "discurso en la Cámara de los Comunes", "1940", ""],
+  ["Política", "Una casa dividida contra sí misma no puede mantenerse en pie.", "Abraham Lincoln", "presidente de Estados Unidos", "discurso en Springfield", "1858", "Abraham_Lincoln_O-77_matte_collodion_print.jpg"],
+  ["Política", "Sostenemos como evidentes estas verdades: que todos los hombres son creados iguales.", "Thomas Jefferson", "presidente de Estados Unidos", "Declaración de Independencia", "1776", ""],
+  ["Derechos civiles", "La injusticia en cualquier lugar es una amenaza para la justicia en todas partes.", "Martin Luther King Jr.", "líder de los derechos civiles, Premio Nobel de la Paz", "Carta desde la cárcel de Birmingham", "1963", "Martin_Luther_King,_Jr..jpg"],
+  ["Política", "Nadie nace odiando a otra persona por el color de su piel, su origen o su religión.", "Nelson Mandela", "presidente de Sudáfrica, Premio Nobel de la Paz", "El largo camino hacia la libertad", "1994", "Nelson_Mandela_1994.jpg"],
+  ["Política", "Ser culto es el único modo de ser libre.", "José Martí", "escritor y prócer cubano", "artículo «Maestros ambulantes»", "1884", ""],
+  ["Política", "Patria es humanidad.", "José Martí", "escritor y prócer cubano", "periódico Patria", "1895", ""],
+  ["Política", "El conocimiento es poder. La información es liberadora. La educación es la premisa del progreso en toda sociedad, en toda familia.", "Kofi Annan", "secretario general de la ONU, Premio Nobel de la Paz", "conferencia en el Banco Mundial", "1997", ""],
+  ["Política", "Habla suavemente y lleva un gran garrote; llegarás lejos.", "Theodore Roosevelt", "presidente de Estados Unidos", "discurso en la feria del estado de Minnesota", "1901", ""],
+
+  // Arte, cine y música
+  ["Música", "Los tiempos están cambiando.", "Bob Dylan", "músico, Premio Nobel de Literatura", "canción «The Times They Are a-Changin'»", "1964", ""],
+
+  // Deporte
+  ["Deporte", "La pelota no se mancha.", "Diego Armando Maradona", "futbolista argentino", "partido de despedida en La Bombonera", "2001", ""],
+  ["Deporte", "Una vida no es importante, excepto por el impacto que tiene en otras vidas.", "Jackie Robinson", "beisbolista, rompió la barrera racial en las Grandes Ligas", "frase grabada en su lápida", "1972", ""],
+  ["Deporte", "Fallas el cien por ciento de los tiros que no haces.", "Wayne Gretzky", "jugador de hockey sobre hielo", "entrevista en The Hockey News", "1983", ""],
+  ["Deporte", "Soy el más grande.", "Muhammad Ali", "boxeador, campeón mundial", "tras ganar el título ante Sonny Liston", "1964", "Muhammad_Ali_NYWTS.jpg"],
+  ["Deporte", "Ningún ser humano tiene límites.", "Eliud Kipchoge", "atleta keniano, campeón olímpico de maratón", "tras correr un maratón en menos de dos horas, Viena", "2019", ""],
+  ["Deporte", "Más rápido, más alto, más fuerte.", "Henri Didon", "sacerdote y educador, autor del lema olímpico", "discurso en un torneo escolar, adoptado luego por los Juegos Olímpicos", "1891", ""],
+
+  // Economía
+  ["Economía", "El trabajo fue el primer precio, la moneda de compra original que se pagó por todas las cosas.", "Adam Smith", "economista", "La riqueza de las naciones", "1776", "Adam_Smith_The_Muir_portrait.jpg"],
+  ["Economía", "La población, si no encuentra obstáculos, aumenta en progresión geométrica; los alimentos solo aumentan en progresión aritmética.", "Thomas Malthus", "economista y demógrafo", "Ensayo sobre el principio de la población", "1798", "", "Thomas Robert Malthus"],
+  ["Economía", "Los hombres prácticos, que se creen libres de toda influencia intelectual, suelen ser esclavos de algún economista difunto.", "John Maynard Keynes", "economista", "Teoría general del empleo, el interés y el dinero", "1936", ""],
+  ["Economía", "La bolsa de valores ha predicho nueve de las últimas cinco recesiones.", "Paul Samuelson", "economista, Premio Nobel", "columna en la revista Newsweek", "1966", ""],
+  ["Economía", "La pobreza no la crean los pobres.", "Muhammad Yunus", "economista, Premio Nobel de la Paz", "discurso del Nobel", "2006", ""],
+  ["Economía", "La primera lección de la economía es la escasez: nunca hay suficiente de nada para satisfacer a todos los que lo quieren.", "Thomas Sowell", "economista", "Is Reality Optional?", "1993", ""],
+  ["Economía", "En este mundo nada es seguro, excepto la muerte y los impuestos.", "Benjamin Franklin", "inventor y político", "carta a Jean-Baptiste Le Roy", "1789", "Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg"],
+  ["Economía", "Sé temeroso cuando otros son codiciosos, y codicioso cuando otros son temerosos.", "Warren Buffett", "inversionista", "carta a los accionistas de Berkshire Hathaway", "1986", ""],
+  ["Economía", "Es mejor ser un ser humano insatisfecho que un cerdo satisfecho; mejor ser Sócrates insatisfecho que un tonto satisfecho.", "John Stuart Mill", "filósofo y economista", "El utilitarismo", "1863", "John_Stuart_Mill_by_London_Stereoscopic_Company,_c1870.jpg"],
+  ["Economía", "El consumo ostentoso de bienes valiosos es un medio de reputación.", "Thorstein Veblen", "economista y sociólogo", "Teoría de la clase ociosa", "1899", ""],
+  ["Economía", "Nada en la vida es tan importante como crees que es mientras estás pensando en ello.", "Daniel Kahneman", "psicólogo, Premio Nobel de Economía", "Pensar rápido, pensar despacio", "2011", ""]
 ];
