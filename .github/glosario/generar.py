@@ -35,6 +35,7 @@ import terminos9  # noqa: E402
 import terminos10  # noqa: E402
 import terminos11  # noqa: E402
 from fuentes import FUENTES, BCRP_TITULOS  # noqa: E402
+from variantes import VARIANTES  # noqa: E402
 
 BCRP_GLOSARIO = "https://www.bcrp.gob.pe/docs/Publicaciones/Glosario/Glosario-BCRP.pdf"
 
@@ -100,6 +101,18 @@ for t in TERMINOS:
     assert t["cat"] in NOMBRE_CAT, t["slug"]
     for r in t.get("rel", []):
         assert r in POR_SLUG, (t["slug"], r)
+VARIANTES = _sin_barras(VARIANTES)
+_vistos = set()
+for _s, _vs in VARIANTES.items():
+    assert _s in POR_SLUG, ("variante de un término que no existe", _s)
+    for _h, _x in _vs:
+        assert _h not in _vistos, ("variante repetida", _h)
+        _vistos.add(_h)
+N_VARIANTES = len(_vistos)
+
+
+def ancla(s):
+    return re.sub(r"[^a-z0-9]+", "-", sin_tildes(s).lower()).strip("-")
 
 # ---------- KaTeX: junta todas las fórmulas y las dibuja de una vez ----------
 PEDIDOS = []
@@ -242,6 +255,13 @@ def pagina_termino(t, i):
         o.append("".join("<li>%s</li>" % con_formulas(x) for x in t["ojo"]))
         o.append("</ul>\n</section>\n\n")
 
+    if VARIANTES.get(t["slug"]):
+        o.append('<section class="card var">\n<h2>Otros términos del glosario del BCRP</h2>\n'
+                 '<p class="nota">Son variantes o detalles de este mismo tema, explicados con nuestras palabras.</p>\n<dl>')
+        for h, x in VARIANTES[t["slug"]]:
+            o.append('<dt id="%s">%s</dt><dd>%s</dd>' % (ancla(h), esc(h), con_formulas(x)))
+        o.append("</dl>\n</section>\n\n")
+
     if t.get("rel"):
         o.append('<section class="rel">\n<h2>Términos relacionados</h2>\n<ul class="chips">')
         for r in t["rel"]:
@@ -259,6 +279,9 @@ def pagina_termino(t, i):
     titulo_bcrp = t.get("bcrp") or BCRP_TITULOS.get(t["slug"])
     if titulo_bcrp:
         fs.insert(0, ("BCRP, Glosario de términos económicos: «%s» (definición redactada aquí con palabras propias)" % titulo_bcrp, BCRP_GLOSARIO))
+    if VARIANTES.get(t["slug"]):
+        fs.insert(1 if titulo_bcrp else 0, ("BCRP, Glosario de términos económicos: %s (explicados aquí con palabras propias)"
+                                            % ", ".join("«%s»" % h for h, _ in VARIANTES[t["slug"]]), BCRP_GLOSARIO))
     o.append('<section class="fuentes">\n<h2>Fuentes</h2>\n')
     if fs:
         o.append("<ul>" + "".join('<li><a href="%s" target="_blank" rel="noopener">%s</a></li>' % (esc(u), esc(n)) for n, u in fs) + "</ul>\n")
@@ -287,7 +310,8 @@ def pagina_indice():
     o = [CABEZA.format(title=esc(title), desc=esc(desc), url=url, ld=ld, ogtype="website", extra="")]
     o.append("<h1>Glosario económico explicado en simple</h1>\n")
     o.append('<p class="lead">%d conceptos de economía y finanzas con palabras de todos los días, ejemplos del Perú y la fórmula bien explicada. '
-             "Sirve para entender las noticias, tu boleta de pago, un préstamo o tus clases.</p>\n" % len(TERMINOS))
+             "Además, %d términos más del glosario del BCRP están explicados dentro de su tema y el buscador también los encuentra. "
+             "Sirve para entender las noticias, tu boleta de pago, un préstamo o tus clases.</p>\n" % (len(TERMINOS), N_VARIANTES))
     o.append('<label class="buscar"><span>¿Qué palabra buscas?</span>\n'
              '<input type="search" id="q" placeholder="Por ejemplo: inflación, TCEA, CTS" autocomplete="off"></label>\n')
     o.append('<div class="filtros" role="group" aria-label="Filtrar por tema">')
@@ -301,14 +325,15 @@ def pagina_indice():
     o.append('<p id="cuantos" class="cuantos" aria-live="polite"></p>\n')
     o.append('<div class="lista" id="lista">')
     for t in TERMINOS:
-        b = sin_tildes(" ".join([t["t"], t.get("alias", ""), texto_plano(t["corto"]), NOMBRE_CAT[t["cat"]]]))
+        b = sin_tildes(" ".join([t["t"], t.get("alias", ""), texto_plano(t["corto"]), NOMBRE_CAT[t["cat"]]]
+                                + [h for h, _ in VARIANTES.get(t["slug"], [])]))
         o.append('<a class="tram" href="%s.html" data-cat="%s" data-b="%s">\n  <span class="ic" aria-hidden="true">%s</span>\n'
                  '  <span><small>%s</small><strong>%s</strong><span class="def">%s</span></span>\n</a>'
                  % (t["slug"], t["cat"], esc(b), t["ic"], esc(NOMBRE_CAT[t["cat"]]), esc(t["t"]), esc(texto_plano(t["corto"]))))
     o.append("</div>\n\n")
     o.append("""<section class="card">
 <h2>¿Cómo está hecho este glosario?</h2>
-<p>Cada término tiene una frase corta para entenderlo rápido, una explicación más completa, un ejemplo con situaciones del Perú y, cuando hace falta, su fórmula con el significado de cada letra y un cálculo paso a paso.</p>
+<p>Cada término tiene una frase corta para entenderlo rápido, una explicación más completa, un ejemplo con situaciones del Perú y, cuando hace falta, su fórmula con el significado de cada letra y un cálculo paso a paso. Las variantes y detalles de un mismo tema (por ejemplo, los distintos tipos de encaje o de subasta) aparecen en la sección «Otros términos del glosario del BCRP» de la página principal, para no repetir lo mismo en muchas páginas.</p>
 <p>Cada página termina con sus <strong>fuentes</strong>: el Glosario de términos económicos del BCRP (que usamos como guía, explicando cada término con nuestras propias palabras), normas publicadas en El Peruano (como la Constitución o las leyes de la TCEA y de pensiones), publicaciones del INEI y la SUNAT, y notas de la agencia estatal Andina con datos del BCRP o del INEI. Los datos que cambian con el tiempo, como la UIT o el sueldo mínimo, indican su año. Los demás números son ejemplos para practicar.</p>
 <p>¿Falta una palabra o encontraste un error? <a href="../contacto.html">Escríbenos</a> y la revisamos.</p>
 </section>
