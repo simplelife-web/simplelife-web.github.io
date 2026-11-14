@@ -17,6 +17,7 @@ import re
 import subprocess
 import sys
 import unicodedata
+from urllib.parse import quote_plus
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.abspath(os.path.join(AQUI, "..", ".."))
@@ -118,7 +119,76 @@ def ancla(s):
 PEDIDOS = []
 
 
+def _grupo(tex, i):
+    """Devuelve (contenido, fin) del grupo {...} que empieza en tex[i] (saltando espacios)."""
+    while tex[i] == " ":
+        i += 1
+    if tex[i] != "{":  # \frac12 o \frac a b
+        if tex[i] == "\\":
+            m = re.match(r"\\[A-Za-z]+", tex[i:])
+            return m.group(0), i + len(m.group(0))
+        return tex[i], i + 1
+    nivel = 0
+    for j in range(i, len(tex)):
+        if tex[j] == "{" and tex[j - 1] != "\\":
+            nivel += 1
+        elif tex[j] == "}" and tex[j - 1] != "\\":
+            nivel -= 1
+            if nivel == 0:
+                return tex[i + 1:j], j + 1
+    raise ValueError("llave sin cerrar: " + tex)
+
+
+def _arriba(x):
+    """Quita lo que va entre llaves para ver solo el nivel de arriba."""
+    while True:
+        y = re.sub(r"\{[^{}]*\}", "", x)
+        if y == x:
+            return y
+        x = y
+
+
+_SUB = r"(?:[_^](?:\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}|\\?[A-Za-z0-9]))*"
+_ATOMO = re.compile(r"^(?:\\Delta\s*)?(?:(?:[0-9.,]|\\,)+|[A-Za-z]+|\\text\{[^{}]*\}|\\(?:bar|hat|tilde|sqrt|overline)\{[^{}]*\}|\\[A-Za-z]+|\([^()]*(?:\([^()]*\)[^()]*)*\))"
+                    + _SUB + "$")
+
+
+def _par(x, abajo):
+    x = x.strip()
+    a = _arriba(x)
+    if abajo:
+        if _ATOMO.match(x):
+            return x
+    elif not re.search(r"[+\-/]|\\pm|\\sum|\\prod", a):
+        return x
+    return "(" + x + ")"
+
+
+def lineal(tex):
+    """Escribe las fórmulas en una sola línea: \\frac{a}{b} pasa a a/b, sin cosas apiladas."""
+    while True:
+        m = re.search(r"\\[dt]?frac(?![A-Za-z])", tex)
+        if not m:
+            break
+        num, k = _grupo(tex, m.end())
+        den, k = _grupo(tex, k)
+        f = _par(lineal(num), False) + "/" + _par(lineal(den), True)
+        if re.match(r"\s*(?:[A-Za-z0-9(]|\\(?!times|cdot|quad|qquad|right|end|le|ge|approx|Rightarrow|Longrightarrow|text\{\s)[A-Za-z])", tex[k:]):
+            f = "(" + f + ")"  # 1/6 G se leería mal: mejor (1/6) G
+        tex = tex[:m.start()] + "{" + f + "}" + tex[k:]
+    tex = re.sub(r"\\(sum|prod|max|min|lim)(?!\\nolimits)(?=\s*[_^])", r"\\\1\\nolimits", tex)
+    while "\\underbrace" in tex:
+        i = tex.index("\\underbrace")
+        dentro, k = _grupo(tex, i + len("\\underbrace"))
+        if tex[k:].lstrip().startswith("_"):
+            k = tex.index("_", k) + 1
+            _, k = _grupo(tex, k)
+        tex = tex[:i] + "{" + dentro + "}" + tex[k:]
+    return tex
+
+
 def pedir(tex, display):
+    tex = lineal(tex)
     PEDIDOS.append((tex, display))
     return "\x00K%d\x00" % (len(PEDIDOS) - 1)
 
@@ -261,6 +331,20 @@ def pagina_termino(t, i):
         for h, x in VARIANTES[t["slug"]]:
             o.append('<dt id="%s">%s</dt><dd>%s</dd>' % (ancla(h), esc(h), con_formulas(x)))
         o.append("</dl>\n</section>\n\n")
+
+    # Videos: búsquedas en YouTube (no se puede comprobar cada video desde aquí); "videos" = enlaces revisados a mano.
+    nombre = re.sub(r"\s*\(.*?\)", "", t["t"]).strip()
+    yt = "https://www.youtube.com/results?search_query="
+    o.append('<section class="card videos">\n<h2>Aprende más en video</h2>\n')
+    if t.get("videos"):
+        o.append('<ul>' + "".join('<li><a href="%s" target="_blank" rel="noopener">%s</a></li>' % (esc(u), esc(x)) for x, u in t["videos"]) + '</ul>\n')
+    o.append('<p class="nota">Abre una búsqueda en YouTube sobre «%s». Prefiere canales confiables: universidades, bancos centrales como el BCRP o Khan Academy en español.</p>\n'
+             '<div class="botones">'
+             '<a class="btn sec" href="%s" target="_blank" rel="noopener">▶ Explicación sencilla</a>'
+             '<a class="btn sec" href="%s" target="_blank" rel="noopener">▶ Clase más completa</a>'
+             '</div>\n</section>\n\n'
+             % (esc(nombre), esc(yt + quote_plus(nombre + " explicado fácil economía")),
+                esc(yt + quote_plus(nombre + " clase de economía"))))
 
     if t.get("rel"):
         o.append('<section class="rel">\n<h2>Términos relacionados</h2>\n<ul class="chips">')

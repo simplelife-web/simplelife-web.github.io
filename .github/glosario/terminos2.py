@@ -151,7 +151,7 @@ r"Lucía gana S/ 2400 al mes y recibió S/ 2400 de gratificación en julio. Su r
 formula=dict(
 tex=r"CTS=\frac{R+\frac{1}{6}G}{12}\times m",
 donde=[(r"R", "sueldo mensual"), (r"G", "última gratificación recibida"), (r"m", "meses completos trabajados en el semestre")],
-calculo=[r"CTS=\frac{2400+\frac{2400}{6}}{12}\times 6=\frac{2800}{12}\times 6=1400\ \text{soles}"],
+calculo=[r"CTS=\frac{2400+\frac{2400}{6}}{12}\times 6", r"CTS=\frac{2800}{12}\times 6=1400\ \text{soles}"],
 ),
 ojo=["Si el 15 cae domingo o feriado, el plazo pasa al siguiente día hábil (en noviembre de 2026 vence el lunes 16).",
      "La Ley 32322 permite retirar libremente el 100 % de la CTS hasta el 31 de diciembre de 2026. Después de esa fecha, revisa qué regla está vigente."],
@@ -417,7 +417,8 @@ ejemplo=[
 r"Si en un año los precios de exportación suben 10 % y los de importación 2 %, los términos de intercambio mejoran alrededor de 8 %: con el mismo cobre, el Perú puede comprar más bienes importados.",
 ],
 formula=dict(
-tex=r"TI=\frac{\text{Índice de precios de exportación}}{\text{Índice de precios de importación}}\times 100",
+tex=r"TI=\frac{IPX}{IPM}\times 100",
+donde=[(r"IPX", "índice de precios de exportación"), (r"IPM", "índice de precios de importación")],
 calculo=[r"TI=\frac{110}{102}\times 100\approx 107.8"],
 ),
 rel=["balanza-comercial", "ciclo-economico", "tipo-de-cambio", "crecimiento-economico"],
@@ -510,7 +511,8 @@ ejemplo=[
 r"Según el INEI, en 2025 la línea de pobreza fue de S/ 462 por persona al mes (S/ 1848 para un hogar de 4) y la de pobreza extrema, S/ 260. Con esas líneas, el 25.7 % de los peruanos era pobre y el 4.7 %, pobre extremo. Un hogar de 4 personas que gasta S/ 1800 al mes (S/ 450 por persona) está por debajo de la línea: es pobre.",
 ],
 formula=dict(
-tex=r"\text{Pobre si}\quad \frac{\text{Gasto del hogar}}{\text{N.° de miembros}}<\text{Línea de pobreza}",
+tex=r"\text{Pobre si}\quad \frac{G}{n}<L",
+donde=[(r"G", "gasto mensual del hogar"), (r"n", "número de miembros del hogar"), (r"L", "línea de pobreza por persona")],
 calculo=[r"\frac{1800}{4}=450<462\ \Rightarrow\ \text{pobre}"],
 ),
 rel=["coeficiente-de-gini", "pbi-per-capita", "informalidad", "inflacion"],

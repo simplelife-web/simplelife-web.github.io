@@ -632,7 +632,8 @@ ejemplo=[
 r"Si un banco tiene S/ 15 000 millones de patrimonio efectivo y S/ 100 000 millones de activos ponderados por riesgo, su ratio es 15 %, por encima del mínimo de 10 %.",
 ],
 formula=dict(
-tex=r"RCG=\frac{\text{Patrimonio efectivo}}{\text{Activos ponderados por riesgo}}\times 100",
+tex=r"RCG=\frac{PE}{APR}\times 100",
+donde=[(r"PE", "patrimonio efectivo"), (r"APR", "activos ponderados por riesgo")],
 calculo=[r"\frac{15\,000}{100\,000}\times 100=15\ \%"],
 ),
 rel=["banco-de-pagos-internacionales", "sbs", "apalancamiento", "riesgo-de-credito"],

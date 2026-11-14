@@ -818,7 +818,8 @@ r"El <strong>índice de precios de exportación</strong> sigue el precio promedi
 r"Al dividir el primero entre el segundo se obtienen los <a href='terminos-de-intercambio.html'>términos de intercambio</a>. El BCRP publica estos índices de forma periódica.",
 ],
 formula=dict(
-tex=r"TI=\frac{\text{Índice de precios de exportación}}{\text{Índice de precios de importación}}\times100",
+tex=r"TI=\frac{IPX}{IPM}\times 100",
+donde=[(r"IPX", "índice de precios de exportación"), (r"IPM", "índice de precios de importación")],
 calculo=[r"\frac{110}{100}\times100=110"],
 ),
 ejemplo=[

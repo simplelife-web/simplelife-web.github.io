@@ -300,7 +300,8 @@ ejemplo=[
 r"Si una caja tiene S/ 500 millones prestados y S/ 25 millones están atrasados o refinanciados, su morosidad es 5 %.",
 ],
 formula=dict(
-tex=r"\text{Morosidad}=\frac{\text{Créditos atrasados y refinanciados}}{\text{Créditos totales}}\times 100",
+tex=r"\text{Morosidad}=\frac{CA}{CT}\times 100",
+donde=[(r"CA", "créditos atrasados y refinanciados"), (r"CT", "créditos totales")],
 calculo=[r"\frac{25}{500}\times 100=5\ \%"],
 ),
 rel=["central-de-riesgos", "creditos-de-consumo", "tasa-de-interes", "cajas-municipales"],

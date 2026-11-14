@@ -285,7 +285,8 @@ ejemplo=[
 r"Con números de ejemplo: si el 20 % más rico recibe el 50 % del ingreso y el 20 % más pobre solo el 5 %, el grupo de arriba recibe 10 veces más que el de abajo.",
 ],
 formula=dict(
-tex=r"\text{Razón de quintiles}=\frac{\text{Ingreso del 20\,\% más rico}}{\text{Ingreso del 20\,\% más pobre}}",
+tex=r"\text{Razón de quintiles}=\frac{Q_5}{Q_1}",
+donde=[(r"Q_5", "ingreso del 20 % más rico"), (r"Q_1", "ingreso del 20 % más pobre")],
 calculo=[r"\frac{50}{5}=10"],
 ),
 rel=["coeficiente-de-gini", "pobreza-monetaria", "indice-de-desarrollo-humano", "impuesto-directo-e-indirecto"],
