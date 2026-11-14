@@ -99,6 +99,8 @@
   .info p, .info li { margin: 4px 0; }
   .info ol, .info ul { padding-left: 22px; margin: 6px 0; }
   table.t { border-collapse: collapse; width: 100%; font-size: .93rem; margin: 6px 0; }
+  @media (max-width: 560px) { table.t { font-size: .82rem; } table.t th, table.t td { padding: 5px; } }
+  table.t th, table.t td { overflow-wrap: anywhere; hyphens: auto; }
   table.t th, table.t td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
 </style>
 </head>
