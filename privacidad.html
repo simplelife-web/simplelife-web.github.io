@@ -60,7 +60,7 @@
 <p>Estas secciones no piden ningún dato personal. El mapa de ¿Qué hago hoy? usa OpenStreetMap: para dibujarlo, tu navegador descarga las imágenes del mapa desde sus servidores. Si aceptas mostrar tu ubicación, se usa solo en tu equipo para centrar el mapa y no se envía a Simplelife.</p>
 
 <h2>Transcribir videos de YouTube</h2>
-<p>El video se muestra con el reproductor oficial de YouTube, que se rige por la política de privacidad de Google. Cuando eliges «Escuchar el video y escribirlo», tu navegador te pide permiso para compartir el audio de la pestaña; ese audio se convierte en texto dentro de tu equipo con el mismo modelo del transcriptor y se descarta al momento. Al pulsar «Transcribir», el código del video (no tus datos) se envía al servidor de Simplelife en Cloudflare, que pide los subtítulos a YouTube y devuelve el texto; si falla, se intenta con servidores públicos de Invidious. Ese servidor guarda el texto del video hasta un día para responder más rápido y no guarda quién lo pidió. Simplelife no graba ni guarda el audio. Si pegas una transcripción copiada de YouTube, se limpia también dentro de tu navegador.</p>
+<p>El video se muestra con el reproductor oficial de YouTube, que se rige por la política de privacidad de Google. Cuando eliges «Escuchar el video y escribirlo», tu navegador te pide permiso para compartir el audio de la pestaña; ese audio se convierte en texto dentro de tu equipo con el mismo modelo del transcriptor y se descarta al momento. Simplelife no graba, no recibe y no guarda el audio, el enlace ni el texto. Si pegas una transcripción copiada de YouTube, se limpia también dentro de tu navegador.</p>
 
 <h2>Publicidad y cookies</h2>
 <p>Este sitio muestra anuncios de Google AdSense. Google y sus socios usan cookies para mostrar anuncios según tus visitas a este y a otros sitios web. Puedes desactivar los anuncios personalizados en la <a href="https://adssettings.google.com" rel="noopener">Configuración de anuncios de Google</a> y conocer más en <a href="https://policies.google.com/technologies/ads" rel="noopener">Cómo utiliza Google las cookies en publicidad</a>. Algunos proveedores externos también pueden usar cookies; puedes desactivarlas en <a href="https://www.aboutads.info/choices/" rel="noopener">aboutads.info</a>.</p>
@@ -71,7 +71,6 @@
   <li><strong>Hugging Face</strong>, desde donde se descarga el modelo de voz del transcriptor.</li>
   <li><strong>OpenStreetMap</strong>, que entrega las imágenes del mapa.</li>
   <li><strong>Google AdSense</strong>, para los anuncios.</li>
-  <li><strong>Cloudflare</strong>, <strong>Invidious</strong> y <strong>Tactiq</strong>, para leer los subtítulos de los videos de YouTube (solo reciben el código del video).</li>
   <li><strong>YouTube</strong> (de Google), cuyo reproductor muestra el video en la sección para transcribir videos de YouTube.</li>
 </ul>
 
