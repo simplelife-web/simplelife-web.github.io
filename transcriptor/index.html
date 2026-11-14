@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Transcriptor de audio a texto gratis y sin límite | Simplelife</title>
 <link rel="icon" href="../logo.svg" type="image/svg+xml">
-<meta name="description" content="Convierte tus audios y videos en texto gratis, sin límite de duración y sin subir tus archivos a ningún servidor. Funciona en español y otros idiomas.">
+<meta name="description" content="Convierte tus audios y videos en texto gratis, sin límite de duración y sin subir tus archivos a ningún servidor, o dicta con tu voz y mira el texto escribirse en vivo. Funciona en español y otros idiomas.">
 <link rel="canonical" href="https://simplelife-web.github.io/transcriptor/">
 <meta property="og:image" content="https://simplelife-web.github.io/og-imagen.png">
 <meta property="og:image:width" content="1200">
@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:locale" content="es_PE">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://simplelife-web.github.io/"},{"@type":"ListItem","position":2,"name":"Transcriptor de audio a texto","item":"https://simplelife-web.github.io/transcriptor/"}]},{"@type":"WebApplication","name":"Transcriptor de audio a texto de Simplelife","url":"https://simplelife-web.github.io/transcriptor/","applicationCategory":"MultimediaApplication","operatingSystem":"Navegador web","description":"Convierte tus audios y videos en texto gratis, sin límite de duración y sin subir tus archivos a ningún servidor. Funciona en español y otros idiomas.","inLanguage":"es","offers":{"@type":"Offer","price":"0","priceCurrency":"PEN"},"publisher":{"@type":"Organization","name":"Simplelife","url":"https://simplelife-web.github.io/","logo":"https://simplelife-web.github.io/logo.svg","email":"simplelifecontacto899@gmail.com"}}]}
+{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://simplelife-web.github.io/"},{"@type":"ListItem","position":2,"name":"Transcriptor de audio a texto","item":"https://simplelife-web.github.io/transcriptor/"}]},{"@type":"WebApplication","name":"Transcriptor de audio a texto de Simplelife","url":"https://simplelife-web.github.io/transcriptor/","applicationCategory":"MultimediaApplication","operatingSystem":"Navegador web","description":"Convierte tus audios y videos en texto gratis, sin límite de duración y sin subir tus archivos a ningún servidor, o dicta con tu voz y mira el texto escribirse en vivo. Funciona en español y otros idiomas.","inLanguage":"es","offers":{"@type":"Offer","price":"0","priceCurrency":"PEN"},"publisher":{"@type":"Organization","name":"Simplelife","url":"https://simplelife-web.github.io/","logo":"https://simplelife-web.github.io/logo.svg","email":"simplelifecontacto899@gmail.com"}}]}
 </script>
 <meta property="og:title" content="Transcriptor de audio a texto gratis y sin límite | Simplelife">
 <meta property="og:site_name" content="Simplelife">
@@ -77,6 +77,22 @@
   .info h3 { font-size: 1.02rem; margin: 18px 0 4px; }
   .info p, .info li { margin: 4px 0; }
   .info ol { padding-left: 22px; margin: 6px 0; }
+  .tabs { display: flex; gap: 8px; margin: 0 0 16px; flex-wrap: wrap; }
+  .tabs button { flex: 1 1 200px; padding: 12px 14px; border-radius: 12px; font-weight: 600; text-align: left; display: flex; gap: 10px; align-items: center; }
+  .tabs button svg { width: 22px; height: 22px; flex: none; }
+  .tabs button small { display: block; font-weight: 400; color: var(--muted); font-size: .82rem; }
+  .tabs button[aria-selected="true"] { border: 2px solid var(--accent); background: var(--soft); }
+  .mic { width: 100%; padding: 16px; font-size: 1.1rem; display: flex; gap: 10px; align-items: center; justify-content: center; }
+  .mic svg { width: 24px; height: 24px; }
+  .mic.on { background: var(--danger); border-color: var(--danger); color: #fff; }
+  .mic.on .dot { width: 10px; height: 10px; border-radius: 50%; background: #fff; animation: latido 1s infinite; }
+  @keyframes latido { 50% { opacity: .25; } }
+  @media (prefers-reduced-motion: reduce) { .mic.on .dot { animation: none; } }
+  .vivo { min-height: 1.6em; margin: 8px 0 0; color: var(--muted); font-style: italic; }
+  .motor { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--soft); font-size: .92rem; }
+  #dictOut { min-height: 260px; }
+  table.nav-tabla { border-collapse: collapse; width: 100%; font-size: .93rem; margin: 6px 0; }
+  table.nav-tabla th, table.nav-tabla td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
 </style>
 </head>
 <body>
@@ -84,8 +100,68 @@
 <main>
   <a class="brand" href="../"><img src="../logo.svg" alt="" width="52" height="52"><span>Simple<b>life</b></span></a>
   <h1>Transcriptor gratuito de audio a texto</h1>
-  <p class="lead">Sube un audio o un video y obtén el texto tal como se dice. Es gratis, no tiene límite de duración y tu archivo nunca sale de tu computadora: todo se procesa en tu navegador.</p>
+  <p class="lead">Sube un audio o un video y obtén el texto tal como se dice, o dicta con tu voz y mira cómo se escribe. Es gratis, no tiene límite de duración y tu archivo nunca sale de tu computadora: todo se procesa en tu navegador.</p>
 
+  <div class="tabs" role="tablist" aria-label="Elige cómo quieres obtener el texto">
+    <button role="tab" id="tabArchivo" aria-selected="true" aria-controls="panelArchivo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="m7 8 5-5 5 5"/><path d="M5 21h14"/></svg>
+      <span>Subir un audio o video<small>Transcribe un archivo que ya tienes</small></span>
+    </button>
+    <button role="tab" id="tabDictado" aria-selected="false" aria-controls="panelDictado">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
+      <span>Dictado y escritura<small>Habla y mira el texto escribirse en vivo</small></span>
+    </button>
+  </div>
+
+  <div id="panelDictado" role="tabpanel" aria-labelledby="tabDictado" class="hidden">
+  <section class="card">
+    <div class="row" style="margin-top:0">
+      <div>
+        <label class="f" for="dictLang">Idioma en que vas a hablar</label>
+        <select id="dictLang">
+          <option value="es-PE" data-w="spanish" selected>Español (Perú)</option>
+          <option value="es-ES" data-w="spanish">Español (España)</option>
+          <option value="es-MX" data-w="spanish">Español (México)</option>
+          <option value="en-US" data-w="english">Inglés</option>
+          <option value="pt-BR" data-w="portuguese">Portugués</option>
+          <option value="fr-FR" data-w="french">Francés</option>
+          <option value="it-IT" data-w="italian">Italiano</option>
+          <option value="de-DE" data-w="german">Alemán</option>
+        </select>
+      </div>
+      <div>
+        <label class="f" for="dictMotor">Modo</label>
+        <select id="dictMotor">
+          <option value="vivo">En vivo (palabra por palabra)</option>
+          <option value="privado">Privado (frase por frase)</option>
+        </select>
+      </div>
+    </div>
+    <label class="check"><input type="checkbox" id="dictCmd" checked> Entender «punto», «coma», «dos puntos», «nueva línea» y «punto y aparte» como signos</label>
+    <p class="motor" id="dictInfo">Revisando tu navegador…</p>
+    <div class="actions">
+      <button class="primary mic" id="dictBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
+        <span id="dictBtnTxt">Empezar a dictar</span>
+      </button>
+    </div>
+    <div class="status" id="dictStatus" role="status"></div>
+  </section>
+
+  <section class="card">
+    <label class="f" for="dictOut">Tu texto (puedes escribir y corregir aquí mismo, incluso mientras dictas)</label>
+    <textarea id="dictOut" spellcheck="true" placeholder="Pulsa «Empezar a dictar» y habla. Lo que digas aparecerá aquí."></textarea>
+    <p class="vivo" id="dictVivo" aria-live="polite"></p>
+    <p class="small" id="dictCount">0 palabras</p>
+    <div class="actions">
+      <button id="dictCopy">Copiar texto</button>
+      <button id="dictDl">Descargar .txt</button>
+      <button id="dictClear">Borrar todo</button>
+    </div>
+  </section>
+  </div>
+
+  <div id="panelArchivo" role="tabpanel" aria-labelledby="tabArchivo">
   <section class="card">
     <label class="drop" id="drop">
       <input type="file" id="file" accept="audio/*,video/*,.mp3,.m4a,.wav,.ogg,.opus,.webm,.mp4,.aac,.flac" hidden>
@@ -140,6 +216,7 @@
       <button id="dlSrt">Descargar subtítulos .srt</button>
     </div>
   </section>
+  </div>
 
   <section class="card info">
     <h2>Cómo usarlo</h2>
@@ -150,7 +227,25 @@
       <li>Revisa el texto, corrige lo que haga falta y cópialo o descárgalo.</li>
     </ol>
 
+    <h2 style="margin-top:22px">Cómo dictar</h2>
+    <ol>
+      <li>Elige la pestaña <strong>Dictado y escritura</strong> y el idioma en que vas a hablar.</li>
+      <li>Pulsa <strong>Empezar a dictar</strong> y acepta el permiso del micrófono.</li>
+      <li>Habla con calma. Di «coma», «punto», «dos puntos», «nueva línea» o «punto y aparte» para poner signos.</li>
+      <li>Pulsa <strong>Detener</strong> cuando termines, corrige lo que haga falta y copia o descarga el texto.</li>
+    </ol>
+
     <h2 style="margin-top:22px">Preguntas frecuentes</h2>
+    <h3>¿En qué navegadores funciona el dictado?</h3>
+    <table class="nav-tabla">
+      <tr><th>Navegador</th><th>Modo en vivo</th><th>Modo privado</th></tr>
+      <tr><td>Chrome y Edge (computadora y Android)</td><td>Sí</td><td>Sí</td></tr>
+      <tr><td>Safari (Mac, iPhone y iPad)</td><td>Sí</td><td>Sí, más lento</td></tr>
+      <tr><td>Firefox, Brave y Opera</td><td>No</td><td>Sí (se elige solo)</td></tr>
+    </table>
+    <p>El <strong>modo en vivo</strong> escribe palabra por palabra mientras hablas, pero usa el reconocimiento de voz de tu navegador, que envía el audio a los servidores de Google (en Chrome y Edge, de Microsoft) o de Apple (en Safari). El <strong>modo privado</strong> usa Whisper dentro de tu equipo: tu voz no sale de él, pero el texto aparece frase por frase, unos segundos después de cada pausa. La primera vez descarga el modelo (~80 MB).</p>
+    <h3>¿El dictado tiene límite de tiempo?</h3>
+    <p>No. Puedes dictar todo lo que quieras; si haces una pausa larga, la página vuelve a escuchar sola mientras no pulses «Detener».</p>
     <h3>¿De verdad es gratis?</h3>
     <p>Sí. La transcripción se hace en tu propio equipo, así que no hay servidores que pagar ni cuentas que crear.</p>
     <h3>¿Hay un límite de duración?</h3>
@@ -499,6 +594,280 @@ $('dlSrt').addEventListener('click', () => {
     .map((p, i) => `${i + 1}\n${fmt(p.start, true)} --> ${fmt(p.end, true)}\n${p.text}\n`).join('\n');
   download(baseName() + '.srt', srt);
 });
+</script>
+
+<script type="module">
+// ---------- Dictado y escritura ----------
+// Modo en vivo: reconocimiento de voz del navegador (Web Speech API).
+// Modo privado: Whisper en tu equipo (el mismo worker.js), frase por frase.
+const $ = (id) => document.getElementById(id);
+const ua = navigator.userAgent;
+const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+// Brave y Opera traen la función pero no funciona (no tienen servidor de voz).
+const liveOk = !!SpeechRec && !navigator.brave && !/OPR\//.test(ua);
+const isAndroid = /Android/i.test(ua);
+
+const out = $('dictOut'), vivo = $('dictVivo'), btn = $('dictBtn');
+let on = false, mode = null, rec = null, worker = null, gpu = null;
+let mic = null, actx = null, proc = null, src = null, wakeLock = null;
+
+// ---------- pestañas ----------
+function showTab(dict) {
+  $('tabArchivo').setAttribute('aria-selected', String(!dict));
+  $('tabDictado').setAttribute('aria-selected', String(dict));
+  $('panelArchivo').classList.toggle('hidden', dict);
+  $('panelDictado').classList.toggle('hidden', !dict);
+  history.replaceState(null, '', dict ? '#dictado' : location.pathname + location.search);
+}
+$('tabArchivo').addEventListener('click', () => showTab(false));
+$('tabDictado').addEventListener('click', () => showTab(true));
+if (location.hash === '#dictado') showTab(true);
+
+// ---------- elegir modo ----------
+if (!liveOk) {
+  const o = $('dictMotor').querySelector('option[value="vivo"]');
+  o.disabled = true; o.textContent += ' (no disponible en este navegador)';
+  $('dictMotor').value = 'privado';
+}
+function info() {
+  const m = $('dictMotor').value;
+  $('dictInfo').textContent = m === 'vivo'
+    ? 'Modo en vivo: el texto aparece mientras hablas. Usa el reconocimiento de voz de tu navegador, que procesa el audio en sus servidores (Google, Microsoft o Apple).'
+    : (liveOk ? '' : 'Tu navegador no tiene reconocimiento de voz en vivo, así que se usa el modo privado. ') +
+      'Modo privado: tu voz no sale de tu equipo. El texto aparece unos segundos después de cada pausa. La primera vez se descarga el modelo (~80 MB).';
+}
+$('dictMotor').addEventListener('change', () => { if (on) stop(); info(); });
+$('dictLang').addEventListener('change', () => { if (on) { stop(); start(); } });
+info();
+
+// ---------- escribir el texto ----------
+const COMANDOS = [
+  [/\s*\bpunto y aparte\b[.,]?/gi, '.\n'],
+  [/\s*\bpunto y seguido\b[.,]?/gi, '.'],
+  [/\s*\bpunto y coma\b[.,]?/gi, ';'],
+  [/\s*\bdos puntos\b[.,]?/gi, ':'],
+  [/\s*\bpuntos suspensivos\b[.,]?/gi, '...'],
+  [/\s*\b(nueva l[ií]nea|nuevo p[aá]rrafo)\b[.,]?/gi, '\n'],
+  [/\s*\bpunto\b[.,]?/gi, '.'],
+  [/\s*\bcoma\b[.,]?/gi, ','],
+  [/\babre (signo de )?interrogaci[oó]n\b\s*/gi, '¿'],
+  [/\s*\bcierra (signo de )?interrogaci[oó]n\b[.,]?/gi, '?'],
+  [/\babre (signo de )?exclamaci[oó]n\b\s*/gi, '¡'],
+  [/\s*\bcierra (signo de )?exclamaci[oó]n\b[.,]?/gi, '!'],
+];
+function limpiar(t) {
+  t = t.trim();
+  if (!t) return '';
+  if ($('dictCmd').checked && $('dictLang').value.startsWith('es')) {
+    for (const [r, s] of COMANDOS) t = t.replace(r, s);
+    t = t.replace(/([.,;:?!])[.,]+/g, '$1').replace(/ *\n */g, '\n').replace(/([,;:])(?=[^\s\n\d])/g, '$1 ')
+      .replace(/([.?!])(?=[^\s\n.\d])/g, '$1 ');
+  }
+  return t;
+}
+function mayus(t, antes) {
+  // Mayúscula al empezar o después de punto, signo o salto de línea.
+  const fin = antes.replace(/[ \t]+$/, '');
+  if (!fin || /[.?!¿¡\n]$/.test(fin)) t = t.replace(/^([¿¡\s]*)(\p{L})/u, (m, a, b) => a + b.toUpperCase());
+  return t.replace(/([.?!]\s+|\n)([¿¡]?)(\p{L})/gu, (m, a, b, c) => a + b + c.toUpperCase());
+}
+function escribir(t) {
+  t = limpiar(t);
+  if (!t) return;
+  const actual = out.value;
+  let sep = '';
+  if (actual && !/[\s]$/.test(actual) && !/^[.,;:?!\n]/.test(t)) sep = ' ';
+  out.value = actual + sep + mayus(t, actual);
+  out.scrollTop = out.scrollHeight;
+  contar();
+}
+function contar() {
+  const n = (out.value.match(/\S+/g) || []).length;
+  $('dictCount').textContent = n === 1 ? '1 palabra' : `${n} palabras`;
+}
+out.addEventListener('input', contar);
+function estado(t, cls = '') { const s = $('dictStatus'); s.textContent = t; s.className = 'status ' + cls; }
+
+// ---------- botón ----------
+btn.addEventListener('click', () => (on ? stop() : start()));
+function ui(activo) {
+  on = activo;
+  btn.classList.toggle('on', activo);
+  btn.querySelector('svg').style.display = activo ? 'none' : '';
+  if (activo && !btn.querySelector('.dot')) btn.insertAdjacentHTML('afterbegin', '<span class="dot"></span>');
+  if (!activo) btn.querySelector('.dot')?.remove();
+  $('dictBtnTxt').textContent = activo ? 'Detener' : 'Empezar a dictar';
+}
+async function start() {
+  mode = $('dictMotor').value;
+  ui(true);
+  try { wakeLock = await navigator.wakeLock?.request('screen'); } catch {}
+  if (mode === 'vivo') startLive(); else startPrivate();
+}
+function stop(msg = 'Dictado detenido. Puedes corregir el texto, copiarlo o descargarlo.') {
+  ui(false);
+  if (rec) { const r = rec; rec = null; try { r.stop(); } catch {} }
+  stopMic();
+  vivo.textContent = '';
+  try { wakeLock?.release(); } catch {}
+  wakeLock = null;
+  if (msg) estado(msg);
+}
+
+// ---------- modo en vivo (Web Speech API) ----------
+function startLive() {
+  const r = new SpeechRec();
+  rec = r;
+  r.lang = $('dictLang').value;
+  r.interimResults = true;
+  // En Android el modo continuo repite frases; ahí se escucha frase por frase y se reinicia solo.
+  r.continuous = !isAndroid;
+  r.maxAlternatives = 1;
+  r.onstart = () => estado('Escuchando… habla con calma.');
+  r.onresult = (e) => {
+    let tmp = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const res = e.results[i];
+      if (res.isFinal) escribir(res[0].transcript);
+      else tmp += res[0].transcript;
+    }
+    vivo.textContent = tmp;
+  };
+  r.onerror = (e) => {
+    if (rec !== r) return;
+    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+      stop(''); estado('No hay permiso para usar el micrófono. Actívalo en el candado junto a la dirección de la página y vuelve a intentar.', 'err');
+    } else if (e.error === 'network') {
+      // El servicio de voz del navegador no responde: se pasa al modo privado.
+      rec = null;
+      $('dictMotor').value = 'privado'; info();
+      $('dictInfo').textContent = 'El modo en vivo no respondió en este navegador, así que se cambió al modo privado. ' + $('dictInfo').textContent;
+      mode = 'privado'; startPrivate();
+    } else if (e.error === 'audio-capture') {
+      stop(''); estado('No se encontró un micrófono. Conecta uno y vuelve a intentar.', 'err');
+    }
+    // 'no-speech' y 'aborted': se reinicia solo en onend.
+  };
+  r.onend = () => {
+    vivo.textContent = '';
+    if (rec === r && on) { try { r.start(); } catch { setTimeout(() => rec === r && on && r.start(), 300); } }
+  };
+  try { r.start(); } catch (e) { stop(''); estado('No se pudo iniciar el dictado: ' + e.message, 'err'); }
+}
+
+// ---------- modo privado (Whisper en el equipo) ----------
+const SR = 16000;
+let frase = [], fraseLen = 0, silencio = 0, voz = 0, pos = 0, enviados = 0, listos = 0, cargado = false;
+function getWorker() {
+  if (worker) return Promise.resolve(worker);
+  return new Promise((resolve) => {
+    worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+    worker.onmessage = (e) => {
+      const m = e.data;
+      if (m.type === 'gpu') { gpu = m; resolve(worker); }
+      else if (m.type === 'download') estado(`Descargando el modelo de voz (solo la primera vez): ${(m.loaded / 1048576).toFixed(0)} de ${(m.total / 1048576).toFixed(0)} MB`);
+      else if (m.type === 'ready') { cargado = true; if (on && mode === 'privado') estado('Escuchando… el texto aparece después de cada pausa.'); }
+      else if (m.type === 'piece') {
+        listos++;
+        if (m.text) escribir(m.text);
+        vivo.textContent = on && listos < enviados ? 'Escribiendo lo que dijiste…' : '';
+      } else if (m.type === 'error') {
+        estado('Ocurrió un error con el modelo de voz: ' + m.message, 'err');
+        worker.terminate(); worker = null; cargado = false;
+        if (on) stop('');
+      }
+    };
+    worker.onerror = (e) => { estado('No se pudo iniciar el modelo de voz: ' + (e.message || 'error'), 'err'); if (on) stop(''); };
+    worker.postMessage({ type: 'gpu' });
+  });
+}
+let workerLang = '';
+async function startPrivate() {
+  estado('Pidiendo permiso para el micrófono…');
+  try {
+    mic = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, channelCount: 1 } });
+  } catch (e) {
+    stop('');
+    estado(e && e.name === 'NotFoundError' ? 'No se encontró un micrófono. Conecta uno y vuelve a intentar.'
+      : 'No hay permiso para usar el micrófono. Actívalo en el candado junto a la dirección de la página y vuelve a intentar.', 'err');
+    return;
+  }
+  if (!on) { stopMic(); return; }
+  const w = await getWorker();
+  const lang = $('dictLang').selectedOptions[0].dataset.w;
+  if (!cargado || lang !== workerLang) {
+    cargado = false; workerLang = lang;
+    estado('Preparando el modelo de voz…');
+    w.postMessage({ type: 'init', model: gpu && gpu.webgpu ? 'onnx-community/whisper-small' : 'onnx-community/whisper-base', language: lang });
+  } else estado('Escuchando… el texto aparece después de cada pausa.');
+
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  actx = new Ctx();
+  src = actx.createMediaStreamSource(mic);
+  proc = actx.createScriptProcessor(4096, 1, 1);
+  const ratio = actx.sampleRate / SR;
+  frase = []; fraseLen = 0; silencio = 0; voz = 0; pos = 0;
+  proc.onaudioprocess = (e) => {
+    if (!on) return;
+    const inp = e.inputBuffer.getChannelData(0);
+    // Pasar a 16 000 muestras por segundo (lo que usa Whisper).
+    const n = Math.floor((inp.length - pos) / ratio);
+    const res = new Float32Array(Math.max(0, n));
+    for (let i = 0; i < n; i++) {
+      const x = pos + i * ratio, j = Math.floor(x), f = x - j;
+      res[i] = inp[j] * (1 - f) + (inp[j + 1] ?? inp[j]) * f;
+    }
+    pos = pos + n * ratio - inp.length;
+    let s = 0;
+    for (let i = 0; i < inp.length; i++) s += inp[i] * inp[i];
+    const nivel = Math.sqrt(s / inp.length);
+    const dur = res.length / SR;
+    if (nivel > 0.012) { voz += dur; silencio = 0; } else silencio += dur;
+    if (voz > 0 || fraseLen < SR * 0.4) { frase.push(res); fraseLen += res.length; }
+    // Si aún no se habla, solo guardar un poquito de audio previo.
+    if (voz === 0 && fraseLen > SR * 0.4) { const u = frase.pop(); frase = [u]; fraseLen = u.length; }
+    // Enviar la frase tras una pausa de 0,7 s, o si ya dura 20 s.
+    if (voz > 0.3 && (silencio > 0.7 || fraseLen > SR * 20)) enviar();
+    else if (voz > 0 && voz <= 0.3 && silencio > 0.7) { frase = []; fraseLen = 0; voz = 0; }
+  };
+  src.connect(proc);
+  proc.connect(actx.destination);
+}
+function enviar() {
+  if (!fraseLen) return;
+  const audio = new Float32Array(fraseLen);
+  let o = 0;
+  for (const c of frase) { audio.set(c, o); o += c.length; }
+  frase = []; fraseLen = 0; voz = 0; silencio = 0;
+  enviados++;
+  vivo.textContent = 'Escribiendo lo que dijiste…';
+  worker.postMessage({ type: 'piece', index: enviados, audio, start: 0, end: audio.length / SR }, [audio.buffer]);
+}
+function stopMic() {
+  if (proc) { if (voz > 0.3) enviar(); proc.onaudioprocess = null; try { proc.disconnect(); src.disconnect(); } catch {} }
+  proc = null; src = null;
+  if (actx) { try { actx.close(); } catch {} actx = null; }
+  if (mic) { mic.getTracks().forEach((t) => t.stop()); mic = null; }
+}
+
+// ---------- copiar, descargar, borrar ----------
+$('dictCopy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(out.value); } catch { out.select(); document.execCommand('copy'); }
+  $('dictCopy').textContent = '¡Copiado!';
+  setTimeout(() => ($('dictCopy').textContent = 'Copiar texto'), 1500);
+});
+$('dictDl').addEventListener('click', () => {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([out.value], { type: 'text/plain;charset=utf-8' }));
+  a.download = 'dictado-' + new Date().toISOString().slice(0, 10) + '.txt';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+$('dictClear').addEventListener('click', () => {
+  if (out.value && !confirm('¿Borrar todo el texto dictado?')) return;
+  out.value = ''; contar(); out.focus();
+});
+window.addEventListener('beforeunload', (e) => { if (on || out.value.trim()) { e.preventDefault(); e.returnValue = ''; } });
 </script>
 
 </body>
