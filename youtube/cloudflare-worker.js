@@ -32,7 +32,7 @@ export default {
 
     const errores = [];
     let res = null;
-    for (const [nombre, metodo] of [['android', porAndroid], ['web', porWeb], ['transcripcion', porTranscripcion]]) {
+    for (const [nombre, metodo] of [['apps', porApps], ['web', porWeb], ['transcripcion', porTranscripcion], ['tactiq', porTactiq]]) {
       try {
         res = await metodo(v, lang);
         if (res && res.segs.length) break;
@@ -54,29 +54,42 @@ function json(obj, status, extra) {
   return new Response(JSON.stringify(obj), { status, headers: { 'Content-Type': 'application/json; charset=utf-8', ...extra } });
 }
 
-// ---------- camino 1: la app de Android de YouTube ----------
-async function porAndroid(v, lang) {
-  const r = await fetch('https://www.youtube.com/youtubei/v1/player?prettyPrint=false', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'User-Agent': `com.google.android.youtube/${ANDROID_VER} (Linux; U; Android 14) gzip`,
-      'X-Youtube-Client-Name': '3',
-      'X-Youtube-Client-Version': ANDROID_VER,
-    },
-    body: JSON.stringify({
-      context: { client: { clientName: 'ANDROID', clientVersion: ANDROID_VER, androidSdkVersion: 34, hl: lang, gl: 'PE' } },
-      videoId: v, contentCheckOk: true, racyCheckOk: true,
-    }),
-  });
-  if (!r.ok) throw new Error('HTTP ' + r.status);
-  const j = await r.json();
-  const pistas = j && j.captions && j.captions.playerCaptionsTracklistRenderer && j.captions.playerCaptionsTracklistRenderer.captionTracks;
-  if (!pistas || !pistas.length) throw new Error((j && j.playabilityStatus && j.playabilityStatus.status) || 'sin subtítulos');
-  const res = await leerPista(elegir(pistas, lang));
-  res.titulo = (j.videoDetails && j.videoDetails.title) || '';
-  res.metodo = 'android';
-  return res;
+// ---------- camino 1: las apps de YouTube (varias, por si YouTube frena alguna) ----------
+const CLIENTES = [
+  { nombre: 'android_vr', id: '28', ua: 'com.google.android.apps.youtube.vr.oculus/1.62.27 (Linux; U; Android 12L; eureka-user Build/SQ3A.220605.009.A1) gzip',
+    client: { clientName: 'ANDROID_VR', clientVersion: '1.62.27', deviceMake: 'Oculus', deviceModel: 'Quest 3', androidSdkVersion: 32, osName: 'Android', osVersion: '12L' } },
+  { nombre: 'ios', id: '5', ua: 'com.google.ios.youtube/20.10.4 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X;)',
+    client: { clientName: 'IOS', clientVersion: '20.10.4', deviceMake: 'Apple', deviceModel: 'iPhone16,2', osName: 'iPhone', osVersion: '18.3.2.22D82' } },
+  { nombre: 'tv', id: '85', ua: 'Mozilla/5.0 (PlayStation; PlayStation 4/12.00) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15',
+    client: { clientName: 'TVHTML5_SIMPLY_EMBEDDED_PLAYER', clientVersion: '2.0' }, embed: true },
+  { nombre: 'web_embed', id: '56', ua: NAVEGADOR,
+    client: { clientName: 'WEB_EMBEDDED_PLAYER', clientVersion: '1.20250310.01.00' }, embed: true },
+  { nombre: 'android', id: '3', ua: `com.google.android.youtube/${ANDROID_VER} (Linux; U; Android 14) gzip`,
+    client: { clientName: 'ANDROID', clientVersion: ANDROID_VER, androidSdkVersion: 34 } },
+];
+async function porApps(v, lang) {
+  const fallas = [];
+  for (const c of CLIENTES) {
+    try {
+      const ctx = { client: { ...c.client, hl: lang, gl: 'PE' } };
+      if (c.embed) ctx.thirdParty = { embedUrl: 'https://www.youtube.com/watch?v=' + v };
+      const r = await fetch('https://www.youtube.com/youtubei/v1/player?prettyPrint=false', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'User-Agent': c.ua, 'X-Youtube-Client-Name': c.id, 'X-Youtube-Client-Version': c.client.clientVersion, Origin: 'https://www.youtube.com' },
+        body: JSON.stringify({ context: ctx, videoId: v, contentCheckOk: true, racyCheckOk: true }),
+      });
+      if (!r.ok) { fallas.push(c.nombre + ' HTTP ' + r.status); continue; }
+      const j = await r.json();
+      const pistas = j && j.captions && j.captions.playerCaptionsTracklistRenderer && j.captions.playerCaptionsTracklistRenderer.captionTracks;
+      if (!pistas || !pistas.length) { fallas.push(c.nombre + ' ' + ((j && j.playabilityStatus && j.playabilityStatus.status) || 'sin pistas')); continue; }
+      const res = await leerPista(elegir(pistas, lang));
+      if (!res.segs.length) { fallas.push(c.nombre + ' pista vacía'); continue; }
+      res.titulo = (j.videoDetails && j.videoDetails.title) || '';
+      res.metodo = c.nombre;
+      return res;
+    } catch (e) { fallas.push(c.nombre + ' ' + (e && e.message)); }
+  }
+  throw new Error(fallas.join(' | '));
 }
 
 // ---------- camino 2: la página web del video ----------
@@ -101,7 +114,10 @@ async function porWeb(v, lang) {
   const html = await pagina(v, lang);
   if (/g-recaptcha|confirm you.re not a bot/i.test(html)) throw new Error('YouTube pidió verificación');
   const pistas = sacarLista(html, 'captionTracks');
-  if (!pistas || !pistas.length) throw new Error('sin subtítulos');
+  if (!pistas || !pistas.length) {
+    const est = (html.match(/"playabilityStatus":\{"status":"([A-Z_]+)"/) || [])[1] || '?';
+    throw new Error('sin subtítulos (estado ' + est + ', ' + html.length + ' bytes)');
+  }
   const res = await leerPista(elegir(pistas, lang));
   res.titulo = tituloDe(html);
   res.metodo = 'web';
@@ -114,10 +130,10 @@ async function porTranscripcion(v, lang) {
   const p = html.match(/"getTranscriptEndpoint":\{"params":"([^"]+)"/);
   if (!p) throw new Error('sin transcripción');
   const ver = (html.match(/"INNERTUBE_CLIENT_VERSION":"([^"]+)"/) || [])[1] || '2.20250101.00.00';
-  const visitor = (html.match(/"VISITOR_DATA":"([^"]+)"/) || [])[1];
+  const visitor = (html.match(/"VISITOR_DATA":"([^"]+)"/) || html.match(/"visitorData":"([^"]+)"/) || [])[1];
   const r = await fetch('https://www.youtube.com/youtubei/v1/get_transcript?prettyPrint=false', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'User-Agent': NAVEGADOR, 'X-Youtube-Client-Name': '1', 'X-Youtube-Client-Version': ver, Origin: 'https://www.youtube.com' },
+    headers: { 'Content-Type': 'application/json', 'User-Agent': NAVEGADOR, 'X-Youtube-Client-Name': '1', 'X-Youtube-Client-Version': ver, Origin: 'https://www.youtube.com', Referer: 'https://www.youtube.com/watch?v=' + v, ...(visitor ? { 'X-Goog-Visitor-Id': visitor } : {}) },
     body: JSON.stringify({ context: { client: { clientName: 'WEB', clientVersion: ver, hl: lang, gl: 'PE', visitorData: visitor } }, params: p[1] }),
   });
   if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -125,6 +141,20 @@ async function porTranscripcion(v, lang) {
     .map((s) => ({ t: Number(s.startMs) || 0, s: texto(s.snippet) }))
     .filter((s) => s.s.trim());
   return { titulo: tituloDe(html), idioma: '', automatico: false, segs, metodo: 'transcripcion' };
+}
+
+// ---------- camino 4: servicio gratuito de Tactiq (respaldo externo) ----------
+async function porTactiq(v, lang) {
+  const r = await fetch('https://tactiq-apps-prod.tactiq.io/transcript', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: 'https://tactiq.io', Referer: 'https://tactiq.io/', 'User-Agent': NAVEGADOR },
+    body: JSON.stringify({ videoUrl: 'https://www.youtube.com/watch?v=' + v, langCode: lang }),
+  });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  const j = await r.json();
+  const segs = (j.captions || []).map((c) => ({ t: Math.round(Number(c.start || 0) * 1000), s: entidades(String(c.text || '')).replace(/\s+/g, ' ').trim() }))
+    .filter((x) => x.s && !/^\[(música|music|aplausos|applause)\]$/i.test(x.s));
+  return { titulo: j.title || '', idioma: lang, automatico: true, segs, metodo: 'tactiq' };
 }
 
 // ---------- utilidades ----------
@@ -154,7 +184,8 @@ async function leerPista(p) {
     let m;
     while ((m = re.exec(x))) {
       const a = m[2];
-      const t = a.match(/\bt="(\d+)"/) ? Number(RegExp.$1) : a.match(/\bstart="([\d.]+)"/) ? Math.round(Number(RegExp.$1) * 1000) : 0;
+      const mt = a.match(/\bt="(\d+)"/), ms = a.match(/\bstart="([\d.]+)"/);
+      const t = mt ? Number(mt[1]) : ms ? Math.round(Number(ms[1]) * 1000) : 0;
       segs.push({ t, s: entidades(m[3].replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim() });
     }
   }
