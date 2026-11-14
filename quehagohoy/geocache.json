@@ -298,5 +298,456 @@
  "calle alcanfores 151, miraflores": [
   -12.12762,
   -77.0281
+ ],
+ "rock and pez, av. alfredo benavides 2824, miraflores, lima": null,
+ "av. alfredo benavides 2824, miraflores, lima": [
+  -12.1274,
+  -77.01121
+ ],
+ "colegio maria auxiliadora de brena, av. brasil 450": null,
+ "av. brasil 450": [
+  -12.06307,
+  -77.04438
+ ],
+ "culto bar, culto bar": null,
+ "culto bar": null,
+ "planetario nacional “mutsumi ishitsuka”, cl. badajoz 169, ate, lima": [
+  -12.05509,
+  -76.94453
+ ],
+ "cineplanet el polo, cineplanet el polo": null,
+ "cineplanet el polo": null,
+ "mercado de productores de santa anita, av santa ana explanada puerta 04": null,
+ "av santa ana explanada puerta 04": null,
+ "mercado de productores de santa anita": [
+  -12.04198,
+  -76.94825
+ ],
+ "teatro del centro de la amistad peruano china, av. de la peruanidad s/n, jesus maria, lima": null,
+ "av. de la peruanidad s/n, jesus maria, lima": [
+  -12.0663,
+  -77.04132
+ ],
+ "centro social cochas, av. nicolas ayllon 3232 (carretera central), distrito de ate, lima": null,
+ "av. nicolas ayllon 3232 (carretera central), distrito de ate, lima": null,
+ "centro social cochas": null,
+ "el roble de barranco, el roble restaurante, sanchez carrion, barranco, peru": null,
+ "el roble restaurante, sanchez carrion, barranco, peru": null,
+ "el roble de barranco": null,
+ "discoteca cocos, centro de convenciones coco’s, avenida arequipa, lince, peru": null,
+ "centro de convenciones coco’s, avenida arequipa, lince, peru": null,
+ "discoteca cocos": null,
+ "centro cultural ricardo palma, av. larco 770, miraflores, lima": [
+  -12.12548,
+  -77.02973
+ ],
+ "espacio alterno, av. tejada 514": null,
+ "av. tejada 514": [
+  -12.13172,
+  -77.02023
+ ],
+ "teatro racional, balta 170, barranco 15063, peru": null,
+ "balta 170, barranco 15063, peru": [
+  -12.14258,
+  -77.01705
+ ],
+ "auditorio jinnai centro cultural peruano japones, av. gregorio escobedo #803, residencial san felipe": null,
+ "av. gregorio escobedo #803, residencial san felipe": null,
+ "auditorio jinnai centro cultural peruano japones": null,
+ "hana bar & lounge, jr. tomas guido 273 - lince": null,
+ "jr. tomas guido 273 - lince": null,
+ "hana bar & lounge": null,
+ "tequendama bar, av. carlos izaguirre 483, los olivos": null,
+ "av. carlos izaguirre 483, los olivos": [
+  -11.99167,
+  -77.07256
+ ],
+ "camara de comercio de lima, av. giuseppe garibaldi 396, jesus maria, lima": null,
+ "av. giuseppe garibaldi 396, jesus maria, lima": [
+  -12.08379,
+  -77.05117
+ ],
+ "colegio santisimo nombre de jesus, calle los recuerdos s/n puerta 6 - san borja": null,
+ "calle los recuerdos s/n puerta 6 - san borja": null,
+ "colegio santisimo nombre de jesus": [
+  -12.10835,
+  -76.98165
+ ],
+ "complejo santa rosa - ate, carretera central 51, ate, lima": null,
+ "carretera central 51, ate, lima": [
+  -12.01847,
+  -76.89735
+ ],
+ "colmena studio, av. nicolas de pierola 519": null,
+ "av. nicolas de pierola 519": [
+  -12.04886,
+  -77.03875
+ ],
+ "cine uvk - san martin, jr. ocona 110, cercado de lima, lima": null,
+ "jr. ocona 110, cercado de lima, lima": null,
+ "cine uvk - san martin": null,
+ "centro de convenciones kantaro, av. tacna 225, cercado de lima, lima": null,
+ "av. tacna 225, cercado de lima, lima": [
+  -12.04402,
+  -77.03581
+ ],
+ "espacio libertad, av. arequipa 4595, miraflores, lima": null,
+ "centro de convenciones “scencia de la molina”, centro de convenciones “scencia de la molina”": null,
+ "centro de convenciones “scencia de la molina”": [
+  -12.07254,
+  -76.95536
+ ],
+ "red cervecera craft beer, av. francisco bolognesi 721": null,
+ "av. francisco bolognesi 721": [
+  -12.14418,
+  -77.01887
+ ],
+ "espacio nhn, 28 de julio 277 - barranco": null,
+ "28 de julio 277 - barranco": [
+  -12.15112,
+  -77.02215
+ ],
+ "kallpa club, avenida pedro miotta, san juan de miraflores, peru": null,
+ "avenida pedro miotta, san juan de miraflores, peru": [
+  -12.15729,
+  -76.98131
+ ],
+ "parque washington, av. arequipa cuadra 5": null,
+ "av. arequipa cuadra 5": null,
+ "parque washington": [
+  -12.07,
+  -77.03724
+ ],
+ "la nueva flor de la canela, av nicolas arriola 155, lima, peru": null,
+ "av nicolas arriola 155, lima, peru": [
+  -12.07395,
+  -77.00636
+ ],
+ "peru fight academy, av. universitaria 836 - 2do piso": null,
+ "av. universitaria 836 - 2do piso": null,
+ "peru fight academy": null,
+ "estadio alberto gallardo, av. zarumilla s/n, san martin de porres, lima": null,
+ "av. zarumilla s/n, san martin de porres, lima": [
+  -12.03482,
+  -77.05009
+ ],
+ "auditorio revival, jr huancavelica 770": null,
+ "jr huancavelica 770": null,
+ "auditorio revival": null,
+ "ccpucp, av. camino real 1075, san isidro 15073, peru": null,
+ "av. camino real 1075, san isidro 15073, peru": [
+  -12.10544,
+  -77.0388
+ ],
+ "nos pucp, av. camino real 1037, san isidro, lima": null,
+ "av. camino real 1037, san isidro, lima": [
+  -12.10428,
+  -77.03867
+ ],
+ "mediateca alianza francesa de miraflores, av. arequipa 4595, miraflores": null,
+ "av. arequipa 4595, miraflores": [
+  -12.11127,
+  -77.02966
+ ],
+ "mercado28, av. vasco nunez de balboa 755, miraflores 15074": null,
+ "av. vasco nunez de balboa 755, miraflores 15074": [
+  -12.13231,
+  -77.02681
+ ],
+ "centro comercial el ovalo, benavides 3308": null,
+ "benavides 3308": [
+  -12.12908,
+  -77.00802
+ ],
+ "centro cultural cafae-se, av. arequipa 2985, san isidro, lima": null,
+ "av. arequipa 2985, san isidro, lima": [
+  -12.0952,
+  -77.03259
+ ],
+ "bar 4queens, c. manuel bonilla 132, miraflores 15074, peru": null,
+ "c. manuel bonilla 132, miraflores 15074, peru": [
+  -12.11989,
+  -77.02746
+ ],
+ "centro de convenciones casa prado, av. 28 de julio 878, miraflores 15074": null,
+ "av. 28 de julio 878, miraflores 15074": [
+  -12.12919,
+  -77.02481
+ ],
+ "auditorio ihs, av. ignacio mariategui 123": null,
+ "av. ignacio mariategui 123": null,
+ "auditorio ihs": null,
+ "museo andres del castillo, jr. de la union 1030": null,
+ "jr. de la union 1030": [
+  -12.04496,
+  -77.03098
+ ],
+ "museo de arte de lima — mali, parque de la exposicion, av. 9 de diciembre 125, lima 15046, peru": null,
+ "parque de la exposicion, av. 9 de diciembre 125, lima 15046, peru": null,
+ "museo de arte de lima — mali": null,
+ "el huaralino internacional, av. naranjal 398, los olivos, peru": null,
+ "av. naranjal 398, los olivos, peru": [
+  -11.97412,
+  -77.08735
+ ],
+ "vichama conciertos, jiron carabaya 954, lima 15001, peru": null,
+ "jiron carabaya 954, lima 15001, peru": [
+  -12.04766,
+  -77.03108
+ ],
+ "centro de convenciones scencia, av. la molina 1131, la molina, lima": null,
+ "av. la molina 1131, la molina, lima": [
+  -12.08616,
+  -76.89753
+ ],
+ "casa blanca cafe bar, isis 852, los olivos 15301, peru": null,
+ "isis 852, los olivos 15301, peru": [
+  -11.99283,
+  -77.07039
+ ],
+ "la carpa espacio cultural, av. universitaria 2366, carabayllo 15316, peru": null,
+ "av. universitaria 2366, carabayllo 15316, peru": [
+  -11.89707,
+  -77.03761
+ ],
+ "sala osma, av. pedro de osma 203": null,
+ "av. pedro de osma 203": [
+  -12.15374,
+  -77.02319
+ ],
+ "teatro britanico, cl. bellavista 527, miraflores, lima": [
+  -12.12334,
+  -77.03307
+ ],
+ "centrum petrus, av. arequipa 3480 san isidro": null,
+ "av. arequipa 3480 san isidro": [
+  -12.09565,
+  -77.03277
+ ],
+ "hotel casa andina miraflores, av. la paz 467, miraflores 15074, peru": [
+  -12.12408,
+  -77.03104
+ ],
+ "kartodromo de la chutana, km50.5 panamericana sur": null,
+ "km50.5 panamericana sur": [
+  -12.17082,
+  -76.97889
+ ],
+ "experiencia zombie, lima - jiron moquegua 245": null,
+ "lima - jiron moquegua 245": [
+  -12.04902,
+  -77.03561
+ ],
+ "auditorio del mali, auditorio mali, av. 9 de diciembre, lima, peru": null,
+ "auditorio mali, av. 9 de diciembre, lima, peru": null,
+ "auditorio del mali": null,
+ "av. santo toribio 173, san isidro, peru, av. santo toribio 173, san isidro, peru": null,
+ "av. santo toribio 173, san isidro, peru": [
+  -12.09881,
+  -77.03923
+ ],
+ "sala osma, av. pedro de osma 203, barranco, lima": null,
+ "av. pedro de osma 203, barranco, lima": [
+  -12.1526,
+  -77.02262
+ ],
+ "la residencia club, la residencia club, jiron junin, lima, peru": null,
+ "la residencia club, jiron junin, lima, peru": null,
+ "la residencia club": [
+  -12.1035,
+  -77.05493
+ ],
+ "sala alzedo del teatro segura, teatro segura, jiron huancavelica, lima, peru": null,
+ "teatro segura, jiron huancavelica, lima, peru": [
+  -12.04712,
+  -77.03447
+ ],
+ "crisis bar, ca. san martin 445, miraflores 15074, peru": null,
+ "ca. san martin 445, miraflores 15074, peru": null,
+ "crisis bar": null,
+ "rustics pizzas bar, av. cesar vallejo 1281": null,
+ "av. cesar vallejo 1281": [
+  -11.81344,
+  -77.13687
+ ],
+ "los maderos, jr. pedro heraud 221, barranco, lima": null,
+ "jr. pedro heraud 221, barranco, lima": null,
+ "los maderos": null,
+ "teatro alianza francesa de miraflores, av. arequipa 4595, miraflores, lima": null,
+ "dossis, av conquistadores 320": null,
+ "av conquistadores 320": [
+  -12.09668,
+  -77.03551
+ ],
+ "la casa roja, av. francisco bolognesi 296, barranco, peru": null,
+ "av. francisco bolognesi 296, barranco, peru": [
+  -12.14712,
+  -77.01976
+ ],
+ "discoteca lift, mariano carranza 127": null,
+ "mariano carranza 127": [
+  -12.07566,
+  -77.03641
+ ],
+ "el padrino club, final de av wiesse de sjl a 3 cuadras del porton de jicamarca": null,
+ "final de av wiesse de sjl a 3 cuadras del porton de jicamarca": null,
+ "el padrino club": null,
+ "pena los andes, av. industrial 3655": null,
+ "av. industrial 3655": [
+  -11.9308,
+  -77.06966
+ ],
+ "club de alto rendimiento atletico minero, santa anita, lima, peru": null,
+ "santa anita, lima, peru": [
+  -12.04327,
+  -76.96195
+ ],
+ "teatro claretiano, av. de los precursores 125, san miguel, lima": null,
+ "av. de los precursores 125, san miguel, lima": [
+  -12.06921,
+  -77.09779
+ ],
+ "centro de convenciones bianca de barranco, av. almte. miguel grau 135, barranco": null,
+ "av. almte. miguel grau 135, barranco": null,
+ "centro de convenciones bianca de barranco": null,
+ "auditorio del pentagonito, av. san borja norte s/n, san borja, lima": null,
+ "av. san borja norte s/n, san borja, lima": [
+  -12.09342,
+  -76.99886
+ ],
+ "la posada del mirador, cl. la ermita 104, barranco, lima": null,
+ "cl. la ermita 104, barranco, lima": null,
+ "la posada del mirador": [
+  -12.14955,
+  -77.02341
+ ],
+ "sala mandra, pasaje sanchez carrion 116, barranco": null,
+ "pasaje sanchez carrion 116, barranco": [
+  -12.14855,
+  -77.02054
+ ],
+ "courtyard by marriott miraflores lima, courtyard by marriott, miraflores, lima.": null,
+ "courtyard by marriott, miraflores, lima.": [
+  -12.12338,
+  -77.02756
+ ],
+ "teatro segura - lima, teatro segura, jiron huancavelica 265, lima, peru": null,
+ "teatro segura, jiron huancavelica 265, lima, peru": [
+  -12.04712,
+  -77.03447
+ ],
+ "centro de convenciones festiva, av. alfonso ugarte 1439, cercado de lima, lima": [
+  -12.05882,
+  -77.04139
+ ],
+ "auditorio juana alarco de dammert, av. benavides 2315, miraflores": null,
+ "av. benavides 2315, miraflores": [
+  -12.12675,
+  -77.00834
+ ],
+ "mercado santa marina, mercado santa marina, av. defensores del morro 2270, chorrillos 15067, peru": null,
+ "mercado santa marina, av. defensores del morro 2270, chorrillos 15067, peru": null,
+ "mercado santa marina": [
+  -12.05532,
+  -77.1285
+ ],
+ "tierra baldia, av. del ejercito 847, miraflores, lima": null,
+ "av. del ejercito 847, miraflores, lima": [
+  -12.1164,
+  -77.04527
+ ],
+ "campo mar u, p494+qfw, lurin 15823, peru": null,
+ "p494+qfw, lurin 15823, peru": null,
+ "campo mar u": [
+  -12.2761,
+  -76.89484
+ ],
+ "ronex park, ronex park": null,
+ "ronex park": [
+  -12.26379,
+  -76.89299
+ ],
+ "jw marriott hotel lima, mal. de la reserva 615, miraflores": null,
+ "mal. de la reserva 615, miraflores": null,
+ "jw marriott hotel lima": [
+  -12.13146,
+  -77.02963
+ ],
+ "ex cine portofino, av. nicolas de pierola 423": null,
+ "av. nicolas de pierola 423": [
+  -12.04822,
+  -77.03973
+ ],
+ "anfiteatro del parque de la exposicion, anfiteatro del parque de la exposicion, avenida paseo de la republica, lima, peru": null,
+ "anfiteatro del parque de la exposicion, avenida paseo de la republica, lima, peru": null,
+ "anfiteatro del parque de la exposicion": null,
+ "kata club barranco, sanchez carrion 135": null,
+ "sanchez carrion 135": [
+  -11.87624,
+  -77.13765
+ ],
+ "club de tiro bellavista, jr. grau 245, bellavista 07016, peru": null,
+ "jr. grau 245, bellavista 07016, peru": null,
+ "club de tiro bellavista": null,
+ "aforo barranco, av. grau 264, barranco, lima": null,
+ "av. grau 264, barranco, lima": [
+  -12.1391,
+  -77.02229
+ ],
+ "country club lima hotel, cl. los eucaliptos 590, san isidro, lima": [
+  -12.09797,
+  -77.04902
+ ],
+ "centro de convenciones barranco, av. republica de panama 220, barranco, lima": null,
+ "av. republica de panama 220, barranco, lima": [
+  -12.13758,
+  -77.01787
+ ],
+ "centro cultural de la universidad de lima, jiron cruz del sur 202, santiago de surco, peru": null,
+ "jiron cruz del sur 202, santiago de surco, peru": [
+  -12.08979,
+  -76.96887
+ ],
+ "sala mandra stage bar, (boulevard de barranco) faustino, c. jose maria eguren 116, barranco": null,
+ "(boulevard de barranco) faustino, c. jose maria eguren 116, barranco": null,
+ "sala mandra stage bar": null,
+ "casa yuyachkani - jiron tacna 363, jiron tacna 363": null,
+ "jiron tacna 363": [
+  -11.93729,
+  -76.6974
+ ],
+ "hommie, jr. amazonas 710, lima 15086, peru": null,
+ "jr. amazonas 710, lima 15086, peru": [
+  -12.04481,
+  -77.02677
+ ],
+ "teatro ricardo roca rey (aaa), asociacion de artistas aficionados, jiron ica, lima, peru": null,
+ "asociacion de artistas aficionados, jiron ica, lima, peru": [
+  -12.04568,
+  -77.0345
+ ],
+ "machupicchu bar, av. roosevelt 277": null,
+ "av. roosevelt 277": [
+  -12.12239,
+  -77.01821
+ ],
+ "bolognesi 307 barranco, av. francisco bolognesi 297, barranco 15063, peru": null,
+ "av. francisco bolognesi 297, barranco 15063, peru": [
+  -12.14401,
+  -77.01868
+ ],
+ "auditorio del centro cultural unife, av. los frutales 954": null,
+ "av. los frutales 954": [
+  -12.072,
+  -76.96584
+ ],
+ "cuchos restobar, avenida buenos aires 1123": null,
+ "avenida buenos aires 1123": [
+  -11.85553,
+  -77.08766
+ ],
+ "hotel estelar lima, av. alfredo benavides 415, miraflores": [
+  -12.12437,
+  -77.02918
  ]
 }
