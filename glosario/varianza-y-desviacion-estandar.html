@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Varianza y desviación estándar: qué es, fórmula y ejemplo | Glosario económico</title>
+<link rel="icon" href="../logo.svg" type="image/svg+xml">
+<meta name="description" content="Miden qué tan dispersos están los datos alrededor del promedio: si son parecidos entre sí o muy distintos.">
+<link rel="canonical" href="https://simplelife-web.github.io/glosario/varianza-y-desviacion-estandar.html">
+<meta property="og:image" content="https://simplelife-web.github.io/og-imagen.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_PE">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://simplelife-web.github.io/"},{"@type":"ListItem","position":2,"name":"Glosario económico","item":"https://simplelife-web.github.io/glosario/"},{"@type":"ListItem","position":3,"name":"Varianza y desviación estándar","item":"https://simplelife-web.github.io/glosario/varianza-y-desviacion-estandar.html"}]},{"@type":"DefinedTerm","name":"Varianza y desviación estándar","description":"Miden qué tan dispersos están los datos alrededor del promedio: si son parecidos entre sí o muy distintos.","url":"https://simplelife-web.github.io/glosario/varianza-y-desviacion-estandar.html","inLanguage":"es-PE","inDefinedTermSet":{"@type":"DefinedTermSet","name":"Glosario económico de Simplelife","url":"https://simplelife-web.github.io/glosario/"}},{"@type":"Article","headline":"Varianza y desviación estándar: qué es, explicado en simple","description":"Miden qué tan dispersos están los datos alrededor del promedio: si son parecidos entre sí o muy distintos.","inLanguage":"es-PE","dateModified":"2026-11-11","mainEntityOfPage":"https://simplelife-web.github.io/glosario/varianza-y-desviacion-estandar.html","image":"https://simplelife-web.github.io/og-imagen.png","author":{"@type":"Organization","name":"Simplelife","url":"https://simplelife-web.github.io/","logo":"https://simplelife-web.github.io/logo.svg","email":"simplelifecontacto899@gmail.com"},"publisher":{"@type":"Organization","name":"Simplelife","url":"https://simplelife-web.github.io/","logo":"https://simplelife-web.github.io/logo.svg","email":"simplelifecontacto899@gmail.com"}}]}
+</script>
+<meta property="og:title" content="Varianza y desviación estándar: qué es, fórmula y ejemplo | Glosario económico">
+<meta property="og:site_name" content="Simplelife">
+<meta property="og:description" content="Miden qué tan dispersos están los datos alrededor del promedio: si son parecidos entre sí o muy distintos.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simplelife-web.github.io/glosario/varianza-y-desviacion-estandar.html">
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9798339025422593"
+     crossorigin="anonymous"></script>
+<link rel="stylesheet" href="katex/katex.min.css">
+<link rel="stylesheet" href="estilo.css">
+<script src="letra.js"></script>
+<script src="formulas.js" defer></script>
+</head>
+<body>
+<a class="saltar" href="#contenido">Ir al contenido</a>
+<script src="../nav.js"></script>
+<header class="top">
+  <span class="brand"><a class="hoja" href="../" title="Ir al inicio de Simplelife"><img src="../logo.svg" alt="Inicio Simplelife" width="48" height="48"></a><a class="brand-txt" href="./" title="Ir al inicio del glosario"><span>Glosario <b>económico</b><small>explicado en simple · de Simplelife</small></span></a></span>
+  <div class="letra" role="group" aria-label="Tamaño de letra">
+    <button type="button" data-letra="-1" aria-label="Letra más pequeña">A−</button>
+    <button type="button" data-letra="1" aria-label="Letra más grande">A+</button>
+  </div>
+</header>
+<main id="contenido">
+<p class="miga"><a href="./">← Todo el glosario</a></p>
+<article>
+<p class="ent">Pobreza y desigualdad</p>
+<h1><span aria-hidden="true">↔️</span> Varianza y desviación estándar</h1>
+<p class="lead"><strong>En una frase:</strong> Miden qué tan dispersos están los datos alrededor del promedio: si son parecidos entre sí o muy distintos.</p>
+
+<section class="card">
+<h2>Explicado en simple</h2>
+<p>La <strong>varianza</strong> promedia las distancias al cuadrado de cada dato respecto a la media. La <strong>desviación estándar</strong> es su raíz cuadrada, y tiene la ventaja de estar en las mismas unidades que los datos.</p>
+<p>En finanzas, la desviación estándar de los rendimientos se usa como medida de riesgo o <a href='volatilidad.html'>volatilidad</a>.</p>
+</section>
+
+<section class="card formula">
+<h2>La fórmula</h2>
+<div class="ecuacion"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="center" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><msup><mi>s</mi><mn>2</mn></msup><mo>=</mo><mfrac><mn>1</mn><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mover accent="true"><mi>x</mi><mo>ˉ</mo></mover><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi>s</mi><mo>=</mo><msqrt><msup><mi>s</mi><mn>2</mn></msup></msqrt></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{gathered}s^{2}=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^{2} \\[6pt] s=\sqrt{s^{2}}\end{gathered}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:4.893em;vertical-align:-2.1965em;"></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.6965em;"><span style="top:-4.6965em;"><span class="pstrut" style="height:3.6514em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">1</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6514em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2222em;"><span class="mord">ˉ</span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span style="top:-2.1149em;"><span class="pstrut" style="height:3.6514em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0039em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span style="top:-2.9639em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.0361em;"><span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.1965em;"><span></span></span></span></span></span></span></span></span></span></span></span></div>
+<p class="donde-t">Ejemplo de cálculo:</p>
+<div class="calculo">
+<div class="ecuacion"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>datos </mtext><mn>2</mn><mo separator="true">,</mo><mn>4</mn><mo separator="true">,</mo><mn>6</mn><mo>:</mo><mtext> </mtext><msup><mi>s</mi><mn>2</mn></msup><mo>=</mo><mfrac><mrow><mn>4</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>4</mn></mrow><mn>2</mn></mfrac><mo>=</mo><mn>4</mn><mo separator="true">,</mo><mtext> </mtext><mi>s</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\text{datos }2,4,6:\ s^{2}=\frac{4+0+4}{2}=4,\ s=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord text"><span class="mord">datos </span></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">6</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8641em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></span></div>
+</div>
+</section>
+
+<section class="card">
+<h2>Ejemplo en el Perú</h2>
+<p>Dos fondos rinden en promedio 6 % al año, pero uno tiene desviación estándar de 2 % y el otro de 15 %: el segundo es mucho más arriesgado.</p>
+</section>
+
+<section class="rel">
+<h2>Términos relacionados</h2>
+<ul class="chips"><li><a href="media-mediana-y-moda.html">Media, mediana y moda</a></li><li><a href="coeficiente-de-variacion.html">Coeficiente de variación</a></li><li><a href="volatilidad.html">Volatilidad</a></li><li><a href="distribucion-normal.html">Distribución normal</a></li></ul>
+</section>
+
+<nav class="pasar" aria-label="Otros términos"><a href="variacion-de-existencias.html"><small>← Anterior</small>Variación de existencias</a><a class="sig" href="velocidad-del-dinero.html"><small>Siguiente →</small>Velocidad del dinero</a></nav>
+
+<section class="fuentes">
+<h2>Fuentes</h2>
+<p>Es un concepto de teoría económica general, que no depende de una norma ni de una cifra oficial del Perú. Los números del ejemplo son para practicar.</p>
+<p class="rev">Revisado el 11 de noviembre de 2026.</p>
+</section>
+<p class="acciones"><button type="button" class="btn sec" onclick="window.print()">Imprimir este término</button></p>
+</article>
+</main>
+<footer>
+  <p><strong>Glosario económico</strong> es contenido educativo de Simplelife, escrito con palabras sencillas. Los ejemplos con números son para practicar; las cifras oficiales están en el INEI, el BCRP, la SUNAT y la SBS. No es asesoría financiera ni legal.</p>
+  <p><a href="./">Todo el glosario</a> · <a href="../">Inicio Simplelife</a> · <a href="../tramites/">Trámites</a> · <a href="../acerca.html">Acerca de</a> · <a href="../contacto.html">Contacto</a> · <a href="../privacidad.html">Privacidad</a></p>
+</footer>
+</body>
+</html>
