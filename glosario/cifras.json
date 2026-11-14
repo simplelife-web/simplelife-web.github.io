@@ -1,43 +1,43 @@
 {
- "revisado": "2026-11-13",
+ "revisado": "2026-11-14",
  "nota": "Cifras oficiales vigentes. Las diarias se publican cada día hábil; las mensuales, una vez al mes.",
  "cifras": {
   "tc": {
    "nombre": "Tipo de cambio (venta, sistema bancario)",
-   "valor": 3.414,
+   "valor": 3.407,
    "unidad": "soles por dólar",
    "formato": "tc",
-   "fecha": "2026-11-11",
+   "fecha": "2026-11-12",
    "fuente": "BCRP, serie PD04640PD",
    "oficial": "Tipo de cambio - TC Sistema bancario SBS (S/ por US$) - Venta",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04640PD/html"
   },
   "tasa_ref": {
    "nombre": "Tasa de referencia del BCRP",
-   "valor": 4.25,
+   "valor": 4.5,
    "unidad": "anual",
    "formato": "pct2",
-   "fecha": "2026-11-12",
+   "fecha": "2026-11-13",
    "fuente": "BCRP, serie PD12301MD",
    "oficial": "Tasas de interés - Tasa de Referencia de la Política Monetaria",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD12301MD/html"
   },
   "interbancaria": {
    "nombre": "Tasa interbancaria en soles",
-   "valor": 4.25,
+   "valor": 4.3,
    "unidad": "anual",
    "formato": "pct2",
-   "fecha": "2026-11-11",
+   "fecha": "2026-11-12",
    "fuente": "BCRP, serie PD04692MD",
    "oficial": "Tasas de interés - Interbancaria, S/",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04692MD/html"
   },
   "rin": {
    "nombre": "Reservas internacionales netas",
-   "valor": 96555.895234,
+   "valor": 96109.0,
    "unidad": "millones de dólares",
    "formato": "millones",
-   "fecha": "2026-11-11",
+   "fecha": "2026-11-12",
    "fuente": "BCRP, serie PD04650MD",
    "oficial": "Reservas internacionales (millones US$) - Reservas internacionales netas",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04650MD/html"
@@ -104,20 +104,20 @@
   },
   "cobre": {
    "nombre": "Precio del cobre (Londres)",
-   "valor": 634.66645,
+   "valor": 621.965864,
    "unidad": "dólares por libra",
    "formato": "cobre",
-   "fecha": "2026-11-10",
+   "fecha": "2026-11-12",
    "fuente": "BCRP, serie PD04701XD",
    "oficial": "Cotizaciones internacionales - Cobre (Londres, cUS$ por libras)",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04701XD/html"
   },
   "oro": {
    "nombre": "Precio del oro (Londres)",
-   "valor": 4032.83,
+   "valor": 3877.07,
    "unidad": "dólares por onza troy",
    "formato": "oro",
-   "fecha": "2026-11-10",
+   "fecha": "2026-11-12",
    "fuente": "BCRP, serie PD04704XD",
    "oficial": "Cotizaciones internacionales - Oro (Londres, US$ por onzas troy)",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04704XD/html"
