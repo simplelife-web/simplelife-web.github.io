@@ -306,6 +306,28 @@ function cargarApi() {
 $('linkForm').addEventListener('submit', (e) => { e.preventDefault(); cargarVideo($('url').value); });
 $('url').addEventListener('paste', () => setTimeout(() => { if (sacarId($('url').value)) cargarVideo($('url').value); }, 0));
 
+function listo() {
+  if (!embedError) { $('urlMsg').textContent = 'Video listo. Ahora elige cómo obtener el texto.'; $('urlMsg').className = 'small'; }
+  revisarBoton();
+}
+// Si el reproductor no aparece (bloqueador, red o YouTube no lo deja), se ofrece abrirlo en YouTube.
+let cargaTimer = null;
+function vigilarCarga(id) {
+  clearTimeout(cargaTimer);
+  cargaTimer = setTimeout(() => {
+    if (videoId !== id || (playerReady && !embedError)) return;
+    sinReproductor();
+  }, 9000);
+}
+function sinReproductor() {
+  embedError = true;
+  $('otraPestana').checked = true;
+  if (!playerReady) $('videoBox').classList.add('hidden');
+  $('urlMsg').innerHTML = 'El video no se pudo mostrar aquí (a veces lo impide un bloqueador de anuncios o el propio video). No pasa nada: <a href="https://www.youtube.com/watch?v=' + videoId + '" target="_blank" rel="noopener"><b>ábrelo en YouTube</b></a> en otra pestaña, vuelve aquí y pulsa <b>«Transcribir el video»</b>. Cuando el navegador pregunte, elige la pestaña de YouTube con su audio.';
+  $('urlMsg').className = 'small warn';
+  revisarBoton();
+}
+
 async function cargarVideo(texto) {
   const id = sacarId(texto);
   if (!id) {
@@ -315,8 +337,9 @@ async function cargarVideo(texto) {
   }
   if (on) stop('');
   videoId = id;
-  $('urlMsg').textContent = 'Video listo. Ahora elige cómo obtener el texto.';
+  $('urlMsg').textContent = 'Cargando el video…';
   $('urlMsg').className = 'small';
+  vigilarCarga(id);
   $('abrirYT').href = 'https://www.youtube.com/watch?v=' + id;
   $('videoBox').classList.remove('hidden');
   $('vtitle').textContent = '';
@@ -324,19 +347,23 @@ async function cargarVideo(texto) {
   if (!$('panelAudio').classList.contains('hidden')) history.replaceState(null, '', '#v=' + id);
   try {
     const YT = await cargarApi();
-    if (player && playerReady) { player.cueVideoById(id); revisarBoton(); return; }
+    if (player && playerReady) { player.cueVideoById(id); listo(); return; }
     if (player) return;
     player = new YT.Player('player', {
       videoId: id,
-      host: 'https://www.youtube-nocookie.com',
-      playerVars: { playsinline: 1, rel: 0, modestbranding: 1 },
+      playerVars: { playsinline: 1, rel: 0, origin: location.origin },
       events: {
-        onReady: () => { playerReady = true; revisarBoton(); },
+        onReady: () => {
+          playerReady = true;
+          // Si tardó mucho pero sí cargó, se vuelve a usar el reproductor de esta página.
+          if (embedError) { embedError = false; $('otraPestana').checked = false; $('videoBox').classList.remove('hidden'); }
+          listo();
+        },
         onStateChange: onEstado,
         onError: (e) => {
           embedError = true;
           if (e.data === 101 || e.data === 150 || e.data === 153) {
-            $('urlMsg').innerHTML = 'El dueño de este video no deja verlo fuera de YouTube. Marca la casilla <b>«lo abriré en YouTube en otra pestaña»</b> o usa la pestaña <b>«Usar los subtítulos de YouTube»</b>.';
+            sinReproductor();
           } else {
             $('urlMsg').textContent = 'YouTube no pudo mostrar este video (puede ser privado o haber sido borrado).';
           }
@@ -346,8 +373,7 @@ async function cargarVideo(texto) {
       },
     });
   } catch {
-    $('urlMsg').textContent = 'No se pudo cargar el reproductor de YouTube. Revisa tu conexión o desactiva el bloqueador que lo impida, y vuelve a intentar.';
-    $('urlMsg').className = 'small err';
+    sinReproductor();
   }
 }
 
