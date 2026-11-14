@@ -6,7 +6,7 @@ Herramientas gratuitas para hacer la vida más simple. La página principal (`in
 |---|---|
 | `transcriptor/` | Transcriptor gratuito de audio |
 | `tramites/` | Trámite fácil Perú |
-| `intercambio/` | Yo te enseño, tú me enseñas |
+| `youtube/` | Transcribir videos de YouTube (usa el modelo de `transcriptor/`; `intercambio/` solo redirige aquí) |
 | `quehagohoy/` | ¿Qué hago hoy? (planes gratis en Lima, en un mapa) |
 | `inflacion/` | Calculadora de inflación Perú (IPC de Lima del BCRP) |
 | `glosario/` | Glosario económico explicado en simple |

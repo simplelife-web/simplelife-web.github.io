@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transcribir videos de YouTube a texto gratis y sin límite | Simplelife</title>
+<link rel="icon" href="../logo.svg" type="image/svg+xml">
+<meta name="description" content="Pega el enlace de un video de YouTube y conviértelo en texto gratis, sin límite de duración y sin crear cuenta. Funciona aunque el video no tenga subtítulos, en español y otros idiomas.">
+<link rel="canonical" href="https://simplelife-web.github.io/youtube/">
+<meta property="og:image" content="https://simplelife-web.github.io/og-imagen.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_PE">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://simplelife-web.github.io/"},{"@type":"ListItem","position":2,"name":"Transcribir videos de YouTube","item":"https://simplelife-web.github.io/youtube/"}]},{"@type":"WebApplication","name":"Transcriptor de videos de YouTube de Simplelife","url":"https://simplelife-web.github.io/youtube/","applicationCategory":"MultimediaApplication","operatingSystem":"Navegador web","description":"Pega el enlace de un video de YouTube y conviértelo en texto gratis, sin límite de duración y sin crear cuenta.","inLanguage":"es","offers":{"@type":"Offer","price":"0","priceCurrency":"PEN"},"publisher":{"@type":"Organization","name":"Simplelife","url":"https://simplelife-web.github.io/","logo":"https://simplelife-web.github.io/logo.svg","email":"simplelifecontacto899@gmail.com"}}]}
+</script>
+<meta property="og:title" content="Transcribir videos de YouTube a texto gratis y sin límite | Simplelife">
+<meta property="og:site_name" content="Simplelife">
+<meta property="og:description" content="Pega el enlace de un video de YouTube y obtén su texto, gratis y sin límite de duración.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simplelife-web.github.io/youtube/">
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9798339025422593"
+     crossorigin="anonymous"></script>
+<style>
+  :root {
+    --bg: #f6f5f1; --card: #ffffff; --text: #1d1d1b; --muted: #66645e;
+    --line: #dedbd2; --accent: #1f6f5c; --accent-text: #ffffff; --soft: #e7f1ed;
+    --warn: #8a4b00; --danger: #a12a2a; --red: #d93a3a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151614; --card: #1e1f1d; --text: #ecebe6; --muted: #a3a19a;
+      --line: #34352f; --accent: #4fb596; --accent-text: #0d1a15; --soft: #1f2d28;
+      --warn: #e2a85c; --danger: #ef7b7b; --red: #ef6b6b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 32px 16px 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; text-decoration: none; color: var(--text); }
+  .brand img { width: 52px; height: 52px; }
+  .brand span { font-size: 1.6rem; font-weight: 700; letter-spacing: -.01em; }
+  .brand span b { color: var(--accent); font-weight: 700; }
+  h1 { font-size: 1.8rem; line-height: 1.2; margin: 0 0 6px; }
+  .lead { color: var(--muted); margin: 0 0 24px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+  .link { display: flex; gap: 10px; flex-wrap: wrap; }
+  .link input { flex: 1 1 280px; min-width: 0; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); font: inherit; color: inherit; font-size: 1.02rem; }
+  .link input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px; }
+  @media (max-width: 700px) { .row { grid-template-columns: 1fr; } }
+  label.f { display: block; font-size: .85rem; color: var(--muted); margin-bottom: 4px; }
+  select, button, textarea, input { font: inherit; color: inherit; }
+  select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); }
+  .check { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-size: .95rem; }
+  button { border: 1px solid var(--line); background: var(--card); padding: 10px 16px; border-radius: 10px; cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
+  button.big { padding: 14px 20px; font-size: 1.05rem; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .video { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; margin-top: 16px; }
+  .video iframe, .video > div { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .vtitle { margin: 10px 0 0; font-weight: 600; }
+  .status { font-size: .95rem; margin-top: 12px; }
+  .small { font-size: .85rem; color: var(--muted); }
+  .warn { color: var(--warn); }
+  .err { color: var(--danger); }
+  .aviso { margin: 14px 0 0; padding: 12px 14px; border-radius: 10px; background: var(--soft); font-size: .93rem; }
+  .aviso b { color: var(--accent); }
+  .bar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; margin: 12px 0 4px; }
+  .bar > div { height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+  textarea { width: 100%; min-height: 300px; padding: 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); line-height: 1.6; resize: vertical; }
+  #pegar { min-height: 160px; }
+  .hidden { display: none !important; }
+  .tabs { display: flex; gap: 8px; margin: 0 0 16px; flex-wrap: wrap; }
+  .tabs button { flex: 1 1 240px; padding: 12px 14px; border-radius: 12px; font-weight: 600; text-align: left; display: flex; gap: 10px; align-items: center; }
+  .tabs button svg { width: 22px; height: 22px; flex: none; }
+  .tabs button small { display: block; font-weight: 400; color: var(--muted); font-size: .82rem; }
+  .tabs button[aria-selected="true"] { border: 2px solid var(--accent); background: var(--soft); }
+  .rec { display: inline-flex; align-items: center; gap: 8px; }
+  .rec .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--red); animation: latido 1s infinite; }
+  @keyframes latido { 50% { opacity: .25; } }
+  @media (prefers-reduced-motion: reduce) { .rec .dot { animation: none; } }
+  .pasos { counter-reset: p; list-style: none; padding: 0; margin: 10px 0 0; }
+  .pasos li { counter-increment: p; position: relative; padding: 4px 0 4px 36px; margin: 4px 0; }
+  .pasos li::before { content: counter(p); position: absolute; left: 0; top: 4px; width: 26px; height: 26px; border-radius: 50%; background: var(--soft); color: var(--accent); font-weight: 700; display: grid; place-items: center; font-size: .9rem; }
+  footer { color: var(--muted); font-size: .85rem; margin-top: 28px; }
+  footer p { margin: 6px 0; }
+  footer a, .info a, .aviso a, .card a { color: var(--accent); }
+  .info h2 { font-size: 1.25rem; margin: 0 0 8px; }
+  .info h3 { font-size: 1.02rem; margin: 18px 0 4px; }
+  .info p, .info li { margin: 4px 0; }
+  .info ol, .info ul { padding-left: 22px; margin: 6px 0; }
+  table.t { border-collapse: collapse; width: 100%; font-size: .93rem; margin: 6px 0; }
+  table.t th, table.t td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<script src="../nav.js"></script>
+<main>
+  <a class="brand" href="../"><img src="../logo.svg" alt="" width="52" height="52"><span>Simple<b>life</b></span></a>
+  <h1>Transcribir videos de YouTube a texto</h1>
+  <p class="lead">Pega el enlace del video y obtén todo lo que se dice, escrito. Es gratis, no tiene límite de duración, no pide cuenta y funciona aunque el video no tenga subtítulos. El texto se hace dentro de tu navegador.</p>
+
+  <section class="card">
+    <label class="f" for="url">Enlace del video de YouTube</label>
+    <form class="link" id="linkForm">
+      <input id="url" type="url" inputmode="url" autocomplete="off" placeholder="https://www.youtube.com/watch?v=…" aria-describedby="urlMsg">
+      <button class="primary" type="submit">Cargar video</button>
+    </form>
+    <p class="small" id="urlMsg">Sirven enlaces de videos, Shorts y transmisiones ya terminadas (youtube.com o youtu.be).</p>
+    <div id="videoBox" class="hidden">
+      <div class="video"><div id="player"></div></div>
+      <p class="vtitle" id="vtitle"></p>
+    </div>
+  </section>
+
+  <div class="tabs" role="tablist" aria-label="Elige cómo obtener el texto">
+    <button role="tab" id="tabAudio" aria-selected="true" aria-controls="panelAudio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10v4M7 7v10M11 4v16M15 8v8M19 11v2"/></svg>
+      <span>Escuchar el video y escribirlo<small>Sirve con cualquier video · computadora con Chrome o Edge</small></span>
+    </button>
+    <button role="tab" id="tabPegar" aria-selected="false" aria-controls="panelPegar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M8 12h8M8 16h5"/></svg>
+      <span>Usar los subtítulos de YouTube<small>Al instante · si el video ya tiene transcripción</small></span>
+    </button>
+  </div>
+
+  <!-- Opción 1: el audio del video se convierte en texto con Whisper, dentro del navegador -->
+  <div id="panelAudio" role="tabpanel" aria-labelledby="tabAudio">
+  <section class="card">
+    <div class="row" style="margin-top:0">
+      <div>
+        <label class="f" for="lang">Idioma del video</label>
+        <select id="lang">
+          <option value="spanish" selected>Español</option>
+          <option value="english">Inglés</option>
+          <option value="portuguese">Portugués</option>
+          <option value="french">Francés</option>
+          <option value="italian">Italiano</option>
+          <option value="german">Alemán</option>
+          <option value="auto">Detectar automáticamente</option>
+        </select>
+      </div>
+      <div>
+        <label class="f" for="model">Calidad</label>
+        <select id="model">
+          <option value="onnx-community/whisper-base">Rápida (descarga ~80 MB)</option>
+          <option value="onnx-community/whisper-small">Buena (descarga ~250 MB)</option>
+          <option value="onnx-community/whisper-large-v3-turbo">Máxima (descarga ~1 GB, requiere tarjeta gráfica)</option>
+        </select>
+      </div>
+      <div>
+        <label class="f" for="speed">Velocidad del video</label>
+        <select id="speed">
+          <option value="1" selected>Normal (más exacto)</option>
+          <option value="1.25">1,25 veces</option>
+          <option value="1.5">1,5 veces (más rápido)</option>
+        </select>
+      </div>
+    </div>
+    <label class="check"><input type="checkbox" id="stamps"> Mostrar el minuto de cada parte</label>
+    <p class="small" id="deviceInfo">Revisando tu equipo…</p>
+
+    <div class="aviso" id="comoFunciona">
+      <b>Cómo funciona:</b> al pulsar el botón, tu navegador te preguntará si quieres <b>compartir esta pestaña</b>. Acepta y deja marcada la casilla <b>«Compartir también el audio de la pestaña»</b>. El video se reproduce y el texto se va escribiendo solo. Nada se graba ni se sube a internet: el audio se convierte en texto dentro de tu equipo.
+    </div>
+    <p class="aviso warn hidden" id="noSoporta"></p>
+
+    <div class="actions">
+      <button class="primary big" id="start" disabled>Transcribir el video</button>
+      <button class="big hidden" id="stop">Detener</button>
+    </div>
+    <label class="check"><input type="checkbox" id="otraPestana"> El video no se puede ver aquí: lo abriré en YouTube en otra pestaña</label>
+
+    <div id="progressBox" class="hidden">
+      <div class="bar"><div id="bar"></div></div>
+    </div>
+    <div class="status" id="status" role="status"></div>
+  </section>
+  </div>
+
+  <!-- Opción 2: pegar la transcripción que YouTube ya muestra -->
+  <div id="panelPegar" role="tabpanel" aria-labelledby="tabPegar" class="hidden">
+  <section class="card">
+    <p style="margin:0">Muchos videos ya traen su texto. Cópialo de YouTube y aquí lo dejamos limpio, sin los minutos ni los saltos raros:</p>
+    <ol class="pasos">
+      <li><a id="abrirYT" href="https://www.youtube.com/" target="_blank" rel="noopener">Abre el video en YouTube</a> en una computadora.</li>
+      <li>Debajo del video, abre la descripción (<b>…más</b>) y pulsa <b>Mostrar transcripción</b>. Se abre un panel a la derecha.</li>
+      <li>Haz clic en la primera línea del panel, baja hasta el final y, con la tecla <b>Mayús</b> (Shift) apretada, haz clic en la última línea. Copia con <b>Ctrl + C</b>.</li>
+      <li>Pega aquí con <b>Ctrl + V</b>.</li>
+    </ol>
+    <label class="f" for="pegar" style="margin-top:14px">Pega aquí la transcripción de YouTube</label>
+    <textarea id="pegar" spellcheck="false" placeholder="0:00&#10;Hola a todos, bienvenidos…&#10;0:04&#10;hoy vamos a hablar de…"></textarea>
+    <label class="check"><input type="checkbox" id="pegarStamps"> Conservar el minuto de cada parte</label>
+    <p class="small">Si no aparece «Mostrar transcripción», el video no tiene subtítulos: usa la otra pestaña, «Escuchar el video y escribirlo».</p>
+  </section>
+  </div>
+
+  <section class="card hidden" id="resultBox">
+    <label class="f" for="out">Texto del video (puedes corregirlo aquí mismo)</label>
+    <textarea id="out" spellcheck="true"></textarea>
+    <p class="small" id="count">0 palabras</p>
+    <div class="actions">
+      <button id="copy">Copiar texto</button>
+      <button id="dlTxt">Descargar .txt</button>
+      <button id="dlSrt" class="hidden">Descargar subtítulos .srt</button>
+    </div>
+  </section>
+
+  <section class="card info">
+    <h2>Cómo usarlo</h2>
+    <ol>
+      <li>Copia el enlace del video en YouTube (botón <strong>Compartir</strong> → <strong>Copiar</strong>) y pégalo arriba.</li>
+      <li>Elige el idioma del video y pulsa <strong>Transcribir el video</strong>.</li>
+      <li>Cuando el navegador lo pida, comparte <strong>esta pestaña</strong> con su audio. El video se reproduce y el texto aparece mientras avanza.</li>
+      <li>Al terminar el video, revisa el texto y cópialo o descárgalo.</li>
+    </ol>
+
+    <h2 style="margin-top:22px">Preguntas frecuentes</h2>
+    <h3>¿Tiene límite de duración o de videos?</h3>
+    <p>No. Puedes transcribir videos de varias horas y todos los que quieras. Como el texto se hace en tu propio equipo, no hay servidores que pagar ni cuotas diarias.</p>
+    <h3>¿Por qué el video se tiene que reproducir?</h3>
+    <p>YouTube no permite que otras páginas descarguen el audio de sus videos. Las webs que dicen hacerlo «solo con el enlace» usan servidores que YouTube bloquea seguido, por eso fallan o ponen límites. Simplelife escucha el video mientras se reproduce en tu pantalla, igual que lo escucharías tú, así que funciona con cualquier video que puedas ver. Puedes subir la velocidad a 1,25 o 1,5 veces para que tarde menos.</p>
+    <h3>¿En qué equipos funciona?</h3>
+    <table class="t">
+      <tr><th>Equipo y navegador</th><th>Escuchar el video</th><th>Subtítulos de YouTube</th></tr>
+      <tr><td>Computadora con Chrome, Edge, Brave u Opera</td><td>Sí</td><td>Sí</td></tr>
+      <tr><td>Computadora con Firefox o Safari</td><td>No (no dejan compartir el audio de una pestaña)</td><td>Sí</td></tr>
+      <tr><td>Celular o tableta</td><td>No (los celulares no dejan compartir una pestaña)</td><td>Sí, si logras copiar el texto</td></tr>
+    </table>
+    <h3>¿Puedo bajar el volumen o seguir usando la computadora?</h3>
+    <p>Sí. Puedes bajar el volumen de tu computadora y el texto se sigue escribiendo, porque se toma el audio de la pestaña y no de tus parlantes. No cierres esta pestaña ni pauses el video hasta que termine.</p>
+    <h3>Me sale «no se puede reproducir en otros sitios»</h3>
+    <p>Algunos dueños de videos no permiten verlos fuera de YouTube. Marca la casilla <strong>«lo abriré en YouTube en otra pestaña»</strong>, pulsa <strong>Transcribir el video</strong> y, cuando el navegador pregunte, elige la pestaña de YouTube (con su audio). Reprodúcelo allí y pulsa <strong>Detener</strong> cuando termine.</p>
+    <h3>¿Qué tan exacto es?</h3>
+    <p>Usa Whisper, un modelo de reconocimiento de voz de código abierto. Con buen sonido acierta la gran mayoría de palabras; con música fuerte, ruido o varias personas hablando a la vez puede equivocarse. Si en el video aparece un anuncio, su texto también puede escribirse: bórralo al revisar.</p>
+    <h3>¿Se graba o se sube algo?</h3>
+    <p>No. El audio de la pestaña se convierte en texto dentro de tu navegador y se descarta al momento. Lo único que se descarga es el modelo de reconocimiento de voz, y solo la primera vez.</p>
+    <h3>¿Y si ya tengo el archivo del video o del audio?</h3>
+    <p>Usa el <a href="../transcriptor/">Transcriptor de audio a texto</a>: lo transcribe más rápido que en tiempo real si tu equipo tiene tarjeta gráfica.</p>
+    <h3>¿Puedo usar el texto de cualquier video?</h3>
+    <p>Para tus apuntes, estudios o para citarlo, sí. Si quieres publicar el texto completo de un video ajeno, pide permiso a su autor, porque el contenido es suyo.</p>
+  </section>
+
+  <footer>
+    <p><a href="../">Todas las herramientas de Simplelife</a> · <a href="../transcriptor/">Transcriptor de audio a texto</a> · <a href="../acerca.html">Acerca de</a> · <a href="../contacto.html">Contacto</a> · <a href="../privacidad.html">Política de privacidad</a></p>
+    <p>La primera vez se descarga el modelo de reconocimiento de voz (Whisper, de código abierto). Luego queda guardado en tu navegador y las siguientes veces empieza al instante.</p>
+    <p>Simplelife no tiene relación con YouTube ni con Google. YouTube es una marca de Google LLC.</p>
+  </footer>
+</main>
+
+<script type="module">
+const $ = (id) => document.getElementById(id);
+const ua = navigator.userAgent;
+const SR = 16000;
+const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
+const isFirefox = /Firefox\//.test(ua);
+const isSafari = /^((?!chrome|android|crios|fxios|edg).)*safari/i.test(ua);
+const canCapture = !!(navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) && !isMobile && !isFirefox && !isSafari;
+
+// ---------- pestañas ----------
+function showTab(pegar) {
+  $('tabAudio').setAttribute('aria-selected', String(!pegar));
+  $('tabPegar').setAttribute('aria-selected', String(pegar));
+  $('panelAudio').classList.toggle('hidden', pegar);
+  $('panelPegar').classList.toggle('hidden', !pegar);
+  history.replaceState(null, '', (pegar ? '#subtitulos' : location.pathname) + (videoId && !pegar ? '#v=' + videoId : ''));
+}
+$('tabAudio').addEventListener('click', () => showTab(false));
+$('tabPegar').addEventListener('click', () => showTab(true));
+
+// ---------- leer el enlace ----------
+function sacarId(texto) {
+  const t = (texto || '').trim();
+  if (/^[\w-]{11}$/.test(t)) return t;
+  let u;
+  try { u = new URL(/^https?:\/\//i.test(t) ? t : 'https://' + t); } catch { return null; }
+  const host = u.hostname.replace(/^(www|m|music)\./, '');
+  if (host === 'youtu.be') return (u.pathname.slice(1).match(/^[\w-]{11}/) || [null])[0];
+  if (host === 'youtube.com' || host === 'youtube-nocookie.com') {
+    const v = u.searchParams.get('v');
+    if (v && /^[\w-]{11}$/.test(v)) return v;
+    const m = u.pathname.match(/^\/(?:shorts|embed|live|v)\/([\w-]{11})/);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+let videoId = null, player = null, apiPromise = null, playerReady = false, embedError = false;
+function cargarApi() {
+  if (apiPromise) return apiPromise;
+  apiPromise = new Promise((resolve, reject) => {
+    window.onYouTubeIframeAPIReady = () => resolve(window.YT);
+    const s = document.createElement('script');
+    s.src = 'https://www.youtube.com/iframe_api';
+    s.onerror = () => { apiPromise = null; reject(new Error('api')); };
+    document.head.appendChild(s);
+  });
+  return apiPromise;
+}
+
+$('linkForm').addEventListener('submit', (e) => { e.preventDefault(); cargarVideo($('url').value); });
+$('url').addEventListener('paste', () => setTimeout(() => { if (sacarId($('url').value)) cargarVideo($('url').value); }, 0));
+
+async function cargarVideo(texto) {
+  const id = sacarId(texto);
+  if (!id) {
+    $('urlMsg').textContent = 'Ese enlace no parece de un video de YouTube. Cópialo con el botón «Compartir» del video y vuelve a pegarlo.';
+    $('urlMsg').className = 'small err';
+    return;
+  }
+  if (on) stop('');
+  videoId = id;
+  $('urlMsg').textContent = 'Video listo. Ahora elige cómo obtener el texto.';
+  $('urlMsg').className = 'small';
+  $('abrirYT').href = 'https://www.youtube.com/watch?v=' + id;
+  $('videoBox').classList.remove('hidden');
+  $('vtitle').textContent = '';
+  embedError = false;
+  if (!$('panelAudio').classList.contains('hidden')) history.replaceState(null, '', '#v=' + id);
+  try {
+    const YT = await cargarApi();
+    if (player && playerReady) { player.cueVideoById(id); revisarBoton(); return; }
+    if (player) return;
+    player = new YT.Player('player', {
+      videoId: id,
+      host: 'https://www.youtube-nocookie.com',
+      playerVars: { playsinline: 1, rel: 0, modestbranding: 1 },
+      events: {
+        onReady: () => { playerReady = true; revisarBoton(); },
+        onStateChange: onEstado,
+        onError: (e) => {
+          embedError = true;
+          if (e.data === 101 || e.data === 150 || e.data === 153) {
+            $('urlMsg').innerHTML = 'El dueño de este video no deja verlo fuera de YouTube. Marca la casilla <b>«lo abriré en YouTube en otra pestaña»</b> o usa la pestaña <b>«Usar los subtítulos de YouTube»</b>.';
+          } else {
+            $('urlMsg').textContent = 'YouTube no pudo mostrar este video (puede ser privado o haber sido borrado).';
+          }
+          $('urlMsg').className = 'small warn';
+          if (on && !modoOtra) stop('');
+        },
+      },
+    });
+  } catch {
+    $('urlMsg').textContent = 'No se pudo cargar el reproductor de YouTube. Revisa tu conexión o desactiva el bloqueador que lo impida, y vuelve a intentar.';
+    $('urlMsg').className = 'small err';
+  }
+}
+
+// ---------- equipo ----------
+let worker = null, gpu = null;
+function newWorker() {
+  if (worker) worker.terminate();
+  worker = new Worker(new URL('../transcriptor/worker.js', import.meta.url), { type: 'module' });
+  worker.onmessage = onWorker;
+  worker.onerror = (e) => falla('No se pudo iniciar el transcriptor: ' + (e.message || 'error desconocido'));
+}
+newWorker();
+worker.postMessage({ type: 'gpu' });
+
+if (!canCapture) {
+  const n = $('noSoporta');
+  n.classList.remove('hidden');
+  n.innerHTML = isMobile
+    ? 'En el celular no se puede compartir el audio de una pestaña. Usa la pestaña <b>«Usar los subtítulos de YouTube»</b> o abre esta página en una computadora con Chrome o Edge.'
+    : 'Tu navegador no deja compartir el audio de una pestaña. Abre esta página en <b>Chrome</b> o <b>Edge</b>, o usa la pestaña <b>«Usar los subtítulos de YouTube»</b>.';
+  $('comoFunciona').classList.add('hidden');
+  if (isMobile) showTab(true);
+}
+function revisarBoton() {
+  $('start').disabled = !canCapture || on || (!videoId && !$('otraPestana').checked) || (!playerReady && !$('otraPestana').checked);
+}
+$('otraPestana').addEventListener('change', revisarBoton);
+
+// ---------- capturar el audio de la pestaña ----------
+let on = false, modoOtra = false, stream = null, actx = null, src = null, proc = null, wakeLock = null;
+let partes = [], enviados = 0, listos = 0, autoPausa = false, empezoAudio = 0, finalizando = false;
+let bloques = [], bloquesLen = 0, resto = 0, inicioParte = null;
+
+function estado(t, cls = '') { const s = $('status'); s.textContent = t; s.className = 'status ' + cls; }
+function horaVideo() {
+  if (!modoOtra && player && playerReady && player.getCurrentTime) return player.getCurrentTime();
+  return (performance.now() - empezoAudio) / 1000;
+}
+
+$('start').addEventListener('click', start);
+$('stop').addEventListener('click', () => stop('Detenido. Puedes corregir el texto, copiarlo o descargarlo.'));
+
+async function start() {
+  modoOtra = $('otraPestana').checked || embedError;
+  estado(modoOtra ? 'Elige la pestaña de YouTube y deja marcada la casilla del audio…' : 'Acepta compartir esta pestaña y deja marcada la casilla «Compartir también el audio de la pestaña»…');
+  try {
+    const opciones = {
+      video: true,
+      audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, suppressLocalAudioPlayback: false },
+      selfBrowserSurface: 'include', surfaceSwitching: 'exclude', systemAudio: 'include',
+    };
+    if (!modoOtra) opciones.preferCurrentTab = true;
+    stream = await navigator.mediaDevices.getDisplayMedia(opciones);
+  } catch (e) {
+    estado('No se compartió la pestaña. Pulsa de nuevo «Transcribir el video» y elige «Compartir».', 'warn');
+    return;
+  }
+  if (!stream.getAudioTracks().length) {
+    stream.getTracks().forEach((t) => t.stop()); stream = null;
+    estado('Se compartió la pestaña pero sin su audio. Vuelve a pulsar el botón y marca la casilla «Compartir también el audio de la pestaña».', 'err');
+    return;
+  }
+  // La imagen no se usa: solo el sonido.
+  stream.getAudioTracks()[0].addEventListener('ended', () => { if (on) terminar('Se dejó de compartir la pestaña.'); });
+
+  on = true; finalizando = false; partes = []; enviados = 0; listos = 0; autoPausa = false;
+  bloques = []; bloquesLen = 0; resto = 0; inicioParte = null;
+  $('out').value = ''; contar();
+  $('resultBox').classList.remove('hidden');
+  $('dlSrt').classList.remove('hidden');
+  $('start').classList.add('hidden'); $('stop').classList.remove('hidden');
+  $('progressBox').classList.remove('hidden'); $('bar').style.width = '0';
+  for (const id of ['lang', 'model', 'otraPestana']) $(id).disabled = true;
+  try { wakeLock = await navigator.wakeLock?.request('screen'); } catch {}
+
+  estado('Preparando el modelo de voz…');
+  worker.postMessage({ type: 'init', model: $('model').value, language: $('lang').value });
+  empezoAudio = performance.now();
+  conectarAudio();
+}
+
+function conectarAudio() {
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  actx = new Ctx();
+  src = actx.createMediaStreamSource(new MediaStream(stream.getAudioTracks()));
+  proc = actx.createScriptProcessor(4096, 1, 1);
+  const ratio = actx.sampleRate / SR;
+  let pos = 0;
+  proc.onaudioprocess = (e) => {
+    if (!on || finalizando) return;
+    const inp = e.inputBuffer.getChannelData(0);
+    const n = Math.floor((inp.length - pos) / ratio);
+    const res = new Float32Array(Math.max(0, n));
+    for (let i = 0; i < n; i++) {
+      const x = pos + i * ratio, j = Math.floor(x), f = x - j;
+      const a0 = inp[Math.max(0, j)], a1 = inp[Math.min(inp.length - 1, Math.max(0, j + 1))];
+      res[i] = a0 * (1 - f) + a1 * f;
+    }
+    pos = pos + n * ratio - inp.length;
+    // Con el reproductor de esta página, solo se escucha mientras el video avanza.
+    if (!modoOtra && player && playerReady && player.getPlayerState() !== 1) return;
+    agregar(res);
+  };
+  src.connect(proc);
+  // El procesador necesita una salida para funcionar; se conecta a una salida muda.
+  const mudo = actx.createGain(); mudo.gain.value = 0;
+  proc.connect(mudo); mudo.connect(actx.destination);
+}
+
+function nivel(a) { let s = 0; for (let i = 0; i < a.length; i++) s += a[i] * a[i]; return Math.sqrt(s / Math.max(1, a.length)); }
+
+// Junta el audio en tramos de hasta ~28 s, cortados en un momento de silencio para no partir palabras.
+function agregar(res) {
+  if (!res.length) return;
+  if (inicioParte === null) inicioParte = horaVideo();
+  bloques.push({ a: res, r: nivel(res) });
+  bloquesLen += res.length;
+  const seg = bloquesLen / SR;
+  if (seg < 8) return;
+  const r = bloques[bloques.length - 1].r;
+  const media = bloques.reduce((s, b) => s + b.r, 0) / bloques.length;
+  if ((seg > 18 && r < media * 0.35) || r < 0.003) { cortar(bloques.length); return; }
+  if (seg >= 28) {
+    // Cortar en el bloque más silencioso de los últimos 8 s.
+    let mejor = bloques.length, min = Infinity, acum = 0;
+    for (let i = bloques.length - 1; i > 0 && acum < SR * 8; i--) {
+      acum += bloques[i].a.length;
+      if (bloques[i].r < min) { min = bloques[i].r; mejor = i + 1; }
+    }
+    cortar(mejor);
+  }
+}
+function cortar(hasta) {
+  const usar = bloques.slice(0, hasta), quedan = bloques.slice(hasta);
+  const len = usar.reduce((s, b) => s + b.a.length, 0);
+  if (!len) return;
+  const audio = new Float32Array(len);
+  let o = 0;
+  for (const b of usar) { audio.set(b.a, o); o += b.a.length; }
+  const start = inicioParte ?? horaVideo();
+  const rate = modoOtra ? 1 : Number($('speed').value) || 1;
+  const end = start + (len / SR) * rate;
+  bloques = quedan; bloquesLen = quedan.reduce((s, b) => s + b.a.length, 0);
+  inicioParte = bloquesLen ? end : null;
+  enviados++;
+  worker.postMessage({ type: 'piece', index: enviados, audio, start, end }, [audio.buffer]);
+  vigilarCola();
+}
+
+// Si el equipo escribe más lento que el video, el video espera un momento para no acumular.
+function vigilarCola() {
+  if (modoOtra || !player || !playerReady) return;
+  const pend = enviados - listos;
+  if (!autoPausa && pend >= 4 && player.getPlayerState() === 1) {
+    autoPausa = true; player.pauseVideo();
+    estado('El video espera unos segundos mientras se escribe lo anterior…');
+  } else if (autoPausa && pend <= 1 && on && !finalizando) {
+    autoPausa = false; player.playVideo();
+  }
+}
+
+let arrancado = false;
+function reproducir() {
+  if (modoOtra) { estado('Escuchando… reproduce el video en la pestaña de YouTube. Pulsa «Detener» cuando termine.'); return; }
+  player.setPlaybackRate(Number($('speed').value) || 1);
+  player.playVideo();
+  arrancado = false;
+  setTimeout(() => { if (on && !arrancado && player.getPlayerState() !== 1) estado('Pulsa ▶ en el video para empezar.', 'warn'); }, 3000);
+}
+
+function onEstado(e) {
+  if (!on) return;
+  if (e.data === 1) { arrancado = true; if (!autoPausa) estado('Escuchando el video… el texto aparece mientras avanza.'); }
+  else if (e.data === 2 && !autoPausa) {
+    if (bloquesLen) cortar(bloques.length);
+    estado('Video en pausa. Pulsa ▶ para seguir o «Detener» para terminar.');
+  } else if (e.data === 0) terminar('');
+  if (!modoOtra && player.getDuration && player.getDuration() > 0) $('bar').style.width = Math.min(100, (player.getCurrentTime() / player.getDuration()) * 100) + '%';
+}
+
+let modeloListo = false;
+function onWorker(e) {
+  const m = e.data;
+  if (m.type === 'gpu') {
+    gpu = m;
+    $('deviceInfo').textContent = m.webgpu
+      ? 'Tu equipo tiene tarjeta gráfica: la calidad «Buena» ya viene elegida.'
+      : 'Tu equipo no tiene tarjeta gráfica compatible: la calidad «Rápida» es la recomendada.';
+    if (m.webgpu) $('model').value = 'onnx-community/whisper-small';
+    else $('model').querySelector('option[value$="turbo"]').disabled = true;
+    revisarBoton();
+  } else if (m.type === 'download') {
+    if (on) estado(`Descargando el modelo de voz (solo la primera vez): ${(m.loaded / 1048576).toFixed(0)} de ${(m.total / 1048576).toFixed(0)} MB`);
+  } else if (m.type === 'ready') {
+    modeloListo = true;
+    if (on && !finalizando) reproducir();
+  } else if (m.type === 'piece') {
+    listos++;
+    partes.push({ start: m.start, end: m.end, text: m.text });
+    pintar();
+    if (finalizando) estado(`Terminando de escribir… faltan ${enviados - listos} partes.`);
+    vigilarCola();
+  } else if (m.type === 'done') {
+    if (finalizando) fin();
+  } else if (m.type === 'error') {
+    falla('Ocurrió un error con el modelo de voz: ' + m.message);
+  }
+}
+
+function hhmmss(t, ms = false) {
+  t = Math.max(0, t);
+  const h = Math.floor(t / 3600), mi = Math.floor((t % 3600) / 60), s = Math.floor(t % 60);
+  const base = (h ? String(h).padStart(2, '0') + ':' : '') + String(mi).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  if (!ms) return base;
+  return String(h).padStart(2, '0') + ':' + String(mi).padStart(2, '0') + ':' + String(s).padStart(2, '0') + ',' + String(Math.floor((t % 1) * 1000)).padStart(3, '0');
+}
+function pintar() {
+  const conHora = $('stamps').checked;
+  const txt = partes.filter((p) => p.text).map((p) => (conHora ? `[${hhmmss(p.start)}] ` : '') + p.text);
+  $('out').value = conHora ? txt.join('\n') : txt.join(' ').replace(/\s+/g, ' ').trim();
+  $('out').scrollTop = $('out').scrollHeight;
+  contar();
+}
+$('stamps').addEventListener('change', () => { if (partes.length) pintar(); });
+
+function terminar(msg) {
+  if (!on || finalizando) return;
+  finalizando = true;
+  if (bloquesLen) cortar(bloques.length);
+  soltarAudio();
+  $('bar').style.width = '100%';
+  worker.postMessage({ type: 'end' });
+  if (!modeloListo) { fin(msg || 'Se detuvo antes de empezar.'); return; }
+  estado((msg ? msg + ' ' : '') + (enviados > listos ? `Terminando de escribir… faltan ${enviados - listos} partes.` : ''));
+  if (enviados === listos) fin();
+}
+function fin(msg) {
+  on = false; finalizando = false;
+  $('start').classList.remove('hidden'); $('stop').classList.add('hidden');
+  for (const id of ['lang', 'model', 'otraPestana']) $(id).disabled = false;
+  try { wakeLock?.release(); } catch {}
+  wakeLock = null;
+  revisarBoton();
+  estado(msg || (partes.some((p) => p.text) ? '¡Listo! Revisa el texto y cópialo o descárgalo.' : 'No se escuchó voz en el video. ¿Estaba marcada la casilla del audio?'), partes.some((p) => p.text) ? '' : 'warn');
+}
+function stop(msg) {
+  if (!on) return;
+  if (!modoOtra && player && playerReady) { autoPausa = true; player.pauseVideo(); }
+  terminar(msg);
+}
+function soltarAudio() {
+  if (proc) { proc.onaudioprocess = null; try { proc.disconnect(); src.disconnect(); } catch {} }
+  proc = null; src = null;
+  if (actx) { try { actx.close(); } catch {} actx = null; }
+  if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
+}
+function falla(msg) {
+  soltarAudio();
+  if (on) { on = false; finalizando = false; }
+  $('start').classList.remove('hidden'); $('stop').classList.add('hidden');
+  for (const id of ['lang', 'model', 'otraPestana']) $(id).disabled = false;
+  estado(msg, 'err');
+  modeloListo = false;
+  newWorker(); worker.postMessage({ type: 'gpu' });
+}
+
+// ---------- pegar la transcripción de YouTube ----------
+const HORA = /^\s*\d{1,2}(?::\d{2}){1,2}\s*$/;
+const LEER_HORA = /^\s*(\d+\s+(hora|horas|minuto|minutos|segundo|segundos|hour|hours|minute|minutes|second|seconds)(,?\s*(y|and)?\s*)?)+\s*$/i;
+function limpiarPegado() {
+  const lineas = $('pegar').value.replace(/\r/g, '').split('\n');
+  const conHora = $('pegarStamps').checked;
+  const trozos = [];
+  let hora = null;
+  for (let l of lineas) {
+    l = l.trim();
+    if (!l) continue;
+    // "0:04 hola…" en una misma línea
+    const junto = l.match(/^(\d{1,2}(?::\d{2}){1,2})\s+(.+)$/);
+    if (junto && !HORA.test(l)) { trozos.push({ h: junto[1], t: junto[2] }); hora = null; continue; }
+    if (HORA.test(l)) { hora = l; continue; }
+    if (LEER_HORA.test(l)) continue;
+    if (/^(transcripci[oó]n|transcript|buscar en el video|search in video|seguir el video|follow along)$/i.test(l)) continue;
+    trozos.push({ h: hora, t: l }); hora = null;
+  }
+  let texto;
+  if (conHora) texto = trozos.map((x) => (x.h ? `[${x.h}] ` : '') + x.t).join('\n');
+  else texto = trozos.map((x) => x.t).join(' ').replace(/\s+/g, ' ').replace(/\s+([.,;:?!])/g, '$1').trim();
+  $('out').value = texto;
+  $('resultBox').classList.toggle('hidden', !texto);
+  $('dlSrt').classList.add('hidden');
+  contar();
+}
+$('pegar').addEventListener('input', limpiarPegado);
+$('pegarStamps').addEventListener('change', limpiarPegado);
+
+// ---------- copiar y descargar ----------
+function contar() {
+  const n = ($('out').value.match(/\S+/g) || []).length;
+  $('count').textContent = n === 1 ? '1 palabra' : `${n.toLocaleString('es-PE')} palabras`;
+}
+$('out').addEventListener('input', contar);
+function nombre() {
+  const t = (player && playerReady && player.getVideoData && player.getVideoData().title) || ('youtube-' + (videoId || 'video'));
+  return t.replace(/[\\/:*?"<>|]+/g, '').slice(0, 80).trim() || 'transcripcion';
+}
+function bajar(name, text) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+$('copy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText($('out').value); } catch { $('out').select(); document.execCommand('copy'); }
+  $('copy').textContent = '¡Copiado!';
+  setTimeout(() => ($('copy').textContent = 'Copiar texto'), 1500);
+});
+$('dlTxt').addEventListener('click', () => bajar(nombre() + '.txt', $('out').value));
+$('dlSrt').addEventListener('click', () => {
+  const srt = partes.filter((p) => p.text).map((p, i) => `${i + 1}\n${hhmmss(p.start, true)} --> ${hhmmss(p.end, true)}\n${p.text}\n`).join('\n');
+  bajar(nombre() + '.srt', srt);
+});
+
+// Mostrar el título del video cuando YouTube lo da.
+setInterval(() => {
+  if (player && playerReady && player.getVideoData) {
+    const t = player.getVideoData().title;
+    if (t && $('vtitle').textContent !== t) $('vtitle').textContent = t;
+  }
+}, 1500);
+
+window.addEventListener('beforeunload', (e) => { if (on || $('out').value.trim()) { e.preventDefault(); e.returnValue = ''; } });
+
+// Abrir con un enlace ya puesto: /youtube/#v=ID o /youtube/?v=ID
+const inicial = new URLSearchParams(location.search).get('v') || (location.hash.match(/v=([\w-]{11})/) || [])[1];
+if (location.hash === '#subtitulos') showTab(true);
+if (inicial) { $('url').value = 'https://www.youtube.com/watch?v=' + inicial; cargarVideo(inicial); }
+revisarBoton();
+</script>
+</body>
+</html>
