@@ -90,6 +90,35 @@
   .marcador { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 99px; background: var(--accent); color: var(--accent-text) !important; text-decoration: none; font-weight: 700; font-size: 1.05rem; cursor: grab; box-shadow: 0 2px 0 rgba(0,0,0,.15); }
   .marcador:active { cursor: grabbing; }
   #rapidoEstado:empty { display: none; }
+  .as-t { font-size: 1.2rem; margin: 0 0 8px; }
+  .as-n { margin: 0 0 6px; font-size: .85rem; color: var(--muted); font-weight: 600; }
+  .as-barra { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; margin-bottom: 16px; }
+  .as-barra > div { height: 100%; width: 25%; background: var(--accent); transition: width .3s; }
+  .teclas { font-size: 1.3rem; text-align: center; margin: 10px 0; }
+  kbd { display: inline-block; padding: 3px 10px; border: 1px solid var(--line); border-bottom-width: 3px; border-radius: 8px; background: var(--bg); font: 600 .95em system-ui, sans-serif; }
+  .mock { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--bg); margin: 6px 0 14px; max-width: 560px; font-size: .85rem; }
+  .mk-top { display: flex; align-items: center; gap: 6px; padding: 8px 10px; background: var(--card); border-bottom: 1px solid var(--line); }
+  .mk-top i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); flex: none; }
+  .mk-url { margin-left: 6px; flex: 1; min-width: 0; padding: 3px 10px; border-radius: 99px; background: var(--bg); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mk-fav { min-height: 34px; padding: 5px 10px; background: var(--card); border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 8px; }
+  .mk-fav.marco { outline: 3px dashed var(--accent); outline-offset: -3px; }
+  .mk-vacia { color: var(--accent); font-weight: 600; font-size: .82rem; }
+  .mk-btn { display: inline-block; padding: 3px 10px; border-radius: 99px; background: var(--accent); color: var(--accent-text); font-weight: 700; font-size: .8rem; white-space: nowrap; }
+  .mk-btn.brilla { box-shadow: 0 0 0 4px rgba(31,111,92,.25); animation: brilla 1.4s infinite; }
+  @keyframes brilla { 50% { box-shadow: 0 0 0 8px rgba(31,111,92,.08); } }
+  .mk-body { position: relative; height: 110px; padding: 12px; }
+  .mk-video { width: 150px; height: 84px; border-radius: 8px; background: #222; color: #fff; display: grid; place-items: center; font-size: 1.4rem; margin-left: auto; }
+  .mk-flecha { position: absolute; left: 14px; top: 2px; color: var(--accent); font-weight: 700; display: none; }
+  .mk-fav + .mk-body .mk-flecha { display: block; }
+  .mk-body .mk-btn.mueve { position: absolute; left: 40%; top: 60px; animation: sube 2.6s ease-in-out infinite; }
+  .mk-mano { position: absolute; left: calc(40% + 60px); top: 74px; font-size: 1.2rem; animation: sube2 2.6s ease-in-out infinite; }
+  @keyframes sube { 0%, 15% { transform: translate(0, 0); } 65%, 100% { transform: translate(-30%, -80px); } }
+  @keyframes sube2 { 0%, 15% { transform: translate(0, 0); } 65%, 100% { transform: translate(-30%, -80px); opacity: .9; } }
+  @media (prefers-reduced-motion: reduce) { .mk-btn.brilla, .mk-body .mk-btn.mueve, .mk-mano { animation: none; } }
+  a.primary-link { display: inline-block; padding: 10px 16px; border-radius: 10px; background: var(--accent); color: var(--accent-text) !important; text-decoration: none; font-weight: 600; }
+  details summary { cursor: pointer; color: var(--accent); }
+  button.enlace { border: 0; background: none; padding: 4px 0; color: var(--accent); text-decoration: underline; font-size: .95rem; }
+
   footer { color: var(--muted); font-size: .85rem; margin-top: 28px; }
   footer p { margin: 6px 0; }
   footer a, .info a, .aviso a, .card a { color: var(--accent); }
@@ -140,17 +169,84 @@
   <div id="panelRapido" role="tabpanel" aria-labelledby="tabRapido">
   <section class="card">
     <p class="status" id="rapidoEstado" role="status" style="margin-top:0"></p>
-    <h2 style="font-size:1.15rem;margin:0 0 6px">Paso único: guarda el botón de Simplelife</h2>
-    <p style="margin:0">Arrastra este botón con el mouse hasta tu <b>barra de favoritos</b> (la fila debajo de la dirección web). Si no la ves, pulsa <b>Ctrl + Shift + B</b> (en Mac, <b>Cmd + Shift + B</b>). Se hace una sola vez.</p>
-    <p style="margin:14px 0"><a class="marcador" id="marcador" href="#" title="Arrástrame a tu barra de favoritos">📄 Texto del video</a></p>
-    <p class="small" style="margin:0">Si al soltarlo no aparece, haz clic derecho en el botón → «Copiar dirección del enlace», luego clic derecho en la barra de favoritos → «Añadir página…», ponle de nombre <b>Texto del video</b> y pega la dirección en «URL».</p>
-    <h2 style="font-size:1.15rem;margin:20px 0 6px">Desde ahora, cada vez</h2>
-    <ol class="pasos">
-      <li>Abre el video en YouTube<span id="rapidoAbrir"></span>.</li>
-      <li>Pulsa <b>📄 Texto del video</b> en tu barra de favoritos.</li>
-      <li>Se abre Simplelife con todo el texto del video, listo para copiar o descargar. Tarda unos segundos, aunque el video dure horas.</li>
-    </ol>
-    <p class="aviso">Funciona con los videos que tienen subtítulos, y casi todos los tienen, porque YouTube los crea solo cuando alguien habla claro. Si un video no tiene, Simplelife te lo dice y puedes usar <b>«Escuchar el video»</b>.</p>
+
+    <!-- Antes de configurar -->
+    <div id="asInicio">
+      <h2 class="as-t">Saca el texto de cualquier video en segundos</h2>
+      <p style="margin:0 0 6px">Simplelife pone un botón llamado <b>📄 Texto del video</b> en tu Chrome. Cuando veas un video en YouTube, lo pulsas y te trae todo lo que se dice, escrito.</p>
+      <p class="small" style="margin:0 0 14px">Se configura una sola vez y toma 1 minuto. Te guiamos paso a paso.</p>
+      <button class="primary big" id="asEmpezar" type="button">Configurar en 1 minuto</button>
+    </div>
+
+    <!-- Asistente paso a paso -->
+    <div id="asPasos" class="hidden">
+      <p class="as-n" id="asNum">Paso 1 de 4</p>
+      <div class="as-barra" aria-hidden="true"><div id="asProg"></div></div>
+
+      <div class="as-paso" data-paso="1">
+        <h2 class="as-t">Así va a funcionar</h2>
+        <div class="mock" aria-hidden="true">
+          <div class="mk-top"><i></i><i></i><i></i><span class="mk-url">youtube.com/watch?v=…</span></div>
+          <div class="mk-fav"><span class="mk-btn brilla">📄 Texto del video</span></div>
+          <div class="mk-body"><div class="mk-video">▶</div><div class="mk-flecha">↑ Lo pulsas aquí</div></div>
+        </div>
+        <p>Vas a tener este botón arriba, en tu Chrome. Cuando estés viendo un video, lo pulsas y se abre Simplelife con el texto completo.</p>
+      </div>
+
+      <div class="as-paso hidden" data-paso="2">
+        <h2 class="as-t">Haz aparecer la «barra de favoritos»</h2>
+        <div class="mock" aria-hidden="true">
+          <div class="mk-top"><i></i><i></i><i></i><span class="mk-url">simplelife-web.github.io/youtube/</span></div>
+          <div class="mk-fav marco"><span class="mk-vacia">← esta fila delgada es la barra de favoritos</span></div>
+          <div class="mk-body"></div>
+        </div>
+        <p>Pulsa estas tres teclas <b>a la vez</b>:</p>
+        <p class="teclas"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd></p>
+        <p class="small">En Mac: <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd>. Debajo de la dirección web aparece una fila delgada. Si ya la tenías, sigue al próximo paso.</p>
+      </div>
+
+      <div class="as-paso hidden" data-paso="3">
+        <h2 class="as-t">Sube el botón verde a esa fila</h2>
+        <div class="mock" aria-hidden="true">
+          <div class="mk-top"><i></i><i></i><i></i><span class="mk-url">simplelife-web.github.io/youtube/</span></div>
+          <div class="mk-fav marco"></div>
+          <div class="mk-body"><span class="mk-btn mueve">📄 Texto del video</span><span class="mk-mano">👆</span></div>
+        </div>
+        <p>Pon el mouse sobre este botón, <b>aprieta el clic sin soltar</b>, súbelo hasta la barra de favoritos y <b>suelta</b>:</p>
+        <p style="text-align:center;margin:16px 0"><a class="marcador" id="marcador" href="#" title="Arrástrame a tu barra de favoritos">📄 Texto del video</a></p>
+        <details class="small"><summary>No puedo arrastrarlo</summary>
+          <p>Haz clic derecho sobre el botón verde → <b>Copiar dirección del enlace</b>. Luego clic derecho en la barra de favoritos → <b>Añadir página…</b> (o «Agregar página»). En «Nombre» escribe <b>Texto del video</b>, en «URL» pega con <b>Ctrl + V</b> y pulsa <b>Guardar</b>.</p>
+        </details>
+      </div>
+
+      <div class="as-paso hidden" data-paso="4">
+        <h2 class="as-t">¡Listo! Pruébalo</h2>
+        <div class="mock" aria-hidden="true">
+          <div class="mk-top"><i></i><i></i><i></i><span class="mk-url">youtube.com/watch?v=…</span></div>
+          <div class="mk-fav"><span class="mk-btn brilla">📄 Texto del video</span></div>
+          <div class="mk-body"><div class="mk-video">▶</div><div class="mk-flecha">↑ 2. Pulsa aquí</div></div>
+        </div>
+        <ol class="pasos">
+          <li>Abre cualquier video en YouTube<span id="rapidoAbrir"></span>.</li>
+          <li>Pulsa <b>📄 Texto del video</b> en tu barra de favoritos.</li>
+          <li>Se abre Simplelife con todo el texto, listo para copiar o descargar.</li>
+        </ol>
+        <p><a class="primary-link" id="asYT" href="https://www.youtube.com/" target="_blank" rel="noopener">Abrir YouTube ↗</a></p>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="asAtras">← Atrás</button>
+        <button type="button" class="primary" id="asSig">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Ya configurado -->
+    <div id="asListo" class="hidden">
+      <h2 class="as-t">✅ Ya tienes el botón</h2>
+      <p style="margin:0">Cuando quieras el texto de un video: ábrelo en YouTube y pulsa <b>📄 Texto del video</b> arriba, en tu barra de favoritos.</p>
+      <p class="small">Funciona con los videos que tienen subtítulos (casi todos, porque YouTube los crea solo). Si uno no tiene, Simplelife te lo dice y puedes usar «Escuchar el video».</p>
+      <button type="button" id="asOtraVez" class="enlace">Ver los pasos otra vez</button>
+    </div>
   </section>
   </div>
 
@@ -371,6 +467,7 @@ async function cargarVideo(texto) {
   const ytUrl = 'https://www.youtube.com/watch?v=' + id;
   $('abrirYT').href = ytUrl;
   $('rapidoAbrir').innerHTML = ` (<a href="${ytUrl}" target="_blank" rel="noopener">abrir el video que pegaste</a>)`;
+  $('asYT').href = ytUrl; $('asYT').textContent = 'Abrir tu video en YouTube ↗';
   if ($('panelAudio').classList.contains('hidden')) {
     // «Al instante» y «Copiar y pegar» se hacen en YouTube: no hace falta el reproductor aquí.
     $('urlMsg').innerHTML = $('panelRapido').classList.contains('hidden')
@@ -861,6 +958,32 @@ function simplelifeYT(SL) {
 }
 const SL = location.origin + location.pathname;
 $('marcador').href = 'javascript:' + encodeURIComponent('(' + simplelifeYT.toString() + ')(' + JSON.stringify(SL) + ')');
+// ---------- asistente para guardar el botón ----------
+const AS_TOTAL = 4;
+let asPaso = 1;
+function guardado(v) { try { if (v === undefined) return localStorage.getItem('simplelife-yt-boton') === '1'; localStorage.setItem('simplelife-yt-boton', v ? '1' : '0'); } catch { return false; } }
+function asVer(vista) {
+  $('asInicio').classList.toggle('hidden', vista !== 'inicio');
+  $('asPasos').classList.toggle('hidden', vista !== 'pasos');
+  $('asListo').classList.toggle('hidden', vista !== 'listo');
+}
+function asIr(n) {
+  asPaso = Math.max(1, Math.min(AS_TOTAL, n));
+  document.querySelectorAll('.as-paso').forEach((el) => el.classList.toggle('hidden', Number(el.dataset.paso) !== asPaso));
+  $('asNum').textContent = `Paso ${asPaso} de ${AS_TOTAL}`;
+  $('asProg').style.width = (asPaso / AS_TOTAL) * 100 + '%';
+  $('asAtras').classList.toggle('hidden', asPaso === 1);
+  $('asSig').textContent = asPaso === 1 ? 'Empezar →' : asPaso === 2 ? 'Ya veo la fila →' : asPaso === 3 ? 'Ya lo puse →' : 'Terminar';
+}
+$('asEmpezar').addEventListener('click', () => { asVer('pasos'); asIr(1); });
+$('asOtraVez').addEventListener('click', () => { asVer('pasos'); asIr(1); });
+$('asAtras').addEventListener('click', () => asIr(asPaso - 1));
+$('asSig').addEventListener('click', () => {
+  if (asPaso < AS_TOTAL) { asIr(asPaso + 1); return; }
+  guardado(true); asVer('listo');
+});
+asVer(guardado() ? 'listo' : 'inicio');
+
 $('marcador').addEventListener('click', (e) => {
   e.preventDefault();
   $('rapidoEstado').textContent = 'Este botón no se pulsa aquí: arrástralo con el mouse hasta tu barra de favoritos y úsalo cuando estés viendo un video en YouTube.';
@@ -881,6 +1004,7 @@ function recibir(d) {
     return true;
   }
   showTab('rapido');
+  guardado(true); asVer('listo');
   tituloRecibido = String(d.titulo || '').slice(0, 200);
   const segs = d.segs.slice(0, 200000);
   partes = segs.map((x, i) => {
