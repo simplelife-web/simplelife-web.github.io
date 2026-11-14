@@ -133,7 +133,7 @@
 
   /* Frase célebre: tarjeta pequeña entre el encabezado y las herramientas */
   .frase { position: relative; display: flex; gap: 16px; align-items: center; margin: 0 0 22px;
-    padding: 14px 48px 14px 16px; background: var(--card); border: 1px solid var(--line);
+    padding: 14px 18px; background: var(--card); border: 1px solid var(--line);
     border-left: 5px solid var(--accent); border-radius: 16px; animation: frase-in .5s ease-out; }
   .frase[hidden] { display: none; }
   @keyframes frase-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -146,14 +146,8 @@
   .frase-autor { margin: 0; color: var(--muted); font-size: .88rem; }
   .frase-autor b { color: var(--text); }
   .frase-autor a { color: var(--muted); }
-  .frase-otra { margin-left: 6px; padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px;
-    background: transparent; color: var(--accent); font: inherit; font-size: .85rem; cursor: pointer; }
-  .frase-otra:hover, .frase-otra:focus-visible { border-color: var(--accent); }
-  .frase-cerrar { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border: 0; border-radius: 50%;
-    background: transparent; color: var(--muted); font-size: 1.2rem; line-height: 1; cursor: pointer; }
-  .frase-cerrar:hover, .frase-cerrar:focus-visible { background: var(--soft); color: var(--text); }
   @media (max-width: 560px) {
-    .frase { align-items: flex-start; gap: 12px; padding: 12px 40px 12px 12px; }
+    .frase { align-items: flex-start; gap: 12px; padding: 12px; }
     .frase-foto { flex-basis: 48px; width: 48px; height: 48px; font-size: 1rem; }
     .frase blockquote { font-size: 1rem; }
   }
@@ -176,16 +170,14 @@
     </ul>
   </header>
 
-  <!-- Frase célebre: cambia al azar cada vez que se abre la página (lista en el script de abajo) -->
+  <!-- Frase del día: la misma para todos durante el día (hora de Lima) y cambia cada día. Lista en frases.js -->
   <aside class="frase" id="frase" aria-label="Frase célebre">
     <span class="frase-foto" id="frase-foto" aria-hidden="true">AS</span>
     <div class="frase-texto">
       <span class="frase-etiqueta" id="frase-etiqueta">Frase para hoy · Economía</span>
       <blockquote id="frase-cita">«Ninguna sociedad puede ser floreciente y feliz si la mayor parte de sus miembros son pobres y miserables».</blockquote>
-      <p class="frase-autor"><span id="frase-autor"><b>Adam Smith</b>, economista · <i>La riqueza de las naciones</i> (1776)</span>
-        <button class="frase-otra" id="frase-otra" type="button">Otra frase ↻</button></p>
+      <p class="frase-autor"><span id="frase-autor"><b>Adam Smith</b>, economista · <i>La riqueza de las naciones</i> (1776)</span></p>
     </div>
-    <button class="frase-cerrar" id="frase-cerrar" type="button" aria-label="Cerrar la frase">×</button>
   </aside>
 
   <!--
@@ -371,29 +363,25 @@
 </main>
 <script src="frases.js"></script>
 <script>
-/* Frase célebre al azar. La lista está en frases.js (una línea por frase).
-   No se repite ninguna hasta que la persona haya visto todas: las vistas se guardan en su navegador. */
+/* Frase del día. La lista está en frases.js (una línea por frase).
+   Todos ven la misma frase durante el día (hora de Lima) y cambia a medianoche.
+   Se recorren todas en un orden mezclado fijo, sin repetir hasta terminar la lista. */
 (function () {
   var LISTA = (window.FRASES || []).map(function (r) {
     return { amb: r[0], cita: r[1], autor: r[2], rol: r[3], obra: r[4], anio: r[5], foto: r[6] || "" };
   });
   var caja = document.getElementById("frase");
   if (!caja || !LISTA.length) return;
-  try { if (sessionStorage.getItem("frase-cerrada") === "1") { caja.hidden = true; return; } } catch (e) {}
   var foto = document.getElementById("frase-foto"), cita = document.getElementById("frase-cita"), autor = document.getElementById("frase-autor"), etiqueta = document.getElementById("frase-etiqueta");
-  function clave(f) { return f.autor + "|" + f.cita.slice(0, 40); }
-  function leerVistas() { try { return JSON.parse(localStorage.getItem("frases-vistas") || "[]"); } catch (e) { return []; } }
-  function guardarVistas(v) { try { localStorage.setItem("frases-vistas", JSON.stringify(v)); } catch (e) {} }
   function iniciales(n) { var p = n.replace(/[^A-Za-zÁÉÍÓÚÑáéíóúñü ]/g, "").split(" ").filter(Boolean); return (p.length > 1 ? p[0][0] + p[p.length - 1][0] : (p[0] || "?").slice(0, 2)).toUpperCase(); }
-  var actual = -1;
+  // Día en Lima (UTC-5, sin horario de verano): número de días desde el 1 de enero de 1970.
+  var dia = Math.floor((Date.now() - 5 * 3600 * 1000) / 86400000);
+  // Orden mezclado fijo (el mismo en todos los navegadores) para no repetir hasta recorrer todas.
+  var orden = LISTA.map(function (_, k) { return k; }), semilla = 20261114;
+  function azar() { semilla = (semilla * 1103515245 + 12345) % 2147483648; return semilla / 2147483648; }
+  for (var k = orden.length - 1; k > 0; k--) { var j = Math.floor(azar() * (k + 1)); var t0 = orden[k]; orden[k] = orden[j]; orden[j] = t0; }
   function mostrar() {
-    var vistas = leerVistas();
-    var libres = [];
-    for (var k = 0; k < LISTA.length; k++) if (k !== actual && vistas.indexOf(clave(LISTA[k])) < 0) libres.push(k);
-    if (!libres.length) { vistas = actual >= 0 ? [clave(LISTA[actual])] : []; for (k = 0; k < LISTA.length; k++) if (k !== actual) libres.push(k); }
-    var i = libres.length ? libres[Math.floor(Math.random() * libres.length)] : 0;
-    vistas.push(clave(LISTA[i])); guardarVistas(vistas);
-    actual = i;
+    var i = orden[dia % orden.length];
     var f = LISTA[i];
     var t = f.cita.replace(/\.$/, "");
     cita.textContent = "«" + t + "»" + (/[!?]$/.test(t) ? "" : ".");
@@ -414,15 +402,10 @@
     if (!f.foto) return;
     var img = new Image();
     img.alt = "";
-    img.onload = function () { if (actual === i) { foto.textContent = ""; foto.appendChild(img); } };
+    img.onload = function () { foto.textContent = ""; foto.appendChild(img); };
     img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(f.foto) + "?width=160";
   }
   mostrar();
-  document.getElementById("frase-otra").addEventListener("click", mostrar);
-  document.getElementById("frase-cerrar").addEventListener("click", function () {
-    caja.hidden = true;
-    try { sessionStorage.setItem("frase-cerrada", "1"); } catch (e) {}
-  });
 })();
 </script>
 </body>
