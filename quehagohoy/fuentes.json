@@ -1,19 +1,21 @@
 {
-  "nota": "Páginas OFICIALES que el robot revisa cada mañana. Para sumar una, copia un bloque y cambia los datos. El robot prueba solo si la página tiene agenda en formato abierto (calendario de WordPress o RSS); si no tiene, la salta. lat/lon es donde aparece el puntito en el mapa.",
+  "nota": "Páginas que el robot revisa cada mañana. Agendas oficiales: el robot prueba si tienen calendario de WordPress o RSS (o el 'feed' que se indique); si no, las salta. Ticketeras ('lector': 'ticketera'): lee su mapa del sitio (sitemap) y los datos abiertos de cada evento (fecha, lugar y precio). lat/lon es donde aparece el puntito si el evento no trae su propia dirección.",
   "fuentes": [
-    { "nombre": "Casa de la Literatura Peruana", "web": "https://www.casadelaliteratura.gob.pe", "distrito": "Cercado de Lima", "lat": -12.0441, "lon": -77.0296, "tipo": "cultura" },
-    { "nombre": "Lugar de la Memoria (LUM)", "web": "https://lum.cultura.pe", "distrito": "Miraflores", "lat": -12.1103, "lon": -77.0514, "tipo": "cultura" },
-    { "nombre": "Biblioteca Nacional del Perú", "web": "https://www.bnp.gob.pe", "distrito": "San Borja", "lat": -12.0866, "lon": -76.9988, "tipo": "cultura" },
-    { "nombre": "Gran Teatro Nacional", "web": "https://granteatronacional.pe", "distrito": "San Borja", "lat": -12.0869, "lon": -77.0003, "tipo": "concierto" },
-    { "nombre": "Centro Cultural Inca Garcilaso", "web": "https://ccincagarcilaso.gob.pe", "distrito": "Cercado de Lima", "lat": -12.0478, "lon": -77.0335, "tipo": "cultura" },
-    { "nombre": "SERPAR (parques de Lima)", "web": "https://www.serpar.gob.pe", "distrito": "Lima", "lat": null, "lon": null, "tipo": "parque" },
-    { "nombre": "Museo de Arte de Lima (MALI)", "web": "https://mali.pe", "distrito": "Cercado de Lima", "lat": -12.0600, "lon": -77.0371, "tipo": "cultura" },
-    { "nombre": "Centro Cultural de España en Lima", "web": "https://ccelima.org", "distrito": "Cercado de Lima", "lat": -12.0545, "lon": -77.0364, "tipo": "cultura" },
-    { "nombre": "Museo de Arte Contemporáneo de Lima (MAC)", "web": "https://maclima.pe", "distrito": "Barranco", "lat": -12.1424, "lon": -77.0217, "tipo": "cultura" },
-    { "nombre": "Centro Cultural de San Marcos", "web": "https://ccsm.unmsm.edu.pe", "distrito": "Cercado de Lima", "lat": -12.0532, "lon": -77.0331, "tipo": "cultura" },
-    { "nombre": "Alianza Francesa de Lima", "web": "https://www.alianzafrancesa.org.pe", "distrito": "Miraflores", "lat": -12.1145, "lon": -77.0327, "tipo": "cultura" },
-    { "nombre": "ICPNA Cultural", "web": "https://cultural.icpna.edu.pe", "distrito": "Miraflores", "lat": -12.1170, "lon": -77.0330, "tipo": "cultura" },
-    { "nombre": "Municipalidad de Miraflores", "web": "https://www.miraflores.gob.pe", "distrito": "Miraflores", "lat": -12.1211, "lon": -77.0297, "tipo": "cultura" },
-    { "nombre": "Municipalidad de Lima", "web": "https://www.munlima.gob.pe", "distrito": "Cercado de Lima", "lat": -12.0453, "lon": -77.0311, "tipo": "cultura" }
+    {"nombre": "Casa de la Literatura Peruana", "web": "https://www.casadelaliteratura.gob.pe", "distrito": "Cercado de Lima", "lat": -12.0441, "lon": -77.0296, "tipo": "cultura"},
+    {"nombre": "Lugar de la Memoria (LUM)", "web": "https://lum.cultura.pe", "distrito": "Miraflores", "lat": -12.1103, "lon": -77.0514, "tipo": "cultura"},
+    {"nombre": "Biblioteca Nacional del Perú", "web": "https://www.bnp.gob.pe", "distrito": "San Borja", "lat": -12.0866, "lon": -76.9988, "tipo": "cultura"},
+    {"nombre": "Gran Teatro Nacional", "web": "https://granteatronacional.pe", "distrito": "San Borja", "lat": -12.0869, "lon": -77.0003, "tipo": "concierto"},
+    {"nombre": "Centro Cultural Inca Garcilaso", "web": "https://ccincagarcilaso.gob.pe", "distrito": "Cercado de Lima", "lat": -12.0478, "lon": -77.0335, "tipo": "cultura"},
+    {"nombre": "SERPAR (parques de Lima)", "web": "https://www.serpar.gob.pe", "distrito": "Lima", "lat": null, "lon": null, "tipo": "parque"},
+    {"nombre": "Museo de Arte de Lima (MALI)", "web": "https://mali.pe", "distrito": "Cercado de Lima", "lat": -12.06, "lon": -77.0371, "tipo": "cultura"},
+    {"nombre": "Centro Cultural de España en Lima", "web": "https://ccelima.org", "distrito": "Cercado de Lima", "lat": -12.0545, "lon": -77.0364, "tipo": "cultura"},
+    {"nombre": "Museo de Arte Contemporáneo de Lima (MAC)", "web": "https://maclima.pe", "distrito": "Barranco", "lat": -12.1424, "lon": -77.0217, "tipo": "cultura"},
+    {"nombre": "Centro Cultural de San Marcos", "web": "https://ccsm.unmsm.edu.pe", "distrito": "Cercado de Lima", "lat": -12.0532, "lon": -77.0331, "tipo": "cultura"},
+    {"nombre": "Alianza Francesa de Lima", "web": "https://www.alianzafrancesa.org.pe", "distrito": "Miraflores", "lat": -12.1145, "lon": -77.0327, "tipo": "cultura"},
+    {"nombre": "ICPNA Cultural", "web": "https://cultural.icpna.edu.pe", "distrito": "Miraflores", "lat": -12.117, "lon": -77.033, "tipo": "cultura"},
+    {"nombre": "Municipalidad de Miraflores", "web": "https://www.miraflores.gob.pe", "distrito": "Miraflores", "lat": -12.1211, "lon": -77.0297, "tipo": "cultura"},
+    {"nombre": "Municipalidad de Lima", "web": "https://www.munlima.gob.pe", "distrito": "Cercado de Lima", "lat": -12.0453, "lon": -77.0311, "tipo": "cultura"},
+    {"nombre": "Andina (agencia oficial de noticias)", "web": "https://andina.pe", "feed": "https://www.andina.pe/agencia/rss.aspx", "distrito": "Lima", "lat": null, "lon": null, "tipo": "cultura"},
+    {"nombre": "Joinnus", "clase": "ticketera", "lector": "ticketera", "web": "https://www.joinnus.com", "sitemap": "https://www.joinnus.com/sitemap.xml", "filtroUrl": "/events/[^/]+/(lima|callao)-", "excluir": "donation|estacionamiento|parking|donaci", "distrito": "Lima", "lat": null, "lon": null, "tipo": "cultura"}
   ]
 }
