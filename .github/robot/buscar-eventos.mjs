@@ -230,7 +230,7 @@ async function coordenadas(lugar, direccion) {
   for (const q of claves) {
     const k = sinTildes(q);
     if (k in GEO) { if (GEO[k]) return GEO[k]; continue; }
-    if (geoNuevas >= 150) return null; // tope por día; el resto se busca mañana
+    if (geoNuevas >= 250) return null; // tope por día; el resto se busca mañana
     geoNuevas++;
     await espera(1100);
     const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=pe&viewbox=-77.25,-11.70,-76.60,-12.55&bounded=1&q=" + encodeURIComponent(q.replace(/,?\s*(Lima|Peru|Perú)\s*$/gi, "") + ", Lima, Perú");
@@ -242,11 +242,11 @@ async function coordenadas(lugar, direccion) {
   }
   return null;
 }
-// El distrito: primero si su nombre aparece en la dirección; si no, el más cercano al puntito
-function distritoDe(texto, lat, lon) {
-  const t = sinTildes(texto);
-  const nombres = Object.keys(DISTRITOS).sort((a, b) => b.length - a.length);
-  for (const d of nombres) if (d !== "Lima" && new RegExp("\\b" + sinTildes(d) + "\\b").test(t)) return d;
+// El distrito: primero si la dirección lo nombra como parte propia ("Calle X 123, Miraflores, Lima");
+// si no, el distrito cuyo centro está más cerca del puntito.
+function distritoDe(direccion, lat, lon) {
+  const partes = String(direccion || "").split(",").slice(1).map((x) => sinTildes(x).replace(/\d+/g, "").trim());
+  for (const parte of partes.reverse()) for (const d of Object.keys(DISTRITOS)) if (sinTildes(d) === parte) return d;
   if (lat == null) return "Lima";
   let mejor = "Lima", dist = 1e9;
   for (const [d, [a, b]] of Object.entries(DISTRITOS)) { const x = (a - lat) ** 2 + (b - lon) ** 2; if (x < dist) { dist = x; mejor = d; } }
@@ -301,7 +301,7 @@ async function leerTicketera(f) {
       titulo, url, fecha, fechaFin: fechaFin && fechaFin !== fecha ? fechaFin : "", hora, publicado: "",
       lugar, direccion: dir, lat, lon, precio, precioMin: Number.isFinite(precioMin) ? precioMin : null,
       tipo: TIPO_CATEGORIA[cat] || tipoDe(titulo + " " + desc, f.tipo), publico: publicoDe(titulo + " " + desc),
-      resumen: corto(desc), distrito: distritoDe(dir + " " + lugar, lat, lon), imagen: [].concat(ev.image || [])[0] || "",
+      resumen: corto(desc), distrito: distritoDe(dir, lat, lon), imagen: [].concat(ev.image || [])[0] || "",
     });
   }
   return { metodo: "ticketera", eventos };

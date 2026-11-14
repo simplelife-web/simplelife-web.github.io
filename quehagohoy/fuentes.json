@@ -15,7 +15,6 @@
     {"nombre": "ICPNA Cultural", "web": "https://cultural.icpna.edu.pe", "distrito": "Miraflores", "lat": -12.117, "lon": -77.033, "tipo": "cultura"},
     {"nombre": "Municipalidad de Miraflores", "web": "https://www.miraflores.gob.pe", "distrito": "Miraflores", "lat": -12.1211, "lon": -77.0297, "tipo": "cultura"},
     {"nombre": "Municipalidad de Lima", "web": "https://www.munlima.gob.pe", "distrito": "Cercado de Lima", "lat": -12.0453, "lon": -77.0311, "tipo": "cultura"},
-    {"nombre": "Andina (agencia oficial de noticias)", "web": "https://andina.pe", "feed": "https://www.andina.pe/agencia/rss.aspx", "distrito": "Lima", "lat": null, "lon": null, "tipo": "cultura"},
     {"nombre": "Joinnus", "clase": "ticketera", "lector": "ticketera", "web": "https://www.joinnus.com", "sitemap": "https://www.joinnus.com/sitemap.xml", "filtroUrl": "/events/[^/]+/(lima|callao)-", "excluir": "donation|estacionamiento|parking|donaci", "distrito": "Lima", "lat": null, "lon": null, "tipo": "cultura"}
   ]
 }

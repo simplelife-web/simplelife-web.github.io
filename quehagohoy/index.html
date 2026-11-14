@@ -112,6 +112,10 @@
   .meta { font-size: .85rem; color: var(--muted); font-weight: 600; }
   .tarjeta p { margin: 0; font-size: .95rem; }
   .etiquetas { display: flex; flex-wrap: wrap; gap: 6px; }
+  .redes summary { cursor: pointer; font-size: .9rem; font-weight: 600; color: var(--accent); padding: 4px 0; }
+  .tarjeta .redes .acciones { margin-top: 6px; padding-top: 0; }
+  #masEventosCaja { margin-top: 14px; justify-content: center; }
+  #masEventosCaja[hidden] { display: none; }
   .et { font-size: .8rem; font-weight: 700; padding: 2px 10px; border-radius: 99px; background: var(--soft); color: var(--accent); }
   .et.g { background: color-mix(in srgb, var(--gratis) 16%, transparent); color: var(--gratis); }
   .et.b { background: color-mix(in srgb, var(--barato) 18%, transparent); color: var(--barato); }
@@ -172,7 +176,10 @@
     </div>
     <div class="fila">
       <span>Precio</span>
-      <button class="chip" type="button" id="soloGratis" aria-pressed="false">Solo gratis</button>
+      <button class="chip" type="button" data-f="precio" data-v="" aria-pressed="true">Cualquier precio</button>
+      <button class="chip" type="button" data-f="precio" data-v="0" aria-pressed="false">Solo gratis</button>
+      <button class="chip" type="button" data-f="precio" data-v="30" aria-pressed="false">Hasta S/ 30</button>
+      <button class="chip" type="button" data-f="precio" data-v="60" aria-pressed="false">Hasta S/ 60</button>
     </div>
     <div class="acciones">
       <button class="btn" type="button" id="cerca">📍 Ver qué hay cerca de mí</button>
@@ -184,14 +191,15 @@
   <div class="leyenda" aria-hidden="true">
     <span><i style="background:var(--gratis)"></i>Lugar gratis</span>
     <span><i style="background:var(--barato)"></i>Lugar económico</span>
-    <span><i style="background:var(--evento)"></i>Evento de agenda oficial</span>
+    <span><i style="background:var(--evento)"></i>Evento (agenda oficial o venta de entradas)</span>
   </div>
   <p id="resumen" class="meta" aria-live="polite"></p>
 
   <section class="seccion" aria-labelledby="tEv">
-    <h2 id="tEv">Eventos de la agenda oficial</h2>
-    <p class="sub" id="subEv">Los encuentra un robot cada mañana en las páginas oficiales. Toca «Ver publicación oficial» para confirmar fecha, hora y precio.</p>
+    <h2 id="tEv">Eventos en Lima</h2>
+    <p class="sub" id="subEv">Los junta un robot cada mañana desde agendas oficiales y desde la ticketera Joinnus, con su precio cuando lo publican. Cada evento trae el enlace a su publicación de origen: ábrela para confirmar fecha, hora y precio.</p>
     <div class="lista" id="listaEventos"></div>
+    <div class="acciones" id="masEventosCaja" hidden><button class="btn sec" type="button" id="masEventos">Ver más eventos</button></div>
   </section>
 
   <section class="seccion" aria-labelledby="tLu">
@@ -203,7 +211,9 @@
   <section class="card ojo">
     <h2>Antes de salir</h2>
     <ul>
-      <li>Los datos de cada evento vienen de su <strong>publicación oficial</strong>. Ábrela antes de ir: ahí están la fecha, la hora y el precio exactos, y si hay que inscribirse.</li>
+      <li>Los datos de cada evento vienen de su <strong>publicación de origen</strong> (página oficial o ticketera). Ábrela antes de ir: ahí están la fecha, la hora y el precio exactos, y si hay que inscribirse.</li>
+      <li>«Desde S/ …» es la entrada más barata que publica la ticketera; puede subir o agotarse.</li>
+      <li>Los botones de YouTube, TikTok, Instagram, Facebook y X abren una búsqueda con el nombre del evento para que veas videos y publicaciones. No las revisa el robot: esas redes no permiten leerlas de forma automática y gratis.</li>
       <li>Los precios y horarios de los lugares son referenciales y pueden cambiar.</li>
       <li>Los puntitos del mapa son aproximados. Para llegar, usa el botón «Cómo llegar».</li>
       <li>Lleva tu DNI: algunos lugares lo piden para entrar gratis (adultos mayores, niños o primer domingo del mes).</li>
@@ -216,7 +226,7 @@
   </section>
 </main>
 <footer>
-  <p><strong>¿Qué hago hoy?</strong> no organiza los eventos ni vende entradas. Solo reunimos información pública de páginas oficiales y te llevamos a ellas.</p>
+  <p><strong>¿Qué hago hoy?</strong> no organiza los eventos ni vende entradas. Solo reunimos información pública de páginas oficiales y ticketeras, y te llevamos a ellas.</p>
   <p id="actualizado"></p>
   <p><a href="../">Inicio Simplelife</a> · <a href="../tramites/">Trámite fácil Perú</a> · <a href="../youtube/">Transcribir videos de YouTube</a> · <a href="../transcriptor/">Transcriptor de audio</a> · <a href="../acerca.html">Acerca de</a> · <a href="../contacto.html">Contacto</a> · <a href="../privacidad.html">Privacidad</a></p>
   <p>Mapa: © colaboradores de <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>.</p>
@@ -228,7 +238,8 @@
   var MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","setiembre","octubre","noviembre","diciembre"];
   var DIAS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
   var TIPOS = { museo: "Museo", cultura: "Centro cultural", parque: "Parque", paseo: "Paseo", evento: "Evento",
-    concierto: "Concierto", taller: "Taller", feria: "Feria", cine: "Cine", teatro: "Teatro y danza", exposicion: "Exposición" };
+    concierto: "Concierto", taller: "Taller o charla", feria: "Feria", cine: "Cine", teatro: "Teatro, danza y stand-up", exposicion: "Exposición",
+    deporte: "Deporte", fiesta: "Fiesta", entretenimiento: "Entretenimiento" };
 
   // ---- Fechas en hora de Lima ----
   function hoyLima() {
@@ -263,7 +274,8 @@
   else bt.innerHTML = "<strong>Próximo día de museos gratis: " + esc(bonita(pd)) + ".</strong> Cada primer domingo del mes, los museos del Estado abren gratis para peruanos y extranjeros residentes (Museos Abiertos, Ley 30599).";
 
   // ---- Estado ----
-  var F = { cuando: "hoy", tipo: "", publico: "", gratis: false, distrito: "" };
+  var F = { cuando: "hoy", tipo: "", publico: "", precio: "", distrito: "" };
+  var MOSTRAR = 40, mostrar = MOSTRAR;
   var LUGARES = [], EVENTOS = [], DISTRITOS = {}, marcadores = {}, yo = null;
 
   // ---- Mapa ----
@@ -288,7 +300,7 @@
     if (F.publico && l.publico.indexOf(F.publico) < 0) return false;
     var ds = diasDeFiltro();
     if (ds && !ds.some(function (d) { return lugarAbiertoEn(l, d); })) return false;
-    if (F.gratis) {
+    if (F.precio === "0") {
       if (ds) { if (!ds.some(function (d) { return lugarGratisEn(l, d) && lugarAbiertoEn(l, d); })) return false; }
       else if (!l.gratis && !l.primerDomingo) return false;
     }
@@ -303,7 +315,10 @@
     if (F.distrito && e.distrito !== F.distrito) return false;
     if (F.tipo && F.tipo !== "evento" && !(F.tipo === "cultura")) return false;
     if (F.publico && e.publico && e.publico.length && e.publico.indexOf(F.publico) < 0) return false;
-    if (F.gratis && e.precio !== "Gratis") return false;
+    if (F.precio !== "") {
+      var pm = e.precio === "Gratis" ? 0 : (e.precioMin != null ? e.precioMin : null);
+      if (pm === null || pm > +F.precio) return false;
+    }
     var ds = diasDeFiltro();
     if (ds) {
       if (!e.fecha) return false;
@@ -344,23 +359,38 @@
   }
   function tarjetaEvento(e) {
     var precio = e.precio ? '<span class="et ' + (e.precio === "Gratis" ? "g" : "b") + '">' + esc(e.precio) + "</span>" : '<span class="et">Precio en la publicación</span>';
-    var hoy = e.fecha && e.fecha <= HOY_ISO && HOY_ISO <= (e.fechaFin || e.fecha) ? '<span class="et hoy">Hoy</span>' : "";
+    var enCurso = e.fecha && e.fecha <= HOY_ISO && HOY_ISO <= (e.fechaFin || e.fecha);
+    var temporada = e.fechaFin && (deIso(e.fechaFin) - deIso(e.fecha)) > 7 * 864e5;
+    var hoy = enCurso ? (temporada ? '<span class="et">En temporada: revisa días y horarios</span>' : '<span class="et hoy">Hoy</span>') : "";
     return '<article class="tarjeta" id="t-' + esc(e.id) + '">' +
       '<div class="meta">' + esc(e.distrito) + " · " + esc(TIPOS[e.tipo] || "Evento") + "</div>" +
       "<h3>" + esc(e.titulo) + "</h3>" +
       '<div class="etiquetas">' + hoy + '<span class="et e">📅 ' + esc(textoFechaEvento(e)) + "</span>" + precio + "</div>" +
       (e.resumen ? "<p>" + esc(e.resumen) + "</p>" : "") +
-      '<p class="meta">Fuente oficial: ' + esc(e.fuente) + "</p>" +
+      (e.lugar || e.direccion ? '<p class="meta">📍 ' + esc([e.lugar, e.direccion].filter(Boolean).join(" · ")) + "</p>" : "") +
+      '<p class="meta">' + (esTicketera(e) ? "Fuente: " + esc(e.fuente) + " (venta de entradas)" : "Fuente oficial: " + esc(e.fuente)) + "</p>" +
       '<div class="acciones">' +
-        '<a class="btn mini" href="' + esc(urlSegura(e.url)) + '" target="_blank" rel="noopener nofollow">Ver publicación oficial</a>' +
+        '<a class="btn mini" href="' + esc(urlSegura(e.url)) + '" target="_blank" rel="noopener nofollow">' + textoBoton(e) + "</a>" +
         (e.lat != null ? '<a class="btn mini sec" href="' + esc(maps(e.lugar || e.fuente, e.direccion, e.distrito)) + '" target="_blank" rel="noopener nofollow">Cómo llegar</a>' +
           '<button class="btn mini sec" type="button" data-ver="' + esc(e.id) + '">Ver en el mapa</button>' : "") +
-      "</div></article>";
+      "</div>" + redes(e) + "</article>";
+  }
+  function esTicketera(e) { return e.fuenteTipo === "ticketera"; }
+  function textoBoton(e) { return esTicketera(e) ? "Ver en " + esc(e.fuente) + " (precio y entradas)" : "Ver publicación oficial"; }
+  // Búsquedas del evento en redes sociales: las abre la persona, el robot no las lee
+  function redes(e) {
+    var q = encodeURIComponent(e.titulo.replace(/\s*[|·].*$/, "").slice(0, 80) + " Lima");
+    var r = [["YouTube", "https://www.youtube.com/results?search_query=" + q], ["TikTok", "https://www.tiktok.com/search?q=" + q],
+      ["Instagram", "https://www.instagram.com/explore/search/keyword/?q=" + q], ["Facebook", "https://www.facebook.com/search/top?q=" + q],
+      ["X", "https://x.com/search?q=" + q]];
+    return '<details class="redes"><summary>🔎 Buscar videos y publicaciones en redes</summary><div class="acciones">' +
+      r.map(function (x) { return '<a class="btn mini sec" href="' + esc(x[1]) + '" target="_blank" rel="noopener nofollow">' + x[0] + "</a>"; }).join("") +
+      "</div></details>";
   }
   function popup(x, esEvento) {
     var h = "<strong>" + esc(esEvento ? x.titulo : x.nombre) + "</strong>";
-    h += esEvento ? esc(textoFechaEvento(x)) + "<br>" + esc(x.fuente) : esc(x.distrito) + " · " + esc(x.precio);
-    h += '<br><a href="' + esc(urlSegura(x.url)) + '" target="_blank" rel="noopener nofollow">' + (esEvento ? "Ver publicación oficial" : "Página oficial") + "</a>";
+    h += esEvento ? esc(textoFechaEvento(x)) + (esEvento && x.precio ? " · " + esc(x.precio) : "") + "<br>" + esc(x.fuente) : esc(x.distrito) + " · " + esc(x.precio);
+    h += '<br><a href="' + esc(urlSegura(x.url)) + '" target="_blank" rel="noopener nofollow">' + (esEvento ? textoBoton(x) : "Página oficial") + "</a>";
     h += ' · <a href="' + esc(esEvento ? maps(x.lugar || x.fuente, x.direccion, x.distrito) : maps(x.nombre, x.direccion, x.distrito)) + '" target="_blank" rel="noopener nofollow">Abrir en Google Maps</a>';
     h += '<br><a href="#t-' + esc(x.id) + '">Ver detalles abajo ↓</a>';
     return h;
@@ -384,6 +414,7 @@
     var centro = F.distrito && DISTRITOS[F.distrito] ? DISTRITOS[F.distrito] : null;
     var lu = ordenarPorCercania(LUGARES.filter(function (l) { return pasaLugar(l); }), centro);
     var ev = ordenarPorCercania(EVENTOS.filter(pasaEvento), centro);
+    var totalEv = ev.length;
     if (F.tipo === "evento") lu = [];
     if (F.tipo && F.tipo !== "evento" && F.tipo !== "cultura") ev = [];
 
@@ -397,7 +428,9 @@
       '. Estos son los más cercanos (a unos ' + Math.round(distanciaKm(centro[0], centro[1], lu[0].lat, lu[0].lon)) + ' km o más):</p>' : "";
     document.getElementById("listaLugares").innerHTML = lu.length ? nota + lu.map(tarjetaLugar).join("") :
       '<p class="vacio">No hay lugares con estos filtros. Prueba con «Cualquier día» u otro distrito.</p>';
-    document.getElementById("listaEventos").innerHTML = ev.length ? ev.map(tarjetaEvento).join("") :
+    document.getElementById("masEventosCaja").hidden = totalEv <= mostrar;
+    document.getElementById("masEventos").textContent = "Ver más eventos (" + (totalEv - mostrar) + " más)";
+    document.getElementById("listaEventos").innerHTML = ev.length ? ev.slice(0, mostrar).map(tarjetaEvento).join("") :
       '<p class="vacio">' + (EVENTOS.length ? "No hay eventos con estos filtros. Prueba con «Cualquier día» u otro distrito." :
         "Todavía no hay eventos de agenda. El robot revisa las páginas oficiales cada mañana.") + "</p>";
 
@@ -423,7 +456,7 @@
     if (centro && cercanos) puntos.push(centro);
     if (puntos.length && !yo) mapa.fitBounds(puntos, { padding: [30, 30], maxZoom: 15 });
 
-    var n = lu.length + ev.length;
+    var n = lu.length + totalEv;
     document.getElementById("resumen").textContent = n + (n === 1 ? " plan encontrado" : " planes encontrados") +
       (F.cuando === "hoy" ? " para hoy, " + bonita(HOY) : F.cuando === "finde" ? " para este fin de semana" : "") +
       (F.distrito ? (cercanos ? " cerca de " : " en ") + F.distrito : "") + ".";
@@ -439,17 +472,15 @@
   document.addEventListener("click", function (ev) {
     var b = ev.target.closest("[data-f]");
     if (b) {
-      F[b.dataset.f] = b.dataset.v;
+      F[b.dataset.f] = b.dataset.v; mostrar = MOSTRAR;
       document.querySelectorAll('[data-f="' + b.dataset.f + '"]').forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
       pintar(); return;
     }
     var v = ev.target.closest("[data-ver]");
     if (v) verEnMapa(v.dataset.ver);
   });
-  document.getElementById("soloGratis").addEventListener("click", function () {
-    F.gratis = !F.gratis; this.setAttribute("aria-pressed", F.gratis ? "true" : "false"); pintar();
-  });
-  document.getElementById("distrito").addEventListener("change", function () { F.distrito = this.value; pintar(); });
+  document.getElementById("masEventos").addEventListener("click", function () { mostrar += MOSTRAR; pintar(); });
+  document.getElementById("distrito").addEventListener("change", function () { F.distrito = this.value; mostrar = MOSTRAR; pintar(); });
   document.getElementById("sorpresa").addEventListener("click", function () {
     if (!visibles.length) { alert("No hay planes con estos filtros. Prueba con «Cualquier día»."); return; }
     var x = visibles[Math.floor(Math.random() * visibles.length)];
