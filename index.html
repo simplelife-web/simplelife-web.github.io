@@ -369,82 +369,49 @@
     <p>Simplelife · Herramientas gratuitas para hacer la vida más simple.</p>
   </footer>
 </main>
+<script src="frases.js"></script>
 <script>
-/* Frases célebres verificadas de varios ámbitos (las que no son del español, con traducción propia). Fotos de dominio público
-   en Wikimedia Commons. Para sumar una frase, copia una línea y cambia sus datos. */
+/* Frase célebre al azar. La lista está en frases.js (una línea por frase).
+   No se repite ninguna hasta que la persona haya visto todas: las vistas se guardan en su navegador. */
 (function () {
-  var FRASES = [
-    { amb: "Ciencia", cita: "La imaginación es más importante que el conocimiento.",
-      autor: "Albert Einstein", rol: "físico, Premio Nobel", obra: "entrevista en The Saturday Evening Post", anio: "1929", ini: "AE",
-      foto: "Albert_Einstein_Head.jpg" },
-    { amb: "Ciencia", cita: "Si he visto más lejos, es porque estoy sobre hombros de gigantes.",
-      autor: "Isaac Newton", rol: "físico y matemático", obra: "carta a Robert Hooke", anio: "1676", ini: "IN",
-      foto: "GodfreyKneller-IsaacNewton-1689.jpg" },
-    { amb: "Ciencia", cita: "La vida no es fácil para ninguno de nosotros. Pero ¿qué importa? Hay que tener perseverancia y, sobre todo, confianza en uno mismo.",
-      autor: "Marie Curie", rol: "científica, dos veces Premio Nobel", obra: "carta citada por su hija Eve Curie en Madame Curie", anio: "1937", ini: "MC",
-      foto: "Marie_Curie_c1920.jpg" },
-    { amb: "Historia del Perú", cita: "El Perú es desde este momento libre e independiente por la voluntad general de los pueblos y por la justicia de su causa que Dios defiende.",
-      autor: "José de San Martín", rol: "libertador del Perú", obra: "proclamación de la Independencia, Lima", anio: "1821", ini: "SM",
-      foto: "Portrait_of_General_José_de_San_Martín_(1818).jpg" },
-    { amb: "Literatura peruana", cita: "Hay golpes en la vida, tan fuertes... ¡Yo no sé!",
-      autor: "César Vallejo", rol: "poeta peruano", obra: "Los heraldos negros", anio: "1918", ini: "CV",
-      foto: "Cesar_vallejo_1929.jpg" },
-    { amb: "Literatura peruana", cita: "Aprendí a leer a los cinco años [...]. Es la cosa más importante que me ha pasado en la vida.",
-      autor: "Mario Vargas Llosa", rol: "escritor peruano, Premio Nobel", obra: "discurso del Nobel «Elogio de la lectura y la ficción»", anio: "2010", ini: "VL",
-      foto: "Mario_Vargas_Llosa_(crop_2).jpg" },
-    { amb: "Literatura", cita: "El que lee mucho y anda mucho, ve mucho y sabe mucho.",
-      autor: "Miguel de Cervantes", rol: "escritor", obra: "Don Quijote de la Mancha, segunda parte", anio: "1615", ini: "MC",
-      foto: "Cervantes_Jáuregui.jpg" },
-    { amb: "Política", cita: "La educación es el arma más poderosa que puedes usar para cambiar el mundo.",
-      autor: "Nelson Mandela", rol: "presidente de Sudáfrica, Premio Nobel de la Paz", obra: "discurso en Johannesburgo", anio: "2003", ini: "NM",
-      foto: "Nelson_Mandela_1994.jpg" },
-    { amb: "Política", cita: "Que el gobierno del pueblo, por el pueblo y para el pueblo no desaparezca de la Tierra.",
-      autor: "Abraham Lincoln", rol: "presidente de Estados Unidos", obra: "discurso de Gettysburg", anio: "1863", ini: "AL",
-      foto: "Abraham_Lincoln_O-77_matte_collodion_print.jpg" },
-    { amb: "Derechos civiles", cita: "Tengo un sueño: que mis cuatro hijos pequeños vivirán un día en una nación donde no serán juzgados por el color de su piel, sino por su carácter.",
-      autor: "Martin Luther King Jr.", rol: "líder de los derechos civiles, Premio Nobel de la Paz", obra: "discurso «Tengo un sueño», Washington", anio: "1963", ini: "MK",
-      foto: "Martin_Luther_King,_Jr..jpg" },
-    { amb: "Filosofía", cita: "El ser humano es por naturaleza un animal político.",
-      autor: "Aristóteles", rol: "filósofo griego", obra: "Política, libro I", anio: "siglo IV a. C.", ini: "Ar",
-      foto: "Aristotle_Altemps_Inv8575.jpg" },
-    { amb: "Filosofía", cita: "El valor de un Estado, a la larga, es el valor de las personas que lo componen.",
-      autor: "John Stuart Mill", rol: "filósofo y economista", obra: "Sobre la libertad", anio: "1859", ini: "JM",
-      foto: "John_Stuart_Mill_by_London_Stereoscopic_Company,_c1870.jpg" },
-    { amb: "Arte", cita: "Pies, ¿para qué los quiero si tengo alas pa' volar?",
-      autor: "Frida Kahlo", rol: "pintora mexicana", obra: "su diario", anio: "1953", ini: "FK",
-      foto: "Frida_Kahlo,_by_Guillermo_Kahlo.jpg" },
-    { amb: "Deporte", cita: "Flota como una mariposa, pica como una abeja.",
-      autor: "Muhammad Ali", rol: "boxeador, campeón mundial", obra: "antes de su pelea con Sonny Liston", anio: "1964", ini: "MA",
-      foto: "Muhammad_Ali_NYWTS.jpg" },
-    { amb: "Economía", cita: "Ninguna sociedad puede ser floreciente y feliz si la mayor parte de sus miembros son pobres y miserables.",
-      autor: "Adam Smith", rol: "economista", obra: "La riqueza de las naciones", anio: "1776", ini: "AS",
-      foto: "Adam_Smith_The_Muir_portrait.jpg" },
-    { amb: "Economía", cita: "La economía es el estudio de la humanidad en los asuntos ordinarios de la vida.",
-      autor: "Alfred Marshall", rol: "economista", obra: "Principios de economía", anio: "1890", ini: "AM",
-      foto: "Alfred_Marshall.jpg" },
-    { amb: "Economía", cita: "Recuerda que el tiempo es dinero.",
-      autor: "Benjamin Franklin", rol: "inventor y político", obra: "Consejos a un joven comerciante", anio: "1748", ini: "BF",
-      foto: "Joseph_Siffrein_Duplessis_-_Benjamin_Franklin_-_Google_Art_Project.jpg" }
-  ];
+  var LISTA = (window.FRASES || []).map(function (r) {
+    return { amb: r[0], cita: r[1], autor: r[2], rol: r[3], obra: r[4], anio: r[5], foto: r[6] || "" };
+  });
   var caja = document.getElementById("frase");
-  if (!caja) return;
+  if (!caja || !LISTA.length) return;
   try { if (sessionStorage.getItem("frase-cerrada") === "1") { caja.hidden = true; return; } } catch (e) {}
   var foto = document.getElementById("frase-foto"), cita = document.getElementById("frase-cita"), autor = document.getElementById("frase-autor"), etiqueta = document.getElementById("frase-etiqueta");
+  function clave(f) { return f.autor + "|" + f.cita.slice(0, 40); }
+  function leerVistas() { try { return JSON.parse(localStorage.getItem("frases-vistas") || "[]"); } catch (e) { return []; } }
+  function guardarVistas(v) { try { localStorage.setItem("frases-vistas", JSON.stringify(v)); } catch (e) {} }
+  function iniciales(n) { var p = n.replace(/[^A-Za-zÁÉÍÓÚÑáéíóúñü ]/g, "").split(" ").filter(Boolean); return (p.length > 1 ? p[0][0] + p[p.length - 1][0] : (p[0] || "?").slice(0, 2)).toUpperCase(); }
   var actual = -1;
   function mostrar() {
-    var i;
-    do { i = Math.floor(Math.random() * FRASES.length); } while (i === actual && FRASES.length > 1);
+    var vistas = leerVistas();
+    var libres = [];
+    for (var k = 0; k < LISTA.length; k++) if (k !== actual && vistas.indexOf(clave(LISTA[k])) < 0) libres.push(k);
+    if (!libres.length) { vistas = actual >= 0 ? [clave(LISTA[actual])] : []; for (k = 0; k < LISTA.length; k++) if (k !== actual) libres.push(k); }
+    var i = libres.length ? libres[Math.floor(Math.random() * libres.length)] : 0;
+    vistas.push(clave(LISTA[i])); guardarVistas(vistas);
     actual = i;
-    var f = FRASES[i];
+    var f = LISTA[i];
     var t = f.cita.replace(/\.$/, "");
     cita.textContent = "«" + t + "»" + (/[!?]$/.test(t) ? "" : ".");
     etiqueta.textContent = "Frase para hoy · " + f.amb;
-    var pagina = "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(f.foto);
-    autor.innerHTML = "<b></b>, " + f.rol + " · <i></i> (" + f.anio + ") · <a rel=\"nofollow noopener\" target=\"_blank\">foto</a>";
+    autor.innerHTML = "<b></b>, <span></span> · <i></i> (<span></span>)";
+    var sp = autor.querySelectorAll("span");
     autor.querySelector("b").textContent = f.autor;
+    sp[0].textContent = f.rol; sp[1].textContent = f.anio;
     autor.querySelector("i").textContent = f.obra;
-    var a = autor.querySelector("a"); a.href = pagina; a.title = "Imagen de dominio público en Wikimedia Commons";
-    foto.textContent = f.ini;
+    if (f.foto) {
+      var a = document.createElement("a");
+      a.href = "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(f.foto);
+      a.rel = "nofollow noopener"; a.target = "_blank"; a.textContent = "foto";
+      a.title = "Imagen libre en Wikimedia Commons";
+      autor.appendChild(document.createTextNode(" · ")); autor.appendChild(a);
+    }
+    foto.textContent = iniciales(f.autor);
+    if (!f.foto) return;
     var img = new Image();
     img.alt = "";
     img.onload = function () { if (actual === i) { foto.textContent = ""; foto.appendChild(img); } };
