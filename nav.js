@@ -45,6 +45,8 @@
     '.sl-links a[aria-current]{background:var(--sl-soft);color:var(--sl-accent);font-weight:600;}' +
     '.sl-sep{width:1px;background:var(--sl-line);margin:4px 2px;}' +
     '.sl-logo,.sl-home{flex:0 0 auto;}' +
+    // En pantallas táctiles, enlaces más altos para tocarlos fácil con el dedo
+    '@media (pointer:coarse){.sl-links a{padding:10px 12px;}.sl-logo{min-height:40px;}}' +
     '@media (max-width:860px){.sl-in{flex-wrap:wrap;}.sl-links{order:3;flex-basis:100%;margin:0 -16px;padding:0 12px 2px;width:calc(100% + 32px);flex-basis:calc(100% + 32px);-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent);}}' +
     // En computadoras medianas todo debe caber en una fila: botón de inicio solo con la casita y enlaces más juntos
     '@media (min-width:861px){.sl-home span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}.sl-home{padding:8px 10px;}.sl-links a{padding:6px 8px;}.sl-in{gap:6px 10px;}}' +

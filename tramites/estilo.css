@@ -151,3 +151,10 @@ body:has(#lista) main > p, body:has(#lista) main > h1, body:has(#lista) .buscar 
 .mas li a:hover { filter: brightness(.97); }
 .volver { display: inline-block; }
 @media print { .temas, .mas { display: none !important; } }
+
+/* Celular: en los cuadros de temas el dibujo va arriba, así los nombres no se cortan con guiones */
+.lista .tram { content-visibility: auto; contain-intrinsic-size: auto 130px; }
+@media (max-width: 479px) {
+  .tema { flex-direction: column; align-items: flex-start; gap: 6px; overflow-wrap: normal; hyphens: manual; }
+  .tema strong { overflow-wrap: break-word; }
+}

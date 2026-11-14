@@ -24,7 +24,6 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9798339025422593"
      crossorigin="anonymous"></script>
 <link rel="stylesheet" href="lib/leaflet.css">
-<script src="lib/leaflet.js"></script>
 <style>
   :root {
     --bg: #f6f5f1; --card: #ffffff; --text: #1d1d1b; --muted: #5c5a54;
@@ -97,6 +96,7 @@
   .punto.g { background: var(--gratis); } .punto.b { background: var(--barato); } .punto.e { background: var(--evento); }
   .punto.yo { background: #2a7de1; width: 16px; height: 16px; box-shadow: 0 0 0 6px rgba(42,125,225,.25); }
   .punto.activo { transform: scale(1.35); }
+  @media (pointer: coarse) { .leaflet-touch .leaflet-bar a { width: 40px; height: 40px; line-height: 40px; font-size: 22px; } }
   .leaflet-popup-content { font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin: 12px 14px; }
   .leaflet-popup-content strong { display: block; font-size: 1rem; margin-bottom: 2px; }
   .leaflet-popup-content a { font-weight: 600; }
@@ -144,7 +144,7 @@
 
   <div class="banner" id="banner" role="status">
     <span class="ic" aria-hidden="true">🏛️</span>
-    <p id="bannerTexto"></p>
+    <p id="bannerTexto"><strong>Próximo día de museos gratis: el primer domingo del mes.</strong> Cada primer domingo del mes, los museos del Estado abren gratis para peruanos y extranjeros residentes (Museos Abiertos, Ley 30599).</p>
   </div>
 
   <section class="filtros" aria-label="Filtros">
@@ -232,6 +232,7 @@
   <p>Mapa: © colaboradores de <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>.</p>
 </footer>
 
+<script src="lib/leaflet.js"></script>
 <script>
 (function () {
   "use strict";

@@ -101,6 +101,7 @@
   /* Controles */
   .ctrl { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; margin: 10px 0 12px; }
   .ctrl label { font-size: .9rem; color: var(--muted); font-weight: 600; }
+  @media (max-width: 640px) { select, input[type=search] { font-size: 16px !important; } }
   select, input[type=search] { font: inherit; font-size: .95rem; min-height: 42px; padding: 6px 10px; border-radius: 12px;
     border: 2px solid var(--line); background: var(--bg); color: var(--text); max-width: 100%; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
