@@ -4,10 +4,10 @@
  "cifras": {
   "tc": {
    "nombre": "Tipo de cambio (venta, sistema bancario)",
-   "valor": 3.404,
+   "valor": 3.419,
    "unidad": "soles por dólar",
    "formato": "tc",
-   "fecha": "2026-11-13",
+   "fecha": "2026-11-16",
    "fuente": "BCRP, serie PD04640PD",
    "oficial": "Tipo de cambio - TC Sistema bancario SBS (S/ por US$) - Venta",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04640PD/html"
@@ -17,27 +17,27 @@
    "valor": 4.5,
    "unidad": "anual",
    "formato": "pct2",
-   "fecha": "2026-11-13",
+   "fecha": "2026-11-17",
    "fuente": "BCRP, serie PD12301MD",
    "oficial": "Tasas de interés - Tasa de Referencia de la Política Monetaria",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD12301MD/html"
   },
   "interbancaria": {
    "nombre": "Tasa interbancaria en soles",
-   "valor": 4.3,
+   "valor": 4.5,
    "unidad": "anual",
    "formato": "pct2",
-   "fecha": "2026-11-12",
+   "fecha": "2026-11-16",
    "fuente": "BCRP, serie PD04692MD",
    "oficial": "Tasas de interés - Interbancaria, S/",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04692MD/html"
   },
   "rin": {
    "nombre": "Reservas internacionales netas",
-   "valor": 96109.0,
+   "valor": 101070.804083,
    "unidad": "millones de dólares",
    "formato": "millones",
-   "fecha": "2026-11-12",
+   "fecha": "2026-11-16",
    "fuente": "BCRP, serie PD04650MD",
    "oficial": "Reservas internacionales (millones US$) - Reservas internacionales netas",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04650MD/html"
