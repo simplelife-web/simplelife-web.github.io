@@ -825,5 +825,38 @@
  ],
  "pulso club, av. petit thouars 212, cercado de lima, lima": null,
  "av. petit thouars 212, cercado de lima, lima": null,
- "pulso club": null
+ "pulso club": null,
+ "casablanca cafe bar, isis 870, los olivos 15301, peru": null,
+ "isis 870, los olivos 15301, peru": [
+  -11.99283,
+  -77.07039
+ ],
+ "estacionamiento apparka paseo de la republica, av. paseo de la republica 567": null,
+ "av. paseo de la republica 567": [
+  -12.13134,
+  -77.02197
+ ],
+ "casa de la cultura san miguel, jr. federico gallese taricchi 420, san miguel, peru": null,
+ "jr. federico gallese taricchi 420, san miguel, peru": null,
+ "casa de la cultura san miguel": null,
+ "capitolio, avenida larco 612 miraflores": null,
+ "avenida larco 612 miraflores": [
+  -12.1303,
+  -77.0298
+ ],
+ "complejo deportivo andres avelino caceres, av. primavera 1601, villa maria del triunfo, lima": [
+  -12.14836,
+  -76.95307
+ ],
+ "polideportivo 1 de la videna, av. del aire s/n, san luis": null,
+ "av. del aire s/n, san luis": [
+  -12.08038,
+  -77.00277
+ ],
+ "coliseo recoleta, av. circunvalacion del golf 318, puerta nº 11 - la molina": null,
+ "av. circunvalacion del golf 318, puerta nº 11 - la molina": null,
+ "coliseo recoleta": [
+  -12.07528,
+  -76.95938
+ ]
 }
