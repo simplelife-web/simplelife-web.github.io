@@ -17,7 +17,7 @@
    "valor": 4.5,
    "unidad": "anual",
    "formato": "pct2",
-   "fecha": "2026-11-19",
+   "fecha": "2026-11-20",
    "fuente": "BCRP, serie PD12301MD",
    "oficial": "Tasas de interés - Tasa de Referencia de la Política Monetaria",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD12301MD/html"
@@ -27,17 +27,17 @@
    "valor": 4.5,
    "unidad": "anual",
    "formato": "pct2",
-   "fecha": "2026-11-18",
+   "fecha": "2026-11-19",
    "fuente": "BCRP, serie PD04692MD",
    "oficial": "Tasas de interés - Interbancaria, S/",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04692MD/html"
   },
   "rin": {
    "nombre": "Reservas internacionales netas",
-   "valor": 100961.919896,
+   "valor": 100504.265863,
    "unidad": "millones de dólares",
    "formato": "millones",
-   "fecha": "2026-11-18",
+   "fecha": "2026-11-19",
    "fuente": "BCRP, serie PD04650MD",
    "oficial": "Reservas internacionales (millones US$) - Reservas internacionales netas",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04650MD/html"
@@ -84,20 +84,20 @@
   },
   "pbi": {
    "nombre": "Crecimiento del PBI (frente al mismo mes del año anterior)",
-   "valor": 3.232764,
+   "valor": 2.428986,
    "unidad": "",
    "formato": "pct1",
-   "fecha": "2026-08",
+   "fecha": "2026-09",
    "fuente": "BCRP, serie PN01728AM",
    "oficial": "Producto bruto interno y demanda interna (variación porcentual interanual) - PBI",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01728AM/html"
   },
   "desempleo": {
    "nombre": "Tasa de desempleo en Lima Metropolitana",
-   "valor": 4.37168,
+   "valor": 4.356588,
    "unidad": "promedio móvil de 3 meses",
    "formato": "pct1",
-   "fecha": "2026-09",
+   "fecha": "2026-10",
    "fuente": "BCRP, serie PN38063GM",
    "oficial": "Empleo Mensual en Lima Metropolitana - Promedio móvil tres meses (porcentaje) - Tasa de Desempleo (%)",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN38063GM/html"
