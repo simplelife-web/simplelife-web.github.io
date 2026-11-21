@@ -4,10 +4,10 @@
  "cifras": {
   "tc": {
    "nombre": "Tipo de cambio (venta, sistema bancario)",
-   "valor": 3.433,
+   "valor": 3.442,
    "unidad": "soles por dólar",
    "formato": "tc",
-   "fecha": "2026-11-18",
+   "fecha": "2026-11-19",
    "fuente": "BCRP, serie PD04640PD",
    "oficial": "Tipo de cambio - TC Sistema bancario SBS (S/ por US$) - Venta",
    "enlace": "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04640PD/html"
