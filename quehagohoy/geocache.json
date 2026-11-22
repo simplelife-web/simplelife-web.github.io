@@ -906,5 +906,36 @@
  ],
  "teatro ricardo blume, jr. huiracocha 2160, jesus maria, lima": null,
  "jr. huiracocha 2160, jesus maria, lima": null,
- "teatro ricardo blume": null
+ "teatro ricardo blume": null,
+ "la sufrida restobar lince, av ignacio merino 2500 - lince": null,
+ "av ignacio merino 2500 - lince": [
+  -12.08163,
+  -77.03287
+ ],
+ "de grot bar cultural, av. nicolas de pierola 955": null,
+ "av. nicolas de pierola 955": [
+  -12.05223,
+  -77.03491
+ ],
+ "lima comedy club, av. alfredo benavides 347, miraflores": null,
+ "av. alfredo benavides 347, miraflores": [
+  -12.12393,
+  -77.02995
+ ],
+ "let's dance escuela de danza, av. larco 1150 - oficina 905": null,
+ "av. larco 1150 - oficina 905": null,
+ "let's dance escuela de danza": null,
+ "depende de cada evento, depende de cada evento": null,
+ "depende de cada evento": null,
+ "discoteca in punta hermosa, discoteca in punta hermosa": null,
+ "discoteca in punta hermosa": null,
+ "discoteca la cueva, av. aviacion 2514, san borja, lima, peru": null,
+ "av. aviacion 2514, san borja, lima, peru": [
+  -12.10097,
+  -77.00182
+ ],
+ "teatro la plaza, malecon de la reserva 610, miraflores, lima": [
+  -12.13167,
+  -77.03093
+ ]
 }
