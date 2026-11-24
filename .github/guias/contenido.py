@@ -414,7 +414,7 @@ def reservas(D):
     tc = D.get("cifras", {}).get("tc")
     graf = linea("Reservas internacionales netas del Perú (millones de dólares)",
                  [{"nombre": "Reservas internacionales netas", "clase": "s1", "v": s["v"]}], s["x0"], unidad="", dec=0, cero=True,
-                 nota="Dato de fin de cada mes (BCRP, serie %s)." % D["fuentes"]["rin"][0].split("serie ")[1].split(":")[0])
+                 nota="Último dato de cada mes (BCRP, serie %s)." % D["fuentes"]["rin"][0].split("serie ")[1].split(":")[0])
     secciones = [
         card("Qué son",
              "Las <a href=\"../glosario/reservas-internacionales.html\">reservas internacionales netas</a> (RIN) son los dólares y otros activos "
@@ -425,6 +425,7 @@ def reservas(D):
              % (mes_txt(ym, True), num(v, 0), num(v / 1000, 1),
                 (" Hace diez años, en %s, eran US$ %s millones." % (mes_txt(ym_mas(ym, -120), True), num(hace10, 0))) if hace10 else ""),
              graf,
+             ("Es el nivel más alto desde %s, cuando empieza esta serie." % mes_txt(s["x0"], True)) if alto[0] == ym else
              "El nivel más alto de la serie fue US$ %s millones, en %s." % (num(alto[1], 0), mes_txt(alto[0], True))),
         card("Para qué sirven",
              "<ul><li><strong>Para calmar al dólar.</strong> Si el dólar sube de golpe, el BCRP puede vender parte de sus dólares para evitar "
@@ -573,8 +574,9 @@ def cobre(D):
              % (mes_txt(ym, True), num(v, 0), num(v / 100, 2),
                 ("" if var12 is None else " Frente a un año antes está %s %s." % (pct(abs(var12), 1), "más caro" if var12 >= 0 else "más barato"))),
              graf,
-             "Desde 2005, el promedio mensual más alto fue %s centavos (%s) y el más bajo, %s centavos (%s)."
-             % (num(alto[1], 0), mes_txt(alto[0], True), num(bajo[1], 0), mes_txt(bajo[0], True))),
+             ("Es el promedio mensual más alto desde 2005. " if alto[0] == ym else
+              "Desde 2005, el promedio mensual más alto fue %s centavos (%s). " % (num(alto[1], 0), mes_txt(alto[0], True)))
+             + "El más bajo de ese periodo fue %s centavos (%s)." % (num(bajo[1], 0), mes_txt(bajo[0], True))),
         card("Qué mueve su precio",
              "El cobre se usa en cables, motores, construcción y aparatos electrónicos, así que su precio sube cuando la economía mundial crece "
              "y baja cuando se enfría. Pesa mucho lo que pasa en China, el mayor comprador del mundo. También influyen la oferta (huelgas, "
