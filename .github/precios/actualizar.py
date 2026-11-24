@@ -127,8 +127,10 @@ def bcrp(codigos, desde="1992-1"):
 
 def peru():
     rubros = []
-    for i in range(0, len(RUBROS), 8):  # de 8 en 8 para no pedir una URL enorme
-        grupo = RUBROS[i:i + 8]
+    # Una serie por pedido: cuando se piden varias juntas, la API del BCRP las devuelve
+    # ordenadas por código (no en el orden pedido) y los nombres quedaban cruzados.
+    for i in range(len(RUBROS)):
+        grupo = RUBROS[i:i + 1]
         nombres, puntos = bcrp([g[0] for g in grupo])
         for (cod, nom, desc), oficial, pts in zip(grupo, nombres, puntos):
             desde, vals = serie_continua(pts)
@@ -137,7 +139,7 @@ def peru():
                 continue
             rubros.append({"codigo": cod, "nombre": nom, "incluye": desc, "oficial": oficial,
                            "desde": desde, "var": [None if v is None else round(v, 4) for v in vals]})
-        time.sleep(1)
+        time.sleep(0.5)
     _, pts = bcrp([TIPO_CAMBIO[0]])
     desde, vals = serie_continua(pts[0])
     datos = {

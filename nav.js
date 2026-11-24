@@ -14,6 +14,7 @@
     { href: 'sueldo/', texto: 'Sueldo' },
     { href: 'prestamos/', texto: 'Préstamos' },
     { href: 'precios/', texto: 'Precios' },
+    { href: 'guias/', texto: 'Guías' },
     { href: 'glosario/', texto: 'Glosario' }
   ];
   var EXTRA = [
