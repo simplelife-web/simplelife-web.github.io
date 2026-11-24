@@ -232,6 +232,7 @@ CABEZA = """<!doctype html>
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9798339025422593"
      crossorigin="anonymous"></script>
+<script src="/anuncios.js" defer></script>
 {extra}<link rel="stylesheet" href="estilo.css">
 <script src="letra.js"></script>
 <script src="formulas.js" defer></script>
@@ -332,6 +333,7 @@ def pagina_termino(t, i):
             o.append('<dt id="%s">%s</dt><dd>%s</dd>' % (ancla(h), esc(h), con_formulas(x)))
         o.append("</dl>\n</section>\n\n")
 
+    o.append('<div class="sl-anuncio" data-zona="glosario-medio"></div>\n\n')  # zona de anuncio entre secciones de texto (ver anuncios.js)
     # Videos: búsquedas en YouTube (no se puede comprobar cada video desde aquí); "videos" = enlaces revisados a mano.
     nombre = re.sub(r"\s*\(.*?\)", "", t["t"]).strip()
     yt = "https://www.youtube.com/results?search_query="
@@ -375,6 +377,7 @@ def pagina_termino(t, i):
     o.append('<p class="rev">Revisado el %s.</p>\n</section>\n' % REVISADO)
     o.append('<p class="acciones"><button type="button" class="btn sec" onclick="window.print()">Imprimir este término</button></p>\n')
     o.append("</article>\n")
+    o.append('<div class="sl-anuncio" data-zona="glosario-final"></div>\n')
     o.append(PIE)
     return "".join(o)
 
@@ -421,6 +424,7 @@ def pagina_indice():
 <p>Cada página termina con sus <strong>fuentes</strong>: el Glosario de términos económicos del BCRP (que usamos como guía, explicando cada término con nuestras propias palabras), normas publicadas en El Peruano (como la Constitución o las leyes de la TCEA y de pensiones), publicaciones del INEI y la SUNAT, y notas de la agencia estatal Andina con datos del BCRP o del INEI. Los datos que cambian con el tiempo, como la UIT o el sueldo mínimo, indican su año. Los demás números son ejemplos para practicar.</p>
 <p>¿Falta una palabra o encontraste un error? <a href="../contacto.html">Escríbenos</a> y la revisamos.</p>
 </section>
+<div class="sl-anuncio" data-zona="glosario-indice"></div>
 <script>
 (function(){
   var q=document.getElementById('q'), it=document.querySelectorAll('.tram'), nada=document.getElementById('nada'),
