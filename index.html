@@ -24,6 +24,7 @@
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9798339025422593"
      crossorigin="anonymous"></script>
+<script src="/anuncios.js" defer></script>
 <style>
   :root {
     --bg: #f6f5f1; --card: #ffffff; --text: #1d1d1b; --muted: #5e5c56;
@@ -119,6 +120,9 @@
   .soon p { margin: 0; }
   @media (max-width: 560px) { .soon { flex-direction: column; text-align: center; } .soon .icon { width: 100%; flex-basis: auto; } }
 
+  .novedades { margin: 0 0 10px; padding-left: 20px; }
+  .novedades li { margin: 6px 0; }
+  .novedades time { font-weight: 600; }
   .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 6px 28px; }
 
   .about { margin-top: 32px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px 24px; }
@@ -345,6 +349,8 @@
     </li>
   </ul>
 
+  <div class="sl-anuncio" data-zona="portada"></div>
+
   <section class="about">
     <h2>¿Qué es Simplelife?</h2>
     <p>Simplelife reúne herramientas web pequeñas y gratuitas que resuelven tareas del día a día. Cada una hace una sola cosa y la explica con palabras sencillas.</p>
@@ -356,6 +362,19 @@
     <div><h3>En el celular o en la computadora</h3>
     <p>No instalas nada: abre la página desde cualquier navegador y úsala al momento.</p></div>
     </div>
+  </section>
+
+  <!-- Novedades: agrega arriba lo más reciente, con su fecha, y deja solo las 5 últimas. -->
+  <section class="about">
+    <h2>Novedades</h2>
+    <ul class="novedades">
+      <li><time datetime="2026-11-14">14 de noviembre de 2026</time>: el <a href="glosario/">Glosario económico</a> llega a 512 conceptos, con fórmulas explicadas y videos para aprender más.</li>
+      <li><time datetime="2026-11-14">14 de noviembre de 2026</time>: nueva herramienta para <a href="youtube/">transcribir videos de YouTube</a> y pestaña de <a href="transcriptor/#dictado">dictado por voz</a> en el Transcriptor.</li>
+      <li><time datetime="2026-11-14">14 de noviembre de 2026</time>: <a href="quehagohoy/">¿Qué hago hoy?</a> suma eventos con precio y un filtro para ver solo los gratis o los económicos.</li>
+      <li><time datetime="2026-11-11">11 de noviembre de 2026</time>: llegan la <a href="inflacion/">calculadora de inflación</a> y los <a href="precios/">precios del Perú y del mundo</a>, que se actualizan solos con datos oficiales del BCRP, el Banco Mundial y otras fuentes.</li>
+      <li><time datetime="2026-11-10">10 de noviembre de 2026</time>: abre <a href="tramites/">Trámite fácil Perú</a>, con guías paso a paso de trámites del RENIEC, la SUNAT y más.</li>
+    </ul>
+    <p>Las cifras de inflación, precios y del glosario se actualizan cada día de forma automática.</p>
   </section>
 
   <footer>

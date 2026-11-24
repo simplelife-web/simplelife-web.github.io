@@ -1100,6 +1100,7 @@ def head(title, desc, canon, ld):
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9798339025422593"
      crossorigin="anonymous"></script>
+<script src="/anuncios.js" defer></script>
 <link rel="stylesheet" href="estilo.css">
 <script src="letra.js"></script>
 </head>
@@ -1204,11 +1205,12 @@ def page(d):
 <h2>Ten en cuenta</h2>
 <ul>{ojo}</ul>
 </section>
+<div class="sl-anuncio" data-zona="tramite-medio"></div>
 
 <p class="rev">Revisado el {d.get("rev", REV)}. {e(verif)} Fuente: {src}</p>
 <p class="acciones"><button type="button" class="btn sec" onclick="window.print()">Imprimir esta guía</button></p>
 </article>
-''' + mas
+''' + mas + '<div class="sl-anuncio" data-zona="tramite-final"></div>\n'
     return head(f'{d["t"]} | Trámite fácil Perú', desc, url, ld) + body + FOOT
 
 def seccion(g):
@@ -1252,6 +1254,7 @@ def index():
 <li>Si alguien te ofrece «sacar tu trámite más rápido» a cambio de dinero, desconfía.</li>
 </ul>
 </section>
+<div class="sl-anuncio" data-zona="tramites-indice"></div>
 <script>
 (function(){{
   var q=document.getElementById('q'), it=document.querySelectorAll('.tram'), nada=document.getElementById('nada'),
