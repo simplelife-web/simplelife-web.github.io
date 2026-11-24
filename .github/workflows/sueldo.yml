@@ -1,10 +1,25 @@
+# Robot de la "Calculadora de sueldo neto Perú": todos los días lee en la SBS las
+# comisiones, la prima de seguros y el tope de cada AFP, y actualiza sueldo/afp.json.
+# Es gratis y no necesitas hacer nada. Para lanzarlo a mano: pestaña Actions →
+# "Robot sueldo (AFP)" → Run workflow.
 name: Robot sueldo (AFP)
+
 on:
+  schedule:
+    - cron: "45 12 * * *"   # 7:45 a. m. de Lima, todos los días
   workflow_dispatch:
   push:
     paths:
       - .github/robot/actualizar-afp.mjs
       - .github/workflows/sueldo.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: robot-sueldo
+  cancel-in-progress: false
+
 jobs:
   actualizar:
     runs-on: ubuntu-latest
@@ -14,4 +29,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - run: node .github/robot/actualizar-afp.mjs
+      - name: Leer la tabla de comisiones de la SBS
+        run: node .github/robot/actualizar-afp.mjs
+      - name: Guardar los datos nuevos
+        run: |
+          git config user.name "robot-sueldo"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sueldo/afp.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Robot: revisar comisiones de las AFP (SBS)"
+          for i in 1 2 3; do git pull --rebase -q && git push && exit 0; sleep 5; done
+          exit 1

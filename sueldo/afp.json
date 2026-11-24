@@ -1,0 +1,13 @@
+{
+ "fuente": "Superintendencia de Banca, Seguros y AFP (SBS)",
+ "enlace": "https://www.sbs.gob.pe/app/spp/empleadores/comisiones_spp/paginas/comision_prima.aspx",
+ "mes": "2026-11",
+ "revisado": "2026-11-24",
+ "nota": "Porcentajes sobre la remuneración bruta mensual. La prima de seguros se cobra hasta la remuneración máxima asegurable (tope, en soles).",
+ "afp": {
+  "Habitat": {"flujo": 1.47, "saldo": 1.25, "prima": 1.37, "aporte": 10, "tope": 12732.7},
+  "Integra": {"flujo": 1.55, "saldo": 0.78, "prima": 1.37, "aporte": 10, "tope": 12732.7},
+  "Prima": {"flujo": 1.6, "saldo": 1.25, "prima": 1.37, "aporte": 10, "tope": 12732.7},
+  "Profuturo": {"flujo": 1.69, "saldo": 0.68, "prima": 1.37, "aporte": 10, "tope": 12732.7}
+ }
+}
