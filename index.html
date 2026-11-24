@@ -94,7 +94,9 @@
   .t6 .icon { background: linear-gradient(135deg, #fde8ec, #f9cdd6); --b1: #f4b6c3; --b2: #fff3f5; }
   .t5 .icon { background: linear-gradient(135deg, #def3f3, #bfe5e6); --b1: #a9dadb; --b2: #effafa; }
   .t7 .icon { background: linear-gradient(135deg, #e6edfb, #cbd9f6); --b1: #b7c9f0; --b2: #f2f6fe; }
-  .t10 .icon { background: linear-gradient(135deg, #f3ecfb, #e2d3f5); --b1: #d2bdef; --b2: #f9f5fe; }
+  .t8 .icon { background: linear-gradient(135deg, #efe9fb, #ddd0f5); --b1: #cdbdf0; --b2: #f7f3fe; }
+  .t9 .icon { background: linear-gradient(135deg, #eef6df, #d8ebba); --b1: #c6e19c; --b2: #f6fbee; }
+  .t10 .icon { background: linear-gradient(135deg, #fdeee3, #f8d9c2); --b1: #f2c6a6; --b2: #fff6ef; }
   .soon .icon { background: linear-gradient(135deg, #eef6f1, #e0efe6); --b1: #d3e9dc; --b2: #f6fbf8; }
   @media (prefers-color-scheme: dark) {
     .t1 .icon { background: linear-gradient(135deg, #1f3a2f, #18302a); --b1: #24473a; --b2: #2a4c3f; }
@@ -104,7 +106,9 @@
     .t6 .icon { background: linear-gradient(135deg, #3a1f26, #311a20); --b1: #4a2630; --b2: #512a35; }
     .t5 .icon { background: linear-gradient(135deg, #17333a, #142b31); --b1: #1d4048; --b2: #21474f; }
     .t7 .icon { background: linear-gradient(135deg, #1b2740, #172137); --b1: #22324f; --b2: #263858; }
-    .t10 .icon { background: linear-gradient(135deg, #2c2140, #241b36); --b1: #382a52; --b2: #3d2e59; }
+    .t8 .icon { background: linear-gradient(135deg, #2a2140, #231b37); --b1: #33284f; --b2: #3a2d58; }
+    .t9 .icon { background: linear-gradient(135deg, #26331a, #1f2a15); --b1: #2f4020; --b2: #344624; }
+    .t10 .icon { background: linear-gradient(135deg, #3a281c, #30211a); --b1: #4a3424; --b2: #503928; }
     .soon .icon { background: linear-gradient(135deg, #1d2a24, #18231e); --b1: #23352c; --b2: #273a30; }
   }
   .tool h2 { font-size: 1.25rem; line-height: 1.25; margin: 0 0 6px; }
@@ -114,8 +118,7 @@
   .soon h2 { color: var(--text); }
   /* El cuadro de ideas ocupa toda la fila, en horizontal, para no dejar huecos */
   .soon-li { grid-column: 1 / -1; }
-  /* Con 7 herramientas en 3 columnas, el cuadro de ideas ocupa las 2 columnas libres de la última fila */
-  @media (min-width: 940px) { .soon-li { grid-column: span 2; } }
+  /* Con 9 herramientas en 3 columnas, el cuadro de ideas ocupa una fila completa, en horizontal */
   .soon { flex-direction: row; gap: 22px; padding: 14px 22px; text-align: left; justify-content: flex-start; }
   .soon .icon { flex: 0 0 160px; width: 160px; height: 96px; margin: 0; }
   .soon .icon svg { width: 84px; height: 84px; }
@@ -333,6 +336,50 @@
       </a>
     </li>
     <li>
+      <a class="tool t8" href="prestamos/">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 128 128"><g>
+<path d="M14 106h100" stroke="#7a5cc0" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="18" y="34" width="46" height="62" rx="8" fill="#ffffff" stroke="#6a4fb8" stroke-width="2.5"/>
+<rect x="25" y="41" width="32" height="12" rx="3" fill="#e4dbf7"/>
+<text x="54" y="51" text-anchor="end" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#5a3fa8">TEA</text>
+<circle cx="30" cy="64" r="4" fill="#cdbdf0"/><circle cx="41" cy="64" r="4" fill="#cdbdf0"/><circle cx="52" cy="64" r="4" fill="#cdbdf0"/>
+<circle cx="30" cy="76" r="4" fill="#cdbdf0"/><circle cx="41" cy="76" r="4" fill="#cdbdf0"/><circle cx="52" cy="76" r="4" fill="#9b7fe0"/>
+<rect x="26" y="84" width="30" height="6" rx="3" fill="#9b7fe0"/>
+<ellipse cx="92" cy="94" rx="18" ry="5" fill="#e0b032"/><ellipse cx="92" cy="88" rx="18" ry="5" fill="#f6c94a" stroke="#c9971a" stroke-width="1.5"/>
+<ellipse cx="92" cy="81" rx="18" ry="5" fill="#f6c94a" stroke="#c9971a" stroke-width="1.5"/><ellipse cx="92" cy="74" rx="18" ry="5" fill="#f6c94a" stroke="#c9971a" stroke-width="1.5"/>
+<circle cx="92" cy="52" r="15" fill="#f6c94a" stroke="#c9971a" stroke-width="2"/>
+<ellipse cx="87" cy="50" rx="2.2" ry="2.8" fill="#5a3d05"/><ellipse cx="97" cy="50" rx="2.2" ry="2.8" fill="#5a3d05"/><circle cx="87.8" cy="49" r=".8" fill="#fff"/><circle cx="97.8" cy="49" r=".8" fill="#fff"/>
+<path d="M88.5 56q3.5 3 7 0" stroke="#5a3d05" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+<path d="M76 30l10-8 8 5 12-11" stroke="#5cbf7a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M100 16h6v6" stroke="#5cbf7a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M112 70l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="#f6c94a"/>
+</g></svg></span>
+        <h2>Simulador de préstamos y ahorro</h2>
+        <p>¿Cuánto pagarás de intereses? ¿Cuánto crecerá tu ahorro? Pon la TEA y el plazo y mira tu cuota, el cronograma y la TCEA.</p>
+        <span class="go">Simular →</span>
+      </a>
+    </li>
+    <li>
+      <a class="tool t9" href="sueldo/">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 128 128"><g>
+<rect x="18" y="26" width="58" height="76" rx="8" fill="#ffffff" stroke="#5b8a1f" stroke-width="2.5"/>
+<path d="M28 40h38M28 50h28" stroke="#b7d98a" stroke-width="4" stroke-linecap="round"/>
+<path d="M28 64h20M28 74h20M28 84h20" stroke="#d9e8c4" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M54 64h12M54 74h12" stroke="#e07a5f" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M54 84h12" stroke="#2f8f73" stroke-width="4" stroke-linecap="round"/>
+<circle cx="92" cy="78" r="24" fill="#f6c94a" stroke="#c9971a" stroke-width="2.5"/><circle cx="92" cy="78" r="18" fill="none" stroke="#e0b032" stroke-width="2"/>
+<ellipse cx="85" cy="76" rx="2.6" ry="3.2" fill="#5a3d05"/><ellipse cx="99" cy="76" rx="2.6" ry="3.2" fill="#5a3d05"/><circle cx="85.9" cy="75" r=".9" fill="#fff"/><circle cx="99.9" cy="75" r=".9" fill="#fff"/>
+<circle cx="81" cy="83" r="2.3" fill="#f29a9a" opacity=".85"/><circle cx="103" cy="83" r="2.3" fill="#f29a9a" opacity=".85"/>
+<path d="M88 85q4 3 8 0" stroke="#5a3d05" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+<text x="92" y="67" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#9a6d0a">S/</text>
+<path d="M100 24l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#f6c94a"/>
+</g></svg></span>
+        <h2>Calculadora de sueldo neto Perú</h2>
+        <p>Pon tu sueldo y mira cuánto te descuentan de AFP u ONP y de renta, y cuánto recibes de gratificación y CTS.</p>
+        <span class="go">Calcular mi sueldo →</span>
+      </a>
+    </li>
+    <li>
       <a class="tool t10" href="guias/">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 128 128"><g>
 <rect x="22" y="24" width="64" height="82" rx="8" fill="#ffffff" stroke="#6250d6" stroke-width="2.5"/>
@@ -390,11 +437,11 @@
   <section class="about">
     <h2>Novedades</h2>
     <ul class="novedades">
+      <li><time datetime="2026-11-24">24 de noviembre de 2026</time>: nueva <a href="sueldo/">calculadora de sueldo neto</a>: cuánto te descuentan de AFP u ONP y de renta, y cuánto recibes de gratificación y CTS, con las comisiones oficiales de la SBS.</li>
+      <li><time datetime="2026-11-24">24 de noviembre de 2026</time>: nuevo <a href="prestamos/">simulador de préstamos y ahorro</a>, con cronograma de pagos, TCEA, pagos adelantados y metas de ahorro.</li>
       <li><time datetime="2026-11-23">23 de noviembre de 2026</time>: abre <a href="guias/">Economía peruana en simple</a>, con guías sobre la <a href="guias/inflacion-en-el-peru.html">inflación</a>, el <a href="guias/precio-del-dolar-en-el-peru.html">precio del dólar</a> y <a href="guias/que-subio-mas-de-precio.html">qué subió más de precio</a>, con gráficos hechos con datos del BCRP.</li>
       <li><time datetime="2026-11-14">14 de noviembre de 2026</time>: el <a href="glosario/">Glosario económico</a> llega a 512 conceptos, con fórmulas explicadas y videos para aprender más.</li>
       <li><time datetime="2026-11-14">14 de noviembre de 2026</time>: nueva herramienta para <a href="youtube/">transcribir videos de YouTube</a> y pestaña de <a href="transcriptor/#dictado">dictado por voz</a> en el Transcriptor.</li>
-      <li><time datetime="2026-11-14">14 de noviembre de 2026</time>: <a href="quehagohoy/">¿Qué hago hoy?</a> suma eventos con precio y un filtro para ver solo los gratis o los económicos.</li>
-      <li><time datetime="2026-11-11">11 de noviembre de 2026</time>: llegan la <a href="inflacion/">calculadora de inflación</a> y los <a href="precios/">precios del Perú y del mundo</a>, que se actualizan solos con datos oficiales del BCRP, el Banco Mundial y otras fuentes.</li>
     </ul>
     <p>Las cifras de inflación, precios y del glosario se actualizan cada día de forma automática.</p>
   </section>
