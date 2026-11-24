@@ -11,6 +11,7 @@
     { href: 'quehagohoy/', texto: '¿Qué hago hoy?' },
     { href: 'youtube/', texto: 'YouTube a texto' },
     { href: 'inflacion/', texto: 'Inflación' },
+    { href: 'prestamos/', texto: 'Préstamos' },
     { href: 'precios/', texto: 'Precios' },
     { href: 'glosario/', texto: 'Glosario' }
   ];
