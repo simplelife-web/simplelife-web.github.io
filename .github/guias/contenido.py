@@ -315,7 +315,7 @@ def subio_mas(D):
 
 
 GUIAS = [
-    {"slug": "inflacion-en-el-peru", "publicar": "2026-11-24", "emoji": "🎈", "tema": "Precios", "minutos": 5,
+    {"slug": "inflacion-en-el-peru", "publicar": "2026-11-23", "emoji": "🎈", "tema": "Precios", "minutos": 5,
      "titulo": "La inflación en el Perú: qué es, cómo va y por qué la meta es 2 %",
      "descripcion": "Qué es la inflación, cómo se mide en el Perú, cómo va hoy y por qué el BCRP busca que esté entre 1 % y 3 %. Con un gráfico de 2003 a hoy hecho con datos oficiales.",
      "necesita": ["inflacion12", "inflacion_mes"], "cuerpo": inflacion,
@@ -323,14 +323,14 @@ GUIAS = [
      "glosario": [("inflacion", "Inflación"), ("ipc", "IPC"), ("meta-de-inflacion", "Meta de inflación"),
                   ("inflacion-subyacente", "Inflación subyacente"), ("poder-adquisitivo", "Poder adquisitivo"),
                   ("deflacion", "Deflación"), ("bcrp", "BCRP")]},
-    {"slug": "precio-del-dolar-en-el-peru", "publicar": "2026-11-24", "emoji": "💵", "tema": "Dólar", "minutos": 5,
+    {"slug": "precio-del-dolar-en-el-peru", "publicar": "2026-11-23", "emoji": "💵", "tema": "Dólar", "minutos": 5,
      "titulo": "El precio del dólar en el Perú: por qué sube y por qué baja",
      "descripcion": "Qué es el tipo de cambio, cuánto cuesta hoy el dólar, qué lo hace subir o bajar y cómo te afecta. Con un gráfico desde 1995 hecho con datos del BCRP.",
      "necesita": ["tc"], "cuerpo": dolar,
      "glosario": [("tipo-de-cambio", "Tipo de cambio"), ("depreciacion-y-apreciacion", "Depreciación y apreciación"),
                   ("intervencion-cambiaria", "Intervención cambiaria"), ("efecto-traspaso", "Efecto traspaso"),
                   ("dolarizacion", "Dolarización"), ("tipo-de-cambio-informal", "Tipo de cambio informal")]},
-    {"slug": "que-subio-mas-de-precio", "publicar": "2026-11-24", "emoji": "🛒", "tema": "Precios", "minutos": 4,
+    {"slug": "que-subio-mas-de-precio", "publicar": "2026-11-23", "emoji": "🛒", "tema": "Precios", "minutos": 4,
      "titulo": "¿Qué subió más de precio en Lima desde la pandemia?",
      "descripcion": "Comida, comer fuera, transporte, alquiler, educación y más: cuánto subió cada rubro del IPC de Lima desde diciembre de 2019 y en el último año, con gráficos propios.",
      "necesita": ["rubro:PN01271PM", "rubro:PN01383PM", "rubro:PN01302PM"], "cuerpo": subio_mas,

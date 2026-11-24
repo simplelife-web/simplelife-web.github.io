@@ -30,7 +30,7 @@ RAIZ = os.path.normpath(os.path.join(AQUI, "..", ".."))
 SALIDA = os.path.join(RAIZ, "guias")
 BASE = "https://simplelife-web.github.io/guias/"
 HOY = datetime.now(timezone(timedelta(hours=-5))).date()  # Lima
-LANZAMIENTO = "2026-11-24"  # las guías de este día van juntas en una sola línea de Novedades
+LANZAMIENTO = "2026-11-23"  # las guías de este día van juntas en una sola línea de Novedades
 
 
 def fecha_larga(iso):
