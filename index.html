@@ -94,6 +94,7 @@
   .t6 .icon { background: linear-gradient(135deg, #fde8ec, #f9cdd6); --b1: #f4b6c3; --b2: #fff3f5; }
   .t5 .icon { background: linear-gradient(135deg, #def3f3, #bfe5e6); --b1: #a9dadb; --b2: #effafa; }
   .t7 .icon { background: linear-gradient(135deg, #e6edfb, #cbd9f6); --b1: #b7c9f0; --b2: #f2f6fe; }
+  .t8 .icon { background: linear-gradient(135deg, #eef6df, #d8ebba); --b1: #c6e19c; --b2: #f6fbee; }
   .soon .icon { background: linear-gradient(135deg, #eef6f1, #e0efe6); --b1: #d3e9dc; --b2: #f6fbf8; }
   @media (prefers-color-scheme: dark) {
     .t1 .icon { background: linear-gradient(135deg, #1f3a2f, #18302a); --b1: #24473a; --b2: #2a4c3f; }
@@ -103,6 +104,7 @@
     .t6 .icon { background: linear-gradient(135deg, #3a1f26, #311a20); --b1: #4a2630; --b2: #512a35; }
     .t5 .icon { background: linear-gradient(135deg, #17333a, #142b31); --b1: #1d4048; --b2: #21474f; }
     .t7 .icon { background: linear-gradient(135deg, #1b2740, #172137); --b1: #22324f; --b2: #263858; }
+    .t8 .icon { background: linear-gradient(135deg, #26331a, #1f2a15); --b1: #2f4020; --b2: #344624; }
     .soon .icon { background: linear-gradient(135deg, #1d2a24, #18231e); --b1: #23352c; --b2: #273a30; }
   }
   .tool h2 { font-size: 1.25rem; line-height: 1.25; margin: 0 0 6px; }
@@ -112,8 +114,8 @@
   .soon h2 { color: var(--text); }
   /* El cuadro de ideas ocupa toda la fila, en horizontal, para no dejar huecos */
   .soon-li { grid-column: 1 / -1; }
-  /* Con 7 herramientas en 3 columnas, el cuadro de ideas ocupa las 2 columnas libres de la última fila */
-  @media (min-width: 940px) { .soon-li { grid-column: span 2; } }
+  /* Con 8 herramientas en 3 columnas, el cuadro de ideas ocupa la columna libre de la última fila, en vertical */
+  @media (min-width: 940px) { .soon-li { grid-column: span 1; } .soon-li .soon { flex-direction: column; text-align: center; justify-content: center; padding: 22px; } .soon-li .soon .icon { width: 100%; flex-basis: auto; height: 150px; margin: -8px -8px 18px; } .soon-li .soon .icon svg { width: 110px; height: 110px; } }
   .soon { flex-direction: row; gap: 22px; padding: 14px 22px; text-align: left; justify-content: flex-start; }
   .soon .icon { flex: 0 0 160px; width: 160px; height: 96px; margin: 0; }
   .soon .icon svg { width: 84px; height: 84px; }
@@ -330,6 +332,26 @@
         <span class="go">Ver los gráficos →</span>
       </a>
     </li>
+    <li>
+      <a class="tool t8" href="sueldo/">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 128 128"><g>
+<rect x="18" y="26" width="58" height="76" rx="8" fill="#ffffff" stroke="#5b8a1f" stroke-width="2.5"/>
+<path d="M28 40h38M28 50h28" stroke="#b7d98a" stroke-width="4" stroke-linecap="round"/>
+<path d="M28 64h20M28 74h20M28 84h20" stroke="#d9e8c4" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M54 64h12M54 74h12" stroke="#e07a5f" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M54 84h12" stroke="#2f8f73" stroke-width="4" stroke-linecap="round"/>
+<circle cx="92" cy="78" r="24" fill="#f6c94a" stroke="#c9971a" stroke-width="2.5"/><circle cx="92" cy="78" r="18" fill="none" stroke="#e0b032" stroke-width="2"/>
+<ellipse cx="85" cy="76" rx="2.6" ry="3.2" fill="#5a3d05"/><ellipse cx="99" cy="76" rx="2.6" ry="3.2" fill="#5a3d05"/><circle cx="85.9" cy="75" r=".9" fill="#fff"/><circle cx="99.9" cy="75" r=".9" fill="#fff"/>
+<circle cx="81" cy="83" r="2.3" fill="#f29a9a" opacity=".85"/><circle cx="103" cy="83" r="2.3" fill="#f29a9a" opacity=".85"/>
+<path d="M88 85q4 3 8 0" stroke="#5a3d05" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+<text x="92" y="67" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#9a6d0a">S/</text>
+<path d="M100 24l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#f6c94a"/>
+</g></svg></span>
+        <h2>Calculadora de sueldo neto Perú</h2>
+        <p>Pon tu sueldo y mira cuánto te descuentan de AFP u ONP y de renta, y cuánto recibes de gratificación y CTS.</p>
+        <span class="go">Calcular mi sueldo →</span>
+      </a>
+    </li>
     <li class="soon-li">
       <div class="tool soon">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 128 128"><g>
@@ -368,11 +390,11 @@
   <section class="about">
     <h2>Novedades</h2>
     <ul class="novedades">
+      <li><time datetime="2026-11-24">24 de noviembre de 2026</time>: nueva <a href="sueldo/">calculadora de sueldo neto</a>: cuánto te descuentan de AFP u ONP y de renta, y cuánto recibes de gratificación y CTS, con las comisiones oficiales de la SBS.</li>
       <li><time datetime="2026-11-14">14 de noviembre de 2026</time>: el <a href="glosario/">Glosario económico</a> llega a 512 conceptos, con fórmulas explicadas y videos para aprender más.</li>
       <li><time datetime="2026-11-14">14 de noviembre de 2026</time>: nueva herramienta para <a href="youtube/">transcribir videos de YouTube</a> y pestaña de <a href="transcriptor/#dictado">dictado por voz</a> en el Transcriptor.</li>
       <li><time datetime="2026-11-14">14 de noviembre de 2026</time>: <a href="quehagohoy/">¿Qué hago hoy?</a> suma eventos con precio y un filtro para ver solo los gratis o los económicos.</li>
       <li><time datetime="2026-11-11">11 de noviembre de 2026</time>: llegan la <a href="inflacion/">calculadora de inflación</a> y los <a href="precios/">precios del Perú y del mundo</a>, que se actualizan solos con datos oficiales del BCRP, el Banco Mundial y otras fuentes.</li>
-      <li><time datetime="2026-11-10">10 de noviembre de 2026</time>: abre <a href="tramites/">Trámite fácil Perú</a>, con guías paso a paso de trámites del RENIEC, la SUNAT y más.</li>
     </ul>
     <p>Las cifras de inflación, precios y del glosario se actualizan cada día de forma automática.</p>
   </section>
