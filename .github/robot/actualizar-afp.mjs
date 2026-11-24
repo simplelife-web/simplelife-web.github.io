@@ -16,15 +16,23 @@ async function traer() {
   for (let intento = 1; intento <= 4; intento++) {
     try {
       const r = await fetch(URL_SBS, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(60000) });
-      if (r.ok) return await r.text();
-      console.log(`Intento ${intento}: la SBS respondió ${r.status}`);
+      const html = r.ok ? await r.text() : "";
+      if (r.ok && /HABITAT/i.test(html) && /PROFUTURO/i.test(html)) return html;
+      console.log(`Intento ${intento}: la SBS respondió ${r.status}${r.ok ? " sin la tabla de comisiones" : ""}`);
     } catch (e) { console.log(`Intento ${intento}: ${e.cause?.code || e.message}`); }
     await new Promise((ok) => setTimeout(ok, 5000 * intento));
   }
   throw new Error("No se pudo descargar la tabla de la SBS");
 }
 
-const html = await traer();
+// Si la SBS falla o cambia su página, se conservan los últimos valores guardados
+// (la calculadora sigue funcionando) y el robot avisa sin romperse.
+function conservar(motivo) {
+  console.log(`::warning::${motivo}. Se conservan los valores guardados en sueldo/afp.json.`);
+  process.exit(0);
+}
+let html;
+try { html = await traer(); } catch (e) { conservar(e.message); }
 const texto = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, " ")
   .replace(/<\/(td|th)>/gi, " | ").replace(/<[^>]+>/g, " ")
   .replace(/&nbsp;/g, " ").replace(/\s+/g, " ");
@@ -34,7 +42,7 @@ const afp = {};
 for (const n of AFPS) {
   const re = new RegExp(n + "\\s*\\|\\s*([\\d,]+)\\s*%\\s*\\|\\s*([\\d,]+)\\s*%\\s*\\|\\s*([\\d,]+)\\s*%\\s*\\|\\s*([\\d,]+)\\s*%\\s*\\|\\s*([\\d\\s.,]+?)\\s*\\|");
   const m = re.exec(texto);
-  if (!m) throw new Error(`No se encontró la fila de ${n}`);
+  if (!m) conservar(`No se encontró la fila de ${n} en la página de la SBS`);
   afp[n.charAt(0) + n.slice(1).toLowerCase()] = {
     flujo: num(m[1]), saldo: num(m[2]), prima: num(m[3]), aporte: num(m[4]), tope: num(m[5])
   };
@@ -44,7 +52,7 @@ for (const n of AFPS) {
 for (const [n, a] of Object.entries(afp)) {
   const ok = a.flujo > 0 && a.flujo < 4 && a.saldo >= 0 && a.saldo < 3 && a.prima > 0.5 && a.prima < 3 &&
     a.aporte >= 8 && a.aporte <= 15 && a.tope > 5000 && a.tope < 40000;
-  if (!ok) throw new Error(`Valores raros para ${n}: ${JSON.stringify(a)}`);
+  if (!ok) conservar(`Valores raros para ${n}: ${JSON.stringify(a)}`);
 }
 const mes = /Al mes de devengue\s*(\d{4}-\d{2})/.exec(texto)?.[1] || null;
 
