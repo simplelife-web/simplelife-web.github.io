@@ -12,6 +12,7 @@
     { href: 'youtube/', texto: 'YouTube a texto' },
     { href: 'inflacion/', texto: 'Inflación' },
     { href: 'precios/', texto: 'Precios' },
+    { href: 'guias/', texto: 'Guías' },
     { href: 'glosario/', texto: 'Glosario' }
   ];
   var EXTRA = [
