@@ -185,8 +185,11 @@ def pagina_guia(g, D, previa, siguiente):
     if cuerpo.get("recuerda"):
         p.append('<section class="card ojo">\n<h2>Para recordar</h2>\n<ul>%s</ul>\n</section>\n' % "".join(
             "<li>%s</li>" % x for x in cuerpo["recuerda"]))
-    if g.get("herramienta"):
-        p.append('<p class="botones"><a class="btn" href="%s">%s</a></p>\n' % g["herramienta"])
+    herr = g.get("herramienta")
+    if herr and herr[0].startswith("../") and not os.path.exists(os.path.join(SALIDA, herr[0])):
+        herr = None  # la herramienta todavía no existe en el sitio
+    if herr:
+        p.append('<p class="botones"><a class="btn" href="%s">%s</a></p>\n' % herr)
     if g.get("glosario"):
         p.append('<section class="rel">\n<h2>Conceptos del glosario</h2>\n<ul class="chips">%s</ul>\n</section>\n' % "".join(
             '<li><a href="../glosario/%s.html">%s</a></li>' % (s, html.escape(t)) for s, t in g["glosario"]))

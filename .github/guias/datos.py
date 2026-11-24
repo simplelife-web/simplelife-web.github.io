@@ -29,7 +29,7 @@ HOY = date.today()
 # clave: lista de intentos (código, "mensual" | "diaria", cómo resumir el mes, desde)
 SERIES = {
     "tasa_ref": [("PD12301MD", "diaria", "ultimo", "2003-09-01")],
-    "rin": [("PN00026MM", "mensual", None, "1995-1"), ("PD04650MD", "diaria", "ultimo", "2000-01-01")],
+    "rin": [("PD04650MD", "diaria", "ultimo", "2000-01-01")],  # en millones de US$ (la mensual PN00026MM está en soles)
     "pbi": [("PN01728AM", "mensual", None, "2004-1")],
     "desempleo": [("PN38063GM", "mensual", None, "2001-1")],
     "cobre": [("PN01652XM", "mensual", None, "2000-1"), ("PD04701XD", "diaria", "promedio", "2000-01-01")],

@@ -314,6 +314,379 @@ def subio_mas(D):
     }
 
 
+
+# ---------- utilidades para las guías en cola ----------
+def extremos(s, desde=None):
+    p = puntos(s, desde)
+    return max(p, key=lambda x: x[1]), min(p, key=lambda x: x[1])
+
+
+def fuente_cifra(D, clave):
+    c = D.get("cifras", {}).get(clave)
+    return [(c["fuente"] + ": " + c["oficial"], c["enlace"])] if c else []
+
+
+def promedio_12(s):
+    p = puntos(s)[-12:]
+    return sum(v for _, v in p) / len(p)
+
+
+# ---------- 4. Tasa de referencia ----------
+def tasa_ref(D):
+    s = D["series"]["tasa_ref"]
+    ym, v = puntos(s)[-1]
+    inf = D["series"]["inflacion12"]
+    ym_i, v_i = puntos(inf)[-1]
+    alto, bajo = extremos(s)
+    hace12 = valor_en(s, ym_mas(ym, -12))
+    cambios = 0
+    previo = None
+    for m, x in puntos(s, ym_mas(ym, -12)):
+        if previo is not None and abs(x - previo) > 1e-9:
+            cambios += 1
+        previo = x
+    real = v - v_i
+    x0 = s["x0"]
+    _, vi = recorte(inf, x0)
+    graf = linea("Tasa de referencia del BCRP e inflación a 12 meses (%)",
+                 [{"nombre": "Tasa de referencia", "clase": "s1", "v": s["v"]},
+                  {"nombre": "Inflación a 12 meses", "clase": "s2", "v": vi[:len(s["v"])]}], x0, unidad="%", dec=2, cero=True,
+                 nota="Tasa: último dato de cada mes (BCRP, serie PD12301MD). Inflación: cálculo propio con el IPC de Lima (BCRP, serie PN38705PM).")
+    if hace12 is None or abs(v - hace12) < 1e-9:
+        frase = "Es la misma tasa que hace un año."
+    elif v > hace12:
+        frase = "Hace un año estaba en %s, así que hoy está más alta." % pct(hace12, 2)
+    else:
+        frase = "Hace un año estaba en %s, así que hoy está más baja." % pct(hace12, 2)
+    secciones = [
+        card("Qué es",
+             "La <a href=\"../glosario/tasa-de-referencia.html\">tasa de referencia</a> es la tasa de interés que el Banco Central de Reserva "
+             "del Perú (BCRP) fija como guía para los préstamos de un día entre bancos. No es la tasa que te cobra tu banco, pero es el punto "
+             "de partida: cuando el BCRP la mueve, poco a poco se mueven también las tasas de los créditos y de los depósitos.",
+             "El Directorio del BCRP la revisa una vez al mes, en fechas que anuncia con anticipación, y publica un comunicado que explica su decisión."),
+        card("Cómo va hoy",
+             "A %s, la tasa de referencia está en <strong>%s</strong>. %s En los últimos doce meses, el BCRP la cambió %d %s."
+             % (mes_txt(ym, True), pct(v, 2), frase, cambios, "vez" if cambios == 1 else "veces"),
+             graf,
+             "Desde %s, la tasa más alta fue %s (%s) y la más baja, %s (%s)."
+             % (mes_txt(x0, True), pct(alto[1], 2), mes_txt(alto[0], True), pct(bajo[1], 2), mes_txt(bajo[0], True))),
+        card("Por qué sube o baja",
+             "La tarea principal del BCRP es cuidar que la inflación se quede entre 1 % y 3 % al año. La tasa de referencia es su herramienta "
+             "principal para eso:",
+             "<ul><li><strong>Si la inflación amenaza con pasarse de la meta</strong>, el BCRP sube la tasa. Los créditos se encarecen, la gente "
+             "y las empresas piden menos préstamos y gastan menos, y eso le quita presión a los precios.</li>"
+             "<li><strong>Si la economía está débil y la inflación baja</strong>, el BCRP baja la tasa. Los créditos se abaratan, se anima el gasto "
+             "y la inversión, y la economía se reactiva.</li></ul>",
+             "Como las decisiones tardan varios meses en sentirse, el BCRP no mira solo la inflación de hoy sino la que espera para los "
+             "próximos meses; por eso las <a href=\"../glosario/expectativas.html\">expectativas</a> pesan tanto."),
+        card("La tasa real",
+             "Una forma sencilla de saber si la tasa «aprieta» o «afloja» es restarle la inflación. A %s la tasa es %s y la inflación de 12 meses "
+             "(%s) es %s, así que la tasa real calculada de esta manera es de %s. %s"
+             % (mes_txt(ym, True), pct(v, 2), mes_txt(ym_i, True), pct(v_i, 2), pct(real, 2),
+                "Cuando es negativa, prestar en soles rinde menos que la subida de los precios, y eso tiende a impulsar el gasto."
+                if real < 0 else "Cuando es positiva, ahorrar en soles le gana a la subida de los precios, y eso tiende a frenar el gasto."),
+             "Los economistas suelen usar la inflación esperada en vez de la pasada, pero la idea es la misma: lo que importa es la "
+             "<a href=\"../glosario/tasa-de-interes-real.html\">tasa de interés real</a>."),
+        card("Cómo llega a tu bolsillo",
+             "Cuando la tasa de referencia sube, con el tiempo suben las tasas de tarjetas, préstamos personales, créditos vehiculares e hipotecarios "
+             "nuevos, y también lo que pagan los depósitos a plazo. Cuando baja, ocurre lo contrario. Los créditos que ya tienes a tasa fija no "
+             "cambian: el efecto se ve en los créditos nuevos."),
+    ]
+    return {
+        "corto": "La tasa de referencia es la tasa de interés que fija el BCRP para guiar a todas las demás. A %s está en %s. "
+                 "El BCRP la sube para frenar la inflación y la baja para animar la economía." % (mes_txt(ym, True), pct(v, 2)),
+        "secciones": secciones,
+        "recuerda": [
+            "No es la tasa que te cobra tu banco, pero la empuja hacia arriba o hacia abajo.",
+            "Sus efectos tardan meses en llegar a los precios.",
+            "Los créditos que ya tienes a tasa fija no cambian cuando el BCRP mueve la tasa.",
+        ],
+        "fuentes": [D["fuentes"]["tasa_ref"], D["fuentes"]["ipc"]] + fuente_cifra(D, "tasa_ref") + [GLOSARIO_PDF],
+    }
+
+
+# ---------- 5. Reservas internacionales ----------
+def reservas(D):
+    s = D["series"]["rin"]
+    ym, v = puntos(s)[-1]
+    alto, bajo = extremos(s)
+    hace10 = valor_en(s, ym_mas(ym, -120))
+    tc = D.get("cifras", {}).get("tc")
+    graf = linea("Reservas internacionales netas del Perú (millones de dólares)",
+                 [{"nombre": "Reservas internacionales netas", "clase": "s1", "v": s["v"]}], s["x0"], unidad="", dec=0, cero=True,
+                 nota="Dato de fin de cada mes (BCRP, serie %s)." % D["fuentes"]["rin"][0].split("serie ")[1].split(":")[0])
+    secciones = [
+        card("Qué son",
+             "Las <a href=\"../glosario/reservas-internacionales.html\">reservas internacionales netas</a> (RIN) son los dólares y otros activos "
+             "seguros del exterior (como oro, bonos de otros países y depósitos en bancos extranjeros) que tiene el BCRP. Son, en pocas palabras, "
+             "el ahorro en moneda extranjera del país."),
+        card("Cuánto tiene el Perú",
+             "A %s, las reservas internacionales netas sumaban <strong>US$ %s millones</strong>, es decir, unos US$ %s mil millones.%s"
+             % (mes_txt(ym, True), num(v, 0), num(v / 1000, 1),
+                (" Hace diez años, en %s, eran US$ %s millones." % (mes_txt(ym_mas(ym, -120), True), num(hace10, 0))) if hace10 else ""),
+             graf,
+             "El nivel más alto de la serie fue US$ %s millones, en %s." % (num(alto[1], 0), mes_txt(alto[0], True))),
+        card("Para qué sirven",
+             "<ul><li><strong>Para calmar al dólar.</strong> Si el dólar sube de golpe, el BCRP puede vender parte de sus dólares para evitar "
+             "saltos bruscos (<a href=\"../glosario/intervencion-cambiaria.html\">intervención cambiaria</a>).</li>"
+             "<li><strong>Como seguro ante crisis.</strong> Si de pronto salen capitales del país o caen los precios de lo que exportamos, "
+             "las reservas permiten seguir pagando compromisos en dólares sin que la economía se paralice.</li>"
+             "<li><strong>Para dar confianza.</strong> Un país con reservas altas es visto como más seguro, y eso ayuda a que pague tasas "
+             "de interés más bajas cuando se endeuda.</li></ul>",
+             "En el Perú importan especialmente porque una parte de los créditos y depósitos todavía está en dólares "
+             "(<a href=\"../glosario/dolarizacion.html\">dolarización</a>): si el dólar saltara sin control, muchas familias y empresas "
+             "con deudas en dólares tendrían problemas."),
+        card("Lo que no son",
+             "Las reservas no son una «caja» que el Gobierno pueda gastar en obras o en bonos: pertenecen al BCRP, que es autónomo, y "
+             "su papel es respaldar la estabilidad de la moneda. Tampoco son todo ganancia: una parte corresponde a depósitos en dólares "
+             "que los bancos y el sector público mantienen en el BCRP."),
+    ]
+    return {
+        "corto": "Las reservas internacionales son el ahorro en dólares y otros activos seguros que guarda el BCRP. A %s sumaban unos "
+                 "US$ %s mil millones y sirven para calmar al dólar y proteger al país en una crisis." % (mes_txt(ym, True), num(v / 1000, 1)),
+        "secciones": secciones,
+        "recuerda": [
+            "Las reservas son del BCRP, no del Gobierno: no se usan para gasto público.",
+            "Sirven como seguro: lo ideal es no tener que usarlas en grande.",
+            "Pesan más en países con muchos créditos en dólares, como el Perú.",
+        ],
+        "fuentes": [D["fuentes"]["rin"]] + fuente_cifra(D, "rin") + [GLOSARIO_PDF],
+    }
+
+
+# ---------- 6. Crecimiento del PBI ----------
+def pbi(D):
+    s = D["series"]["pbi"]
+    ym, v = puntos(s)[-1]
+    prom = promedio_12(s)
+    alto, bajo = extremos(s)
+    negativos = sum(1 for _, x in puntos(s)[-12:] if x < 0)
+    graf = linea("Crecimiento de la producción nacional frente al mismo mes del año anterior (%)",
+                 [{"nombre": "Variación a 12 meses", "clase": "s1", "v": s["v"]}], s["x0"], unidad="%", dec=1, cero=True,
+                 nota="BCRP, serie PN01728AM (con datos del INEI). La línea oscura marca el cero: debajo, la economía produjo menos que un año antes.")
+    secciones = [
+        card("Qué es el PBI",
+             "El <a href=\"../glosario/pbi.html\">producto bruto interno (PBI)</a> es el valor de todo lo que se produce en el país en un periodo: "
+             "minerales, cosechas, edificios, ropa, servicios de transporte, comercio, salud, todo. Cuando el PBI crece, en general hay más "
+             "ventas, más empleo y más ingresos."),
+        card("Cómo va hoy",
+             "En %s, la producción nacional fue <strong>%s</strong> %s que en el mismo mes del año anterior. En promedio, en los últimos doce "
+             "meses publicados, cada mes produjo %s %s que un año antes%s."
+             % (mes_txt(ym, True), pct(abs(v), 1), "mayor" if v >= 0 else "menor", pct(abs(prom), 1), "más" if prom >= 0 else "menos",
+                (" (en %d de esos meses la variación fue negativa)" % negativos) if negativos else ""),
+             graf,
+             ("La caída más fuerte de la serie fue de %s, en %s%s. " % (
+                 pct(bajo[1], 1), mes_txt(bajo[0], True),
+                 ", cuando la cuarentena por la pandemia paralizó gran parte de la economía" if "2020-03" <= bajo[0] <= "2020-12" else ""))
+             + ("El salto más alto, %s en %s, fue sobre todo un rebote: se comparaba con meses en los que casi todo estaba cerrado."
+                % (pct(alto[1], 1), mes_txt(alto[0], True)) if "2021-03" <= alto[0] <= "2021-12" else
+                "El salto más alto fue %s, en %s." % (pct(alto[1], 1), mes_txt(alto[0], True)))),
+        card("Cómo leer este dato",
+             "El INEI publica la producción de cada mes con unas seis semanas de retraso, y la compara con el mismo mes del año anterior para "
+             "que no influyan las temporadas (en algunos meses siempre se pesca o se cosecha más). Un solo mes puede moverse por algo puntual, "
+             "como una huelga, un fenómeno climático o una fiesta: por eso conviene mirar varios meses seguidos.",
+             "Cuando la producción cae durante un tiempo prolongado se habla de <a href=\"../glosario/recesion.html\">recesión</a>."),
+        card("Crecer no es lo mismo que estar mejor",
+             "El PBI mide cuánto se produce, no cómo se reparte. Para saber si a una persona promedio le va mejor hay que mirar el "
+             "<a href=\"../glosario/pbi-per-capita.html\">PBI por habitante</a>, y para saber si a la mayoría le llega, también el empleo, "
+             "los sueldos y la pobreza. Aun así, sin crecimiento es muy difícil que mejoren esos otros indicadores."),
+    ]
+    return {
+        "corto": "El PBI mide todo lo que produce el país. En %s, la producción fue %s %s que un año antes. "
+                 "Aquí explicamos cómo leer este dato y qué dice el gráfico desde 2004." % (mes_txt(ym, True), pct(abs(v), 1), "mayor" if v >= 0 else "menor"),
+        "secciones": secciones,
+        "recuerda": [
+            "El dato mensual se compara con el mismo mes del año anterior, no con el mes previo.",
+            "Un mes aislado puede engañar: mira la tendencia de varios meses.",
+            "Más PBI no garantiza que a todos les vaya mejor, pero ayuda.",
+        ],
+        "fuentes": [D["fuentes"]["pbi"], GLOSARIO_PDF],
+    }
+
+
+# ---------- 7. Desempleo en Lima ----------
+def desempleo(D):
+    s = D["series"]["desempleo"]
+    ym, v = puntos(s)[-1]
+    alto, bajo = extremos(s)
+    hace12 = valor_en(s, ym_mas(ym, -12))
+    pre = valor_en(s, "2019-12")
+    graf = linea("Tasa de desempleo en Lima Metropolitana (%)",
+                 [{"nombre": "Tasa de desempleo", "clase": "s1", "v": s["v"]}], s["x0"], unidad="%", dec=1, cero=True,
+                 nota="Promedio móvil de tres meses (BCRP, serie PN38063GM, con datos de la encuesta de empleo del INEI).")
+    secciones = [
+        card("Qué mide",
+             "La <a href=\"../glosario/tasa-de-desempleo.html\">tasa de desempleo</a> es el porcentaje de personas que buscan trabajo activamente "
+             "y no lo encuentran, dentro de la <a href=\"../glosario/pea.html\">población económicamente activa (PEA)</a>: quienes trabajan más "
+             "quienes buscan trabajo. Quien no busca (por ejemplo, porque estudia o se cansó de buscar) no cuenta como desempleado.",
+             "En Lima Metropolitana, el INEI la calcula cada mes con una encuesta a hogares. Para que el dato no salte demasiado, se publica "
+             "como promedio de tres meses."),
+        card("Cómo va hoy",
+             "En el trimestre que termina en %s, la tasa de desempleo en Lima fue de <strong>%s</strong>.%s%s"
+             % (mes_txt(ym, True), pct(v, 1),
+                (" Un año antes era %s." % pct(hace12, 1)) if hace12 is not None else "",
+                (" Antes de la pandemia, en diciembre de 2019, era %s." % pct(pre, 1)) if pre is not None else ""),
+             graf,
+             "El punto más alto de la serie fue %s, en %s, durante la pandemia." % (pct(alto[1], 1), mes_txt(alto[0], True))
+             if alto[0] >= "2020-03" and alto[0] <= "2021-12" else
+             "El punto más alto de la serie fue %s, en %s." % (pct(alto[1], 1), mes_txt(alto[0], True))),
+        card("Poco desempleo no siempre es buen empleo",
+             "La tasa de desempleo puede verse baja aunque falte trabajo de calidad, porque en el Perú muchas personas no pueden darse el lujo de no "
+             "trabajar: si no encuentran un empleo formal, se las arreglan con trabajos por su cuenta, a veces de pocas horas o con poco ingreso.",
+             "Por eso, además del desempleo, conviene mirar el <a href=\"../glosario/subempleo.html\">subempleo</a> y la "
+             "<a href=\"../glosario/informalidad.html\">informalidad</a>, que muestran cuántos trabajan sin beneficios o ganan menos de lo necesario."),
+    ]
+    return {
+        "corto": "La tasa de desempleo dice qué parte de quienes buscan trabajo no lo encuentra. En Lima fue de %s en el trimestre que "
+                 "termina en %s. Pero un desempleo bajo no siempre significa empleo de calidad." % (pct(v, 1), mes_txt(ym, True)),
+        "secciones": secciones,
+        "recuerda": [
+            "Solo cuenta como desempleado quien busca trabajo y no lo encuentra.",
+            "El dato de Lima es un promedio de tres meses.",
+            "Para ver la calidad del empleo, mira también el subempleo y la informalidad.",
+        ],
+        "fuentes": [D["fuentes"]["desempleo"], GLOSARIO_PDF],
+    }
+
+
+# ---------- 8. Cobre ----------
+def cobre(D):
+    s = D["series"]["cobre"]
+    ym, v = puntos(s)[-1]
+    alto, bajo = extremos(s, "2005-01")
+    hace12 = valor_en(s, ym_mas(ym, -12))
+    var12 = (v / hace12 - 1) * 100 if hace12 else None
+    # La serie del BCRP viene en centavos de dólar por libra
+    graf = linea("Precio del cobre en Londres (centavos de dólar por libra)",
+                 [{"nombre": "Cobre", "clase": "s1", "v": s["v"]}], s["x0"], unidad="", dec=0, cero=True,
+                 nota="Promedio de cada mes (BCRP, serie %s)." % D["fuentes"]["cobre"][0].split("serie ")[1].split(":")[0])
+    secciones = [
+        card("Por qué el cobre importa tanto",
+             "El Perú es uno de los mayores productores de cobre del mundo y el cobre es uno de los productos que más vende al exterior. "
+             "Por eso, lo que pasa con su precio en el mercado internacional se siente aquí: cuando sube, entran más dólares, las mineras "
+             "pagan más impuestos y crece el <a href=\"../glosario/canon.html\">canon</a> que reciben las regiones productoras.",
+             "Al revés, cuando el precio cae, entran menos dólares y se recauda menos. Por eso los economistas siguen de cerca los "
+             "<a href=\"../glosario/terminos-de-intercambio.html\">términos de intercambio</a>: la relación entre los precios de lo que el "
+             "Perú vende y de lo que compra."),
+        card("Cómo va hoy",
+             "En %s, el cobre se vendió en promedio a <strong>%s centavos de dólar por libra</strong> (unos US$ %s por libra).%s"
+             % (mes_txt(ym, True), num(v, 0), num(v / 100, 2),
+                ("" if var12 is None else " Frente a un año antes está %s %s." % (pct(abs(var12), 1), "más caro" if var12 >= 0 else "más barato"))),
+             graf,
+             "Desde 2005, el promedio mensual más alto fue %s centavos (%s) y el más bajo, %s centavos (%s)."
+             % (num(alto[1], 0), mes_txt(alto[0], True), num(bajo[1], 0), mes_txt(bajo[0], True))),
+        card("Qué mueve su precio",
+             "El cobre se usa en cables, motores, construcción y aparatos electrónicos, así que su precio sube cuando la economía mundial crece "
+             "y baja cuando se enfría. Pesa mucho lo que pasa en China, el mayor comprador del mundo. También influyen la oferta (huelgas, "
+             "minas nuevas o que cierran) y, en los últimos años, la demanda para autos eléctricos y redes de energía."),
+        card("Cómo te afecta",
+             "Un cobre caro suele traer más dólares al país, lo que tiende a abaratar el dólar, y más recursos para el Estado y las regiones. "
+             "Un cobre barato hace lo contrario. Por eso el precio de un metal que casi nadie compra directamente termina influyendo en el "
+             "<a href=\"precio-del-dolar-en-el-peru.html\">precio del dólar</a> y en el presupuesto público."),
+    ]
+    return {
+        "corto": "El cobre es clave para la economía peruana: cuando su precio sube, entran más dólares y más impuestos. En %s costó en "
+                 "promedio %s centavos de dólar por libra en Londres." % (mes_txt(ym, True), num(v, 0)),
+        "secciones": secciones,
+        "recuerda": [
+            "El precio del cobre lo fija el mercado mundial, no el Perú.",
+            "Un cobre caro suele fortalecer al sol; uno barato, debilitarlo.",
+            "El canon minero que reciben las regiones depende de las ganancias de las mineras, y por eso del precio de los metales.",
+        ],
+        "fuentes": [D["fuentes"]["cobre"]] + fuente_cifra(D, "cobre") + [GLOSARIO_PDF],
+    }
+
+
+# ---------- 9. Riesgo país ----------
+def riesgo(D):
+    s = D["series"]["embig"]
+    ym, v = puntos(s)[-1]
+    alto, bajo = extremos(s)
+    hace12 = valor_en(s, ym_mas(ym, -12))
+    graf = linea("Riesgo país del Perú: diferencial EMBIG (puntos básicos)",
+                 [{"nombre": "Riesgo país (EMBIG Perú)", "clase": "s1", "v": s["v"]}], s["x0"], unidad="", dec=0, cero=True,
+                 nota="Promedio de cada mes (BCRP, serie PN01129XM). 100 puntos básicos = 1 punto porcentual.")
+    secciones = [
+        card("Qué es",
+             "El <a href=\"../glosario/riesgo-pais.html\">riesgo país</a> mide cuánto más interés le piden los inversionistas al Perú, comparado "
+             "con Estados Unidos, por prestarle dinero. Se calcula con los bonos del Gobierno peruano en dólares: si rinden 1.5 puntos más que "
+             "los bonos del Tesoro de Estados Unidos, el riesgo país es de 150 <a href=\"../glosario/puntos-basicos.html\">puntos básicos</a>.",
+             "El indicador más usado es el EMBIG, que elabora el banco JP Morgan y publica el BCRP."),
+        card("Cómo va hoy",
+             "En %s, el riesgo país del Perú fue de <strong>%s puntos básicos</strong>, en promedio.%s"
+             % (mes_txt(ym, True), num(v, 0), (" Un año antes era %s." % num(hace12, 0)) if hace12 is not None else ""),
+             graf,
+             "Desde %s, el punto más alto fue %s puntos básicos (%s) y el más bajo, %s (%s)."
+             % (mes_txt(s["x0"], True), num(alto[1], 0), mes_txt(alto[0], True), num(bajo[1], 0), mes_txt(bajo[0], True))),
+        card("Por qué sube o baja",
+             "Sube cuando los inversionistas ven más peligro de que el país tenga problemas para pagar o de que su economía se complique: "
+             "crisis mundiales, caídas fuertes de los precios de los metales, ruido político o cuentas fiscales que empeoran. Baja cuando "
+             "la confianza mejora. Las crisis globales suelen subir el riesgo país de todos los países emergentes a la vez."),
+        card("Cómo te afecta",
+             "Un riesgo país bajo abarata el crédito para el Gobierno y para las grandes empresas que se financian afuera, y con el tiempo "
+             "eso se refleja en las tasas de interés dentro del país. Un riesgo país alto hace lo contrario y puede espantar inversiones. "
+             "Las <a href=\"../glosario/calificacion-de-riesgo.html\">calificaciones de riesgo</a> y el "
+             "<a href=\"../glosario/grado-de-inversion.html\">grado de inversión</a> miden algo parecido, pero con la opinión de agencias especializadas."),
+    ]
+    return {
+        "corto": "El riesgo país mide cuánto más interés piden los inversionistas para prestarle al Perú que a Estados Unidos. "
+                 "En %s fue de %s puntos básicos (unos %s puntos porcentuales)." % (mes_txt(ym, True), num(v, 0), num(v / 100, 2)),
+        "secciones": secciones,
+        "recuerda": [
+            "100 puntos básicos equivalen a 1 punto porcentual de interés extra.",
+            "Las crisis mundiales suben el riesgo país de todos los emergentes, no solo del Perú.",
+            "Un riesgo país bajo ayuda a que el crédito sea más barato.",
+        ],
+        "fuentes": [D["fuentes"]["embig"], GLOSARIO_PDF],
+    }
+
+
+# ---------- 10. Tasas de los bancos ----------
+def tasas(D):
+    a = D["series"]["tamn"]
+    p = D["series"]["tipmn"]
+    ym, va = puntos(a)[-1]
+    ymp, vp = puntos(p)[-1]
+    x0 = max(a["x0"], p["x0"])
+    _, av = recorte(a, x0)
+    _, pv = recorte(p, x0)
+    graf = linea("Tasas promedio de los bancos en soles (% efectivo anual)",
+                 [{"nombre": "Préstamos (TAMN)", "clase": "s1", "v": av}, {"nombre": "Depósitos (TIPMN)", "clase": "s2", "v": pv}],
+                 x0, unidad="%", dec=2, cero=True, nota="BCRP, series PN07807NM y PN07816NM. Promedios de todo el sistema bancario.")
+    secciones = [
+        card("Dos tasas muy distintas",
+             "Los bancos ganan sobre todo con la diferencia entre lo que cobran por prestar y lo que pagan por los depósitos. El BCRP publica "
+             "cada mes dos promedios de todo el sistema: la <strong>TAMN</strong>, tasa activa promedio en soles (lo que cobran por los préstamos), "
+             "y la <strong>TIPMN</strong>, tasa pasiva promedio (lo que pagan por los depósitos).",
+             "En %s, la TAMN fue <strong>%s</strong> y la TIPMN, <strong>%s</strong>. La diferencia es de %s puntos."
+             % (mes_txt(ym, True), pct(va, 2), pct(vp, 2), num(va - vp, 2)),
+             graf),
+        card("Por qué tanta diferencia",
+             "La TAMN es un promedio de muchos tipos de crédito, desde préstamos baratos a grandes empresas hasta tarjetas de crédito y "
+             "microcréditos con tasas muy altas. La TIPMN incluye cuentas de ahorro que casi no pagan nada y depósitos a plazo que pagan más. "
+             "Además, el banco debe cubrir el riesgo de que algunos no paguen, sus costos de operación y el "
+             "<a href=\"../glosario/encaje-bancario.html\">encaje</a>, y obtener una ganancia.",
+             "Por eso estos promedios sirven para ver tendencias, pero no para saber cuánto te cobrarán a ti: eso depende del tipo de "
+             "crédito, del plazo y de tu historial."),
+        card("Qué mirar antes de pedir o ahorrar",
+             "<ul><li>Para un préstamo, compara la <a href=\"../glosario/tcea.html\">TCEA</a>, que incluye comisiones y seguros, no solo la "
+             "<a href=\"../glosario/tea.html\">TEA</a>.</li>"
+             "<li>Para un depósito, compara la <a href=\"../glosario/trea.html\">TREA</a>, que descuenta comisiones.</li>"
+             "<li>Revisa que la entidad esté supervisada por la SBS y, si es un depósito, que esté cubierta por el Fondo de Seguro de Depósitos.</li></ul>"),
+    ]
+    return {
+        "corto": "Los bancos cobran mucho más por prestar que lo que pagan por los depósitos. En %s, la tasa promedio de los préstamos en "
+                 "soles fue %s y la de los depósitos, %s." % (mes_txt(ym, True), pct(va, 2), pct(vp, 2)),
+        "secciones": secciones,
+        "recuerda": [
+            "La TAMN y la TIPMN son promedios: tu tasa real depende del producto y de tu historial.",
+            "Para comparar préstamos usa la TCEA; para comparar depósitos, la TREA.",
+            "Las tasas del sistema siguen, con retraso, a la tasa de referencia del BCRP.",
+        ],
+        "fuentes": [D["fuentes"]["tamn"], D["fuentes"]["tipmn"], GLOSARIO_PDF],
+    }
+
+
 GUIAS = [
     {"slug": "inflacion-en-el-peru", "publicar": "2026-11-23", "emoji": "🎈", "tema": "Precios", "minutos": 5,
      "titulo": "La inflación en el Perú: qué es, cómo va y por qué la meta es 2 %",
@@ -337,4 +710,48 @@ GUIAS = [
      "herramienta": ("../precios/", "Mira los precios de cada rubro mes a mes →"),
      "glosario": [("ipc", "IPC"), ("canasta-de-consumo", "Canasta de consumo"), ("inflacion", "Inflación"),
                   ("poder-adquisitivo", "Poder adquisitivo"), ("valor-nominal-y-real", "Valor nominal y real")]},
+    {"slug": "tasa-de-referencia-del-bcrp", "publicar": "2026-11-27", "emoji": "🏦", "tema": "Banco Central", "minutos": 5,
+     "titulo": "La tasa de referencia del BCRP: qué es y cómo llega a tu bolsillo",
+     "descripcion": "Qué es la tasa de referencia del Banco Central, cómo va hoy, por qué sube o baja y cómo afecta a tus créditos y ahorros. Con un gráfico desde 2003.",
+     "necesita": ["tasa_ref", "inflacion12"], "cuerpo": tasa_ref,
+     "glosario": [("tasa-de-referencia", "Tasa de referencia"), ("politica-monetaria", "Política monetaria"),
+                  ("tasa-de-interes-interbancaria", "Tasa interbancaria"), ("tasa-de-interes-real", "Tasa de interés real"),
+                  ("expectativas", "Expectativas"), ("bcrp", "BCRP")]},
+    {"slug": "reservas-internacionales-del-peru", "publicar": "2026-12-01", "emoji": "🛟", "tema": "Banco Central", "minutos": 4,
+     "titulo": "Las reservas internacionales del Perú: el colchón de dólares del país",
+     "descripcion": "Qué son las reservas internacionales netas, cuánto tiene el Perú, para qué sirven y para qué no. Con un gráfico hecho con datos del BCRP.",
+     "necesita": ["rin"], "cuerpo": reservas,
+     "glosario": [("reservas-internacionales", "Reservas internacionales"), ("intervencion-cambiaria", "Intervención cambiaria"),
+                  ("dolarizacion", "Dolarización"), ("balanza-de-pagos", "Balanza de pagos"), ("bcrp", "BCRP")]},
+    {"slug": "crecimiento-de-la-economia-peruana", "publicar": "2026-12-04", "emoji": "📈", "tema": "Producción", "minutos": 4,
+     "titulo": "¿Cuánto crece la economía peruana? El PBI explicado mes a mes",
+     "descripcion": "Qué es el PBI, cuánto creció la producción del Perú en el último mes y en el último año, y cómo leer el dato sin confundirse. Con un gráfico desde 2004.",
+     "necesita": ["pbi"], "cuerpo": pbi,
+     "glosario": [("pbi", "PBI"), ("crecimiento-economico", "Crecimiento económico"), ("recesion", "Recesión"),
+                  ("ciclo-economico", "Ciclo económico"), ("pbi-per-capita", "PBI per cápita")]},
+    {"slug": "desempleo-en-lima", "publicar": "2026-12-08", "emoji": "💼", "tema": "Empleo", "minutos": 4,
+     "titulo": "El desempleo en Lima: qué mide y qué no te dice",
+     "descripcion": "Qué es la tasa de desempleo, cómo va en Lima Metropolitana y por qué un desempleo bajo no siempre significa buen empleo. Con un gráfico propio.",
+     "necesita": ["desempleo"], "cuerpo": desempleo,
+     "glosario": [("tasa-de-desempleo", "Tasa de desempleo"), ("pea", "PEA"), ("subempleo", "Subempleo"),
+                  ("informalidad", "Informalidad"), ("empleo-formal-e-informal", "Empleo formal e informal")]},
+    {"slug": "precio-del-cobre-y-el-peru", "publicar": "2026-12-11", "emoji": "⛏️", "tema": "Comercio exterior", "minutos": 4,
+     "titulo": "El precio del cobre y por qué mueve la economía peruana",
+     "descripcion": "Por qué el cobre es tan importante para el Perú, cuánto cuesta hoy, qué mueve su precio y cómo llega al dólar y al presupuesto. Con un gráfico propio.",
+     "necesita": ["cobre"], "cuerpo": cobre,
+     "glosario": [("terminos-de-intercambio", "Términos de intercambio"), ("canon", "Canon"), ("materias-primas", "Materias primas"),
+                  ("exportaciones-tradicionales-y-no-tradicionales", "Exportaciones tradicionales y no tradicionales")]},
+    {"slug": "riesgo-pais-del-peru", "publicar": "2026-12-15", "emoji": "🌡️", "tema": "Finanzas", "minutos": 4,
+     "titulo": "El riesgo país del Perú: qué es y por qué te importa",
+     "descripcion": "Qué es el riesgo país (EMBIG), cómo va el del Perú, qué lo hace subir o bajar y cómo afecta al crédito. Con un gráfico hecho con datos del BCRP.",
+     "necesita": ["embig"], "cuerpo": riesgo,
+     "glosario": [("riesgo-pais", "Riesgo país"), ("puntos-basicos", "Puntos básicos"), ("bono-soberano", "Bono soberano"),
+                  ("grado-de-inversion", "Grado de inversión"), ("calificacion-de-riesgo", "Calificación de riesgo")]},
+    {"slug": "tasas-de-interes-de-los-bancos", "publicar": "2026-12-18", "emoji": "💳", "tema": "Finanzas", "minutos": 4,
+     "titulo": "¿Por qué los bancos cobran tanto y pagan tan poco? Las tasas en soles",
+     "descripcion": "Cuánto cobran en promedio los bancos por prestar y cuánto pagan por los depósitos en soles, por qué hay tanta diferencia y qué mirar antes de decidir.",
+     "necesita": ["tamn", "tipmn"], "cuerpo": tasas,
+     "herramienta": ("../prestamos/", "Simula tu préstamo o tu ahorro →"),
+     "glosario": [("tasa-de-interes-activa-y-pasiva", "Tasa activa y pasiva"), ("tea", "TEA"), ("tcea", "TCEA"), ("trea", "TREA"),
+                  ("encaje-bancario", "Encaje bancario")]},
 ]
