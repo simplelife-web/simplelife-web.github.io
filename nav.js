@@ -11,7 +11,8 @@
     { href: 'quehagohoy/', texto: '¿Qué hago hoy?' },
     { href: 'youtube/', texto: 'YouTube a texto' },
     { href: 'inflacion/', texto: 'Inflación' },
-    { href: 'sueldo/', texto: 'Sueldo neto' },
+    { href: 'sueldo/', texto: 'Sueldo' },
+    { href: 'prestamos/', texto: 'Préstamos' },
     { href: 'precios/', texto: 'Precios' },
     { href: 'glosario/', texto: 'Glosario' }
   ];
@@ -52,7 +53,7 @@
     // En computadoras medianas todo debe caber en una fila: botón de inicio solo con la casita y enlaces más juntos
     '@media (min-width:861px){.sl-home span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}.sl-home{padding:8px 10px;}.sl-links a{padding:6px 8px;}.sl-in{gap:6px 10px;}}' +
     // Si aún no cabe, Acerca de, Contacto y Privacidad quedan solo en el pie de página
-    '@media (min-width:861px) and (max-width:1120px){.sl-x{display:none;}}';
+    '@media (min-width:861px) and (max-width:1360px){.sl-x{display:none;}}';
 
   var st = document.createElement('style');
   st.textContent = css;

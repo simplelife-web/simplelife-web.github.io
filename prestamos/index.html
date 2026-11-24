@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador de préstamos y ahorro Perú | Cuota, cronograma, TEA y TCEA</title>
+<link rel="icon" href="../logo.svg" type="image/svg+xml">
+<meta name="description" content="Calcula gratis la cuota de tu préstamo con la TEA, mira el cronograma de pagos y la TCEA, y simula cuánto crece tu ahorro o depósito a plazo. Explicado en simple, con tasas de referencia del BCRP.">
+<link rel="canonical" href="https://simplelife-web.github.io/prestamos/">
+<meta property="og:image" content="https://simplelife-web.github.io/og-imagen.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_PE">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://simplelife-web.github.io/"},{"@type":"ListItem","position":2,"name":"Simulador de préstamos y ahorro","item":"https://simplelife-web.github.io/prestamos/"}]},{"@type":"WebApplication","name":"Simulador de préstamos y ahorro de Simplelife","url":"https://simplelife-web.github.io/prestamos/","applicationCategory":"FinanceApplication","operatingSystem":"Navegador web","description":"Calcula la cuota de un préstamo a partir de la TEA, con cronograma de pagos, intereses totales y TCEA, y simula el crecimiento de un ahorro o depósito a plazo.","inLanguage":"es-PE","offers":{"@type":"Offer","price":"0","priceCurrency":"PEN"},"publisher":{"@type":"Organization","name":"Simplelife","url":"https://simplelife-web.github.io/","logo":"https://simplelife-web.github.io/logo.svg","email":"simplelifecontacto899@gmail.com"}}]}
+</script>
+<meta property="og:title" content="Simulador de préstamos y ahorro Perú | Cuota, cronograma y TCEA">
+<meta property="og:site_name" content="Simplelife">
+<meta property="og:description" content="¿Cuánto pagarás de intereses? ¿Cuánto crecerá tu ahorro? Simúlalo gratis con la TEA y el plazo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simplelife-web.github.io/prestamos/">
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9798339025422593"
+     crossorigin="anonymous"></script>
+<script src="/anuncios.js" defer></script>
+<link rel="stylesheet" href="../glosario/katex/katex.min.css">
+<style>
+  :root {
+    --bg: #f6f5f1; --card: #ffffff; --text: #1d1d1b; --muted: #5c5a54;
+    --line: #dedbd2; --accent: #1f6f5c; --accent-text: #ffffff; --soft: #e7f1ed;
+    --warm: #c2410c; --warm-soft: #fdeee4; --cap: #2f8f73; --int: #d9822b; --apo: #9fc9b9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151614; --card: #1e1f1d; --text: #ecebe6; --muted: #b0aea7;
+      --line: #34352f; --accent: #4fb596; --accent-text: #0d1a15; --soft: #1f2d28;
+      --warm: #f59e62; --warm-soft: #33241a; --cap: #4fb596; --int: #f0a050; --apo: #2c5a4b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent); }
+  .saltar { position: absolute; left: -999px; }
+  .saltar:focus { left: 16px; top: 8px; background: var(--card); padding: 8px 12px; z-index: 9999; }
+  .top, main, footer { max-width: 1040px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
+  .top { display: flex; align-items: center; gap: 12px; padding-top: 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .brand span { font-size: 1.45rem; font-weight: 700; line-height: 1.1; }
+  .brand b { color: var(--accent); }
+  .brand a { display: inline-flex; align-items: center; text-decoration: none; color: inherit; }
+  .hoja img { transition: transform .2s; }
+  .hoja:hover img, .hoja:focus-visible img { transform: scale(1.1) rotate(-4deg); }
+  @media (prefers-reduced-motion: reduce) { .hoja img { transition: none; } }
+  .brand small { display: block; font-size: .72rem; font-weight: 500; color: var(--muted); }
+  main { padding-top: 14px; padding-bottom: 32px; }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 8px 0 8px; }
+  h2 { font-size: 1.3rem; line-height: 1.3; margin: 0 0 10px; }
+  h3 { font-size: 1.05rem; margin: 18px 0 4px; }
+  .lead { color: var(--muted); margin: 0 0 18px; max-width: 66ch; font-size: 1.05rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; margin-bottom: 18px; }
+
+  /* Pestañas */
+  .tabs { display: flex; gap: 8px; margin: 0 0 14px; flex-wrap: wrap; }
+  .tab { font: inherit; font-weight: 700; font-size: 1rem; padding: 10px 18px; min-height: 46px; border-radius: 99px; cursor: pointer;
+    background: var(--card); color: var(--text); border: 2px solid var(--line); }
+  .tab[aria-selected="true"] { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+
+  /* Formulario */
+  .form { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: end; }
+  .campo label { display: block; font-weight: 600; font-size: .92rem; margin-bottom: 4px; }
+  .campo .ayuda { display: block; font-size: .8rem; color: var(--muted); font-weight: 400; margin-top: 3px; line-height: 1.3; }
+  input, select { font: inherit; width: 100%; min-height: 46px; padding: 8px 10px; border-radius: 12px;
+    border: 2px solid var(--line); background: var(--bg); color: var(--text); }
+  .pre, .suf { position: relative; }
+  .pre span, .suf span { position: absolute; top: 23px; transform: translateY(-50%); color: var(--muted); font-weight: 600; pointer-events: none; }
+  .pre span { left: 12px; } .pre input { padding-left: 42px; }
+  .suf span { right: 12px; } .suf input { padding-right: 70px; }
+  input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  details.mas { grid-column: 1 / -1; border-top: 1px dashed var(--line); padding-top: 10px; }
+  details.mas summary { cursor: pointer; font-weight: 600; color: var(--accent); min-height: 32px; }
+  details.mas .form { margin-top: 10px; }
+  .atajos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .atajos span { font-size: .9rem; color: var(--muted); align-self: center; }
+  .chip { font: inherit; font-size: .92rem; padding: 6px 12px; min-height: 38px; border-radius: 99px; cursor: pointer;
+    background: var(--bg); color: var(--text); border: 2px solid var(--line); }
+  .chip:hover { border-color: var(--accent); }
+  @media (max-width: 760px) { .form { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .form { grid-template-columns: 1fr; } }
+
+  /* Resultado */
+  .res { background: var(--soft); border-color: transparent; }
+  .res .grande { font-size: 1.1rem; margin: 0 0 4px; }
+  .res .cifra { display: block; font-size: 2.4rem; font-weight: 800; line-height: 1.15; color: var(--accent); letter-spacing: -.01em; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+  .stat { background: var(--card); border-radius: 14px; padding: 12px 14px; }
+  .stat b { display: block; font-size: 1.25rem; }
+  .stat small { color: var(--muted); font-size: .86rem; line-height: 1.35; display: block; }
+  .explica { margin: 14px 0 0; font-size: .95rem; color: var(--muted); }
+  .acciones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .btn { font: inherit; font-size: .95rem; font-weight: 600; padding: 8px 14px; min-height: 42px; border-radius: 99px; cursor: pointer;
+    background: var(--accent); color: var(--accent-text); border: 0; }
+  .btn.sec { background: var(--card); color: var(--accent); border: 2px solid var(--accent); }
+  @media (max-width: 760px) { .stats { grid-template-columns: 1fr 1fr; } .res .cifra { font-size: 2rem; } }
+  @media (max-width: 480px) { .stat b { font-size: 1.05rem; white-space: nowrap; } .stats { gap: 8px; } .stat { padding: 10px 10px; } }
+
+  /* Barra de proporción */
+  .prop { display: flex; height: 18px; border-radius: 99px; overflow: hidden; margin: 16px 0 6px; background: var(--line); }
+  .prop i { display: block; height: 100%; }
+  .leyenda { display: flex; flex-wrap: wrap; gap: 14px; font-size: .88rem; color: var(--muted); margin-top: 8px; }
+  .leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+  /* Gráfico */
+  .grafico svg { width: 100%; height: auto; display: block; }
+  .grafico text { fill: var(--muted); font-size: 11px; font-family: inherit; }
+  .grafico .eje { stroke: var(--line); }
+
+  /* Tabla */
+  .tabla-cont { max-height: 440px; overflow: auto; border: 1px solid var(--line); border-radius: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: .93rem; font-variant-numeric: tabular-nums; }
+  th, td { padding: 7px 10px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { position: sticky; top: 0; background: var(--card); }
+  tbody tr:nth-child(odd) { background: var(--bg); }
+  tr.marca td { font-weight: 700; }
+
+  .ref { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .ref .stat { background: var(--bg); }
+  @media (max-width: 760px) { .ref { grid-template-columns: 1fr; } }
+  .ecuacion { overflow-x: auto; overflow-y: hidden; padding: 4px 0; -webkit-overflow-scrolling: touch; }
+  .ecuacion .katex-display { margin: .5em 0; }
+  .katex { font-size: 1.12em; }
+  ul.donde { margin: 0; padding-left: 22px; }
+  .aviso { background: var(--warm-soft); border-radius: 12px; padding: 10px 14px; font-size: .95rem; }
+  .error { color: var(--warm); font-weight: 600; }
+  footer { color: var(--muted); font-size: .9rem; padding-bottom: 40px; }
+  footer p { margin: 6px 0; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<a class="saltar" href="#contenido">Ir al contenido</a>
+<script src="../nav.js"></script>
+<header class="top">
+  <span class="brand"><a class="hoja" href="../" title="Ir al inicio de Simplelife"><img src="../logo.svg" alt="Inicio Simplelife" width="48" height="48"></a><a class="brand-txt" href="../" title="Ir al inicio de Simplelife"><span>Simulador de <b>préstamos y ahorro</b><small>Perú · de Simplelife</small></span></a></span>
+</header>
+
+<main id="contenido">
+  <h1>Simulador de préstamos y ahorro: cuota, intereses y cronograma</h1>
+  <p class="lead">Escribe el monto, la tasa efectiva anual (TEA) y el plazo. Te mostramos cuánto pagarás cada mes y cuánto se va en intereses, o cuánto crecerá tu ahorro. Todo se calcula en tu navegador: no pedimos tus datos.</p>
+
+  <div class="tabs" role="tablist" aria-label="Elige qué simular">
+    <button class="tab" role="tab" id="tab-p" aria-controls="panel-p" aria-selected="true" type="button">Préstamo</button>
+    <button class="tab" role="tab" id="tab-a" aria-controls="panel-a" aria-selected="false" type="button">Ahorro o depósito a plazo</button>
+  </div>
+
+  <!-- ============ PRÉSTAMO ============ -->
+  <div id="panel-p" role="tabpanel" aria-labelledby="tab-p">
+    <section class="card" aria-label="Datos del préstamo">
+      <form class="form" id="form-p" onsubmit="return false">
+        <div class="campo">
+          <label for="p-monto">Monto del préstamo</label>
+          <div class="pre"><span>S/</span><input id="p-monto" type="text" inputmode="decimal" value="10000" autocomplete="off"></div>
+        </div>
+        <div class="campo">
+          <label for="p-tea">TEA (tasa efectiva anual)</label>
+          <div class="suf"><input id="p-tea" type="text" inputmode="decimal" value="35" autocomplete="off"><span>% anual</span></div>
+        </div>
+        <div class="campo">
+          <label for="p-plazo">Plazo</label>
+          <div class="suf"><input id="p-plazo" type="number" inputmode="numeric" min="1" max="360" value="24"><span>meses</span></div>
+        </div>
+        <details class="mas" id="p-mas">
+          <summary>Más opciones: tipo de cuota, seguro, comisiones y pagos extra</summary>
+          <div class="form">
+            <div class="campo">
+              <label for="p-tipo">Tipo de cuota</label>
+              <select id="p-tipo">
+                <option value="f">Cuotas iguales (método francés)</option>
+                <option value="a">Cuotas que bajan (método alemán)</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="p-seg">Seguro de desgravamen</label>
+              <div class="suf"><input id="p-seg" type="text" inputmode="decimal" value="0" autocomplete="off"><span>% al mes</span></div>
+              <span class="ayuda">Se cobra sobre la deuda que queda. Suele estar entre 0.03 % y 0.1 %.</span>
+            </div>
+            <div class="campo">
+              <label for="p-com">Comisión fija al mes</label>
+              <div class="pre"><span>S/</span><input id="p-com" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+              <span class="ayuda">Envío de estado de cuenta u otros cobros fijos.</span>
+            </div>
+            <div class="campo">
+              <label for="p-extra">Pago extra cada mes</label>
+              <div class="pre"><span>S/</span><input id="p-extra" type="text" inputmode="decimal" value="0" autocomplete="off"></div>
+              <span class="ayuda">Adelanto a capital para terminar antes. Es tu derecho y no tiene penalidad.</span>
+            </div>
+          </div>
+        </details>
+      </form>
+      <div class="atajos" id="atajos-p"><span>Ejemplos:</span></div>
+    </section>
+
+    <section class="card res" aria-live="polite">
+      <p class="grande" id="p-frase">Tu cuota mensual sería:</p>
+      <span class="cifra" id="p-cifra"></span>
+      <div class="stats" id="p-stats">
+        <div class="stat"><b id="p-s-int"></b><small>Total de intereses</small></div>
+        <div class="stat"><b id="p-s-tot"></b><small>Total que pagarás</small></div>
+        <div class="stat"><b id="p-s-tem"></b><small>TEM: tasa efectiva mensual</small></div>
+        <div class="stat"><b id="p-s-tcea"></b><small>TCEA aproximada: costo real con seguro y comisiones</small></div>
+      </div>
+      <div class="prop" id="p-prop" aria-hidden="true"><i style="background:var(--cap)"></i><i style="background:var(--int)"></i><i style="background:var(--warm)"></i></div>
+      <div class="leyenda" id="p-ley"></div>
+      <p class="explica" id="p-explica"></p>
+      <div class="acciones">
+        <button class="btn" type="button" data-copiar>Copiar enlace de este cálculo</button>
+        <button class="btn sec" type="button" id="p-csv">Descargar cronograma (Excel/CSV)</button>
+      </div>
+    </section>
+
+    <section class="card grafico" aria-labelledby="t-pg">
+      <h2 id="t-pg">¿Cuánto de cada cuota es interés?</h2>
+      <p class="explica" style="margin-top:0" id="p-g-txt">Al inicio casi toda la cuota se va en intereses; al final, casi toda baja tu deuda.</p>
+      <div id="p-graf" role="img" aria-label="Gráfico de barras: capital e intereses en cada periodo"></div>
+      <div class="leyenda"><span><i style="background:var(--cap)"></i>Capital (lo que baja tu deuda)</span><span><i style="background:var(--int)"></i>Intereses</span></div>
+    </section>
+
+    <section class="card" aria-labelledby="t-pc">
+      <h2 id="t-pc">Misma deuda, distinto plazo</h2>
+      <p class="explica" style="margin-top:0">Con el mismo monto y la misma TEA, un plazo más largo baja la cuota, pero sube mucho los intereses.</p>
+      <div class="tabla-cont" style="max-height:none">
+        <table>
+          <thead><tr><th scope="col">Plazo</th><th scope="col">Cuota</th><th scope="col">Total de intereses</th><th scope="col">Intereses por cada S/ 100</th></tr></thead>
+          <tbody id="p-comp"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="t-pcr">
+      <h2 id="t-pcr">Cronograma de pagos</h2>
+      <div class="tabla-cont">
+        <table>
+          <thead><tr><th scope="col">Mes</th><th scope="col">Deuda al inicio</th><th scope="col">Interés</th><th scope="col">Capital</th><th scope="col">Seguro y comisión</th><th scope="col">Cuota total</th><th scope="col">Deuda al final</th></tr></thead>
+          <tbody id="p-crono"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ AHORRO ============ -->
+  <div id="panel-a" role="tabpanel" aria-labelledby="tab-a" class="hidden">
+    <section class="card" aria-label="Datos del ahorro">
+      <form class="form" id="form-a" onsubmit="return false">
+        <div class="campo">
+          <label for="a-ini">Monto inicial</label>
+          <div class="pre"><span>S/</span><input id="a-ini" type="text" inputmode="decimal" value="5000" autocomplete="off"></div>
+        </div>
+        <div class="campo">
+          <label for="a-apo">Aporte cada mes</label>
+          <div class="pre"><span>S/</span><input id="a-apo" type="text" inputmode="decimal" value="200" autocomplete="off"></div>
+          <span class="ayuda">Pon 0 si es un depósito a plazo sin aportes.</span>
+        </div>
+        <div class="campo">
+          <label for="a-tea">TEA que te pagan</label>
+          <div class="suf"><input id="a-tea" type="text" inputmode="decimal" value="5" autocomplete="off"><span>% anual</span></div>
+        </div>
+        <div class="campo">
+          <label for="a-plazo">Plazo</label>
+          <div class="suf"><input id="a-plazo" type="number" inputmode="numeric" min="1" max="600" value="36"><span>meses</span></div>
+        </div>
+        <div class="campo">
+          <label for="a-inf">Inflación esperada</label>
+          <div class="suf"><input id="a-inf" type="text" inputmode="decimal" value="2" autocomplete="off"><span>% anual</span></div>
+          <span class="ayuda">La meta del BCRP es 2 %. Sirve para ver cuánto vale tu ahorro en soles de hoy.</span>
+        </div>
+        <div class="campo">
+          <label for="a-meta">Meta (opcional)</label>
+          <div class="pre"><span>S/</span><input id="a-meta" type="text" inputmode="decimal" value="" placeholder="Ej.: 20 000" autocomplete="off"></div>
+          <span class="ayuda">Te decimos cuánto ahorrar al mes para llegar.</span>
+        </div>
+      </form>
+      <div class="atajos" id="atajos-a"><span>Ejemplos:</span></div>
+    </section>
+
+    <section class="card res" aria-live="polite">
+      <p class="grande" id="a-frase">Al final tendrías:</p>
+      <span class="cifra" id="a-cifra"></span>
+      <div class="stats">
+        <div class="stat"><b id="a-s-apo"></b><small>Lo que pusiste de tu bolsillo</small></div>
+        <div class="stat"><b id="a-s-int"></b><small>Intereses ganados</small></div>
+        <div class="stat"><b id="a-s-real"></b><small>Lo que vale en soles de hoy, descontando la inflación</small></div>
+        <div class="stat"><b id="a-s-tr"></b><small>Tasa real al año (TEA menos inflación)</small></div>
+      </div>
+      <p class="explica" id="a-explica"></p>
+      <p class="aviso hidden" id="a-meta-txt"></p>
+      <div class="acciones">
+        <button class="btn" type="button" data-copiar>Copiar enlace de este cálculo</button>
+      </div>
+    </section>
+
+    <section class="card grafico" aria-labelledby="t-ag">
+      <h2 id="t-ag">Cómo crece tu ahorro</h2>
+      <p class="explica" style="margin-top:0">Con el interés compuesto, los intereses también ganan intereses: por eso la parte naranja crece cada vez más rápido.</p>
+      <div id="a-graf" role="img" aria-label="Gráfico del saldo del ahorro a lo largo del tiempo"></div>
+      <div class="leyenda"><span><i style="background:var(--apo)"></i>Lo que pusiste</span><span><i style="background:var(--int)"></i>Intereses ganados</span></div>
+    </section>
+
+    <section class="card" aria-labelledby="t-at">
+      <h2 id="t-at">Tu ahorro año por año</h2>
+      <div class="tabla-cont">
+        <table>
+          <thead><tr><th scope="col">Al final de</th><th scope="col">Lo que pusiste</th><th scope="col">Intereses ganados</th><th scope="col">Saldo</th><th scope="col">En soles de hoy</th></tr></thead>
+          <tbody id="a-tabla"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="t-ref">
+    <h2 id="t-ref">Tasas de referencia en el Perú</h2>
+    <p class="explica" style="margin-top:0">Promedios de los bancos publicados por el BCRP. Sirven para saber si una tasa es alta o baja, pero cada banco y cada producto tiene la suya.</p>
+    <div class="ref">
+      <div class="stat"><b id="r-tamn">…</b><small>TAMN: tasa promedio que <strong>cobran</strong> los bancos por préstamos en soles</small></div>
+      <div class="stat"><b id="r-tipmn">…</b><small>TIPMN: tasa promedio que <strong>pagan</strong> los bancos por depósitos en soles</small></div>
+      <div class="stat"><b id="r-inf">…</b><small>Inflación de los últimos 12 meses en Lima</small></div>
+    </div>
+    <p class="explica" id="r-fecha"></p>
+    <p class="explica">Para ver la tasa exacta de cada banco, caja o financiera, usa los comparadores oficiales de la SBS: <a href="https://www.sbs.gob.pe/usuarios/informate-y-compara/compara-productos-financieros/compara-costos-de-creditos" rel="noopener" target="_blank">compara costos de créditos</a> y <a href="https://www.sbs.gob.pe/usuarios/informate-y-compara/compara-productos-financieros/compara-rendimiento-de-depositos" rel="noopener" target="_blank">compara rendimiento de depósitos</a>.</p>
+  </section>
+
+  <div class="sl-anuncio" data-zona="prestamos-medio"></div>
+
+  <section class="card" aria-labelledby="t-como">
+    <h2 id="t-como">¿Cómo se calcula?</h2>
+    <h3>1. De la TEA a la tasa mensual (TEM)</h3>
+    <p>Los bancos en el Perú anuncian la tasa como <a href="../glosario/tea.html">TEA</a>, pero las cuotas son mensuales. Por eso primero se pasa a tasa efectiva mensual. No se divide entre 12: se saca la raíz doce, porque los intereses se capitalizan.</p>
+<div class="ecuacion"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>T</mi><mi>E</mi><mi>M</mi><mo>=</mo><mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><mi>T</mi><mi>E</mi><mi>A</mi><msup><mo stretchy="false">)</mo><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mn>12</mn></mrow></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">TEM=(1+TEA)^{1/12}-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">TEM</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.188em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">TE</span><span class="mord mathnormal">A</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.938em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1/12</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span></div>
+    <p>Ejemplo: con una TEA de 35 %, la TEM es 2.53 % (y no 2.92 %, que saldría de dividir 35 entre 12).</p>
+
+    <h3>2. La cuota con el método francés (cuotas iguales)</h3>
+    <p>Es el que usan casi todos los créditos de consumo, vehiculares e hipotecarios. La cuota es la misma todos los meses:</p>
+<div class="ecuacion"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>R</mi><mo>=</mo><mi>P</mi><mo>⋅</mo><mfrac><mi>i</mi><mrow><mn>1</mn><mo>−</mo><mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><mi>i</mi><msup><mo stretchy="false">)</mo><mrow><mo>−</mo><mi>n</mi></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">R=P\cdot\dfrac{i}{1-(1+i)^{-n}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.2725em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3365em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">i</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6973em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div>
+    <ul class="donde">
+      <li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span>: cuota mensual</li>
+      <li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span>: monto del préstamo</li>
+      <li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span>: TEM en decimal (2.53 % = 0.0253)</li>
+      <li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>: número de cuotas</li>
+    </ul>
+    <p>Cada mes, el interés se calcula sobre la deuda que queda. Lo que sobra de la cuota es la <a href="../glosario/amortizacion.html">amortización</a>, la parte que de verdad baja tu deuda.</p>
+<div class="ecuacion"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mrow><mtext>Inter</mtext><mover accent="true"><mtext>e</mtext><mo>ˊ</mo></mover><mtext>s</mtext></mrow><mi>t</mi></msub><mo>=</mo><msub><mi>S</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>⋅</mo><mi>i</mi><mspace width="2em"/><msub><mrow><mtext>Amortizaci</mtext><mover accent="true"><mtext>o</mtext><mo>ˊ</mo></mover><mtext>n</mtext></mrow><mi>t</mi></msub><mo>=</mo><mi>R</mi><mo>−</mo><msub><mrow><mtext>Inter</mtext><mover accent="true"><mtext>e</mtext><mo>ˊ</mo></mover><mtext>s</mtext></mrow><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\text{Interés}_t=S_{t-1}\cdot i \qquad \text{Amortización}_t=R-\text{Interés}_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord text"><span class="mord">Inter</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord">e</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">ˊ</span></span></span></span></span></span></span><span class="mord">s</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:2em;"></span><span class="mord"><span class="mord text"><span class="mord">Amortizaci</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord">o</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">ˊ</span></span></span></span></span></span></span><span class="mord">n</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord text"><span class="mord">Inter</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord">e</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">ˊ</span></span></span></span></span></span></span><span class="mord">s</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></div>
+
+    <h3>3. El método alemán (cuotas que bajan)</h3>
+    <p>Aquí la amortización es igual cada mes y el interés baja junto con la deuda. La primera cuota es la más alta, pero en total pagas menos intereses.</p>
+<div class="ecuacion"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>A</mi><mo>=</mo><mfrac><mi>P</mi><mi>n</mi></mfrac><mspace width="2em"/><msub><mi>C</mi><mi>t</mi></msub><mo>=</mo><mi>A</mi><mo>+</mo><msub><mi>S</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>⋅</mo><mi>i</mi></mrow><annotation encoding="application/x-tex">A=\dfrac{P}{n} \qquad C_t=A+S_{t-1}\cdot i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0463em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:2em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></span></div>
+
+    <h3>4. La TCEA: el costo de verdad</h3>
+    <p>La <a href="../glosario/tcea.html">TCEA</a> suma a la TEA los seguros y comisiones. Es la tasa <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span></span></span></span> que iguala lo que recibes con todo lo que pagas, llevada a un año. Por ley, el banco debe mostrarla, y es la cifra correcta para comparar dos créditos.</p>
+<div class="ecuacion"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mfrac><msub><mi>F</mi><mi>t</mi></msub><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><mi>r</mi><msup><mo stretchy="false">)</mo><mi>t</mi></msup></mrow></mfrac><mspace width="2em"/><mi>T</mi><mi>C</mi><mi>E</mi><mi>A</mi><mo>=</mo><mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><mi>r</mi><msup><mo stretchy="false">)</mo><mn>12</mn></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">P=\sum_{t=1}^{n}\dfrac{F_t}{(1+r)^t} \qquad TCEA=(1+r)^{12}-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.9185em;vertical-align:-1.2671em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6514em;"><span style="top:-1.8829em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2671em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7196em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:2em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">TCE</span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1141em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">12</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span></div>
+    <p>Aquí, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">F_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> es todo lo que pagas en el mes <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span>: cuota, seguro y comisiones. El simulador la halla probando tasas hasta que la igualdad se cumple.</p>
+
+    <h3>5. El ahorro con interés compuesto</h3>
+    <p>Si empiezas con <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">C_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> y agregas <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> al final de cada mes, después de <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> meses tendrás:</p>
+<div class="ecuacion"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><msub><mi>C</mi><mn>0</mn></msub><mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><mi>i</mi><msup><mo stretchy="false">)</mo><mi>n</mi></msup><mo>+</mo><mi>A</mi><mo>⋅</mo><mfrac><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><mi>i</mi><msup><mo stretchy="false">)</mo><mi>n</mi></msup><mo>−</mo><mn>1</mn></mrow><mi>i</mi></mfrac></mrow><annotation encoding="application/x-tex">S_n=C_0(1+i)^n+A\cdot\dfrac{(1+i)^n-1}{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">i</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7144em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">i</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">i</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div>
+    <p>Y para saber cuánto ganas de verdad, quita la inflación esperada <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span> con la <a href="../glosario/tasa-de-interes-real.html">tasa de interés real</a>:</p>
+<div class="ecuacion"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>r</mi><mtext>real</mtext></msub><mo>=</mo><mfrac><mrow><mn>1</mn><mo>+</mo><mi>T</mi><mi>E</mi><mi>A</mi></mrow><mrow><mn>1</mn><mo>+</mo><mi>π</mi></mrow></mfrac><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">r_{\text{real}}=\dfrac{1+TEA}{1+\pi}-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">real</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.1297em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">TE</span><span class="mord mathnormal">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span></div>
+  </section>
+
+  <section class="card" aria-labelledby="t-cons">
+    <h2 id="t-cons">Consejos antes de pedir un préstamo o abrir un depósito</h2>
+    <h3>Compara la TCEA, no la cuota</h3>
+    <p>Una cuota baja puede esconder un plazo largo o seguros caros. Pide la hoja resumen y compara la TCEA de cada oferta: la más baja es la más barata.</p>
+    <h3>Si puedes, paga antes</h3>
+    <p>En el Perú puedes adelantar pagos sin penalidad y elegir si quieres que baje la cuota o el plazo. Bajar el plazo ahorra más intereses. Prueba la opción «Pago extra cada mes» para ver cuánto te ahorras. El <a href="https://elperuano.pe/noticia/286964-pago-anticipado-es-derecho-del-consumidor-indecopi-multa-a-entidad-por-incumplimiento" rel="noopener" target="_blank">Indecopi sanciona</a> a las entidades que no lo respetan.</p>
+    <h3>Cuidado con las tasas muy altas</h3>
+    <p>Desde la <a href="https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Texto_Consolidado/31143-TXM.pdf" rel="noopener" target="_blank">Ley 31143</a>, el BCRP fija tasas máximas para los créditos de consumo y de pequeña empresa. Los prestamistas informales, como los <a href="../glosario/prestamos-gota-a-gota.html">préstamos «gota a gota»</a>, no respetan esos topes y suelen cobrar mucho más.</p>
+    <h3>Tu ahorro y la inflación</h3>
+    <p>Si la TEA de tu ahorro es menor que la inflación, tu dinero pierde poder de compra aunque el saldo crezca. Revisa la <a href="../inflacion/">calculadora de inflación</a> para ver cuánto han subido los precios.</p>
+    <h3>¿Está protegido mi dinero?</h3>
+    <p>Los depósitos de personas en bancos, financieras y cajas supervisadas por la <a href="../glosario/sbs.html">SBS</a> están cubiertos por el <a href="../glosario/fondo-de-seguro-de-depositos.html">Fondo de Seguro de Depósitos</a> hasta un monto que se actualiza cada trimestre. Las cooperativas tienen otras reglas.</p>
+  </section>
+
+  <section class="card" aria-labelledby="t-preg">
+    <h2 id="t-preg">Preguntas frecuentes</h2>
+    <h3>¿Por qué mi banco me da una cuota un poco distinta?</h3>
+    <p>Porque el banco puede contar los días exactos de cada mes (30 o 31), cobrar seguros de otra forma o sumar el ITF y otros gastos. El simulador usa meses iguales, que es lo más común para estimar. Para el monto exacto, pide tu cronograma al banco.</p>
+    <h3>¿Qué es mejor, cuotas iguales o cuotas que bajan?</h3>
+    <p>Con cuotas que bajan pagas menos intereses en total, pero las primeras cuotas son más altas. Con cuotas iguales es más fácil organizar tu presupuesto. Cambia el «Tipo de cuota» en «Más opciones» para comparar.</p>
+    <h3>¿Qué diferencia hay entre una cuenta de ahorros y un depósito a plazo?</h3>
+    <p>En una <a href="../glosario/deposito-de-ahorro.html">cuenta de ahorros</a> puedes sacar tu dinero cuando quieras, pero la tasa suele ser baja. En un <a href="../glosario/deposito-a-plazo.html">depósito a plazo</a> te comprometes a no tocarlo por un tiempo y a cambio te pagan más.</p>
+    <h3>¿Guardan mis datos?</h3>
+    <p>No. Los cálculos se hacen en tu propio celular o computadora y no se envían a ningún lado. El enlace que copias solo lleva los números que escribiste.</p>
+    <h3>¿Puedo usarlo para decidir un crédito?</h3>
+    <p>Es una guía para entender y comparar. La cifra oficial es la de la hoja resumen y el cronograma que te entrega la entidad financiera.</p>
+    <p>Más conceptos en el glosario: <a href="../glosario/interes-compuesto.html">interés compuesto</a>, <a href="../glosario/interes-simple.html">interés simple</a>, <a href="../glosario/tasa-de-interes-activa-y-pasiva.html">tasa activa y pasiva</a>, <a href="../glosario/seguro-de-desgravamen.html">seguro de desgravamen</a> y <a href="../glosario/tasa-fija-y-variable.html">tasa fija y variable</a>.</p>
+  </section>
+  <div class="sl-anuncio" data-zona="prestamos-final"></div>
+</main>
+
+<footer>
+  <p>Tasas de referencia: Banco Central de Reserva del Perú (BCRP), series PN07807NM (TAMN) y PN07816NM (TIPMN), revisadas cada día por un robot de Simplelife. Simplelife no es parte del BCRP ni de la SBS, y no ofrece préstamos.</p>
+  <p><a href="../">Inicio Simplelife</a> · <a href="../inflacion/">Calculadora de inflación</a> · <a href="../glosario/">Glosario económico</a> · <a href="../precios/">Precios del Perú y del mundo</a> · <a href="../tramites/">Trámite fácil Perú</a> · <a href="../acerca.html">Acerca de</a> · <a href="../contacto.html">Contacto</a> · <a href="../privacidad.html">Privacidad</a></p>
+</footer>
+
+<script src="../glosario/formulas.js" defer></script>
+<script src="app.js"></script>
+</body>
+</html>
